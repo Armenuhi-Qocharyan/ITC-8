@@ -29,7 +29,17 @@ for i in inp:
             exit()
     else:
         key+=i
-print a
-print b
-print key_list
-print value_list
+if len(key_list) != len(set(key_list)):
+    print "not correct"
+    exit()
+elif len(key_list) != len(value_list):
+    print "not correct"
+    exit()
+elif a != []:
+    print "not correct"
+    exit()
+elif b != []:
+    print "not correct"
+    exit()
+else:
+    print "correct "
