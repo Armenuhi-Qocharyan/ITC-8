@@ -1,3 +1,5 @@
+import argparse
+
 def summa(first, second):
     return first + second
 
@@ -15,10 +17,10 @@ def div(first, second):
 
 def calculator(first_number, second_number , operator):
     switch = {
-        '+': summa(first_number, second_number),        
-        '-': sub(first_number, second_number),        
-        '*': mul(first_number, second_number),        
-        '/': div(first_number, second_number),        
+        operator.fadd: summa(first_number, second_number),        
+        operator.fsub: sub(first_number, second_number),        
+        operator.fmulti: mul(first_number, second_number),        
+        operator.fdiv: div(first_number, second_number),        
     }
     return switch.get(operator, "invalid")
 
@@ -39,11 +41,32 @@ operator = {
     '*': 10**-1,
     '/': 1,
 }
-'''
 
 first_number = input("enter a first number : ")
 second_number = input("enter a second number : ")
 operator = raw_input('enter operator + - * or / : ')
 result = calculator(first_number, second_number, operator)
 print "Result = ", result
+'''
+parser = argparse.ArgumentParser()
 
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-a","--fadd",help="Performs addition",action="store_true")
+group.add_argument("-s","--fsub",help="Performs subtraction",action="store_true")
+group.add_argument("-d","--fdiv",help="Performs division",action="store_true")
+group.add_argument("-m","--fmulti",help="Performs multiplication",action="store_true")
+parser.add_argument("num1",help="Number1 to calculate",type=int)
+parser.add_argument("num2",help="Number2 to calculate",type=int)
+args = parser.parse_args()
+
+
+if args.fadd:
+    print("The addition result of {} and {} is {}".format(args.num1,args.num2,(add(args.num1,args.num2))))
+elif args.fsub:
+    print("The subtraction result of {} and {} is {}".format(args.num1,args.num2,(sub(args.num1,args.num2))))
+elif args.fdiv:
+    print("The division result of {} and {} is {}".format(args.num1,args.num2,(div(args.num1,args.num2))))
+elif args.fmulti:
+    print("The multiplication result of {} and {} is {}".format(args.num1,args.num2,(mul(args.num1,args.num2))))
+else:
+    print("Error:Requires an argument to perform an action")
