@@ -1,3 +1,5 @@
+#correct format {a:1,b:2,c:3}
+
 def findKey(keys, values):
     key=raw_input("Enter key: ")
     length=len(keys)
