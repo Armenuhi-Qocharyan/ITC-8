@@ -1,26 +1,52 @@
-#import argparse
-#parser = argparse.ArgumentParser()
-#parser.add_argument("-jSon")
-#args = parser.parse_args()
-#s=args.c
+import sys
 
-string = "{'aaa': 12, 'bbb': 11, 'ccc': 8}"
+string = "{'a': 15, 'v': 154, 'ka': 487, 'ssd': 748, 'ba': 14, 'ze': 144, 'chka': 488, 'sdd': 458}"
+print string
 key = raw_input("Input key - ") 
+length=len(string)
 
-words = string.split() 
+
+if string[0] != '{' or string[length-1] != '}':
+    sys.exit("Please input correct string")
+
+value=''
+
+
+def isUnique():
+    counter=0
+    temp=string.split(',')
+    for i in temp:
+        if key in temp:
+            counter+=1
+    return counter < 1
+
+
+if isUnique()==0:
+    sys.exit("String is not unique")
+
+
 if key in string:
-    print "true"
-if key in words:
-    if key in string:
-        print "true"
-    
-    '''
-for i in str:
-    temp=str.split(":")
-    print temp
-    for j in str[i]:
-        if j==a[0]:
-            
-            for i in a:
-                print "a"
-                '''
+    index=string.find(key)
+    end=index+len(key)
+    count1=0    #not added
+    count2=0    #not added
+    for i in range(end,length):
+        if string[i]=="'":
+            count1+=1
+        elif string[i]==':':
+            count2+=1
+        elif string[i]!=' ':
+            value=value+string[i]
+
+
+temp=value.split(',')
+value=temp[0]
+length=len(value)
+if value[0]=='{':
+    value=value.split('{')
+    value=value[1]
+elif value[length-1]=='}':
+    value=value.split('}')
+    value=value[0]
+
+print "value=" + value
