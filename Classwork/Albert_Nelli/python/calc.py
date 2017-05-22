@@ -14,6 +14,15 @@ def div(first, second):
         print "Division on 0 "
 
 def calculator(first_number, second_number , operator):
+    switch = {
+        '+': summa(first_number, second_number),        
+        '-': sub(first_number, second_number),        
+        '*': mul(first_number, second_number),        
+        '/': div(first_number, second_number),        
+    }
+    return switch.get(operator, "invalid")
+
+'''    if operator == '+':
     if operator == '+':
         return summa(first_number, second_number)
     elif operator == '-':
@@ -24,6 +33,13 @@ def calculator(first_number, second_number , operator):
         return div(first_number, second_number)
     else:
         print "Incorrect operator "
+operator = {
+    '+': re,
+    '-': 10**-2,
+    '*': 10**-1,
+    '/': 1,
+}
+'''
 
 first_number = input("enter a first number : ")
 second_number = input("enter a second number : ")
