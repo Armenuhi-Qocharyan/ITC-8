@@ -1,0 +1,7 @@
+short
+15246
+ocean
+5
+169
+64
+father
