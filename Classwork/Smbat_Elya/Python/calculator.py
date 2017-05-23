@@ -6,7 +6,7 @@ def mul(var1, var2):
     return var1 * var2
 def div(var1, var2):
     if var2 == 0:
-        return "null"
+        return 
     return var1 / var2
     
 import argparse
