@@ -16,10 +16,6 @@ def checkString ():
         return
     string = string[:-1]
     string = string[1:]
-    if string[0] == ' ':
-        string = string[1:]
-    if string[-1] == ' ':
-        string = string [:-1]
     if string[:1] != '"':
         print "Incorrect format"
         return
@@ -41,7 +37,7 @@ def check (string):
                 i = i-1
             if string[i+1] == ' ':
                 string = string[:i+1] + string[i+2:]
-            if string[i-1] != '"' or string[i+1] != '"':
+            if string[i-1] != '"':
                 print "Incorrect brackets "
                 return
             key += string[:i+1]
@@ -51,8 +47,14 @@ def check (string):
             
         if string[i] == ',':
             if string[i-1] != '"':
-                print "Incorrect brackets "
-                return
+                if string[:i].isdigit():
+                    value += string[:i+1]
+                    string = string[i+1:]
+                    i=0
+                    continue
+                else:
+                    print "Incorrect value"
+                    return
             if i+1 < len(string) and string[i+1] == ' ':
                 string = string[:i+1] + string[i+2:]
 
