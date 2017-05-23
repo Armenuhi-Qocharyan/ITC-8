@@ -17,10 +17,10 @@ def div(first, second):
 
 def calculator(first_number, second_number , operator):
     switch = {
-        operator.fadd: summa(first_number, second_number),        
-        operator.fsub: sub(first_number, second_number),        
-        operator.fmulti: mul(first_number, second_number),        
-        operator.fdiv: div(first_number, second_number),        
+        '+': summa(first_number, second_number),        
+        '-': sub(first_number, second_number),        
+        '*': mul(first_number, second_number),        
+        '/': div(first_number, second_number),        
     }
     return switch.get(operator, "invalid")
 
