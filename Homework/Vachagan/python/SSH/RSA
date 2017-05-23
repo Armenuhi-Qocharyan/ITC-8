@@ -1,0 +1,9 @@
+Generating a new SSH key and adding it to the ssh-agent
+1)ssh-keygen -t rsa -b 4096 -C "your_email"
+in /home/you/.ssh/id_rsa generate two key id_rsa  id_rsa.pub 
+add ssh key to the ssh-agent
+1)eval "$(ssh-agent -s)"
+2)ssh-add ~/.ssh/id_rsa
+copy my id_rsa.pub -key and add to github
+Test SSH connection
+1)ssh -T git@github.com
