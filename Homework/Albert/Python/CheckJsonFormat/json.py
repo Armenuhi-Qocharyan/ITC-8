@@ -1,4 +1,7 @@
-#correct format {a:1,b:2,c:3}
+#correct   format   {"a":1, "b":"2", "c":"3(aa}[545"}
+#incorrect format   {a:1,"a":1a,"b":,:5}
+#incorrect format - key-@ grvac lini ("")-i mej, value-n ete string e grvac lini ("")-i mej,ete tiv e ("")-n ampayman chen
+#                   key-@ kam value-n datark chtoxnel, key-@ chpetq e krknvi
 
 def checkRepeatingKey(keys):
     length=len(keys)
@@ -7,16 +10,23 @@ def checkRepeatingKey(keys):
     for i in range(0, length):
         for j in range(i+1, length):
             if keys[i] == keys[j]:
-                print "Key repeated...Invalid json format"
+                print "Key repeated.Invalid json format"
                 return 0
     else:
         return 1
 
 def checkCountKeyEqualCountValue(keys, values):
+    keyIndex=0
     for i in keys:
         if i == '':
-            print "Empty key...Incorrect json format"
+            print "Empty key.Incorrect json format"
             return 0
+        else:
+            while keyIndex < len(i):
+                if i[keyIndex] == " ":        
+                    print "key contain space.Incorrect json format"
+                    return 0
+                keyIndex += 1
     for i in values:
         if i == '':
             print "Empty Value...Incorrect json format"
@@ -25,6 +35,36 @@ def checkCountKeyEqualCountValue(keys, values):
         print "Incorrect json format"
         return 0
     return 1
+
+
+def checkKeyValid(keys):
+    length=len(keys)
+    for i in range(0, length):
+        if keys[i][:1] != '"' or keys[i][-1:] != '"':
+            print "Invalid json format(key is incorrect)"
+            return 0
+        else:
+            keys[i] = keys[i][1:]
+            keys[i] = keys[i][:-1]
+    else:
+            return 1
+
+
+def checkValueValid(values):
+    length=len(values)
+    j=0
+    for i in range(0, length):
+        if values[i][:1] == '"' and values[i][-1:] == '"':
+            return 1
+        else:
+            while j < len(values[i]):
+                if values[i][j].isdigit() == 0:
+                    print "Incorrect json format(value is incorrect)"
+                    return 0
+                j += 1
+            j=0
+    else:
+            return 1
 
 
 def findKey(keys, values):
@@ -47,7 +87,6 @@ def checkJsonFormat():
         string = string[1:]
         string = string[:-1]
         string += ","
-
     key = ""
     value = ""
     index=0
@@ -66,6 +105,9 @@ def checkJsonFormat():
     key = key[:-1]
     value = value[:-1]
 
+    if checkKeyValid(key) == 0 or checkValueValid(value) == 0:
+        return
+    
     if checkCountKeyEqualCountValue(key, value) == 0:
         return
 
