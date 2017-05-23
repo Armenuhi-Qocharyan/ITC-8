@@ -1,48 +1,26 @@
 import math
+import argparse
 
-#Enter first number
-try:
-    a = float(raw_input("Enter first number: "))
-except ValueError:
-    print "Not a number\n"
-    exit()
+parser = argparse.ArgumentParser(description='Calculator with few functions')
+parser.add_argument('first', action='store', type=float, help='Enter first argument')
+parser.add_argument('second', action='store', type=float, help='Enter second argument')
+parser.add_argument('oper', action='store', type=str, help='Enter operation')
+args = parser.parse_args()
 
-#Enter operation
-oper = raw_input("Enter operation: ")
+a = args.first
+b = args.second
+oper = args.oper
 
-#Check operation: if it is 'sqrt', second argument is not required
-if oper == 'sqrt':
-    if a >= 0:
-        print math.sqrt(a)
-        exit()
-    else:
-        print "Negative number\n"
-        exit() 
-
-#Enter second number
-try:
-    b = float(raw_input("Enter second number: "))
-except ValueError: 
-    print "Not a number\n"
-    exit()
-
-#Count expression value
-if oper == '+':
-    print a + b
-elif oper == '-':
-    print a - b
-elif oper == '/':
+def divide(a, b):
     if b != 0:
-        print a / b
-    else:
-        print "Division by zero"
-elif oper == '*':
-    print a * b
-elif oper == 'pow':
-    try:
-        print math.pow(a, b)
-    except ValueError:
-        print "Can't get ", b, " power of ", a
-        exit()
-else:
-    print 'Unknown operator'
+        return a / b
+    print "Division by zero"
+    exit()
+
+switch = {    
+    '+': a + b,
+    '-': a - b,
+    '*': a * b,
+    '/': divide(a,b),
+}
+print switch[oper]
