@@ -19,42 +19,43 @@ if arr[0].isdigit() and arr[1].isdigit():
 else:
     sys.exit("Please input only numbers")
 
-a=int(arr[0])
-b=int(arr[1])
+num1=int(arr[0])
+num2=int(arr[1])
 
-def sum (a,b):
-    print "%d + %d = %d " % (a, b,a+b)
+def sum (num1,num2):
+    return num1+num2
 
-def diff (a,b):
-    print "%d - %d = %d " % (a, b, a-b)
+def diff (num1,num2):
+    return num1-num2 
 
-def mult (a,b):
-    print "%d * %d = %d " % (a, b, a*b)
+def mult (num1,num2):
+    return num1*num2
 
-def div (a,b):
-    if b==0:
+def div (num1,num2):
+    if num2==0:
         sys.exit("Second number can't be 0")
     else:
-        print "%d / %d = %d " % (a, b, a/b)
-
+        return num1/num2
+        '''
 if opr=="+":
-    sum(a, b)
+    sum(num1, num2)
 else:
     if opr=="-":
-        diff(a, b)
+        diff(num1, num2)
     elif opr=="*":
-        mult(a, b)
+        mult(num1, num2)
     elif opr=="/":
-        div(a, b)
+        div(num1, num2)
     else:
         print "Wrong option"
 
 '''
-#use this but it's call all cases can' use break
-opr = {
-        '+': sum(a, b),
-        '-': diff(a, b),
-        '*': mult(a, b),
-        '/': div(a,b),
-}
-'''
+#use this but it's call all cases can't use break
+result = {
+    '+': sum(num1, num2),
+    '-': diff(num1, num2),
+    '*': mult(num1, num2),
+    '/': div(num1,num2),
+    }.get(opr, "Invalid operator")
+
+print "%d %s %d = %d" % (num1, opr, num2, result)

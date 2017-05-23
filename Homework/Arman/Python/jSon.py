@@ -5,12 +5,38 @@ print string
 key = raw_input("Input key - ") 
 length=len(string)
 
+stack=[]
+
+
+def push(value):
+    stack.append(value)
+def pop():
+    stack.pop()
+
+def check(string):
+    count=0
+    balanced = True
+    for i in string:
+        if i == "{":
+            push(i)
+            print "push"
+            count+=1
+        elif i == "}":
+            if len(stack)==0:
+                break
+            pop()
+            count-=1
+            print "pop"
+
+    return len(stack)==0
+
+print check(string)
+
 
 if string[0] != '{' or string[length-1] != '}':
     sys.exit("Please input correct string")
 
 value=''
-
 
 def isUnique():
     counter=0
@@ -23,7 +49,7 @@ def isUnique():
 
 if isUnique()==0:
     sys.exit("String is not unique")
-
+'''
 
 if key in string:
     index=string.find(key)
@@ -37,7 +63,14 @@ if key in string:
             count2+=1
         elif string[i]!=' ':
             value=value+string[i]
+'''
 
+if key in string:
+    index=string.find(key)
+    end=index+len(key)
+    for i in range(end,length):
+        if string[i]!=' ':
+            value=value+string[i]
 
 temp=value.split(',')
 value=temp[0]
