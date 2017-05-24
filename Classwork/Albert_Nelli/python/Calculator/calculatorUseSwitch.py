@@ -14,14 +14,16 @@ def div(first, second):
         print "Division on 0 "
         return
 
-first = input("Enter first number  : ")
-second = input("Enter second number: ")
-operator = raw_input("Enter choice(+ - * or /): ")
+#first = input("Enter first number  : ")
+#second = input("Enter second number: ")
+#operator = raw_input("Enter choice(+ - * or /): ")
 
+'''
 switch = {
     '+': add(first, second),
     '-': sub(first, second),
     '*': mul(first, second),
     '/': div(first, second),
 }
-print "Result = ",(switch.get(operator, "Invaled Action"))
+'''
+#print "Result = ",(switch.get(operator, "Invaled Action"))
