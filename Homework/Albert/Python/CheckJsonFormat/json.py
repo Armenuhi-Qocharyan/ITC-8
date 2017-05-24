@@ -1,8 +1,3 @@
-#correct   format   {"a":1, "b":"2", "c":"3(aa}[545"}
-#incorrect format   {a:1,"a":1a,"b":,:5}
-#incorrect format - key-@ grvac lini ("")-i mej, value-n ete string e grvac lini ("")-i mej,ete tiv e ("")-n ampayman chen
-#                   key-@ kam value-n datark chtoxnel, key-@ chpetq e krknvi
-
 def checkRepeatingKey(keys):
     length=len(keys)
     if length == 1:
@@ -53,11 +48,27 @@ def checkKeyValid(keys):
 def checkValueValid(values):
     length=len(values)
     j=0
+    floatIndex=0
     for i in range(0, length):
-        if values[i][:1] == '"' and values[i][-1:] == '"':
+        if values[i] == "true" or values[i] == "false" or values[i] == "null":
+            return 1
+        if values[i][:1] == '"' and values[i][-1:] == '"': 
+            values[i] = values[i][1:]
+            values[i] = values[i][:-1]
             return 1
         else:
             while j < len(values[i]):
+                if values[i][j] == '.':
+                    if j > 0 and j < len(values[i])-1:
+                        if floatIndex > 0:
+                            print "Incorrect json format(value is incorrect float number)"
+                            return 0
+                        j += 1
+                        floatIndex += 1
+                    else:
+                        print "Incorrect json format(value is incorrect float number)"
+                        return 0
+                
                 if values[i][j].isdigit() == 0:
                     print "Incorrect json format(value is incorrect)"
                     return 0
@@ -76,7 +87,7 @@ def findKey(keys, values):
             return values[i]
     else:
             print "Value not found"
-            return
+            return None
 
 def checkJsonFormat():
     string = raw_input("Enter string: ")
@@ -84,6 +95,9 @@ def checkJsonFormat():
         print "Incorrect json format"
         return
     else:
+        if len(string) == 2:
+            print "Correct json format.But json is empty!"
+            return 0
         string = string[1:]
         string = string[:-1]
         string += ","
@@ -106,20 +120,26 @@ def checkJsonFormat():
     value = value[:-1]
 
     if checkKeyValid(key) == 0 or checkValueValid(value) == 0:
-        return
+        return 0
     
     if checkCountKeyEqualCountValue(key, value) == 0:
-        return
+        return 0
 
     choose = 1
     if checkRepeatingKey(key) == 1:
         while choose != 0:
-            choose=input("Press 0 - Exit, Press any key - find key: ")
+            try:
+                choose=input("Press 0 - Exit, Press any number - Find key: ")
+            except Exception:
+                print "Enter only number! Programm exit"
+                return 0
+            finally:
+                pass
             if choose == 0:
-                return
+                return 0
             else:
                 findKey(key, value)
     else:
-        return
+        return 0
 
 checkJsonFormat()
