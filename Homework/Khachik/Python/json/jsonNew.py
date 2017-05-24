@@ -1,5 +1,6 @@
 #This program simulates the operation of an json
 
+
 arrkey=[]       #List of keys
 arrval=[]       #List of Values
 bracket=[]
@@ -13,14 +14,14 @@ def check(arg,key):
         return 0
     str1[0] = str1[0][1:]
     str1[0] = str1[0][:-1]
-    if str1[1][0] == '"' and len(str1[1]) != 2:
-        str1[1] = str1[1][1:]
-        str1[1] = str1[1][:-1]
-    if len(str1[1]) == 2:
+    if str1[1][0] == '"' and len(str1[1]) == 2:
         arrkey.append(str1[0])
         arrval.append("")
         return 1
 
+    if str1[1][0] == '"' and len(str1[1]) != 2:
+        str1[1] = str1[1][1:]
+        str1[1] = str1[1][:-1]
     for i in range(length):
         if str1[0] == arrkey[i]:
             print "Eror:Keys are repeated"
@@ -34,14 +35,16 @@ def find(key, length):
     for i in range(length):
         if key == arrkey[i]:
             print "Value - " + arrval[i]
-            exit(0)
+            return 1
+    return 0
 
 if __name__ == '__main__':
     string = raw_input('Input your json: ')
     string = string.replace(" ", "")
     if string[0] != "{" or string[len(string) - 1] != "}":
-        print "Eror:Wrong input (Check brackets)"
-        exit(0)
+        if string[0] != "[" or string[len(string) - 1] != "]":
+            print "Eror:Wrong input (Check brackets)"
+            exit(0)
     string = string[1:]
     string = string[:-1]
 
@@ -130,7 +133,7 @@ def cat(string,key):
                 if i == len(string) - 1:
                     string = ""
                 else:
-                    string = string[i:]
+                    string = string[i + 1:]
                 if check(keyVal,key) == 0:
                     return 0
                 return string
@@ -144,7 +147,10 @@ def cat(string,key):
                     return 0
                 return string
             elif digit == 1:
-                print "Eror:Wrong value"
+                print "Error:Wrong value"
+                return 0
+            elif string[i].isalpha():
+                print "Error:Wrong value"
                 return 0
     if countBrack == 3:
         print "Error:Wrong value"
@@ -166,6 +172,6 @@ if __name__ == '__main__':
             break
         length += 1
     if boolian != 0:
-        find(key, length)
-        print "Key not found"
+        if not find(key, length):
+            print "Key not found"
 
