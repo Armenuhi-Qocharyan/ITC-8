@@ -62,6 +62,7 @@ def is_valid_json(json):
                 for i in range(1, length):
                     if json[i] == '"':
                         if json[i - 1] == '\\' and order == "value":
+                            value = value[0 : len(value) - 2]
                             value = value + '"'
                         else:
                             if order == "key":
@@ -121,7 +122,9 @@ def is_valid_json(json):
                             return 0
                         elif top == 1 and stack[top - 1] == '"':
                             value = value + ','
-                    elif json[i] == '}':
+                    elif json[i] == '}' and i == length - 1:
+                        if top != 0:
+                            return 0
                         if not is_valid_value(value):
                             return 0
                         values.append(value)
