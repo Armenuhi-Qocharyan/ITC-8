@@ -47,8 +47,7 @@ def is_valid_key (key):
 
 def is_valid_json(json):
     length = len(json)
-    if (json[0] == '{' and json[length - 1] == '}') \
-            or  (json[0] == '[' and json[length- 1] == ']') :
+    if (json[0] == '{' and json[length - 1] == '}'): 
                 stack = []
                 top = 0
                 key = ""
