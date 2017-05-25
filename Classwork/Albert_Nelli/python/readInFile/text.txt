@@ -1,0 +1,4 @@
+aaa aaayan,15
+bbb bbbyan,25
+ccc cccyan,33
+ddd dddyan,55

@@ -77,7 +77,6 @@ def checkValueValid(values):
     else:
             return 1
 
-
 def findKey(keys, values):
     key=raw_input("Enter key: ")
     lengthKeys=len(keys)
