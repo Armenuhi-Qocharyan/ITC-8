@@ -7,7 +7,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertTrue(json_validation.is_valid_json('{"key":15}'))
         self.assertTrue(json_validation.is_valid_json('{"dsfd":15.2,"df":"df"}'))
         self.assertTrue(json_validation.is_valid_json('{"12":None}'))
-        self.assertTrue(json_validation.is_valid_json('{"d" :False}'))
+        self.assertFalse(json_validation.is_valid_json('{"d" :12..15}'))
         self.assertTrue(json_validation.is_valid_json('{"sdsdf":True}'))
         self.assertFalse(json_validation.is_valid_json('{"1555ssw":aaa}'))
         self.assertFalse(json_validation.is_valid_json('{ke{}" y":15".2}'))
