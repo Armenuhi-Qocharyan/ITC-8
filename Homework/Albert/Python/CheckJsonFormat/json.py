@@ -50,7 +50,7 @@ def checkValueValid(values):
     j=0
     floatIndex=0
     for i in range(0, length):
-        if values[i] == "true" or values[i] == "false" or values[i] == "null":
+        if values[i] == "True" or values[i] == "False" or values[i] == "None":
             return 1
         if values[i][:1] == '"' and values[i][-1:] == '"': 
             values[i] = values[i][1:]
