@@ -1,0 +1,82 @@
+body {
+    background-color: rgb(234,232,231);
+}
+
+.global-content {
+    margin: 25px 15% 0 15%;
+    padding: 0 0 0px 0;
+    background-color: green;
+}
+
+.left-div {
+    background-color: rgb(93,164,217);
+    float: left;
+    width: 32%;
+    margin: 0 0 10px 0;
+}
+
+.profile-image {
+    width: 100%;    
+}
+
+.menu-icon {
+    position: absolute;
+    margin: 20px 0 0 20px;
+}
+
+.contact-list {
+    margin: 0 0 0px 20px;
+}
+
+.contact-items {
+    padding: 20px 0 0 0;    
+}
+
+.about-icon {
+    float: left; 
+    margin: 0px 5px 0 0;
+    width: 10%;
+}
+
+.about-text {
+    float: left;
+    border-bottom: thick solid #4683c2;
+    border-width: 2px;
+    width: 85%;
+    font-size: 12px;
+    color: white;
+    margin: 10px 0 10px 0;
+}
+
+.slider {
+    width: 100%;
+}
+
+.right-div {
+    background-color: white;
+    float: right; 
+    width: 66%;    
+}
+
+.about-all {
+    padding: 30px 0 30px 30px;
+         
+}
+
+.about-image {
+    float: left;
+    width: 7%;
+    margin: 0 20px 0 0;
+}
+
+.about-item {
+    float:left;
+    width: 87%;
+    font-size: 14px;
+    color:#808080;
+    border-bottom: thick solid #4683c2;    
+}
+
+
+
+
