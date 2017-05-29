@@ -1,0 +1,117 @@
+body {
+    background-color: #eae8e7;
+    color: #767270;
+}
+
+.wrapper {
+    width: 85%;
+    padding-top: 5%;
+}
+
+.left {
+    width: 40%;
+    float: left;
+    display: inline-block;
+    margin-left: 8%;
+    margin-top: 3%;
+    background-color: #5da4d9;
+}
+
+.manImg {
+    width:100%;
+    background-image: url("../resurces/img/man.png");
+    margin:auto;
+}
+
+.conText {
+    text-align: center;
+    margin-top: -25%;
+    color: #ffffff;
+}
+.Info {
+    margin-top: 15%;
+    display: block;
+}
+
+.white {
+    color: #ffffff;
+}
+.icon {
+    width: 7%;
+    display: inline-block;
+    position: absolute;
+    top 0;
+    left 0;
+}
+
+.icon img {
+    width: 50%;
+}
+
+.infoText {
+    margin-right: 5%;
+    width: 80%;
+}
+
+.right {
+    width: 50%;
+    float: right;
+    display: inline-block;
+    margin-left: 2%;
+    margin-right: 7%;
+    background-color: #eae8e7;
+}
+.text {
+    width: 70%;
+    display: inline-block;
+    margin-left: 20%;
+}
+
+.text p {
+    display: inline-bilock;
+}
+
+.text span {
+    font-size: 15px;
+}
+
+.rows {
+    display: block;
+    background-color: #ffffff;
+    margin-top: 5%;
+    padding: 5%;
+}
+
+.work {
+    padding-bottom: 5%;
+    padding-right: 0;
+    padding-top: 5%;
+    border-bottom: solid 1px #999;
+}
+
+.work p {
+    color: blue;
+}
+
+.work h4 {
+    display: inline;
+}
+
+.interest {
+    width: 90%;
+}
+
+.list {
+    display: inline-block;
+    width: 15%;
+    margin-right: 5%;
+}
+
+.list img {
+    width: 70%;
+}
+
+.text a {
+    width: 40%;
+    margin-right: 15%;
+}
