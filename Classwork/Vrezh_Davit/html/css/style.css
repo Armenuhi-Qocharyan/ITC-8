@@ -1,0 +1,19 @@
+.login-form {
+    margin:auto;
+    width: 400px;
+    padding: 10px;
+
+}
+
+.button-one {
+    background:green;
+    width: 100%;
+    height: 30px;
+    
+}
+
+.log-pass {
+    margin: 10px;
+    width: 380px;
+    height: 30px;
+}
