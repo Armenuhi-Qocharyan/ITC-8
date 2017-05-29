@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My first page</title>	
+	<style>
+		body {
+			margin: auto;
+			height: 100%;
+			width: 100%;
+		}
+		#wrapper {
+			height: 100%;
+			width:  50%;
+			margin: auto;
+			padding: 3%;
+			border: solid 4px lightgray;
+		}
+		.inputClass {
+			width: 100%;
+			height: 25px;
+		}
+		#image {
+			width: 60%;
+			height: auto;
+		        padding-left: 20%;	
+		}
+		#login {
+			background-color: #2FFF10;
+			height: 40px;
+		}
+		#login:hover {
+			background-color: #666;
+		}
+		#login:active {
+			background-color: #667;
+		}
+	</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<img src="img/index.jpeg" id="image">
+			<form id="form">
+				<p><b>Username</b></p>
+				<input type="text" placeholder="Enter username" class="inputClass">
+				<p><b>Password</b></p>
+				<input type="password" placeholder="Enter password" class="inputClass">
+				<br>
+				<br>
+				<input type="submit" value="Login" class="inputClass" id="login">
+			</form>
+		</div>
+	</body>
+</html>
