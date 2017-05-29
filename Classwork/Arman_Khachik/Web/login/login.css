@@ -1,0 +1,33 @@
+#forma {
+    border: solid 2px #D3D3D3;
+    margin-left: 500px;
+    margin-right: 500px;
+    height: 100%;
+}
+.text {
+    text-align: left;
+    margin-left: 2.5%;
+}
+.input {
+    width: 95%;
+    height: 40px;
+    font-size: 1em;
+    padding-left: 10px;
+}
+#button {
+    width: 95%;
+    height: 50px;
+    background: #4CAF50;
+    margin-top: 30px;
+}
+#button:hover {
+    width: 95%;
+    height: 55px;
+    background: #32CD32;
+    margin-top: 30px;
+}
+
+#image {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
