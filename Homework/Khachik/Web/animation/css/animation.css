@@ -1,0 +1,88 @@
+/* ../index.html */
+
+#topline {
+    left:450px; 
+    top:150px;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    position: fixed;
+    -webkit-animation-name: firstline; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+    animation-name: firstline;
+    animation-duration: 2s;
+    width:300px;
+}
+
+
+@keyframes firstline{
+    0%   {width: 100px; }
+    100%  {width: 300px; }
+}
+
+#rightline {
+    left:650px; 
+    top:150px;
+    width: 100px;
+    height: 0px;
+    background-color: red;
+    position: fixed;
+    -webkit-animation-name: secondline; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+    animation-name: secondline;
+    animation-duration: 4s;
+    height:300px;*/
+}
+
+@keyframes secondline {
+    0%   {height: 0px; }
+    50%  {height: 0px; }
+    100%  {height: 300px; }
+}
+
+#bottomline {
+    left:650px; 
+    top:350px;
+    width: 0px;
+    height: 100px;
+    background-color: red;
+    position: fixed;
+    -webkit-animation-name: thirdline; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 6s; /* Safari 4.0 - 8.0 */
+    animation-name: thirdline;
+    animation-duration: 6s;
+    width: 300px;
+    left: 450px;
+}
+
+@keyframes thirdline {
+    0%   {width: 0px; left:650px;}
+    33%  {width: 0px; left:650px;}
+    66%  {width: 0px; left:650px;}
+    100%  {width: 300px; left:450px;}
+}
+
+#leftline {
+    left:450px; 
+    top:350px;
+    width: 100px;
+    height: 0px;
+    background-color: red;
+    position: fixed;
+    -webkit-animation-name: fourthline; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 8s; /* Safari 4.0 - 8.0 */
+    animation-name: fourthline;
+    animation-duration: 8s;
+    height: 300px;
+    top: 150px;
+}
+
+@keyframes fourthline {
+    0%   {height: 0px; top: 350px;}
+    25%  {height: 0px; top: 350px;}
+    50%  {height: 0px; top: 350px;}
+    75%  {height: 0px; top: 350px;}
+    100% {height: 300px; top: 150px;}
+}
+
+
