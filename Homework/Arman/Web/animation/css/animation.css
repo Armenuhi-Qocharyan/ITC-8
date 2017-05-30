@@ -1,0 +1,21 @@
+.moveDiv {
+    border-radius: 50px 0px;
+    margin-left:25%;
+    width: 100px;
+    height: 100px;
+    border-style: solid;
+    border-width: 10px;
+    background-color: black;
+    border-color: red;
+    position: relative;
+    animation-name: square;
+    animation-duration: 4s;
+}
+
+@keyframes square {
+    0%   {border-color:red; background-color:green; left:0%; top:0%;}
+    25%  {border-color:yellow; background-color:brown; left:0%; top:75%;}
+    50%  {border-color:blue; background-color:yellow; left:50%; top:75%;}
+    75%  {border-color:green; background-color:pink; left:50%; top:0%;}
+    100% {border-color:red; background-color:gray; left:0%; top:0%;}
+}
