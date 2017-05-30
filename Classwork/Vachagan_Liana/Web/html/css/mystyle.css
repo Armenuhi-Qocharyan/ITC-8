@@ -1,0 +1,36 @@
+.login {
+    margin-left: 35%;
+}
+
+.login > button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 1% 25% ;
+	text-align: center;
+	font-size: 100%;
+	width: 55%;
+	outline: none;
+}
+
+.login > label { 
+	display: block; 
+	font-size: 150%;
+	font-weight: bold;
+	margin-bottom: 0.2%;
+}
+
+.login > input {
+	width: 55%;
+	line-height: 300%;
+	margin-bottom: 1%;
+	font-size: 80%;
+	padding-left: 2%;
+}
+
+.login > img {
+	margin-left: 8%;
+	width: 40%;
+	
+}
+
+
