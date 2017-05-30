@@ -1,0 +1,20 @@
+.animation {
+    background:linear-gradient(red, blue, orange); 
+    width: 700px;
+    height: 500px;
+    animation: smile 5s infinite;
+    animation-direction: alternate;
+    position: relative;
+    animation-iteration-count: 5;
+
+}
+
+
+@keyframes smile {
+    0%   {background: linear-gradient(0deg, red, blue); left: 0px; top: 0px; width: 200px; height: 100px;}
+    25%  {background: linear-gradient(50deg, red, yellow); left: 200px; top: 0px;  width: 400px; height: 200px;}
+    50%  {background: linear-gradient(100deg, green, yellow); left: 200px; top: 200px; width: 600px; height: 400px;}
+    75%  {background:  linear-gradient(10deg, red, blue,orange);left: 0px; top: 200px; width: 650px; height: 450px;}
+    100% {background: url(../container/smiley1.png); left: 0px; top: 0px; width: 700px; height: 500px;}
+
+}
