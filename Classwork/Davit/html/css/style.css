@@ -1,0 +1,28 @@
+.login-form {
+    outline: 2px solid #eae8e7; 
+    margin: auto;
+    width: 385px;
+    padding: 10px;
+
+}
+
+.button-one {
+    margin: 10px 0px 10px 0px; 
+    outline: rgb(255,255,255);   
+    background: rgb(0,170,50);
+    color: rgb(255,255,255);
+    width: 100%;
+    height: 30px;    
+}
+
+.log-pass {
+    outline: none; 
+    margin: 10px 0px 10px 0px;
+    width: 380px;
+    height: 30px;
+}
+.img-form {
+    margin: 10% 20% 0% 20%;
+    width: 60%;
+    height: 70%;
+}
