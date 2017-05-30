@@ -7,10 +7,10 @@
 }
 
 @keyframes drawSquare {
-    0% {left: 0px; top: 0px;}
-    25% {left: 300px; top: 0px;}
-    50% {left:300px; top: 300px;}
-    75% {left: 0px; top: 300px;}
-    100% {left: 0px; top: 0px;}
+    0% {background: red; left: 0px; top: 0px;}
+    25% {background: green; left: 300px; top: 0px;}
+    50% {background: blue; left:300px; top: 300px;}
+    75% {background: yellow; left: 0px; top: 300px;}
+    100% {background: red; left: 0px; top: 0px;}
 }
 
