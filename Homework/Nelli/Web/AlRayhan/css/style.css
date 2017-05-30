@@ -4,8 +4,10 @@ body {
 }
 
 .wrapper {
-    width: 85%;
+    width: 60%;
     padding-top: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .left {
@@ -13,7 +15,6 @@ body {
     float: left;
     display: inline-block;
     margin-left: 8%;
-    margin-top: 3%;
     background-color: #5da4d9;
 }
 
@@ -25,12 +26,17 @@ body {
 
 .conText {
     text-align: center;
-    margin-top: -25%;
+    margin-top: -40%;
     color: #ffffff;
 }
 .Info {
     margin-top: 15%;
     display: block;
+}
+
+.Info .text {
+    border-bottom: solid 1px #fff;
+    padding-bottom: 5%;
 }
 
 .white {
@@ -46,6 +52,11 @@ body {
 
 .icon img {
     width: 50%;
+}
+
+.left .icon {
+    width: 3%;
+    margin-left: 2%;
 }
 
 .infoText {
@@ -70,6 +81,9 @@ body {
 .text p {
     display: inline-bilock;
 }
+.text input {
+    width: 60%;
+}
 
 .text span {
     font-size: 15px;
@@ -78,8 +92,9 @@ body {
 .rows {
     display: block;
     background-color: #ffffff;
-    margin-top: 5%;
+    margin-bottom: 5%;
     padding: 5%;
+    padding-right: 0%;
 }
 
 .work {
