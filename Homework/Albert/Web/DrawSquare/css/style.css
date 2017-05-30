@@ -1,0 +1,16 @@
+.square {
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: relative;
+    animation: drawSquare 5s infinite;
+}
+
+@keyframes drawSquare {
+    0% {left: 0px; top: 0px;}
+    25% {left: 300px; top: 0px;}
+    50% {left:300px; top: 300px;}
+    75% {left: 0px; top: 300px;}
+    100% {left: 0px; top: 0px;}
+}
+
