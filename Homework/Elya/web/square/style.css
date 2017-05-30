@@ -1,0 +1,27 @@
+.square {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    position: relative;
+    -webkit-animation-name: drowSquare 4s infinite;
+    -webkit-animation-direction: alternate;
+    animation: drawSquare 4s infinite;
+    animation-direction: alternate;
+}
+
+@-webkit-keyframes drawSquare {
+    0%   {background-color: green; left: 0px top: 0px;}
+    25%  {background-color: yellow; left: 200px; top: 0px;}
+    50%  {background-color: blue; left:200px; top: 200px;}
+    75%  {background-color: red; left: 0px; top: 200px;}
+    100% {background-color: black; left: 0px; top: 0px;}
+}
+
+
+@keyframes drawSquare {
+    0%   {background-color: green; left: 0px top: 0px;}
+    25%  {background-color: yellow; left: 200px; top: 0px;}
+    50%  {background-color: blue; left:200px; top: 200px;}
+    75%  {background-color: red; left: 0px; top: 200px;}
+    100% {background-color: black; left: 0px; top: 0px;}
+}
