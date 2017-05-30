@@ -1,0 +1,28 @@
+.square {
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: relative;
+    -webkit-animation: drawSquare 5s infinite;
+    -webkit-animation-direction: alternate;
+    animation: drawSquare 5s infinite;
+    animation-direction: alternate;
+}
+
+@-webkit-keyframes drawSquare {
+    0% {left: 0px top: 0px;}
+    25% {left: 200px; top: 0px;}
+    50% {left:200px; top: 200px;}
+    75% {left: 0px; top: 200px;}
+    100% {left: 0px; top: 0px;}
+}
+
+
+@keyframes drawSquare {
+    0% {left: 0px; top: 0px;}
+    25% {left: 200px; top: 0px;}
+    50% {left:200px; top: 200px;}
+    75% {left: 0px; top: 200px;}
+    100% {left: 0px; top: 0px;}
+}
+
