@@ -12,7 +12,7 @@
     background-color: #5da4d9;
     float: left;
     margin-left: 15%;
-    margin-top: 1.5%;
+    margin-top: 1%;
     margin-bottom: 1.5%;
     width: 23%; 
     color: white;
@@ -25,8 +25,8 @@
     float: right;
     margin-right: 15%;
     width: 45%;
-    margin-top: 1.5%;
-    margin-bottom: 1.5%;
+    margin-top: 1%;
+    margin-bottom: 0.5%;
     padding-top: 3%;
     padding-bottom: 3%;
     font-family: arial;
@@ -157,6 +157,15 @@
     margin-bottom: 1%;
     margin-left: -3%;
     padding-bottom: 0%;
+}
+
+.text_url {
+    color: #73b0de;
+    display: inline;
+    position: relative;
+    font-size: 16px;
+    margin-left: 17%;
+    cursor: pointer;
 }
 
 .icon_info {
