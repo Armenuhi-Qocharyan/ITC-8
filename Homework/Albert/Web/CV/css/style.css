@@ -1,0 +1,60 @@
+body {
+	background-color: #eae8e7;
+	color: #767270;
+}
+
+.basic {
+    width: 78%;
+    padding-top: 1%;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+.menu-img {
+    padding-left: 1%;
+    padding-top: 1%;
+    position: absolute;
+}
+.left {
+    float: left;
+	width: 29%; 
+	margin-left: 6%;
+	background-color: #5da4d9;
+}
+
+.imageMan {
+	width:100%;
+    margin:auto;
+}
+
+.imgText {
+   	text-align: center;
+    margin-top: -45%;
+	color: white;
+}
+
+.InfoIcon {
+	margin-top: 15%;
+	display: block;
+}
+
+.colorWhite {
+    color: white;
+}
+
+.info {
+    padding-left: 22%;
+    padding-top: 0%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.icon {
+	display: inline-block;
+    vertical-align: top;
+    width: 7%;
+    padding-top: 0.5%;
+    margin-left: 2%;
+    position: absolute;
+}
+
+
