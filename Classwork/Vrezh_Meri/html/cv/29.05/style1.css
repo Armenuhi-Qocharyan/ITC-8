@@ -69,14 +69,14 @@ h2 {
 .blue {
     border-top: 1px solid #4683c2;
     display: block;
-    margin: 25px 0 20px 0;
+    margin: 10% 0 10% 0;
 }
 .about-text {
     float: left;
     border-width: 2px;
-    width: 80%;
+    width: 70%;
     color: white;
-    margin: 0px 0 10px 0;
+    margin: 0px 10% 10px 0;
 }
 
 .slider {
