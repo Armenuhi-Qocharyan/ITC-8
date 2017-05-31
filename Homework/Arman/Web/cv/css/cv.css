@@ -1,0 +1,87 @@
+/*cv.html*/
+
+
+html > body {
+    background: #EAE8E7;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.left-column {
+    margin-top: 0.5%;
+    margin-left: 11%;
+    background: #5DA4D9;
+    margin-right: 0%;
+    display: inline-block;
+    float: left;
+    width: 25%;
+}
+
+.imgText {
+    color: white;
+    margin-top: -40%;
+    margin-bottom: 15%;
+    margin-left: 28%;
+}
+
+#img {
+    display: block;
+    width: 100%; 
+}
+
+.image {
+    width: 40%;
+}
+
+
+.iconDiv {
+    margin-left: 9%;
+    margin-top: 7%;
+    
+}
+
+.smallText {
+    
+    padding-left: 0px !important;
+    margin-top:5%;
+    line-height: 1.6;
+    font-family: Verdana;
+    color: white;
+    font-weight: lighter;
+}
+
+.hr {
+    background-color: #4785C3;
+    height: 1px;
+    border: none;
+}
+
+.normalText {
+    line-height: 0.1;
+    font-family: Verdana;
+    color: white;
+    font-weight: lighter;
+}
+
+.right-column {
+    background: white;
+    display:inline-block;
+
+}
+
+.right-icon {
+    margin-top: 3%;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+ul {
+    list-style-type:none;
+    padding: 0 !important;
+}
+
+html, h5 {
+    color: #DBEBF6;
+}

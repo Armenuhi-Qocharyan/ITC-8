@@ -1,0 +1,89 @@
+.row {
+	display: inline-block;
+}
+
+.template {
+	margin-right: 20px;
+}
+.btn {
+	float: right;
+    background-color: rgb(129,125,169);
+	color: white;
+	border: none;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width: 120px;
+	height: 40px;
+	border-radius: 35%;
+}
+
+.navbar-costum {
+	background-color: inherit;
+	border-bottom: #1cfffa;
+}
+
+.navbar-nav > li {
+	font-family: sans-serif;
+	font-size: 16px;
+	margin-top: 10px;
+}
+
+.navbar-nav > li a {
+	color: black;
+}
+
+.navbar-nav > li a:hover {
+	background-color: rgb(129,125,169);
+	color: white;
+
+}
+
+.glyphicon-heart, .glyphicon-comment {
+	font-size: 18px;
+}
+
+.badge {
+	border: none;
+	background-color: white;
+	color: black;
+}
+
+.earned {
+	font-weight: 600;
+	float: right;
+	font-size: 16px;
+}
+
+.earned > span {
+	color: rgb(129,125,169);
+	font-size: 15px;
+}
+
+.text > h4 {
+	font-weight: 600;
+}
+
+.text {
+	margin-bottom: 30px;
+
+	font-family: sans-serif;
+	font-size: 16px;
+}
+
+#id1 {
+	border-right: groove;
+}
+
+#id3 {
+	border-top: groove;
+	border-right: groove;
+}
+
+#id4 {
+	border-top: groove;
+}
+
+.media {
+	margin-bottom: 40px;
+}

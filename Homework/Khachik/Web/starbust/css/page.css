@@ -1,0 +1,155 @@
+/*index.html*/
+
+.container {
+    margin-top: 10%;
+}
+
+.left-column {
+    min-height:100%;
+    background-color: #DFE3EE;
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.left-data {
+    margin-top: 5%;
+    font-size: 1.2em;
+}
+
+.left-navbar {
+    background-color: #DFE3EE;
+    border: none;
+    margin-bottom: 0%;
+}
+
+a {
+    padding-left: 0%;
+    padding-right: 0%;
+    color: #515152;
+    
+}
+
+.left-navbar > ul > li > a:hover {
+    background-color:#837CA9;
+    color: white;
+}
+
+.left-navbar > ul > li > a:focus {
+    background-color:#837CA9;
+    color: white;
+}
+
+.hr {
+    margin-left:5%;
+    margin-right:5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    background-color:#C7CCD9;
+    height: 1px;
+    border: none;
+}
+
+.right-column {
+    background-color: white;
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+
+.topRow {
+    box-shadow: 1px 1px 5px #888888;
+}
+.row {
+
+    margin: 0%;
+}
+
+
+
+@media screen and (max-width: 1301px) {
+    .topmenu {
+        padding: 0%;
+        font-size: 8pt;
+    }
+}
+
+
+@media screen and (min-width: 1300px) {
+    .topmenu {
+        padding: 0%;
+        font-size: 10pt;
+    }
+}
+
+.right-navbar {
+    background-color: white; 
+    border-color: white;
+    margin-bottom: 0%;
+}
+
+.right-navbar>ul>li {
+    margin-top: 0%;
+}
+
+.right-navbar>ul>li:hover {
+    background-color:#837CA9;
+}
+
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: white;
+}
+
+.button {
+    margin-top: 5%;
+    border-radius: 30px;
+    border: none;
+    width: 90%;
+    height: 6%;
+    background-color: #837CA9;
+    color:white;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #6d659a;
+}
+.buttonadd {
+    padding-right: 0;
+}
+
+.img {
+    width: 4%;
+    cursor: pointer;
+}
+
+.price {
+    float: right;
+    margin-right: 5%;
+}
+
+.color {
+    color: #837CA9;
+}
+
+.imgtext {
+    display: inline-block;
+    float:left;
+    margin-left: 1%;
+    margin-top: 2%;
+}
+
+#col1 {
+    padding:0;
+    padding-bottom: 3%;
+    border-right: 1px solid #CBCFDC;
+}
+
+#col4 {
+    border-left: 1px solid #CBCFDC;
+}
+
+#rowBottom {
+    margin-left: 2%;
+    border-top: 1px solid #CBCFDC;
+}

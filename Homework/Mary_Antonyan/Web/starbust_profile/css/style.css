@@ -1,0 +1,166 @@
+#ink {
+    width: 100%;
+    margin-right: -20%;
+}
+
+#logo {
+    margin-left: -40%;
+    letter-spacing: 2px;    
+}
+
+#starbust_menu {
+    background-color: white;
+    border: none;
+    color: #000;
+    font-size: 12px;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#pipe { 
+    color: #000;
+    font-size: 12px;
+    margin-top: 4%;
+}
+
+#starbust_search {
+    background-color: white;
+    border: none;
+    color: #000;
+    margin-top: 12%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#icon {
+    display: inline;
+    border-radius: 50%;
+    width: 20px;
+    float: left;
+    margin-top: -5%;
+    margin-bottom: 10%;
+    margin-left: 50%;
+    margin-right: 50%;
+    filter: none;
+}
+
+#back {
+    background-image: url(resource/wallpaper.jpg);
+    filter: blur(5px);
+}
+
+#profile {
+    display: inline;
+    border-radius: 50%;
+    width: 70px;
+    float: left;
+    padding-top: 10%;
+    padding-bottom: 5%;
+    filter: none;
+}
+
+#user {
+    padding-top: -5%;
+    color: purple;
+    filter: none;
+}
+
+#follow {
+    color: black; /*white;*/
+    padding-bottom: 10%;
+    filter: none;
+}
+
+#vertical_menu_bar {
+    background-color: #ddd;
+    padding-bottom: 150%;
+}
+
+#horizontal_menu_bar {
+    background-color: #eee;
+    border-radius: 0%;
+    border-width: none;
+    box-shadow: 2px 2px 5px #aaa;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#visual_art {
+    background-color: purple;
+    color: white;
+}
+
+#button {
+    background-color: purple;
+    border: none;
+    outline: none;
+    border-radius: 20px; 
+    margin-top: 10%;
+    margin-left: 400%;
+    margin-right: 10%;
+}
+
+#content_top {
+    padding-top: 10%;
+}
+
+#content_bottom {
+    border-top: 1px solid #ccc;
+}
+
+#h5_bold {
+    font-weight: bold;
+}
+
+#cell {
+    padding: 10px;
+}
+
+#count {
+    padding-right: 10px;
+    font-family: arial;
+}
+
+#earned {
+    float: right;
+    font-weight: bold;
+}
+
+#money {
+    float: right;
+    padding-left: 10px;
+    font-family: arial;
+    color: purple;
+}
+
+#image {
+    width: 200%;
+    border-radius: 50%;
+    padding-top: 20%;
+}
+
+#left_part {
+    padding: 2%;
+    border-right: 1px solid #ccc;
+    float: left;
+    box-sizing: border-box;
+}
+
+#right_part {
+    padding: 2%;
+    float: left;
+    box-sizing: border-box;
+}
+
+#side {
+    padding-top: 10%;
+    color: #222;
+}
+
+#side_break {
+    border-top-color: #aaa;
+    border-bottom: none;
+}

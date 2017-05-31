@@ -2,9 +2,7 @@ body {
 	background-color: #eae8e7;
 	color: #767270;
 }
-* { 
-    font-family: 'Roboto', sans-serif;
-}
+
 .basic {
     width: 82%;
     padding-top: 1%;
@@ -19,9 +17,8 @@ body {
 .left {
     display: inline-block;
     float: left;
-	width: 28%; 
-	margin-left: 6%;
-    margin-bottom: 10%;
+	width: 30%; 
+	margin-left: 7%;
 	background-color: #5da4d9;
 }
 
@@ -42,12 +39,12 @@ body {
 }
 
 .colorText {
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 10pt;
     line-height: 19pt;
     margin-top: 0%;
     color: white;
-    opacity:0.8;
 }
 
 .info {   
@@ -58,8 +55,6 @@ body {
     float: left;
     width: 75%;
     padding-left: 2%;
-    font-color:#808080;
-
     
 }
 
@@ -83,12 +78,12 @@ body {
 .bold {
     font-size: 12pt;
 }
-
 input[type=range] {
     -webkit-appearance: none;
     border: 1px solid white;
     width: 80%;
 }
+
 
 input[type=range]::-webkit-slider-runnable-track {
     width: 80%;
@@ -97,6 +92,7 @@ input[type=range]::-webkit-slider-runnable-track {
     border: none;
     border-radius: 1px;
 }
+
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -109,78 +105,44 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .right {
-    box-shadow: 2px 2px 2px 2px  #cec8c8;
-    width: 56%;
+    width: 53%;
     float: right;
     display: inline-block;
+    background-color: #eae8e7;
     background-color: white;
-    margin-bottom: 2%;
+    margin-left: 0%;
     margin-right: 8%;
 }
 
-.work { 
+.work {
+    display: block;
     padding: 5%;
     padding-right: 0%;
-    margin-bottom: 5%;
-}
-
-.infoR {
-    font-size: 12px;
-    display:inline-block;
-    vertical-align: top;
-    padding-bottom: 8%;
-    float: left;
-    width: 84%;
-    padding-left: 2%;
-    background-color: white;
-}
-.infoR h1 {
-    font-size: 28px;
-}
-.iconR {
-    display: inline-block;
-    float: left;
-    padding-top: 2%;
-    margin-left: 0%;
-    width: 12%;
 }
 
 .smallWork {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-bottom: solid 1px #999;
+}
+
+.iconR {
+    display: inline-block;
+    float: left;
+    
     padding-top: 3%;
-    padding-bottom: 2%;
-}
-.smallWork p {
-    color: #5DA4D9;
-    opacity:0.8;
-}
-.smallWork h4 {
-    font-size: 15px;
-    display: inline;
+    margin-left: 1%;
+    width: 12%;
 }
 
 .listIcon {
     display: inline-block;
-    width: 13%;
-    margin-right: 4%;
+    width: 15%;
+    margin-right: 5%;
 }
 .listIcon img {
     width: 60%;
 }
 .classInterestes {
     width: 100%;
-    padding-top: 2%;
-}
-
-.infoR a {
-    margin-top: 15%;
-    width: 70%;
-    margin-right: 0%;
-    margin-left: 10%;
-    padding-left: 6%;
-    color: #5DA4D9;
-    font-size: 16px;
-}
-.line {
-    margin: 3% 0 3% 0%;
-    border-top: 1px solid #999;
 }
