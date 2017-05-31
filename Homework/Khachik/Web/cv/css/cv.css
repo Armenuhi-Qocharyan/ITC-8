@@ -189,3 +189,14 @@ footer {
     padding-top: 4%;
     padding-bottom: 4%;
 }
+
+.inImage {
+    margin-left: 4%;
+    margin-top: -10%;
+    position: absolute;
+    color: white;
+}
+
+#name {
+    margin-bottom: 0%;
+}
