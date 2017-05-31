@@ -2,6 +2,21 @@ body {
     background-color: rgb(234,232,231);
 }
 
+* {
+        
+    font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+    color: #767270;
+    font-size: 22pt;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    margin: 0px;     
+    display: block;
+}
+
+
 .global-content {
     margin: 25px 15% 0 15%;
     padding: 0 0 0px 0;
@@ -9,7 +24,7 @@ body {
 }
 
 .left-div {
-    box-shadow: 5px 4px 5px #cec8c8;
+    box-shadow: 5px 5px 5px 5px #cec8c8;
     background-color: rgb(93,164,217);
     float: left;
     width: 32%;
@@ -35,8 +50,8 @@ body {
 
 .about-icon {
     float: left; 
-    margin: 0px 10px 0 0;
-    width: 8%;
+    margin: 0px 35px 0 15px;
+    width: 5%;
 }
 .bold-text-contact {
     margin: 0 0 0 0; 
@@ -47,6 +62,7 @@ body {
 .text-contact {
     opacity: 0.7;
     font-size: 12px;
+    line-height: 17pt;
     margin: 0 0 0 0 ;
 }
 
@@ -58,7 +74,7 @@ body {
 .about-text {
     float: left;
     border-width: 2px;
-    width: 85%;
+    width: 80%;
     color: white;
     margin: 0px 0 10px 0;
 }
@@ -68,7 +84,7 @@ body {
 }
 
 .right-div {
-    box-shadow: 5px 4px 5px #cec8c8;
+    box-shadow: 5px 5px 5px 5px  #cec8c8;
     background-color: white;
     float: right; 
     width: 66%;
@@ -81,8 +97,8 @@ body {
 
 .about-image {
     float: left;
-    width: 6%;
-    margin: 0 3% 0 3%;
+    width: 5%;
+    margin: 0 7% 0 3%;
 }
 
 .about-item {
@@ -112,6 +128,5 @@ body {
 
 .grey {
     margin: 0 0 0 15%;
-    display: block;
     border-top: 1px solid #808080;
 }
