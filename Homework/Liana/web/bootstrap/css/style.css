@@ -1,0 +1,138 @@
+.btn {
+    float: right;
+    background-color: rgb(129,125,169);
+    color: white;
+    border-radius: 200px;
+    font-size: 16px;
+    outline-color: white;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #807FA8; 
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    color: white;
+}
+
+.btn:after{
+    background-color: #817DB9; 
+    color: white;
+}
+.navbar-costum {
+    background-color: white;
+    box-shadow: 0px 1px 5px 0 #F0F0F0;
+
+}
+
+.navbar-nav > li{
+    font-family: sans-serif;
+    font-size: 16px;
+
+}
+.navbar-nav > li a {
+    color: black;
+
+}
+.navbar-nav > li a:hover {
+    background-color: rgb(129,125,169);
+    color: white;
+
+}
+
+.glyphicon-heart, .glyphicon-comment {
+    font-size: 18px;
+}
+
+.badge {
+    border: none;
+    background-color: white;
+    color: black;
+}
+
+.earned {
+    font-weight: 600;
+    float: right;
+    font-size: 16px;
+}
+
+.earned > span {
+    color: rgb(129,125,169);
+    font-size: 15px;
+}
+
+.text > h4 {
+    font-weight: 600;
+}
+
+.text {
+    margin-bottom: 30px;
+}
+
+.supporter {
+    margin-top: 30px;
+    color: #424242;
+}
+
+.col-sm-6 {
+    padding-bottom: 20px;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+
+.row-bordered:after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid #ccc;
+    margin: 0 15px;
+}
+@media (min-width: 768px) {
+
+    .row-relative {
+        position: relative;
+    }
+
+    .col-border-padding {
+        padding-left: 15px;
+    } 
+    .col-border:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        border-left: 1px solid #C2C9D6;
+    }
+    .col-border {
+
+        padding-left: 0;
+        position: static; 
+    }
+}
+
+.nav-list {
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: #DEE4EE;
+}
+
+.nav-list > li a {
+    padding: 20px;
+    color: #424242;
+
+}
+
+
+.nav-list > li a:hover {
+    background-color: #807FA8;
+    color: white;
+}
+
+.nav-list > li.nav-divider {
+    margin: 20px;
+    border-bottom: 0.2px solid #C2C9D6;
+
+}   
+
+
