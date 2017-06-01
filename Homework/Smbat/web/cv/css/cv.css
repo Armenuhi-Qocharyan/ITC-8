@@ -1,0 +1,22 @@
+body {
+    background-color: #eae8e7;
+}
+.prof_img {
+    background-image: url(../container/man.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.prof_img p, .prof_img h1 {
+    color: white;
+    padding-left: 10%;
+}
+
+.prof_img h1 {
+    padding-top: 60%;
+}
+
+.menu {
+    padding-left:100px
+}
+
