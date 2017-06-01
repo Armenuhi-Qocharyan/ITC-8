@@ -1,0 +1,36 @@
+/*cv1.html*/
+
+html > body {
+    background: #EAE8E7;
+}
+
+.row {
+
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.left-column {
+    margin: 0% !important;
+}
+
+.imgText {
+    color: white;
+    margin-top: -40%;
+    margin-bottom: 15%;
+    margin-left: 28%;
+}
+
+#img {
+    width: 100%; 
+}
+
+.iconDiv {
+    margin:  7$ 0 0 7%;    
+}
+
+.right-column {
+    margin: 0 !imortant;
+}

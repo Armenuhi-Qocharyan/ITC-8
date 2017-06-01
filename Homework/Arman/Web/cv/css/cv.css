@@ -1,87 +1,117 @@
 /*cv.html*/
 
-
 html > body {
     background: #EAE8E7;
 }
 
 .container {
-    margin-top: 20px;
+    margin-top: 2%;
 }
 
 .left-column {
-    margin-top: 0.5%;
-    margin-left: 11%;
+    margin-right: 0;
     background: #5DA4D9;
-    margin-right: 0%;
-    display: inline-block;
-    float: left;
-    width: 25%;
+    width: 27%;
 }
 
 .imgText {
     color: white;
-    margin-top: -40%;
-    margin-bottom: 15%;
-    margin-left: 28%;
+    margin: -45% 0 15% 25%;
+}
+
+.imgDiv {
+    margin-bottom: 16%;
+    width: 100%;
 }
 
 #img {
-    display: block;
     width: 100%; 
 }
 
 .image {
-    width: 40%;
+    width: 50%;
 }
 
 
+.leftRows {
+    margin-top: 5%;
+}
+
 .iconDiv {
-    margin-left: 9%;
-    margin-top: 7%;
-    
+    margin: 0% 3% 0 8%;
+    padding-right: 0;
 }
 
 .smallText {
-    
-    padding-left: 0px !important;
-    margin-top:5%;
-    line-height: 1.6;
-    font-family: Verdana;
+    margin: -2% 0 5% 0;
     color: white;
-    font-weight: lighter;
+    padding: 0; 
+    font-size: 13px;
+    line-height: 2;
+}
+
+.text {
+    font-size: 17px;
+    color: white;
+    padding: 0;
 }
 
 .hr {
+    margin-bottom: 0;
     background-color: #4785C3;
     height: 1px;
     border: none;
 }
 
-.normalText {
-    line-height: 0.1;
-    font-family: Verdana;
-    color: white;
-    font-weight: lighter;
-}
-
 .right-column {
-    background: white;
-    display:inline-block;
-
+    padding-right: 0;
+    background-color: white;
+    margin-left: 1.5%;
 }
 
-.right-icon {
+.rightRows {
     margin-top: 3%;
-    margin-left: 0 !important;
-    padding-left: 0 !important;
 }
 
-ul {
-    list-style-type:none;
-    padding: 0 !important;
+.rImages {
+    margin: 40% 0 0 50%;
+    width: 100%;
 }
 
-html, h5 {
-    color: #DBEBF6;
+.rtext {
+    padding-right: 0;
+    margin-left: 8%;
+    color: #767270;
+    width: 81.5%;
+}
+
+.rIconDiv {
+    padding: 0;
+    width: 8%
+}
+
+.big {
+    color: #767270;
+    font-size: 15px;
+}
+
+.middle {
+    color: #78B4DF;
+    font-size: 80%;
+}
+
+.small {
+    color: #767270;
+    font-size:12px;
+}
+
+.rHr {
+    background-color: #CDCDCD;
+    border: none;
+    height: 1px;
+}
+
+.logo { 
+    margin-left: 8%;
+    width: 9%;
 }
