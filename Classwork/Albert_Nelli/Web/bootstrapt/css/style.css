@@ -42,7 +42,8 @@
 }
 
 .right {
-
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .btn {
@@ -72,12 +73,59 @@
     background-color:#807CC6; 
     color: #ffffff; 
 }
-.wish {
-    border-right:solid 2px black; 
-    border-bottom:solid 2px black; 
-    padding:50px;
-    background-color:red;
+
+.topMenu {
+    box-shadow: 1px 1px 5px #888888;
+    padding-bottom: 70px;
 }
 
-.row {
+.img {
+    width: 4%;
+}
+
+.price {
+    float: right;
+    margin-right: 5%;
+}
+
+.color {
+    color: #837CA9;
+}
+
+.imgtext {
+    display: inline-block;
+    float:left;
+    margin-left: 1%;
+    margin-top: 2%;
+}
+
+.imgtext>p {
+    padding:0;
+
+    margin: 0;
+}
+#col1 {
+    padding:0;
+    padding-bottom: 3%;
+    border-right: 1px solid #CBCFDC;
+}
+
+#col4 {
+    border-left: 1px solid #CBCFDC;
+}
+
+#rowBottom {
+    margin-left: 2%;
+    border-top: 1px solid #CBCFDC;
+}
+
+.profile-photo {
+    background-image: url("../images/face.jpg");
+    border-radius: 50%;
+    background-size:cover;
+    width: 10%;
+    margin-right:5%;
+    margin-left:5%;
+    float:left;
+    padding-bottom: 10%;
 }
