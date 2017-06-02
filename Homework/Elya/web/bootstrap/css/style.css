@@ -1,0 +1,53 @@
+.container {
+    margin-top: 1%;
+}
+
+.left-div {
+    height: 100%;
+    background-color:#DFE3EE;
+}
+
+.navbar-nav>li{
+    border-right: 1px soldier #000;
+}
+
+.line {
+    margin: 10%;
+    border-color: #d6d6d6;
+}
+
+.menu-list>ul>li>a:hover {
+    color:white;
+    background-color: #807AA6;
+}
+
+.menu-list>ul>li>a:focus {
+    color:white;
+    background-color: #807AA6;
+}
+
+.btn {
+    background-color: #807AA6;
+    color: white;
+    float: right;
+    border-radius: 30px;
+    margin-top: 1%;
+}
+/*stver*/
+.top-navbar {
+    box-shadow: 2px 2px 1px #888888;
+}
+/*drow line*/
+#column1 {
+    border-right: 1px solid #CBCFDC;
+    border-bottom: 1px solid #CBCFDC;
+}
+
+.earned-txt {
+    float: right;
+}
+
+.name-text {
+    display: inline-block;
+    margin-left: 2%;
+}
