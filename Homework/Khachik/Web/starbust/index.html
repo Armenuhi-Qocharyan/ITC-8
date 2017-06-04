@@ -4,6 +4,8 @@
     <head>
         <title> Starbust </title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/page.css" type="text/css">
     </head>
         
@@ -12,7 +14,7 @@
             <div class="col-sm-8 col-sm-offset-2 container">
                 
                 <div class="row">
-                    <div class="col-sm-2 left-column">
+                    <div class="col-sm-3 hidden-xs left-column">
                         <nav class="left-navbar navbar navbar-default">
 
                             <ul class="nav sidebar-nav">
@@ -37,10 +39,9 @@
                             </ul>
                         </nav>
                     </div>
-                    
-                    <div class="col-sm-10 right-column">
+                    <div class="col-sm-9 right-column">
                         <div class="row topRow"> 
-                            <div class="col-sm-4 topmenu">
+                            <div class="col-sm-6  hidden-xs topmenu">
                                 <nav class="navbar navbar-default right-navbar">
                                     <ul class="nav navbar-nav">
                                         <li class="left-data"><a href="#">All</a></li>
@@ -50,13 +51,28 @@
                                 </nav>
                                     
                             </div>
-                            <div class="col-sm-2 col-sm-offset-6 buttonadd">
+                            <div class="col-sm-2  hidden-xs col-sm-offset-4 buttonadd">
                                 <button class="button"><b> Add Wish</b> </button> 
                             </div>
                         </div>
+	                    <div class="col-xs-12 hidden-sm hidden-lg hidden-md" style="padding: 0%;">
+    	                	<div class="btn-group btn-group-primaryc new-dropdown">
+								  <button class="btn btn-primary big-bot" type="button">Visual Art</button>
+								  <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle small-bot" type="button"><span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu">
+									  <li><a href="#">All</a></li>
+									  <li><a href="#">Visual Art</a></li>
+									  <li><a href="#">Music</a></li>
+								  </ul>
+							 </div>
+                             <div class="col-xs-12 hidden-md hidden-lg hidden-sm buttonadd"  style="margin-bottom: 30px;">
+                                <button class="button"><b> Add Wish</b> </button> 
+                             </div>
+        	            </div>
                         
                         <div class="row" style="margin-top: 5%; margin-left: 2%" >
-                            <div class="col-sm-6 " id="col1">
+                            <div class="col-sm-6 col-xs-12 " id="col1">
                                 <h5><b>"Life on Display illustration"</b></h5>
                                 <p style="margin-right: 11%; margin-bottom: 5%">Consectetuer adipiscing elit, 
                                 sed diam nonummy nibh 
@@ -71,8 +87,10 @@
                                 <div class="imgtext">Tomas Raylie<br>
                                     ($72,58)</div>
                             </div>
-
-                            <div class="col-sm-6">
+                            <div class="col-xs-12 hidden-lg hidden-sm hidden-md">
+                            	<hr class="line">
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
                                 <h5><b>"Life on Display illustration"</b></h5>
                                 <p style="margin-right: 5%; margin-bottom: 5%">Consectetuer adipiscing elit, 
                                 sed diam nonummy nibh 
@@ -92,9 +110,11 @@
  
                             </div>
                         </div>
-
+                            <div class="col-xs-12 hidden-lg hidden-sm hidden-md">
+                            	<hr class="line">
+                            </div>
                         <div class="row" id="rowBottom" >
-                            <div class="col-sm-6 ">
+                            <div class="col-sm-6 col-xs-12">
                                 <h5><b>"Life on Display illustration"</b></h5>
                                 <p style="margin-right: 5%; margin-bottom: 5%">Consectetuer adipiscing elit, 
                                 sed diam nonummy nibh 
@@ -110,8 +130,10 @@
                                     ($72,58)</div>
 
                             </div>
-
-                            <div class="col-sm-6" id="col4">
+                            <div class="col-xs-12 hidden-lg hidden-sm hidden-md">
+                            	<hr class="line">
+                            </div>
+                            <div class="col-sm-6 col-xs-12" id="col4">
                                 <h5><b>"Life on Display illustration"</b></h5>
                                 <p style="margin-right: 5%; margin-bottom: 5%">Consectetuer adipiscing elit, 
                                 sed diam nonummy nibh 
@@ -129,6 +151,15 @@
                                 <img src="images/face.png" style="width: 10%;margin-top:2%;float:left; margin-left: 6%;"> 
                                 <div class="imgtext">Tomas Raylie<br>
                                     ($72,58)</div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-lg hidden-md">
+                            	<button class="pageing"><b>1</b> </button> 
+                            	<button class="pageing"><b>2</b> </button> 
+                            	<button class="pageing"><b>3</b> </button> 
+                            	<button class="pageing"><b>4</b> </button> 
+                            	<button class="pageing"><b>5</b> </button>
+                            	....
+                            	<button class="pageing"><b>12</b> </button>  
                             </div>
                         </div>
                     </div>
