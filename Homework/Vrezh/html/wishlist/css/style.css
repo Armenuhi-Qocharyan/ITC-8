@@ -28,20 +28,31 @@ body {
     vertical-align: middle;
 }
 
+.menu-button {
+    display: inline; 
+    background-color: rgb(130, 122, 170)!important;
+}
+
+.nav-header {
+    float:left;
+    width:70%;
+    background-color: rgb(130, 122, 170)!important;
+}
+
 hr {
     margin: 6%; 
     height: 1px;
     background-color: rgb(130, 122, 170);
 }
 
-button {
+.btn {
+    display: inline;
     height: 70% !important;
     margin-top: 1%;
     background-color: rgb(130, 122, 170);
     border-radius: 50px !important;    
     color: white;
     outline-style: none !important;
-    
 }
 
 a {
