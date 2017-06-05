@@ -2,8 +2,12 @@
     margin-top: 1%;
 
 }
+.row {
+    margin: 0;
+    padding:0;
+}
 .left {
-    height: 300%;
+    padding-bottom: 50%;
     padding-top: 1%;
     background-color:#DFE3EE;
     padding-left: 0px;
@@ -25,10 +29,6 @@
     color:white;
     background-color: #807AA6;
 }
-.list>ul {
-    width: 100%;
-    padding: 0;
-}
 
 .list>ul>li {
     padding: 5px;
@@ -45,15 +45,15 @@
     padding-right: 0;
     padding-left: 0;
 }
-
+.right .topMenu {
+    padding-right:10px;
+}
 .btn {
-    width: 15%;
     color: #fff;   
     background-color: #807AA6;
     border-radius: 30px;
     float: right;
     margin-top: 2%;
-    margin-right: 5%;
 }
 .btn:hover {
     background-color:#807CC6;
@@ -74,9 +74,10 @@
     color: #ffffff; 
 }
 
+
 .topMenu {
+    margin:0;
     box-shadow: 1px 1px 5px #888888;
-    padding-bottom: 70px;
 }
 
 .img {
