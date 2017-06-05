@@ -14,16 +14,17 @@
 
 <body>
 <div class="container">
-    <div class="row"> 
-        <div class=col-sm-3>
+    <div class="row my-row"> 
+        <div class="col-sm-3 column-sm3">
             <nav class="navbar navbar-costum">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="glyphicon glyphicon-align-justify"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav nav-list">
+                <div class="collapse navbar-collapse navbar-change" id="myNavbar">
+                    <ul class="nav nav-list nav-list-change">
                         <li><a href="">News Feed</a></li>
                         <li class="nav-divider"></li>
                         <li><a href="">My Skills</a></li>
@@ -38,8 +39,8 @@
             </nav>
         </div>
         <div class="col-sm-9">
-            <div class="row">
-                <div class="col-sm-12">
+            <div class="row my-row">
+                <div class="col-sm-12 column-sm12">
                     <nav class="navbar navbar-costum">
                         <ul class="nav navbar-nav hidden-xs">
 
@@ -48,25 +49,60 @@
                             <li><a href="#">Music</a></li>
                         </ul>
                         <div class="navbar-header data dropdown hidden-sm hidden-md hidden-lg">
-                            <ul class="nav navbar-nav">
-                                <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Visual Art
-                                    <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="">All</a></li>
-                                    <li><a href="">Visual Art</a></li>
-                                    <li><a href="">Music</a></li>
+                            <div class = "btn-group navbar-mobile">
+                                <button type = "button" class = "btn btn-default button-change">Visual Art</button>
+
+                                <button type = "button" class = "btn btn-default dropdown-toggle button-drop-change" data-toggle = "dropdown">
+                                    <span class = "caret"></span>
+                                </button>
+
+                                <ul class = "dropdown-menu navbar-mobile" role = "menu">
+                                    <li><a href = "#">All</a></li>
+                                    <li><a href = "#">Visual Art</a></li>
+                                    <li><a href = "#">Music</a></li>
                                 </ul>
-                                </li>
+                            </div>   
+                            <div class="button-div">
+                                <a href="" class="btn navbar-btn xs-button" >Add Wish</a>
                             </div>
-                            <a href="" class="btn navbar-btn center-mobile" >Add Wish</a>
-                        </nav>
+                        </div>
+                        <a href="" class="btn navbar-btn hidden-xs sm-button" >Add Wish</a>
+                    </nav>
 
-                    </div>
                 </div>
-                <div class="row row-bordered row-relative">
+            </div>
+            <div class="row row-bordered row-relative my-row">
 
-                    <div class="col-sm-6" >
+                <div class="col-sm-6 column-sm-6" >
+                    <div class="text">
+                        <h4>"Life on Display" illustration</h4>
+                        <p>
+                        Consectetuer adipiscing elit,sed diam nonummy nibh
+                        euismodtincidunt ut laoreet dolore. Short Description
+                        About Upcoming Project laoreet dolore.
+                        </p>
+                    </div>
+                    <p>
+                    <span class="glyphicon glyphicon-heart"> </span>
+                    <span class="badge">123</span>
+                    <span class="glyphicon glyphicon-comment"> </span>
+                    <span class="badge">12</span>
+                    <span class="earned">EARNED<span class="badge">$72.58</span></span>
+                    </p>
+                    <h4 class="supporter">Supporters</h4>
+                    <div class="media">
+                        <div class="media-left">
+                            <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Thomas Raylie</h4>
+                            <p>($72.58)</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6 col-border column-sm6" >
+                    <div class="col-border-padding">
                         <div class="text">
                             <h4>"Life on Display" illustration</h4>
                             <p>
@@ -91,120 +127,91 @@
                                 <h4 class="media-heading">Thomas Raylie</h4>
                                 <p>($72.58)</p>
                             </div>
-                        </div>
 
-                    </div>
-                    <div class="col-sm-6 col-border" >
-                        <div class="col-border-padding">
-                            <div class="text">
-                                <h4>"Life on Display" illustration</h4>
-                                <p>
-                                Consectetuer adipiscing elit,sed diam nonummy nibh
-                                euismodtincidunt ut laoreet dolore. Short Description
-                                About Upcoming Project laoreet dolore.
-                                </p>
-                            </div>
-                            <p>
-                            <span class="glyphicon glyphicon-heart"> </span>
-                            <span class="badge">123</span>
-                            <span class="glyphicon glyphicon-comment"> </span>
-                            <span class="badge">12</span>
-                            <span class="earned">EARNED<span class="badge">$72.58</span></span>
-                            </p>
-                            <h4 class="supporter">Supporters</h4>
-                            <div class="media">
-                                <div class="media-left">
-                                    <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Thomas Raylie</h4>
-                                    <p>($72.58)</p>
-                                </div>
-
-                                <div class="media-left">
-                                    <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Thomas Raylie</h4>
-                                    <p>($72.58)</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row row-relative">
-                    <div class="col-sm-6">
-                        <div class="text">
-                            <h4>"Life on Display" illustration</h4>
-                            <p>
-                            Consectetuer adipiscing elit,sed diam nonummy nibh
-                            euismodtincidunt ut laoreet dolore. Short Description
-                            About Upcoming Project laoreet dolore.
-                            </p>
-                        </div>
-                        <p>
-                        <span class="glyphicon glyphicon-heart"> </span>
-                        <span class="badge">123</span>
-                        <span class="glyphicon glyphicon-comment"> </span>
-                        <span class="badge">12</span>
-                        <span class="earned">EARNED<span class="badge">$72.58</span></span>
-                        </p>
-                        <h4 class="supporter">Supporters</h4>
-                        <div class="media">
                             <div class="media-left">
                                 <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">Thomas Raylie</h4>
                                 <p>($72.58)</p>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-sm-6 col-border" >
-                        <div class="col-border-padding">
-
-                            <div class="text">
-                                <h4>"Life on Display" illustration</h4>
-                                <p>
-                                Consectetuer adipiscing elit,sed diam nonummy nibh
-                                euismodtincidunt ut laoreet dolore. Short Description
-                                About Upcoming Project laoreet dolore.
-                                </p>
-                            </div>
-                            <p>
-                            <span class="glyphicon glyphicon-heart"> </span>
-                            <span class="badge">123</span>
-                            <span class="glyphicon glyphicon-comment"> </span>
-                            <span class="badge">12</span>
-                            <span class="earned">EARNED<span class="badge">$72.58</span></span>
-                            </p>
-                            <h4 class="supporter">Supporters</h4>
-                            <div class="media">
-                                <div class="media-left">
-                                    <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Thomas Raylie</h4>
-                                    <p>($72.58)</p>
-                                </div>
-
-                                <div class="media-left">
-                                    <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Thomas Raylie</h4>
-                                    <p>($72.58)</p>
-                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </div>
+            <div class="row row-relative my-row">
+                <div class="col-sm-6 column-sm6">
+                    <div class="text">
+                        <h4>"Life on Display" illustration</h4>
+                        <p>
+                        Consectetuer adipiscing elit,sed diam nonummy nibh
+                        euismodtincidunt ut laoreet dolore. Short Description
+                        About Upcoming Project laoreet dolore.
+                        </p>
+                    </div>
+                    <p>
+                    <span class="glyphicon glyphicon-heart"> </span>
+                    <span class="badge">123</span>
+                    <span class="glyphicon glyphicon-comment"> </span>
+                    <span class="badge">12</span>
+                    <span class="earned">EARNED<span class="badge">$72.58</span></span>
+                    </p>
+                    <h4 class="supporter">Supporters</h4>
+                    <div class="media">
+                        <div class="media-left">
+                            <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Thomas Raylie</h4>
+                            <p>($72.58)</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-sm-6 col-border column-sm6" >
+                    <div class="col-border-padding">
+
+                        <div class="text">
+                            <h4>"Life on Display" illustration</h4>
+                            <p>
+                            Consectetuer adipiscing elit,sed diam nonummy nibh
+                            euismodtincidunt ut laoreet dolore. Short Description
+                            About Upcoming Project laoreet dolore.
+                            </p>
+                        </div>
+                        <p>
+                        <span class="glyphicon glyphicon-heart"> </span>
+                        <span class="badge">123</span>
+                        <span class="glyphicon glyphicon-comment"> </span>
+                        <span class="badge">12</span>
+                        <span class="earned">EARNED<span class="badge">$72.58</span></span>
+                        </p>
+                        <h4 class="supporter">Supporters</h4>
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Thomas Raylie</h4>
+                                <p>($72.58)</p>
+                            </div>
+
+                            <div class="media-left">
+                                <img src="image/index.jpeg" class="img-circle" alt="Cinque Terre" width="52" height="52">
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Thomas Raylie</h4>
+                                <p>($72.58)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
-    </body>
-    </html>
+</div>
+</body>
+</html>

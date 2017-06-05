@@ -1,4 +1,4 @@
-.btn {
+.sm-button {
     float: right;
     background-color: rgb(129,125,169);
     color: white;
@@ -12,6 +12,21 @@
     margin-right: 20px;
 }
 
+.xs-button {
+    background-color: rgb(129,125,169);
+    color: white;
+    border-radius: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 80px;
+    outline-color: white;
+    outline: none;
+    border: none;
+}
+
+.button-div {
+    text-align: center;
+}
 .btn:hover {
     background-color: #807FA8; 
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 #DEE4EE;
@@ -37,6 +52,12 @@
     padding: 24px;
     color: #424242;
 
+}
+
+.navbar-mobile > li a {
+    font-size: 16px;
+    padding: 15px 20px;
+    display: flex;
 }
 .navbar-nav > li a:hover {
     background-color: rgb(129,125,169);
@@ -87,17 +108,17 @@
     color: #424242;
 }
 
-.col-sm-6 {
+.column-sm6 {
     padding-bottom: 20px
 }
-.col-sm-12 {
+.column-sm12 {
     padding-left: 0;
 }
-.col-sm-3 {
+.column-sm3 {
     padding-right: 0;
 }
 
-.row {
+.my-row {
     padding-bottom: 20px;
 }
 
@@ -129,17 +150,17 @@
     }
 }
 
-.navbar-collapse {
+.navbar-change {
     padding: 0px;
 }
-.nav-list {
-    margin-left: 13px;
+
+.nav-list-change{
     font-size: 16px;
     background-color: #DEE4EE;
 }
 
 .nav-list > li a {
-    padding: 15px;
+    padding: 12px 20px;
     color: #424242;
 
 }
@@ -161,9 +182,19 @@
     font-size: 14px;
 }
 
-.caret {
 
-    float: right;
-    text-align: center;
+
+.button-change {
+    font-size: 16px;
+    padding: 12px 150px 12px 5px;
+    border: none;
+
 }
+
+.button-drop-change {
+    width: 40px;
+    padding: 12px;
+    border: none;
+}
+
 
