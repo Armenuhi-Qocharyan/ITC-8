@@ -54,6 +54,7 @@
     margin-top: 1%;
     margin-right: 5%;
 }
+
 .btn:hover {
     background-color:#807CC6;
     color: #ffffff;
@@ -72,13 +73,42 @@
     color: #ffffff; 
 }
 
+.myXS>li>a {
+    background-color: #807AA6;
+}
+
+.menuXS:hover{
+    color:white;
+    background-color: #807CC6;
+}
+
+.btnXS {
+    width:60%;
+    text-align: center;
+    float: right;
+    color: white;
+    background-color:#807AA6;
+    border-radius: 30px;
+    outline: none;
+    border: none;
+    margin-right: 75px;
+}
+.btnXS:hover {
+    background-color: #807AA6;
+    color: white;
+}
+
 .right {
     margin-bottom: 10%;
 }
 .topMenu {
     box-shadow: 2px 2px 2px 2px #DFE3EE;
 }
+
+
+
 #column1 {
+    padding-bottom: 50px;
     border-right: 1px solid #CBCFDC;
     border-bottom: 1px solid #CBCFDC;
 }
@@ -87,6 +117,7 @@
     border-top: 1px solid #CBCFDC;
     border-left: 1px solid #CBCFDC;
 }
+
 .wish {
     margin-top: 20px;
     padding:30px;
