@@ -1,5 +1,7 @@
 body {
     margin: 0%;
+    height: 100%;
+    overflow: hidden;
     background-image: url("../sources/login_background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
