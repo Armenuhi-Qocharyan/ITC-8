@@ -1,11 +1,11 @@
 body {
     margin: 0%;
     height: 100%;
-    overflow: hidden;
-    background-image: url("../sources/login_background.jpg");
-    background-repeat: no-repeat;
+    background: url("../sources/login_background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    margin-right: 0;
     font-family: arial;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -13,6 +13,7 @@ body {
 
 #first_row {
     background-color: rgba(0, 150, 156, 0.8);
+    background-size: cover;
     margin-right: 0%;
     color: #ffffff;
     font-size: 300%;
@@ -27,7 +28,9 @@ body {
 }
 
 #login-field {
-    padding-top: 10%;
+    margin: 0;
+    padding-top: 40px;
+
 }
 
 .container {
