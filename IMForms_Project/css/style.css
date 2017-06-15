@@ -4,6 +4,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     margin-right: 0;
+    font-family: arial;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
