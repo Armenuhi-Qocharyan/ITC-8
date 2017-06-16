@@ -14,42 +14,44 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
-    <body>
+    <body id="img">
         <!--Header-->
+	<div class="container" id="img">
         <div class="row" id="first_row">
-            <div class="col-md-2" >
+            <div class="col-md-2 col-xs-12" >
                 <h3>IMForms</h3>
             </div>
-            <div class="col-md-7"></div>
-            <div class="col-md-3 " id="right-text">
+            <div class="col-md-8"></div>
+            <div class="col-md-2 col-xs-12" id="right-text">
                 <h3>Create Online Forms</h3>
             </div>
         </div>
 
         <!--Login Area-->
         <div class="row" id="login-field">
-            <div class="col-md-4 col-sm-4"> </div>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <div class="container">
+            <div class="col-md-6"> </div>
+            <div class="col-md-6">
+                <div class="log-container">
                     <div class="card"></div>
                     <div class="card">
                         <h1 class="title">Login</h1>
                         <form>
-                            <div class="input-container">
+                            <div class="input-log-container">
                                 <input type="#{type}" id="#{label}" required="required"/>
                                 <label for="#{label}">Username</label>
                                 <div class="bar"></div>
                             </div>
 
-                            <div class="input-container">
+                            <div class="input-log-container">
                                 <input type="#{type}" id="#{label}" required="required"/>
                                 <label for="#{label}">Password</label>
                                 <div class="bar"></div>
                             </div>
 
-                            <div class="button-container">
+                            <div class="button-log-container">
                                 <button><span>Login</span></button>
                             </div>
+      			    <div class="footer"><a href="#"></a></div>
                         </form>
                     </div>
 
@@ -59,34 +61,35 @@
                             <div class="close"></div>
                         </h1>
                         <form>
-                            <div class="input-container">
+                            <div class="input-log-container">
                                 <input type="#{type}" id="#{label}" required="required"/>
                                 <label for="#{label}">Username</label>
                                 <div class="bar"></div>
                             </div>
 
-                            <div class="input-container">
+                            <div class="input-log-container">
                                 <input type="#{type}" id="#{label}" required="required"/>
                                 <label for="#{label}">Password</label>
                                 <div class="bar"></div>
                             </div>
 
-                            <div class="input-container">
+                            <div class="input-log-container">
                                 <input type="#{type}" id="#{label}" required="required"/>
                                 <label for="#{label}">Repeat Password</label>
                                 <div class="bar"></div>
                             </div>
 
-                            <div class="button-container">
+                            <div class="button-log-container">
                                 <button><span>Next</span></button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-
+        
             <script src="js/index.js"></script>
 
         </div>
+	</div>
     </body>
 </html>
