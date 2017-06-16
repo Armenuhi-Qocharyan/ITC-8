@@ -27,17 +27,17 @@
                     <img src="../sources/user.png" alt="View">
                     <div class="dropdown-content">
                         <div class="btn-group-vertical">
-                            <button type="button" class="btn btn-info btn-lg" >My Forms</button>
-                            <button type="button" class="btn btn-info btn-lg" >Create Forms</button>
-                            <button type="button" class="btn btn-info btn-lg" >Logout</button>
+                            <button type="button" class="btn btn-change btn-lg" >My Forms</button>
+                            <button type="button" class="btn btn-change btn-lg" >Create Forms</button>
+                            <button type="button" class="btn btn-change btn-lg" >Logout</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-12">
-            <div class="col-sm-2">
+        <div class="col-sm-12 sm2">
+            <div class="col-sm-2 sm2">
                 <div id="mySidenav" class="sidenav side">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <a href="#" id="menu_head">Form Elements</a>
@@ -85,17 +85,18 @@
                 </div>
 
                 <div class="sidemenu">
-                    <span class="open"  onclick="openNav()">&#9776; </span>
+                    <span class="open"  onclick="openNav()">Add element<p class="glyphicon glyphicon-plus plus"></p></span>
                 </div>
             </div>
 
-            <div class="col-sm-10">
-                <label class="title">Title</label>
+            <div class="col-sm-8 col-md-8 title">
+                <label>Title</label>
                 <hr>
-                <div class="drag">
+                <div class="drag hidden-xs">
                     <p><span class="glyphicon glyphicon-move"></span>Drag your question here from left</p>
                 </div>
             </div>
+	    <div class="col-sm-2 hidden-xs col-md-2"></div>
         </div>
 
         <script src="../js/sidenav.js"></script>
