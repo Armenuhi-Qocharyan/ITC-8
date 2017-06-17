@@ -10,7 +10,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-#first_row {
+#first-row {
     background-color: rgba(0, 150, 156, 0.8);
     background-size: cover;
     margin-right: 0%;
@@ -18,6 +18,17 @@ body {
     font-size: 300%;
     font-family: arial;
     padding-right: 0;
+}
+
+#right-text {
+    font-size: 50%;
+    padding-top: 2.5%;
+    left: 2.5%;
+}
+
+#profile-pic {
+    padding-top: 0;
+    float: right;
 }
 
 #imforms {
@@ -116,20 +127,20 @@ body {
 .dropdown {
     margin-right: 20px;
     display: inline-block;
-    float: right;
+    float: left;
 }
 
 .dropdown > img {
     border-radius: 50px;
     margin-right: 40px;
     width: 50px;
-    margin-top: 20px;
-	
+    margin-top: 20px;	
 }
 
 .btn-group-vertical > button {
     font-size: 15px;
     text-align: center;
+    right: 60%;
 }
 
 .btn-change {
@@ -155,26 +166,32 @@ body {
 .title {
     background-color: white;
     border: 1px;
-    padding: 20px;
+    padding: 40px;
     margin: 80px;
-    text-align: center;
-
 }
+
 .title > label {
-    font-size: 25px;
+    font-size: 35px;
+    text-align: left;
+    color: #555555;
 }
 
 .drag > p {
     font-size: 20px;
+    text-align: center;
+    color: #999999;
 }
+
 .drag > p span {
     padding-right: 10px;
+    color: #999999;
 }
 
 .drag {
+    border: 2px dashed #999999;
+    border-radius: 10px;
     font-size: 16px;
     padding: 50px 0;
-
 }
 
 .sm2 {
