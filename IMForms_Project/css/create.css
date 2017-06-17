@@ -60,7 +60,7 @@ body {
 .sidenav {
     height: 100%;
     width: 0;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     left: 0;
     background-color: #333333;
@@ -193,5 +193,6 @@ body {
 }
 
 .sm2 {
+    height: 100vh;
     padding-left: 0;
 }
