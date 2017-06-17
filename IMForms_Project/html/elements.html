@@ -10,12 +10,13 @@
         <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
         <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
         <link rel="stylesheet" href="../css/create.css"> 
+        <link rel="stylesheet" href="../css/elements.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
     <body>
-        <!--Header-->
+        <!--Navbar-->
         <div class="row" id="first-row">
             <div class="col-md-2" >
                 <h3 id="imforms">IMForms</h3>
@@ -38,6 +39,7 @@
             </div>
         </div>
 
+        <!--Side navbar-->
         <div class="col-sm-12 sm2">
             <div class="col-sm-2 sm2">
                 <div id="mySidenav" class="sidenav side">
@@ -90,14 +92,55 @@
                 </div>
             </div>
 
+            <!--Workspace-->
             <div class="col-sm-8 col-md-8 title">
                 <label>Title</label>
                 <hr>
-                <div class="drag hidden-xs">
-                    <p><span class="glyphicon glyphicon-move"></span>Drag your question here from left</p>
-                </div>
+                <form name="full_name" method= "get">
+                    <table width="60%" cellspacing="0" cellpadding="4">
+                        <tr>
+                            <td class="element_text"><span>First Name</span></td>
+                            <td class="element_text"><input type="text" name="fname" class="input_area"></td>
+                        </tr>
+                        <tr>
+                            <td class="element_text"><span>Last Name</span></td>
+                            <td class="element_text"><input type="text" name="lname" class="input_area"></td>
+                        </tr>
+                    </table>
+                </form>
+                <hr>
+                <form name="email" method="get">
+                    <table width="51%" cellspacing="0" cellpadding="4">
+                        <tr>
+                            <td class="element_text"><span>Email Address</span></td>
+                            <td class="element_text"><input type="email" name="email" class="input_area"></td>
+                        </tr>
+                    </table>
+                    <hr>
+                </form>
+                <form name="birthday" method="get" draggable="true">
+                    <table width="66%" cellspacing="0" cellpadding="4">
+                        <tr>
+                            <td class="element_text"><span>Birthday</span></td>
+                            <td class="element_text"><input type="date" name="birthday" class="input_area"></td>
+                        </tr>
+                    </table>
+                    <hr>
+                </form>
+                <form name="address" method="get" draggable="true">
+                    <table width="73%" cellspacing="0" cellpadding="4">
+                        <tr>
+                            <td class="element_text"><span>Address</span></td>
+                            <td class="element_text"><input type="text" name="country" placeholder="Input your Country" class="input_area"></td>
+                        </tr>
+                        <tr>
+                            <td class="element_text"><span>City</span></td>
+                            <td class="element_text"><input type="text" name="birthday" placeholder="Input your City" class="input_area"></span></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
-	    <div class="col-sm-2 hidden-xs col-md-2"></div>
+            <div class="col-sm-2 hidden-xs col-md-2"></div>
         </div>
 
         <script src="../js/sidenav.js"></script>
