@@ -24,6 +24,7 @@
 #right-text {
     font-size: 50%;
     padding-top: 0.7%;
+    text-align: right;
 }
 
 #login-field {

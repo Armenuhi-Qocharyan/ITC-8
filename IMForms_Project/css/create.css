@@ -10,6 +10,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.profile {
+    display: inline-flex;
+    float: right;
+}
+
 #first-row {
     background-color: rgba(0, 150, 156, 0.8);
     background-size: cover;
@@ -17,18 +22,15 @@ body {
     color: #ffffff;
     font-size: 300%;
     font-family: arial;
-    padding-right: 0;
 }
 
 #right-text {
     font-size: 50%;
-    padding-top: 2.5%;
-    left: 2.5%;
+    padding-top: 35px;
 }
 
 #profile-pic {
-    padding-top: 0;
-    float: right;
+    padding-left: 10px;
 }
 
 #imforms {
@@ -84,7 +86,6 @@ body {
     color: white;
     display: block;
     transition: 0.3s;
-    display: flex;
     white-space: nowrap;
 }
 
@@ -92,9 +93,11 @@ body {
     padding-right: 10px;
 }
 
-.sidenav a:hover, .offcanvas a:focus{
+.sidenav a:hover, .offcanvas a:focus {
     color: #0D9AA0;
 }
+
+
 
 .sidenav .closebtn {
     position: absolute;
@@ -121,14 +124,13 @@ body {
 }
 
 .dropdown {
-    margin-right: 20px;
     display: inline-block;
     float: left;
 }
 
 .dropdown > img {
     border-radius: 50px;
-    margin-right: 40px;
+    margin-right: 10px;
     width: 50px;
     margin-top: 20px;	
 }
