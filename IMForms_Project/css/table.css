@@ -8,12 +8,6 @@ a {
   text-align: left;
 }
 
-h1, h2, h3, h4 {
-  margin: 0;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
 h1 {
   font-size: 3em;
 }
@@ -24,7 +18,7 @@ h1 {
 }
 
 .menu-item, .menu-open-button {
-  background: #00bcd4;
+  background: #00969c;
   border-radius: 100%;
   width: 50px;
   height: 50px;
