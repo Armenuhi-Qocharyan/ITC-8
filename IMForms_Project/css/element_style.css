@@ -1,0 +1,187 @@
+.element_text {
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+body {
+    margin: 0%;
+    background: #EAEAEA no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#first_row {
+    background-color: rgba(0, 150, 156, 0.8);
+    background-size: cover;
+    margin-right: 0%;
+    color: #ffffff;
+    font-size: 300%;
+    font-family: arial;
+    padding-right: 0;
+}
+
+#imforms {
+    padding: 20px;
+}
+
+.sidemenu {
+    width: 200px;
+    margin: 20px;
+    margin-left: 0;
+    padding: 20px;
+    color: #EAEAEA;
+    background-color: #333333;
+    border-radius: 0 50px 50px 0;
+    white-space: nowrap;
+
+}
+
+.open {
+    font-size:20px;
+    cursor:pointer;
+}
+
+.plus {
+    padding-left: 10px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    background-color: #333333;
+    overflow-x: hidden;
+    transition: 0.5s;
+
+}
+
+.center-area {
+    margin-top: 40px;
+    background-color: white;
+}
+
+.nav-divider {
+    background-color: #727272;
+    height: 1px;
+    border: none;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    display: flex;
+    white-space: nowrap;
+
+}
+
+.icons {
+    padding-right: 10px;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #0D9AA0;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    right: 15px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+#menu_head {
+    padding-top: 15px;
+    padding-bottom: 0px;
+    font-size: 24px;
+}
+
+.dropdown > label {
+    display: inline-block;
+    font-size: 25px;
+    margin-bottom: 15px;
+    padding-right: 10px;
+}
+
+.dropdown {
+    margin-right: 20px;
+    display: inline-block;
+    float: right;
+}
+
+.dropdown > img {
+    border-radius: 50px;
+    margin-right: 40px;
+    width: 50px;
+    margin-top: 20px;
+
+}
+
+.btn-group-vertical > button {
+    font-size: 15px;
+    text-align: center;
+}
+
+.btn-change {
+    background-color: #333333;
+    color: #EAEAEA;
+}
+
+.btn-change:hover {
+    color: white;
+    background-color: #2FA7AB;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.title {
+    text-align: left;
+    background-color: white;
+    border: 1px;
+    padding: 20px;
+    margin: 80px;
+
+}
+.title > label {
+    font-size: 25px;
+}
+
+.drag > p {
+    font-size: 20px;
+}
+.drag > p span {
+    padding-right: 10px;
+}
+
+.drag {
+    font-size: 16px;
+    padding: 50px 0;
+
+}
+
+.sm2 {
+    padding-left: 0;
+}
+
