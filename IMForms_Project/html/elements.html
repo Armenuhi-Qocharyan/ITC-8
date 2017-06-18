@@ -123,10 +123,25 @@
                     <hr>
                 </form>
                 <form name="birthday" method="get" draggable="true">
-                    <table width="66%" cellspacing="0" cellpadding="4">
+                    <table width="51%" cellspacing="0" cellpadding="4">
                         <tr>
-                            <td class="element_text"><span>Birthday</span></td>
+                            <td class="element_text"><span>Date of Birth</span></td>
                             <td class="element_text"><input type="date" name="birthday" class="input_area"></td>
+                        </tr>
+                    </table>
+                    <hr>
+                </form>
+                <form name="gender" method="get" draggable="true">
+                    <table width="40%" cellspacing="0" cellpadding="4">
+                        <tr>
+                            <td class="element_text"><span>Gender</span></td>
+                            <td>
+                                <form action="">
+                                    <input type="radio" name="education" value="no"> Male<br>
+                                    <input type="radio" name="education" value="yes"> Female<br>
+                                </form>
+                            </td>
+
                         </tr>
                     </table>
                     <hr>
@@ -152,13 +167,23 @@
                     <table width="64%" cellspacing="0" cellpadding="4">
                         <tr>
                             <td class="element_text"><span>Education</span></td>
+                            <td>
+                                <form action="">
+                                    <input type="radio" name="education" value="no"> no<br>
+                                    <input type="radio" name="education" value="yes"> yes<br>
+                                </form>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td></td>
                             <td class="element_text"><input type="text" name="education" class="input_area"></td>
                         </tr>
                     </table>
                     <hr>
                 </form>
                 <form name="certificate" method="get" draggable="true">
-                    <table width="64%" cellspacing="0" cellpadding="4">
+                    <table width="59%" cellspacing="0" cellpadding="4">
                         <tr>
                             <td class="element_text"><span>Upload Certificate</span></td>
                             <td class="element_text"><input type="file" name="education" class="input_area"></td>
