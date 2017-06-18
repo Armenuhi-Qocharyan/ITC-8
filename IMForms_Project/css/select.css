@@ -1,13 +1,17 @@
 
 .video_div{
+    height: 100vh;
     z-index: -1;
+}
+
+.demo {
+   height: 100vh;
 }
 
 .button_area {
     text-align: center;
-    padding: 10%;
-        padding-top: 20%;
-
+    padding-left: 20%;
+    margin-top: 250px;
 }
 
 .button {
@@ -20,25 +24,36 @@
     font-size: 250%;
     box-shadow: 4px 4px 5px #555555;
     padding: 3%;
-    margin-bottom: 10%;
-    float: center;
+    margin-top: 20px;
     white-space: nowrap;
 }
 
 .row-change {
-    height: 100vh;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     background-image: url("../sources/select_page.png");
-    background-position:  right;
+    background-position: right;
     margin: 0;
     padding: 0;
     display: flex;
-
 }
 
 .button:hover {
     background-color: #EAEAEA;
     color: #2FA7AB;
     box-shadow: 5px 5px 6px #555555;
+}
+
+@media (max-width: 400px) {
+    .button_area {
+	height: 100vh;
+        padding-top: 100px;
+	margin: 0;
+    }
+}
+
+@media (max-width: 1000px) {
+    .row-change {
+        background-size: cover;
+    }
 }
