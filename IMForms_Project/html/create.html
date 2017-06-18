@@ -7,19 +7,24 @@
         <link rel="shortcut icon" type="image/png" href="#">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
         <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
         <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
         <link rel="stylesheet" href="../css/create.css"> 
+        <link rel="stylesheet" href="../css/menu.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     </head>
 
     <body>
+	
         <!--Navbar-->
         <div class="row" id="first-row">
             <div class="col-md-2" >
                 <h3 id="imforms">IMForms</h3>
             </div>
+
             <div class="col-md-8"></div>
             <div class="col-md-2">
                 <div class="profile">
@@ -40,9 +45,10 @@
                 </div>
             </div>
         </div>
-
-        <!--Side navbar-->
+        
         <div class="col-sm-12 sm2">
+			
+			<!--Side navbar-->
             <div class="col-sm-2 sm2">
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -94,18 +100,38 @@
                     <span class="open"  onclick="openNav()">Add element<p class="glyphicon glyphicon-plus plus"></p></span>
                 </div>
             </div>
+			
+			<!-- preview -->
+            <div>
+				<nav class="menu">
+					<input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open"/>
+					<label class="menu-open-button" for="menu-open">
+						<span class="hamburger hamburger-1"></span>
+						<span class="hamburger hamburger-2"></span>
+						<span class="hamburger hamburger-3"></span>
+					</label>
+	  
+					<a href="#" class="menu-item"> <i class="fa fa-eye"></i> </a>
+					<a href="#" class="menu-item"> <i class="fa fa-floppy-o"></i> </a>
+					<a href="#" class="menu-item"> <i class="fa fa-trash"></i> </a>
+				</nav>
+			</div>
 
             <!--Workspace-->
-            <div class="col-sm-8 col-md-8 title">
+            <div class="col-sm-8 col-md-8 col-xs-10 title">
                 <label>Title</label>
                 <hr>
                 <div class="drag hidden-xs">
                     <p><span class="glyphicon glyphicon-move"></span>Drag your question here from left</p>
                 </div>
+		<div class="submit">
+                	<button placeholder="" id="input_2" type="button" class="form-submit-button" data-component="button">Submit</button>
+                </div>
             </div>
             <div class="col-sm-2 hidden-xs col-md-2"></div>
         </div>
-
+		
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="../js/sidenav.js"></script>
     </body>
 </html>

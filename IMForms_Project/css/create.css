@@ -98,7 +98,6 @@ body {
 }
 
 
-
 .sidenav .closebtn {
     position: absolute;
     right: 15px;
@@ -196,3 +195,28 @@ body {
     height: 100vh;
     padding-left: 0;
 }
+
+.submit {
+    text-align: center;
+    padding: 30px;
+}
+
+#input_2 {
+    outline: none;
+    padding: 10px;
+}
+
+#input_2:hover {
+    outline: none;
+}
+
+@media (max-width: 1000px) {
+    .sm2 {
+        height: auto;
+    }
+    .sidenav {
+        height: auto;
+    }
+
+}
+

@@ -10,4 +10,13 @@
     padding: 2px;
 }
 
+@media (max-width: 1000px) {
+    #certificate {
+        display: none;
+    }
 
+    .title {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
