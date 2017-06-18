@@ -17,7 +17,7 @@
     </head>
 
     <body>
-      <!--Header-->
+      <!--Navbar-->
         <div class="row" id="first-row">
             <div class="col-md-2" >
                 <h3 id="imforms">IMForms</h3>
@@ -33,9 +33,11 @@
                             <img src="../sources/user.png" alt="View">
                             <div class="dropdown-content">
                                 <div class="btn-group-vertical">
-                                    <button type="button" class="btn btn-change btn-lg" >My Forms</button>
-                                    <button type="button" class="btn btn-change btn-lg" >Create Forms</button>
-                                    <button type="button" class="btn btn-change btn-lg" >Logout</button>
+                                    <button type="button" class="btn btn-change btn-lg" onclick="window.location.href='table.html'">My Forms</button>
+
+                                    <button type="button" class="btn btn-change btn-lg" onclick="window.location.href='create.html'">Create new form</button>
+
+                                    <button type="button" class="btn btn-change btn-lg" onclick="window.location.href='../index.html'">Logout</button>
                                 </div>
                             </div>
                         </div>
@@ -46,12 +48,14 @@
 
         <div class="row row-change">
             <div class=" col-sm-6 col-md-6 hidden-xs video_div">
-                <video src="../sources/demo.mp4" type="video/mp4" autoplay loop></video>
+                <!-- Here will be demo video about our web page  
+                <video src="../sources/demo.mp4" class="demo"  type="video/mp4" autoplay loop></video>
+                -->
             </div>
             
-            <div class="col-sm-6 col-md-6 col-xs-12 button_area">
-                <button class="button" id="new_form" type="button"> New Form </button>
-                <button class="button" id="my_forms" type="button"> My Forms </button>  
+            <div class="col-sm-6 col-md-6 button_area">
+                <button class="button" id="new_form" type="button" onclick="window.location.href='create.html'"> New Form </button>
+                <button class="button" id="my_forms" type="button" onclick="window.location.href='table.html'"> My Forms </button>  
             </div>
             
         </div>
