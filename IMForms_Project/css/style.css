@@ -3,6 +3,7 @@ h1 {
 }
 
 #img {
+    /*TODO no-repeat is provided twice*/
     background-repeat: no-repeat;
     background: url("../sources/login_background.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -26,6 +27,7 @@ h1 {
 }
 
 #right-text {
+     /*TODO % ? for font size */
     font-size: 50%;
     padding-top: 0.7%;
     text-align: right;

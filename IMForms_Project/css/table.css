@@ -1,3 +1,4 @@
+/*TODO Styles provideing by using tag name as selector is not preferable even if you have used seperate css file*/
 body {
   color: white;
   text-align: center;
