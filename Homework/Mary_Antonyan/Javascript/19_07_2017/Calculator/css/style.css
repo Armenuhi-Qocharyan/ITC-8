@@ -43,11 +43,12 @@ body {
     background: rgba(0, 0, 0, 0.4);
     border-radius: 4px;
     box-shadow: inset 0px 4px rgba(0, 0, 0, 0.4);
-    font-size: 24px;
+    font-size: 40px;
+    font-family: arial;
     line-height: 55px;
     color: #ffffff;
     text-align: right;
-    letter-spacing: 1.5px;
+    letter-spacing: -5px;
 }
 
 /* Each button */
