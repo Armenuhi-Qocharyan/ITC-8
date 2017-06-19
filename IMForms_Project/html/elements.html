@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html>
     <head>
         <title>IMForms | Create</title>
         <meta charset="utf-8">
@@ -11,6 +11,7 @@
         <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
         <link rel="stylesheet" href="../css/create.css"> 
         <link rel="stylesheet" href="../css/elements.css"> 
+        <link rel="stylesheet" href="../css/menu.css"> 		
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
@@ -96,9 +97,25 @@
                 </div>
             </div>
 
+			<!-- preview -->
+			<div>
+				<nav class="menu">
+					<input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open"/>
+					<label class="menu-open-button" for="menu-open">
+						<span class="hamburger hamburger-1"></span>
+						<span class="hamburger hamburger-2"></span>
+						<span class="hamburger hamburger-3"></span>
+					</label>
+	  
+					<a href="#" class="menu-item"> <i class="fa fa-eye"></i> </a>
+					<a href="#" class="menu-item"> <i class="fa fa-floppy-o"></i> </a>
+					<a href="#" class="menu-item"> <i class="fa fa-trash"></i> </a>
+				</nav>
+			</div>
+			
             <!--Workspace-->
             <!-- This part will be hidden. It will be shown after drag-drop. There are only some elements for preview -->
-            <div class="col-sm-8 col-md-8 title">
+            <div class="col-sm-8 col-md-8 col-xs-12 title">
                 <label>Title</label>
                 <hr>
                 <form name="full_name" method= "get">
@@ -186,14 +203,17 @@
                 <form name="certificate" method="get" draggable="true">
                     <table width="59%" cellspacing="0" cellpadding="4">
                         <tr>
-                            <td class="element_text"><span>Upload Certificate</span></td>
-                            <td class="element_text"><input type="file" name="education" class="input_area"></td>
+                            <!--TODO certificate is is duplicated-->
+                            <td class="element_text" id="certificate"><span>Upload Certificate</span></td>
+                            <td class="element_text"><input type="file" name="education" class="input_area" id="certificate"></td>
                         </tr>
                     </table>
                     <hr>
                 </form>
             </div>
+
             <div class="col-sm-2 hidden-xs col-md-2"></div>
+
         </div>
 
         <script src="../js/sidenav.js"></script>
