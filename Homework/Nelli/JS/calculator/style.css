@@ -1,0 +1,12 @@
+.digit {
+    width: 60px;
+    height: 50px;
+}
+.equal {
+    background-color: rgba(143, 223, 163, 0.66);
+}
+.result {
+    height: 30px;
+    width: 300px;
+    margin-bottom: 1%;
+}
