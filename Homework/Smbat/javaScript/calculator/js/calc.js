@@ -6,27 +6,26 @@ var calcScreen = document.getElementById("screen");
 
 var currentAction = "";
 var var1 = 0;
-var var2 = 0;
 var nextNumFlag = false;
-var tasnordakanGorcakic = 1;
+var tasnordakanFlag = false;
 
 var inputNum = function(thisBtn) {
     if (nextNumFlag) {
-        calcScreen.value = 0;
+        calcScreen.value = "0";
+        tasnordakanFlag = false;
         nextNumFlag = false;
     }
-    if (thisBtn.value == "." && tasnordakanGorcakic == 1) {
-        tasnordakanGorcakic = 0.1;
+    if (thisBtn.value == ".") {
+        if (!tasnordakanFlag) {
+            tasnordakanFlag = true;
+            calcScreen.value = calcScreen.value + thisBtn.value;
+        }
+        return;
     }
-    else if (calcScreen.value == 0) {
+    else if (calcScreen.value == "0") {
         calcScreen.value = thisBtn.value;
     } else {
-        if (tasnordakanGorcakic == 1) {
-            calcScreen.value = calcScreen.value * 10 + thisBtn.value * 1;
-        } else {
-            calcScreen.value = calcScreen.value * 1 + ( thisBtn.value * tasnordakanGorcakic );
-            tasnordakanGorcakic = tasnordakanGorcakic / 10;
-        }
+	calcScreen.value = calcScreen.value + thisBtn.value;
     }
 }
 
