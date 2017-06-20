@@ -49,11 +49,37 @@ var btnaction = function(thisBtn) {
             calcScreen.value = var1;
             break;
         case "/":
-            if (calcScreen)
+            if (calcScreen.value == 0) {
+                var1 = 0;
+                break;
+            }
             var1 = var1 / (calcScreen.value * 1);
             calcScreen.value = var1;
             break;
 
+
+    }
+    switch (thisBtn.value) {
+        case "sqrt":
+            if (calcScreen.value < 0) {
+                var1 = 0;
+                calcScreen.value = 0;
+                break;
+            }
+            calcScreen.value = Math.sqrt(var1);
+            return;
+        case "del":
+            calcScreen.value = 0;
+            var1 = 0;
+            return;
+        case "abs":
+            if (calcScreen.value < 0) {
+                calcScreen.value = -1 * calcScreen.value;
+            }
+            return;
+        case "log":
+                calcScreen.value = Math.log(calcScreen.value);
+            return;
     }
     currentAction = thisBtn.value;
     nextNumFlag = true;
