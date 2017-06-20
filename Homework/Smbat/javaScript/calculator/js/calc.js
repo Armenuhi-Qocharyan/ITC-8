@@ -70,6 +70,8 @@ var btnaction = function(thisBtn) {
         case "del":
             calcScreen.value = 0;
             var1 = 0;
+            tasnordakanFlag = false;
+            nextNumFlag = false;
             return;
         case "abs":
             if (calcScreen.value < 0) {
