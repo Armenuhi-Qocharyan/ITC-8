@@ -102,4 +102,21 @@ function Abs() {
     firstNumber = result;
     document.getElementById('result').value = result;
 }
-
+function Log() {
+    number = Number(document.getElementById('result').value);
+    result = Math.log(number);
+    firstNumber = result;
+    document.getElementById('result').value = result;
+}
+function Sqrt() {
+    number = Number(document.getElementById('result').value);
+    result = Math.sqrt(number);
+    firstNumber = result;
+    document.getElementById('result').value = result;
+}
+function Exp() {
+    number = Number(document.getElementById('result').value);
+    result = Math.exp(number);
+    firstNumber = result;
+    document.getElementById('result').value = result;
+}
