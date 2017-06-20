@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculator</title>
+	<link rel="stylesheet" type="text/css" href="calc.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script type="text/javascript" src="calc.js"></script>
+</head>
+<body>
+	<center id="calc">Calculator</center>
+	<div class="cont">
+		<div class="row">
+			<input type="text" id="val1" class="val" placeholder="value">
+			<button onclick="del()" id="del"  class="col-sm-12">C</button>
+			<button onclick="num(1)" class="act col-sm-4">1</button>
+			<button onclick="num(2)" class="act col-sm-4">2</button>
+			<button onclick="num(3)" class="act col-sm-4">3</button>
+			<button onclick="num(4)" class="act col-sm-4">4</button>
+			<button onclick="num(5)" class="act col-sm-4">5</button>
+			<button onclick="num(6)" class="act col-sm-4">6</button>
+			<button onclick="num(7)" class="act col-sm-4">7</button>
+			<button onclick="num(8)" class="act col-sm-4">8</button>
+			<button onclick="num(9)" class="act col-sm-4">9</button>
+			<button onclick="num(0)" class="act col-sm-10">0</button>
+			<button onclick="minus()" class="act col-sm-2">+/-</button>
+			<button onclick="action('+')" class="act col-sm-3">+</button>
+			<button onclick="action('-')" class="act col-sm-3">-</button>
+			<button onclick="action('*')" class="act col-sm-3">*</button>
+			<button onclick="action('/')" class="act col-sm-3" id="div">/</button>
+			<button onclick="action1('sqrt')" class="act col-sm-3">sqrt</button>
+			<button onclick="action('^')" class="act col-sm-3">^</button>
+			<button onclick="action1('||')" class="act col-sm-3">||</button>
+			<button onclick="action1('log')" class="act col-sm-3">log</button>
+			<button onclick="equal()" id="equal" class="col-sm-12">=</button>
+		</div>
+	</div>
+</body>
+</html>
