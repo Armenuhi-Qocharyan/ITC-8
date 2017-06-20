@@ -2,7 +2,7 @@
  * Created by smbat on 6/20/17.
  */
 var print = function (arg1, arg2, arg3, arg4) {
-    for (var i = 0, length = arguments.length; i < length; i++) {
+    for (var i = print.length, length = arguments.length; i < length; i++) {
         console.log(arguments[i]);
 
     }
