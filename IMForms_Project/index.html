@@ -17,10 +17,10 @@
     <script src="js/validation.js" defer></script>
 </head>
 
-<body id="img">
+<body class="img">
 <!--Header-->
-<!--TODO img id is duplicated-->
-<div class="container" id="img">
+<!--TODO img id is duplicated (done)-->
+<div class="container img">
   <div class="row" id="first_row">
     <div class="col-md-2 col-xs-12">
       <h1>IMForms</h1>
@@ -69,7 +69,7 @@
           </h1>
           <form>
             <div class="input-log-container form">
-              <input type="text" id="user" required="required">
+              <input type="text" id="user" onChange="validateUsername(this.value)" required="required">
               <label for="user">Username</label>
               <div class="bar"></div>
                 <div class="alert alert-danger" id="alertUname">
@@ -78,7 +78,7 @@
 </div>
             
             <div class="input-log-container">
-              <input type="text" id="email" required="required">
+              <input type="text" id="email" onChange="validateEmail(this.value)" required="required">
               <label for="user">Email</label>
               <div class="bar"></div>
               <div class="alert alert-danger" id="alertEmail">
@@ -88,25 +88,25 @@
 
 
             <div class="input-log-container">
-              <input type="password" id="password" required="required">
+              <input type="password" id="password" onChange="validatePassword(this.value)" required="required">
               <label for="password">Password</label>
               <div class="bar"></div>
                 <div class="alert alert-danger" id="alertPsw">
-                  <strong>Password should contain 6-16 symbols(only letters and numbers)</strong> 
+                  <strong>Password should contain 6-20 symbols(uppercase, lowercase letters and numbers)</strong> 
               </div>
-</div>
+            </div>
 
             <div class="input-log-container">
-              <input type="password" id="repeat" required="required">
+              <input type="password" id="repeat" onChange="validateRepeat(this.value)" required="required">
               <label for="repeat">Repeat Password</label>
               <div class="bar"></div>
                 <div class="alert alert-danger" id="alertRepeat">
                   <strong>Passwords doesn't match</strong> 
-              </div>
- </div>
+                </div>
+             </div>
 
             <div class="button-log-container">
-              <button type="submit" id="submit" onclick="validator()"><span>Next</span></button>
+              <button type="submit" id="submit"><span>Next</span></button>
             </div>
           </form>
         </div>

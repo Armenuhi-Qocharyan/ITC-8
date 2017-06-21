@@ -8,17 +8,6 @@ h1 {
   font-size: 72px;
 }
 
-#img {
-    background: url("../sources/login_background.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    background-size: cover;
-    font-family: arial;
-    -moz-osx-font-smoothing: grayscale;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-}
-
 #first_row {
     background-color: rgba(0, 150, 156, 0.8);
     margin-right: 0%;
@@ -312,8 +301,6 @@ h1 {
 
 .card.alt {
     position: absolute;
-    top: 15px;
-    left: -30px;
     z-index: 10;
     width: 140px;
     height: 140px;
@@ -325,20 +312,30 @@ h1 {
     transition: .3s ease;
 }
 
-.card.alt .toggle {
-    position: relative;
+.card.alt {
+    top: 15px;
+    left: -30px;
     background: #00969c;
     width: 140px;
     height: 140px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     color: #ffffff;
     font-size: 58px;
-    line-height: 140px;
     text-align: center;
     cursor: pointer;
 }
 
 .pen {
+    position: absolute;
+    background: #00969c;
+    width: 140px;
+    height: 140px;
+    line-height: 140px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    color: #ffffff;
+    font-size: 58px;
+    text-align: center;
+    cursor: pointer;
     border-radius: 100%;
 }
 
@@ -439,3 +436,16 @@ h1 {
         opacity: 0;
     }
 }
+
+.img {
+    background: url("../sources/login_background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    background-size: cover;
+    font-family: arial;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+
