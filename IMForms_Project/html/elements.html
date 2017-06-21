@@ -2,8 +2,11 @@
 <html>
     <head>
         <title>IMForms | Create</title>
+        <!-- Meta data -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Links -->
         <link rel="shortcut icon" type="image/png" href="#">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
@@ -12,8 +15,11 @@
         <link rel="stylesheet" href="../css/create.css"> 
         <link rel="stylesheet" href="../css/elements.css"> 
         <link rel="stylesheet" href="../css/menu.css"> 		
+
+        <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="../js/sidenav.js" defer></script>
     </head>
 
     <body>
@@ -45,8 +51,8 @@
 
 
         <!--Side navbar-->
-        <div class="col-sm-12 sm2">
-            <div class="col-sm-2 sm2">
+        <div class="col-sm-12 side-menu">
+            <div class="col-sm-2 side-menu">
                 <div id="mySidenav" class="sidenav side">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <a href="#" id="menu_head">Form Elements</a>
@@ -97,22 +103,22 @@
                 </div>
             </div>
 
-			<!-- preview -->
-			<div>
-				<nav class="menu">
-					<input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open"/>
-					<label class="menu-open-button" for="menu-open">
-						<span class="hamburger hamburger-1"></span>
-						<span class="hamburger hamburger-2"></span>
-						<span class="hamburger hamburger-3"></span>
-					</label>
-	  
-					<a href="#" class="menu-item"> <i class="fa fa-eye"></i> </a>
-					<a href="#" class="menu-item"> <i class="fa fa-floppy-o"></i> </a>
-					<a href="#" class="menu-item"> <i class="fa fa-trash"></i> </a>
-				</nav>
-			</div>
-			
+            <!-- preview -->
+            <div>
+                <nav class="menu">
+                    <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open"/>
+                    <label class="menu-open-button" for="menu-open">
+                        <span class="hamburger hamburger-1"></span>
+                        <span class="hamburger hamburger-2"></span>
+                        <span class="hamburger hamburger-3"></span>
+                    </label>
+
+                    <a href="#" class="menu-item"> <i class="fa fa-eye"></i> </a>
+                    <a href="#" class="menu-item"> <i class="fa fa-floppy-o"></i> </a>
+                    <a href="#" class="menu-item"> <i class="fa fa-trash"></i> </a>
+                </nav>
+            </div>
+
             <!--Workspace-->
             <!-- This part will be hidden. It will be shown after drag-drop. There are only some elements for preview -->
             <div class="col-sm-8 col-md-8 col-xs-12 title">
@@ -211,11 +217,7 @@
                     <hr>
                 </form>
             </div>
-
             <div class="col-sm-2 hidden-xs col-md-2"></div>
-
         </div>
-
-        <script src="../js/sidenav.js"></script>
     </body>
 </html>

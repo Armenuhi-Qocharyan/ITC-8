@@ -1,5 +1,4 @@
-/*TODO Styles provideing by using tag name as selector is not preferable even if you have used seperate css file*/
-body {
+#body {
   color: white;
   text-align: center;
 }
@@ -9,6 +8,6 @@ a {
   text-align: left;
 }
 
-h1 {
+.h1 {
   font-size: 3em;
 }

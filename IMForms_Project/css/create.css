@@ -191,7 +191,7 @@ body {
     padding: 50px 0;
 }
 
-.sm2 {
+.side-menu {
     height: 100vh;
     padding-left: 0;
 }
@@ -204,6 +204,9 @@ body {
 #input_2 {
     outline: none;
     padding: 10px;
+    background-color: #e7e7e7;
+    border: 1px solid #dddddd;
+    border-radius: 1px;
 }
 
 #input_2:hover {
@@ -211,12 +214,10 @@ body {
 }
 
 @media (max-width: 1000px) {
-    .sm2 {
+    .side-menu {
         height: auto;
     }
     .sidenav {
         height: auto;
     }
-
 }
-
