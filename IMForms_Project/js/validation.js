@@ -25,8 +25,7 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-    var regularExpression  = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-
+    var regularExpression = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,20}$/;
     if(!regularExpression.test(password)) {
         document.getElementById("alertPsw").style.display="block";
         document.getElementById("submit").disabled=true;
