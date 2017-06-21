@@ -1,13 +1,23 @@
 
 var click = function () {
-    btn.innerHTML = "Click";
+    mytxt.innerHTML = "Click";
 }
 var over = function () {
-    btn.innerHTML = "Over";
+    mytxt.innerHTML = "Over";
+    mytxt.childNodes[0].nodeValue= "Over print with method child";
 }
+
+
 
 var btn = document.createElement("button");
 document.body.appendChild(btn);
+
+var mytxt = document.createElement("h1");
+document.body.appendChild(mytxt);
+
+var windowSize = document.createElement("h1");
+document.body.appendChild(windowSize);
+
 btn.innerHTML = "Click Me";
 btn.style.color = "black";
 btn.style.backgroundColor = "green";
