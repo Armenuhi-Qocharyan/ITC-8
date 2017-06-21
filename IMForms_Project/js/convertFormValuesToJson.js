@@ -1,11 +1,11 @@
 var getFormValues = function () {
     var inputs = document.getElementsByClassName("inputs");
-    var jsontext = "{";
+    myJson = {};
     for (var i = 0, length = inputs.length; length > i; i++) {
-        jsontext += '"' + inputs[i].name + '"' + ":" + '"' + inputs[i].value + '"' + ",";
+        myJson[inputs[i].name] = inputs[i].value;
     }
-    jsontext += "}";
-    alert(jsontext);
+    console.log(myJson);
+    alert(myJson.firstname);
 }
 
 var submitBtn = document.getElementById("submit_btn");
