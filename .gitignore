@@ -9,6 +9,9 @@ __pycache__/
 #swap file
 .*.swp
 
+#
+.idea
+
 # Distribution / packaging
 .Python
 env/
