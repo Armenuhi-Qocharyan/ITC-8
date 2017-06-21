@@ -23,38 +23,9 @@
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' defer></script>
         <script src="../js/sidenav.js" defer></script>
         <script src="../js/modal.js" defer></script>
-        <script src="../js/create.js" defer></script>
     </head>
 
-    <body >
-
-
-    <!-- Hidden elements -->
-        <form class="name" id="ElementfullName" style="display: none;>
-            <table width="60%" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td class="element_text"><span>First Name</span></td>
-                    <td class="element_text"><input type="text" name="fname" class="input_area"></td>
-                </tr>
-                <br>
-                <tr>
-                    <td class="element_text"><span>Last Name</span></td>
-                    <td class="element_text"><input type="text" name="lname" class="input_area"></td>
-                </tr>
-                <hr>
-            </table>
-        </form>
-
-        <form class="email" id="Elementemail" style="display: none;">
-            <table width="51%" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td class="element_text"><span>Email Address</span></td>
-                    <td class="element_text"><input type="email" name="email" class="input_area"></td>
-                </tr>
-            </table>
-            <hr>
-        </form>
-
+    <body>
         <!--Navbar-->
         <div class="row" id="first-row">
             <div class="col-md-2" >
@@ -92,10 +63,10 @@
                     <!--TODO By the way list element can be used in this case-->
                     <p class="nav-divider"></p>
 
-                    <a onclick="Add(this.id)" id="fullName" draggable="true" ondragstart="drag(event,this.id)" href="#"><span class="glyphicon glyphicon-user icons"></span>Full Name</a>
+                    <a href="#"><span class="glyphicon glyphicon-user icons"></span>Full Name</a>
                     <p class="nav-divider"></p>
 
-                    <a onclick="Add(this.id)" id="email" draggable="true" ondragstart="drag(event,this.id)" href="#"><span class="glyphicon glyphicon-envelope icons"></span>Email</a>
+                    <a href="#"><span class="glyphicon glyphicon-envelope icons"></span>Email</a>
 
                     <p class="nav-divider"></p>
 
@@ -155,24 +126,14 @@
             </div>
 
             <!--Workspace-->
-            <div class="col-sm-8 col-md-8 col-xs-10 title" ondrop="drop(event)" ondragover="allowDrop(event)" >
-                <div class="workArea"  >
-                    <label>Title</label>
-                    <hr>
-                    <div class="drag hidden-xs" id="drag">
-                        <p><span class="glyphicon glyphicon-move"></span>Drag your question here from left</p>
-                    </div>
-
-
-                    <!-- Drop Area -->
-                    <div id="dropArea">
-
-                    </div>
-
-
-                    <div class="submit">
-                        <button placeholder="" id="input_2" type="button" class="form-submit-button" data-component="button">Submit</button>
-                    </div>
+            <div class="col-sm-8 col-md-8 col-xs-10 title">
+                <label>Title</label>
+                <hr>
+                <div class="drag hidden-xs">
+                    <p><span class="glyphicon glyphicon-move"></span>Drag your question here from left</p>
+                </div>
+                <div class="submit">
+                    <button placeholder="" id="input_2" type="button" class="form-submit-button" data-component="button">Submit</button>
                 </div>
             </div>
             <div class="col-sm-2 hidden-xs col-md-2"></div>
@@ -187,7 +148,7 @@
                     <h2 id="first_row">DIRECT LINK OF YOUR FORM </h2>
                     <h5>Your form is securely published and ready to use at this address<h5>
                             <input type="text" disabled id="modal-id" value="url"> 
-                            <button id="copy-link">Copy Link </button>
+                            <button id="copy-link" onclick="copyToClipboard()">Copy Link </button>
                             <button id="open-new-tab"> Open In New Tab </button>
                 </div>
             </div>

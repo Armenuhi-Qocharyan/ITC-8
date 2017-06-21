@@ -34,8 +34,8 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
-    margin-top: -80px;
-    margin-right: -60px;
+    margin-top: -12%;
+    margin-right: -10%;
 }
 
 .close:hover, 
@@ -95,7 +95,27 @@
     outline: none;
 }
 
+#copy-link:hover {
+    background-color: #efefef;
+}
+#open-new-tab:hover {
+    background-color: #efefef;
+}
+
+#copy-link:active {
+    background-color: #efefef;
+    box-shadow: 0 2px #666;
+    transform: translateY(1px);
+}
+
+#open-new-tab:active {
+    background-color: #efefef;
+    box-shadow: 0 2px #666;
+    transform: translateY(1px);
+}
+
 #first_row {
     font-size: 40px;
     margin-bottom: 10px;
 }
+

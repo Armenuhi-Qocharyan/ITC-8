@@ -23,3 +23,9 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+function copyToClipboard() {
+    var copyArea = document.querySelector("#modal-id");
+    copyArea.select();
+    document.execCommand('copy');
+}
