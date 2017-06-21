@@ -24,8 +24,15 @@ window.onclick = function(event) {
     }
 }
 
-function copyToClipboard() {
-    var copyArea = document.querySelector("#modal-id");
+$("#copy-link").click(function(){
+    var copyArea = document.getElementById("modal-id");
     copyArea.select();
     document.execCommand('copy');
-}
+});
+
+$("#open-new-tab").click(function(){
+    var copyArea = document.getElementById("modal-id");
+    var url = copyArea.value;
+    var win = window.open(url, "Form");
+    win.focus();
+});
