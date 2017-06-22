@@ -1,0 +1,36 @@
+#body {
+    background-color: #ccc;
+    font-family: arial;
+    font-size: 30px;
+    color: #fff;
+}
+
+#content {
+    background: linear-gradient(#00969c, #01b6ac);
+    border: 0.1px solid #00969c;
+    border-radius: 4px;
+    margin: auto;
+    margin-top: 5%;
+    padding: 2%;
+    width: 40%;
+    height: auto;
+}
+
+#button {
+    display: block;
+    margin: auto;
+}
+
+.table {
+    border: 0.5px solid #fff;
+    border-collapse: collapse;
+    margin: 2%;
+    width: 50%;
+}
+
+.cell {
+    width: 10%;
+    border: 0.5px solid #fff;
+    padding-bottom: 7%;
+    background-color: rgba(7, 7, 7, 0.3);
+}
