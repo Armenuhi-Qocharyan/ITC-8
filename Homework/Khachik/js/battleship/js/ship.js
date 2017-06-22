@@ -1,10 +1,19 @@
 var sh = 0;
 var top = 0;
+var arr = [];
+var countShips = 0;
+
+for(var i = 0; i < 10; i++){
+    arr[i] = [];    
+    for(var j = 0; j < 10; j++){ 
+        arr[i][j] = 0;    
+    }    
+}
 
 $(document).ready(function(){
 	var rows = 10;
 	var cols = 10;
-	var squareSize = 50;
+	var squareSize = 40;
 	var gameBoardContainer = document.getElementById("gameboard");
 	var p = 0;
 
@@ -56,6 +65,7 @@ $(document).ready(function(){
 	}
 });
 
+
 var drag = function(shNum){
 		var ship = document.getElementById('ship_' + shNum);
 		ship.onmousedown = function(e) { 
@@ -67,7 +77,7 @@ var drag = function(shNum){
 		    ship.style.zIndex = 1000; 
 		    function moveAt(e) {
 		        ship.style.left = e.pageX - ship.offsetWidth / 2 + 'px';
-		        ship.style.top = e.pageY - ship.offsetHeight / 2 + 'px';
+		        ship.style.top = e.pageY + 'px';
 		    }
 		    document.onmousemove = function(e) {
 		        moveAt(e);
@@ -86,11 +96,197 @@ var drag = function(shNum){
 }
 
 var endDrag = function(elem, ship) {
-	if (elem.id === "" || elem.id === "shipCont") {
+	if (elem.id === "" || elem.id === "shipCont" || (elem.id[0] === "s" && elem.id[1] === "h")) {
 		return "block";
 	} else {
+		return shipInBoard(elem, ship);;
+	}
+}
+
+var shipInBoard = function(elem,ship) {
+	var retVal = 0; 
+	retVal = ship_1(elem,ship);
+	if (retVal === "block") {
+		return  "block";
+	}
+	retVal = ship_2(elem,ship);
+	if (retVal === "block") {
+		return  "block";
+	}
+	retVal = ship_3(elem,ship);
+	return retVal;
+}
+
+
+var ship_1 = function(elem,ship) {
+	if (ship.id[5] === "0" || ship.id[5] === "1" || ship.id[5] === "2" || ship.id[5] === "3") {
+		if(elem.id[1] === "9" || elem.style.backgroundColor === "rgb(175, 175, 175)" || elem.style.backgroundColor === "rgb(221, 221, 221)"){
+			ship.style.position = "absolute";
+			ship.style.top = "100px";
+			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			return "block";
+		}
+		
+		
+		var pos = Number(elem.id[1]) + 1;
+		arr[pos - 1][elem.id[2]] = 1;
+		
+		if (document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)") {
+			ship.style.position = "absolute";
+			ship.style.top = "100px";
+			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			return "block";		
+		}
 		elem.style.backgroundColor = "#afafaf";
+		document.getElementById(elem.id[0] + pos + elem.id[2]).style.backgroundColor = "#afafaf";
+		if(elem.id[2] != "9"){
+			document.getElementById(elem.id[0] + (pos - 1) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+		}
+		if(elem.id[1] != "8"){
+			if(elem.id[2] != "9"){
+				document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			}
+			document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]) )).style.backgroundColor = "#ddd";
+			if(elem.id[2] != "0"){
+				document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			}
+		}
+		if(elem.id[2] != "0"){
+			document.getElementById(elem.id[0] + (pos - 1) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+		}
+		if(elem.id[1] != "0") {
+			if(elem.id[2] != "0"){
+				document.getElementById(elem.id[0] + (pos - 2)  + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			}
+			if(elem.id[2] != "9"){
+				document.getElementById(elem.id[0] + (pos - 2) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			}
+			document.getElementById(elem.id[0] + (pos - 2) + (Number(elem.id[2]) )).style.backgroundColor = "#ddd";
+		}
+		countShips++;
 		return "none";
 	}
 
+}
+
+var ship_2 = function(elem,ship) {
+	if (ship.id[5] === "4" || ship.id[5] === "5") {
+		if(elem.id[1] === "9" || elem.id[1] === "8" || elem.style.backgroundColor === "rgb(175, 175, 175)"){
+			ship.style.position = "absolute";
+			ship.style.top = "100px";
+			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			return "block";
+		}
+
+
+		var pos = Number(elem.id[1]) + 1;
+		arr[pos - 1][elem.id[2]] = 1;
+		if (document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)" || 
+			document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)") {
+			ship.style.position = "absolute";
+			ship.style.top = "100px";
+			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			return "block";		
+		}
+		elem.style.backgroundColor = "#afafaf";
+		document.getElementById(elem.id[0] + pos++ + elem.id[2]).style.backgroundColor = "#afafaf";
+		if(elem.id[2] != "9"){
+			document.getElementById(elem.id[0] + (pos - 2) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos - 1) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos ) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			
+		}
+		if(elem.id[1] != "7"){
+			if(elem.id[2] != "9"){
+				document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			}
+			document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]) )).style.backgroundColor = "#ddd";
+			if(elem.id[2] != "0"){
+				document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			}
+		} 
+		if(elem.id[2] != "0"){
+			document.getElementById(elem.id[0] + (pos - 2) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos - 1) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos ) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+		}
+
+		if(elem.id[1] != "0") {
+			if(elem.id[2] != "0"){
+				document.getElementById(elem.id[0] + (pos - 3) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			}
+			if(elem.id[2] != "9"){
+				document.getElementById(elem.id[0] + (pos - 3) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			}
+			document.getElementById(elem.id[0] + (pos - 3) + (Number(elem.id[2]) )).style.backgroundColor = "#ddd";
+		}
+		
+		arr[pos - 1][elem.id[2]] = 1;
+		document.getElementById(elem.id[0] + pos + elem.id[2]).style.backgroundColor = "#afafaf";
+		countShips++;
+		return "none";
+	}
+}
+
+var ship_3 = function(elem, ship) {
+	if (ship.id[5] === "6" || ship.id[5] === "7") {
+		if(elem.id[1] === "9" || elem.id[1] === "8" || elem.id[1] === "7" || elem.style.backgroundColor === "rgb(175, 175, 175)"){
+			ship.style.position = "absolute";
+			ship.style.top = "100px";
+			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			return "block";
+		}
+		
+		var pos = Number(elem.id[1]) + 1;
+		arr[pos - 1][elem.id[2]] = 1;
+		if (document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)" || 
+			document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)" ||
+			document.getElementById(elem.id[0] + (pos + 2) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)") {
+			ship.style.position = "absolute";
+			ship.style.top = "100px";
+			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			return "block";		
+		}
+		elem.style.backgroundColor = "#afafaf";
+		if(elem.id[2] != "9"){
+			document.getElementById(elem.id[0] + (pos - 1) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos + 2) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+	
+		}
+		if(elem.id[1] != "6"){
+			if(elem.id[2] != "9"){
+				document.getElementById(elem.id[0] + (pos + 3) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			}
+			if(elem.id[2] != "0"){
+				document.getElementById(elem.id[0] + (pos + 3) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			}
+			document.getElementById(elem.id[0] + (pos + 3) + (Number(elem.id[2]))).style.backgroundColor = "#ddd";
+		}
+		if(elem.id[2] != "0"){
+			document.getElementById(elem.id[0] + (pos + 2) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			document.getElementById(elem.id[0] + (pos - 1) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+		}
+		if(elem.id[1] != "0") {
+			if(elem.id[2] != "0"){
+				document.getElementById(elem.id[0] + (pos - 2) + (Number(elem.id[2]) - 1)).style.backgroundColor = "#ddd";
+			}
+			if(elem.id[2] != "9"){
+				document.getElementById(elem.id[0] + (pos - 2) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
+			}
+			document.getElementById(elem.id[0] + (pos - 2) + (Number(elem.id[2]))).style.backgroundColor = "#ddd";
+		}
+		document.getElementById(elem.id[0] + pos++ + elem.id[2]).style.backgroundColor = "#afafaf";
+		arr[pos - 1][elem.id[2]] = 1;
+		document.getElementById(elem.id[0] + pos++ + elem.id[2]).style.backgroundColor = "#afafaf";
+		arr[pos - 1][elem.id[2]] = 1;
+		document.getElementById(elem.id[0] + pos + elem.id[2]).style.backgroundColor = "#afafaf";
+		countShips++;
+		return "none";
+	}
 }

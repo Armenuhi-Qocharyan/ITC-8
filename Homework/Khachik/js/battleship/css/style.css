@@ -1,14 +1,15 @@
 
 h1 {
-    font-size: 3em;
+    font-size: 2em;
     text-align: center;
 }
 
 #gameboard {
 	position:relative;
 	margin: auto;
-	width:500px;
-	height:500px;
+	width:400px;
+	height:400px;
+	margin-bottom: 100px;
 }
 
 #gameboard div {
@@ -17,16 +18,16 @@ h1 {
 	-moz-box-sizing: border-box;    /* Firefox 1 - 28 */
 	box-sizing: border-box;         /* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
 	background: #f6f8f9; /* Old browsers */
-	border: 1px solid #ddd;
-	width:50px;
-	height:50px;
+	border: 1px solid #abd8bc;
+	width:40px;
+	height:40px;
 }
 
 #shipCont  {
 	position:relative;
 	margin: auto;
-	width:400px;
-	height: 200px;
+	width:320px;
+	height: 160px;
 	border: 1px solid #cccccc;
 	background-color: #aae4e4;
 	margin-bottom: 50px;
@@ -38,17 +39,17 @@ h1 {
 	box-sizing: border-box;         /* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
 	background: #afafaf; /* Old browsers */
 	border: 1px solid #8c8c8c;
-	width:50px;
-	height:100px;
+	width:40px;
+	height:80px;
 	display: inline-block;
 }
 
 .ship_3 {
-	height:150px;
+	height:120px;
 }
 
 .ship_4 {
-	height:200px;
+	height:160px;
 }
 
 
