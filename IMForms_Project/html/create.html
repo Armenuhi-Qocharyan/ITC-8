@@ -31,7 +31,6 @@
 
  <!-- Hidden elements -->
         <form class="name" id="ElementfullName" style="display: none;>
-            <table width="60%" cellspacing="0" cellpadding="4">
                 <tr>
                     <td class="element_text"><span>First Name</span></td>
                     <td class="element_text"><input type="text" name="fname" class="input_area"></td>
@@ -41,8 +40,8 @@
                     <td class="element_text"><span>Last Name</span></td>
                     <td class="element_text"><input type="text" name="lname" class="input_area"></td>
                 </tr>
+                <button type="button" class="RemoveButton" onclick="Remove(this)">Remove</button>
                 <hr>
-            </table>
         </form>
 
         <form class="email" id="Elementemail" style="display: none;">
@@ -52,6 +51,8 @@
                     <td class="element_text"><input type="email" name="email" class="input_area"></td>
                 </tr>
             </table>
+            <button type="button" class="RemoveButton" onclick="Remove(this)">Remove</button>
+            <br>
             <hr>
         </form>
 

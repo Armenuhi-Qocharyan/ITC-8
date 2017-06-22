@@ -1,4 +1,5 @@
 global="";
+cnt = 0;
 
 function Add(myId) {
     myId = "Element" + myId;
@@ -6,8 +7,14 @@ function Add(myId) {
     var newDiv = document.createElement( 'div' );
     newDiv.innerHTML = myDiv.innerHTML;
     newDiv.className="hideDiv";
+    newDiv.setAttribute("id","myid"+cnt);
     document.getElementById("dropArea").appendChild(newDiv);
     $("#drag").hide();
+    cnt++;
+}
+
+function Remove(This) {
+    $( "#"+ This.parentNode.id ).remove();
 }
 
 function allowDrop(ev) {
