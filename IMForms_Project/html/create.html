@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="../css/create.css"> 
         <link rel="stylesheet" href="../css/menu.css">
         <link rel="stylesheet" href="../css/modal.css"> 
-
+        <link rel="stylesheet" href="../css/elementsNew.css"> 
         <!-- Scripts-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -24,6 +24,7 @@
         <script src="../js/sidenav.js" defer></script>
         <script src="../js/modal.js" defer></script>
 	<script src="../js/create.js" defer></script>
+    <script type="text/javascript" src="../js/convertFormValuesToJson.js" defer></script>
 
     </head>
 
@@ -33,7 +34,7 @@
         <form class="name" id="ElementfullName" style="display: none;>
                 <tr>
                     <td class="element_text"><span>First Name</span></td>
-                    <td class="element_text"><input type="text" name="fname" class="input_area"></td>
+                    <td class="element_text"><input type="text" name="fname" class="inputs"></td>
                 </tr>
                 <br>
                 <tr>
@@ -55,6 +56,30 @@
             <br>
             <hr>
         </form>
+
+
+
+
+
+  <form  class="address" id="Elementaddress" style="display: none;">
+
+        <label for="fname">First Name</label>
+        <input class="inputs" type="text" id="fname" name="firstname" placeholder="Your name..">
+
+        <label for="lname">Last Name</label>
+        <input class="inputs" type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+        <label for="country">Country</label>
+        <select class="inputs" id="country" name="country">
+            <option value="australia">Australia</option>
+            <option value="canada">Canada</option>
+            <option value="usa">USA</option>
+        </select>
+
+        <label for="subject">Subject</label>
+        <textarea class="inputs" id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+    </form>
 
         <!--Navbar-->
         <div class="row" id="first-row">
@@ -93,44 +118,44 @@
                     <!--TODO By the way list element can be used in this case-->
                     <p class="nav-divider"></p>
 
-                    <a onclick="Add(this.id)" id="fullName" draggable="true" ondragstart="drag(event,this.id)" href="#"><span class="glyphicon glyphicon-user icons"></span>Full Name</a>
+                    <a onclick="Add(this.id)" id="fullName" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-user icons"></span>Full Name</a>
                     <p class="nav-divider"></p>
 
-                    <a onclick="Add(this.id)" id="email" draggable="true" ondragstart="drag(event,this.id)" href="#"><span class="glyphicon glyphicon-envelope icons"></span>Email</a>
+                    <a onclick="Add(this.id)" id="email" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-envelope icons"></span>Email</a>
 
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-map-marker icons"></span>Address</a>
+                    <a onclick="Add(this.id)" id="address" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-map-marker icons"></span>Address</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-phone icons"></span>Phone</a>
+                    <a ><span class="glyphicon glyphicon-phone icons"></span>Phone</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-gift icons"></span>Date of Birth</a>
+                    <a ><span class="glyphicon glyphicon-gift icons"></span>Date of Birth</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-education icons"></span>Education</a>
+                    <a ><span class="glyphicon glyphicon-education icons"></span>Education</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-sunglasses icons"></span>Skills</a>
+                    <a ><span class="glyphicon glyphicon-sunglasses icons"></span>Skills</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-briefcase icons"></span>Work experience</a>
+                    <a ><span class="glyphicon glyphicon-briefcase icons"></span>Work experience</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-ok-circle icons"></span>Submit</a>
+                    <a ><span class="glyphicon glyphicon-ok-circle icons"></span>Submit</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-chevron-down icons"></span>Dropdown</a>
+                    <a ><span class="glyphicon glyphicon-chevron-down icons"></span>Dropdown</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="fa fa-transgender icons"></span>Gender</a>
+                    <a ><span class="fa fa-transgender icons"></span>Gender</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-headphones icons"></span>Hobby</a>
+                    <a ><span class="glyphicon glyphicon-headphones icons"></span>Hobby</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-picture icons"></span>Image</a>
+                    <a ><span class="glyphicon glyphicon-picture icons"></span>Image</a>
                     <p class="nav-divider"></p>
                 </div>
 
@@ -167,10 +192,7 @@
                     <div id="dropArea">
 
                     </div>
-
-                <div class="submit">
-                    <button placeholder="" id="input_2" type="button" class="form-submit-button" data-component="button">Submit</button>
-                </div>
+		 <input  id="submit_btn"  type="submit" value="Submit">
             </div>
             <div class="col-sm-2 hidden-xs col-md-2"></div>
         </div>
