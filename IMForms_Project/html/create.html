@@ -31,7 +31,8 @@
     <body>
 
  <!-- Hidden elements -->
-        <form class="name" id="ElementfullName" style="display: none;>
+        <form class="name" id="ElementfullName" style="display: none;">
+            <table>
                 <tr>
                     <td class="element_text"><span>First Name</span></td>
                     <td class="element_text"><input type="text" name="fname" class="inputs"></td>
@@ -43,11 +44,12 @@
                 </tr>
                 <button type="button" class="RemoveButton" onclick="Remove(this)">Remove</button>
                 <hr>
+            </table>
         </form>
 
         <form class="email" id="Elementemail" style="display: none;">
-            <table width="51%" cellspacing="0" cellpadding="4">
-                <tr>
+            <table>
+            <tr>
                     <td class="element_text"><span>Email Address</span></td>
                     <td class="element_text"><input type="email" name="email" class="input_area"></td>
                 </tr>
@@ -56,10 +58,6 @@
             <br>
             <hr>
         </form>
-
-
-
-
 
   <form  class="address" id="Elementaddress" style="display: none;">
 
@@ -205,7 +203,7 @@
                     <span class="close">&times;</span>
                     <h2 id="first_row">DIRECT LINK OF YOUR FORM </h2>
                     <h5>Your form is securely published and ready to use at this address<h5>
-                            <input type="text" id="modal-id" value="https://www.google.com"></input>
+                            <input type="text" id="modal-id" value="https://www.google.com" readonly></input>
                             <button id="copy-link">Copy Link </button>
                             <button id="open-new-tab">Open In New Tab</button>
                 </div>
