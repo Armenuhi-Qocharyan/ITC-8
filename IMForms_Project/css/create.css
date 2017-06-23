@@ -35,6 +35,7 @@ body {
 
 #imforms {
     padding: 20px;
+    cursor:pointer;
 }
 
 .sidemenu {
