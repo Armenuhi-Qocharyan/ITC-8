@@ -34,6 +34,7 @@ for (var i = 0, len = keys.length; i < len; ++i) {
                 //If first operand is empty
                 firstOperand = inputValue;
                 operation = buttonValue;
+		input,innerHTML = "";
             } else {
                 //If first operand is not empty and now is second operand's turn
                 secondOperand = inputValue;
