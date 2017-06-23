@@ -6,10 +6,11 @@ h1 {
 
 #gameboard {
 	position:relative;
+
 	margin: auto;
 	width:400px;
 	height:400px;
-	margin-bottom: 100px;
+	margin-bottom: 10px;
 }
 
 #gameboard div {
@@ -25,7 +26,8 @@ h1 {
 
 #shipCont  {
 	position:relative;
-	margin: auto;
+	display: inline-block;
+	float: right;
 	width:320px;
 	height: 160px;
 	border: 1px solid #cccccc;
@@ -52,4 +54,14 @@ h1 {
 	height:160px;
 }
 
-
+#start {
+	display: inline-block;
+	text-align: center;
+	margin-left:37.5%;
+	width: 25%;
+	height: 50px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	background-color: #480d4e;
+	color:white;
+	font-size:1.7em;
+}

@@ -2,6 +2,7 @@ var sh = 0;
 var top = 0;
 var arr = [];
 var countShips = 0;
+var start = false;
 
 for(var i = 0; i < 10; i++){
     arr[i] = [];    
@@ -22,6 +23,7 @@ $(document).ready(function(){
 		for (j = 0; j < rows; j++) {
 			
 			var square = document.createElement("div");
+
 			gameBoardContainer.appendChild(square);
 
 			square.id = 's' + j + i;			
@@ -30,7 +32,8 @@ $(document).ready(function(){
 			var leftPosition = i * squareSize;			
 
 			square.style.top = topPosition + 'px';
-			square.style.left = leftPosition + 'px';						
+			square.style.left = leftPosition + 'px';
+			square.addEventListener("click", function () {findShip(this.id)});						
 		}
 	}
 
@@ -63,6 +66,12 @@ $(document).ready(function(){
 	for(var i = 0; i < 8; ++i){
 		drag(i);
 	}
+	document.getElementById("start").addEventListener("click", function () {
+		if(countShips === 8) {
+			clearBoard();
+			start = true;
+		}
+	});
 });
 
 
@@ -87,6 +96,7 @@ var drag = function(shNum){
 		    	var elem = document.elementFromPoint(event.clientX, event.clientY);
 		    	ship.style.display = endDrag(elem, ship);
 		        document.onmousemove = null;
+		        
 		        ship.onmouseup = null;
 		    }
 		}
@@ -122,22 +132,24 @@ var ship_1 = function(elem,ship) {
 	if (ship.id[5] === "0" || ship.id[5] === "1" || ship.id[5] === "2" || ship.id[5] === "3") {
 		if(elem.id[1] === "9" || elem.style.backgroundColor === "rgb(175, 175, 175)" || elem.style.backgroundColor === "rgb(221, 221, 221)"){
 			ship.style.position = "absolute";
-			ship.style.top = "100px";
-			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			ship.style.top = "81px";
+			ship.style.left = Number(ship.id[5]) * 40 + "px";
 			return "block";
 		}
 		
 		
 		var pos = Number(elem.id[1]) + 1;
-		arr[pos - 1][elem.id[2]] = 1;
+		
 		
 		if (document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)") {
 			ship.style.position = "absolute";
-			ship.style.top = "100px";
-			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			ship.style.top = "81px";
+			ship.style.left = Number(ship.id[5]) * 40 + "px";
 			return "block";		
 		}
 		elem.style.backgroundColor = "#afafaf";
+		arr[pos - 1][elem.id[2]] = 1;
+		arr[pos ][elem.id[2]] = 1;
 		document.getElementById(elem.id[0] + pos + elem.id[2]).style.backgroundColor = "#afafaf";
 		if(elem.id[2] != "9"){
 			document.getElementById(elem.id[0] + (pos - 1) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
@@ -173,24 +185,24 @@ var ship_1 = function(elem,ship) {
 
 var ship_2 = function(elem,ship) {
 	if (ship.id[5] === "4" || ship.id[5] === "5") {
-		if(elem.id[1] === "9" || elem.id[1] === "8" || elem.style.backgroundColor === "rgb(175, 175, 175)"){
+		if(elem.id[1] === "9" || elem.id[1] === "8" || elem.style.backgroundColor === "rgb(175, 175, 175)" || elem.style.backgroundColor === "rgb(221, 221, 221)"){
 			ship.style.position = "absolute";
-			ship.style.top = "100px";
-			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			ship.style.top = "81px";
+			ship.style.left = Number(ship.id[5]) * 40 + "px";
 			return "block";
 		}
 
 
 		var pos = Number(elem.id[1]) + 1;
-		arr[pos - 1][elem.id[2]] = 1;
 		if (document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)" || 
 			document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)") {
 			ship.style.position = "absolute";
-			ship.style.top = "100px";
-			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			ship.style.top = "81px";
+			ship.style.left = Number(ship.id[5]) * 40 + "px";
 			return "block";		
 		}
 		elem.style.backgroundColor = "#afafaf";
+		arr[pos - 1][elem.id[2]] = 1;
 		document.getElementById(elem.id[0] + pos++ + elem.id[2]).style.backgroundColor = "#afafaf";
 		if(elem.id[2] != "9"){
 			document.getElementById(elem.id[0] + (pos - 2) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
@@ -224,6 +236,7 @@ var ship_2 = function(elem,ship) {
 		}
 		
 		arr[pos - 1][elem.id[2]] = 1;
+		arr[pos][elem.id[2]] = 1;
 		document.getElementById(elem.id[0] + pos + elem.id[2]).style.backgroundColor = "#afafaf";
 		countShips++;
 		return "none";
@@ -232,24 +245,24 @@ var ship_2 = function(elem,ship) {
 
 var ship_3 = function(elem, ship) {
 	if (ship.id[5] === "6" || ship.id[5] === "7") {
-		if(elem.id[1] === "9" || elem.id[1] === "8" || elem.id[1] === "7" || elem.style.backgroundColor === "rgb(175, 175, 175)"){
+		if(elem.id[1] === "9" || elem.id[1] === "8" || elem.id[1] === "7" || elem.style.backgroundColor === "rgb(175, 175, 175)" || elem.style.backgroundColor === "rgb(221, 221, 221)"){
 			ship.style.position = "absolute";
-			ship.style.top = "100px";
-			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			ship.style.top = "81px";
+			ship.style.left = Number(ship.id[5]) * 40 + "px";
 			return "block";
 		}
 		
 		var pos = Number(elem.id[1]) + 1;
-		arr[pos - 1][elem.id[2]] = 1;
 		if (document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)" || 
 			document.getElementById(elem.id[0] + (pos + 1) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)" ||
 			document.getElementById(elem.id[0] + (pos + 2) + (Number(elem.id[2]))).style.backgroundColor === "rgb(221, 221, 221)") {
 			ship.style.position = "absolute";
-			ship.style.top = "100px";
-			ship.style.left = Number(ship.id[5]) * 53 + "px";
+			ship.style.top = "81px";
+			ship.style.left = Number(ship.id[5]) * 40 + "px";
 			return "block";		
 		}
 		elem.style.backgroundColor = "#afafaf";
+		arr[pos - 1][elem.id[2]] = 1;
 		if(elem.id[2] != "9"){
 			document.getElementById(elem.id[0] + (pos - 1) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
 			document.getElementById(elem.id[0] + (pos) + (Number(elem.id[2]) + 1)).style.backgroundColor = "#ddd";
@@ -285,8 +298,29 @@ var ship_3 = function(elem, ship) {
 		arr[pos - 1][elem.id[2]] = 1;
 		document.getElementById(elem.id[0] + pos++ + elem.id[2]).style.backgroundColor = "#afafaf";
 		arr[pos - 1][elem.id[2]] = 1;
+		arr[pos ][elem.id[2]] = 1;
 		document.getElementById(elem.id[0] + pos + elem.id[2]).style.backgroundColor = "#afafaf";
 		countShips++;
 		return "none";
+	}
+}
+
+var clearBoard = function() {
+	for (var i = 0; i < 10 ; ++i) {
+		for (var j = 0; j < 10 ; ++j) {
+			document.getElementById("s" + i + j).style.backgroundColor = "white";
+		}
+	}
+}
+
+var findShip = function(squareId) {
+	if (start === true) {
+		var x = squareId[1];
+		var y = squareId[2];
+		if(arr[x][y] ===  1){
+			document.getElementById("s" + x + y).style.backgroundColor = "red";
+		} else {
+			document.getElementById("s" + x + y).style.backgroundColor = "#ddd";
+		}
 	}
 }
