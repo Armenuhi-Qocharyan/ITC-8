@@ -1,0 +1,139 @@
+body {
+    height: 100%;
+}
+
+.no-left-padding {
+    padding-left: 0px !important;
+}
+
+.no-right-padding {
+    padding-right: 0px !important;
+}
+
+.left-menu {
+    padding-bottom: 100%;
+    background-color: #dfe3ee;
+}
+
+.menu-item-border {
+    border-style: solid; 
+    border-width: 0px 0px 1px 0px;
+    border-color: rgb(130, 122, 170);
+    margin: 0% 10% 0% 10%;
+}
+
+.top-navigation-bar {
+    box-shadow: 2px 2px 0px 0px #dfe3ee;
+    border-radius: 0%;  
+    vertical-align: middle;
+}
+
+.menu-button {
+    display: inline; 
+    background-color: rgb(130, 122, 170)!important;
+}
+
+.nav-header {
+    float:left;
+    width:70%;
+    background-color: rgb(130, 122, 170)!important;
+}
+
+hr {
+    margin: 6%; 
+    height: 1px;
+    background-color: rgb(130, 122, 170);
+}
+
+.btn {
+    display: inline;
+    height: 70% !important;
+    margin-top: 1%;
+    background-color: rgb(130, 122, 170);
+    border-radius: 50px !important;    
+    color: white;
+    outline-style: none !important;
+}
+
+a {
+    color: grey;
+    font-size: 16px;
+}
+
+li :hover {
+    background-color: rgb(130, 122, 170) !important;
+    color: white !important;
+}
+
+li.active a{
+    color: white;
+    background-color: rgb(130, 122, 170) !important;
+}
+
+.top-left-item {
+    border-style: solid; 
+    border-width: 0px 1px 1px 0px;
+    border-color:#dfe3ee;
+    padding-bottom: 2%;
+    padding-top: 2%;
+
+}
+
+.top-right-item {
+    border-style: solid; 
+    border-width: 0px 0px 1px 0px;
+    border-color:#dfe3ee;
+    padding-bottom: 2%;
+    padding-top: 2%;
+}
+
+.bottom-left-item {
+    border-style: solid; 
+    border-width: 0px 1px 0px 0px;
+    border-color:#dfe3ee;
+    padding-bottom: 2%;
+    padding-top: 2%;
+}
+
+.like-comment {
+    margin: 5% 0 5% 0;
+}
+
+.bottom-right-item {
+    padding-bottom: 2%;
+    padding-top: 2%;
+}
+
+.supporter {
+    width: 100%;
+}
+
+.supporter-text {
+    display: block;
+    color: grey;
+}
+
+.item {
+    float: left;
+    width: 50%;
+}
+
+.item-right {
+    text-align: right;
+}
+
+.earned {
+    color: rgb(130, 122, 170);
+}
+
+.supporter-image {
+    float: left;
+    margin: 3%;
+}
+
+.supporter-data {
+    float: left;
+    font-size: 11px;
+    margin: 3%;
+}
+

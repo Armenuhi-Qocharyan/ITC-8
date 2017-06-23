@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>IMForms | Create</title>
+    <!-- Meta data -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Links -->
+    <link rel="shortcut icon" type="image/png" href="#">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="../css/create.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/elementsNew.css">
+    <!-- Scripts-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' defer></script>
+    <script src="../js/sidenav.js" defer></script>
+    <script src="../js/modal.js" defer></script>
+    <script type="text/javascript" src="../js/convertFormValuesToJson.js" defer></script>
+    <script src="../js/cv.js" defer></script>
+
+</head>
+
+<body>
+
+<!-- Hidden elements -->
+<form class="name" id="ElementfullName" style="display: none;">
+    <table>
+        <tr>
+            <td class="element_text"><span>First Name</span></td>
+            <td class="element_text"><input type="text" name="fname" class="inputs"></td>
+        </tr>
+        <br>
+        <tr>
+            <td class="element_text"><span>Last Name</span></td>
+            <td class="element_text"><input type="text" name="lname" class="input_area"></td>
+        </tr>
+        <button type="button" class="RemoveButton" onclick="Remove(this)">Remove</button>
+        <hr>
+    </table>
+</form>
+
+<form class="email" id="Elementemail" style="display: none;">
+    <table>
+        <tr>
+            <td class="element_text"><span>Email Address</span></td>
+            <td class="element_text"><input type="email" name="email" class="input_area"></td>
+        </tr>
+    </table>
+    <button type="button" class="RemoveButton" onclick="Remove(this)">Remove</button>
+    <br>
+    <hr>
+</form>
+
+<form  class="address" id="Elementaddress" style="display: none;">
+
+    <label for="fname">First Name</label>
+    <input class="inputs" type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input class="inputs" type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="country">Country</label>
+    <select class="inputs" id="country" name="country">
+        <option value="australia">Australia</option>
+        <option value="canada">Canada</option>
+        <option value="usa">USA</option>
+    </select>
+
+    <label for="subject">Subject</label>
+    <textarea class="inputs" id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+</form>
+
+    <!--Workspace-->
+    <div class="col-sm-8 col-md-8 col-xs-10 title" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <label>My Cv</label>
+        <hr>
+        <div class="drag hidden-xs" id="drag">
+            <p><span class="glyphicon glyphicon-move"></span>Drag your question here from left</p>
+        </div>
+        <!-- Drop Area -->
+        <div id="dropArea">
+
+        </div>
+        <input  id="submit_btn"  type="submit" value="Submit">
+    </div>
+    <div class="col-sm-2 hidden-xs col-md-2"></div>
+</div>
+
+
+</body>
+</html>

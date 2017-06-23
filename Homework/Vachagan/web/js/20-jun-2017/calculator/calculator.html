@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body onload="Func()">
+<div id="calc" >
+    <input id="input" type="text" name="in" placeholder="input number" disabled>
+    <div class="buttons">
+        <div id="btnDiv">
+        </div>
+        <div class="logic">
+        <button type="button" class="mybtn" id="butSqrt" onclick="sendId(this.id)">Sqrt</button>
+        <button type="button" class="mybtn"  id="but^" onclick="sendId(this.id)">Pow</button>
+        <button type="button" class="mybtn"  id="butLog" onclick="sendId(this.id)" >Log</button>
+        <button type="button" class="mybtn"  id="but=" onclick="sendId(this.id)" >=</button>
+        </div>
+        <button type="button" class="mybtn" id="butC" onclick="sendId(this.id)" >C</button>
+
+    </div>
+</div>
+
+
+</body>
+</html>
