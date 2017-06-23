@@ -1,0 +1,77 @@
+body {
+    background-color: rgba(46, 142, 153, 0.21);
+    min-width: 1500px;
+}
+
+.photo {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 5%;
+    padding-bottom: 30%;
+    background: url("../images/ship.jpg") no-repeat;
+    background-size: contain;
+}
+
+.startButton {
+    background-color: #0dbbab;
+    margin-left: 45%;
+    width: 10%;
+    height: 60px;
+}
+
+.startButton:hover {
+    font-size: x-large;
+    background-color: #0dbba0;
+}
+
+.ships {
+    background-color: #ffffff;
+    display:none;
+    width: 60%;
+    height: 80px;
+    margin-left: 20%;
+    margin-top: 2%;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+.shipArea {
+    background-color: #ffffff;
+    display:none;
+    width: 600px;
+    height: 600px;
+    margin-left: 7%;
+    margin-top: 3%;
+    box-shadow: 10px 10px 5px #888888;
+}
+table {
+    width: 100%;
+}
+.partOfShip{
+    border: solid 1px #000;
+    margin: 0;
+    background-size: cover;
+}
+
+.ship {
+    display: inline;
+    margin-left: 7%;
+    margin-top: 5%;
+}
+
+.part {
+    display: inline-block;
+    width: 38px;
+    height: 38px;
+    border: solid 1px #000;
+    margin-left: 0.5%;
+    margin-top: 2%;
+    background-color: #f96b7d;
+}
+
+#shipArea2 table td {
+    background-color: #f96b7d;
+}
+
+#4 {
+    width: 150px;
+}
