@@ -14,10 +14,12 @@
         <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
         <link rel="stylesheet" href="../css/create.css"> 
         <link rel="stylesheet" href="../css/select.css"> 
+        <link rel="stylesheet" href="../css/modal.css">
 
         <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="../js/modal_title.js" defer></script>
     </head>
 
     <body>
@@ -55,9 +57,24 @@
             </div>
 
             <div class="col-sm-6 col-md-6 button_area">
-                <button class="button" id="new_form" type="button" onclick="window.location.href='create.html'"> New Form </button>
+                <button class="button" id="new_form" type="button" > New Form </button>
                 <button class="button" id="my_forms" type="button" onclick="window.location.href='table.html'"> My Forms </button>  
             </div>            
         </div>
+	<!-- Hidden Modal-->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span class="close" id="close">&times;</span>
+                    <h2 id="first_row">Form Name </h2>
+                    <h5>Enter a short descriptive title for this form <h5>
+                            <input type="text" id="modal-id" placeholder="Title me"></input>
+                            <button id="copy-link">Cansel </button>
+                            <button id="open-new-tab" >Continiue</button>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
