@@ -1,0 +1,22 @@
+.board {
+    height: 50%;
+    padding: 3%;
+    float: left;
+
+}
+.shipBord {
+    padding: 3%;
+    float: left;
+}
+table, th, td {
+    border: 3px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 20px;
+}
+td {
+
+}
+button {
+}

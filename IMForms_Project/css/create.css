@@ -173,6 +173,12 @@ body {
     color: #555555;
 }
 
+.workArea > label {
+    font-size: 35px;
+    text-align: left;
+    color: #555555;
+}
+
 .drag > p {
     font-size: 20px;
     text-align: center;
@@ -220,4 +226,36 @@ body {
     .sidenav {
         height: auto;
     }
+}
+
+
+
+/* hide element style */
+
+.element_text {
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.input_area {
+    border: 1px solid #999999;
+    border-radius: 4px;
+    margin: 4px;
+    padding: 2px;
+}
+
+@media (max-width: 1000px) {
+    #certificate {
+        display: none;
+    }
+
+    .title {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+
+
+.RemoveButton {
+    float: right;
 }

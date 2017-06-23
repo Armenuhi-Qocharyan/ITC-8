@@ -14,16 +14,71 @@
         <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
         <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
         <link rel="stylesheet" href="../css/create.css"> 
-        <link rel="stylesheet" href="../css/menu.css"> 
-
+        <link rel="stylesheet" href="../css/menu.css">
+        <link rel="stylesheet" href="../css/modal.css"> 
+        <link rel="stylesheet" href="../css/elementsNew.css"> 
         <!-- Scripts-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' defer></script>
         <script src="../js/sidenav.js" defer></script>
+        <script src="../js/modal.js" defer></script>
+	<script src="../js/create.js" defer></script>
+    <script type="text/javascript" src="../js/convertFormValuesToJson.js" defer></script>
+
     </head>
 
     <body>
+
+ <!-- Hidden elements -->
+        <form class="name" id="ElementfullName" style="display: none;">
+            <table>
+                <tr>
+                    <td class="element_text"><span>First Name</span></td>
+                    <td class="element_text"><input type="text" name="fname" class="inputs"></td>
+                </tr>
+                <br>
+                <tr>
+                    <td class="element_text"><span>Last Name</span></td>
+                    <td class="element_text"><input type="text" name="lname" class="input_area"></td>
+                </tr>
+                <button type="button" class="RemoveButton" onclick="Remove(this)">Remove</button>
+                <hr>
+            </table>
+        </form>
+
+        <form class="email" id="Elementemail" style="display: none;">
+            <table>
+            <tr>
+                    <td class="element_text"><span>Email Address</span></td>
+                    <td class="element_text"><input type="email" name="email" class="input_area"></td>
+                </tr>
+            </table>
+            <button type="button" class="RemoveButton" onclick="Remove(this)">Remove</button>
+            <br>
+            <hr>
+        </form>
+
+  <form  class="address" id="Elementaddress" style="display: none;">
+
+        <label for="fname">First Name</label>
+        <input class="inputs" type="text" id="fname" name="firstname" placeholder="Your name..">
+
+        <label for="lname">Last Name</label>
+        <input class="inputs" type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+        <label for="country">Country</label>
+        <select class="inputs" id="country" name="country">
+            <option value="australia">Australia</option>
+            <option value="canada">Canada</option>
+            <option value="usa">USA</option>
+        </select>
+
+        <label for="subject">Subject</label>
+        <textarea class="inputs" id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+    </form>
+
         <!--Navbar-->
         <div class="row" id="first-row">
             <div class="col-md-2" >
@@ -61,44 +116,44 @@
                     <!--TODO By the way list element can be used in this case-->
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-user icons"></span>Full Name</a>
+                    <a onclick="Add(this.id)" id="fullName" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-user icons"></span>Full Name</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-envelope icons"></span>Email</a>
+                    <a onclick="Add(this.id)" id="email" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-envelope icons"></span>Email</a>
 
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-map-marker icons"></span>Address</a>
+                    <a onclick="Add(this.id)" id="address" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-map-marker icons"></span>Address</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-phone icons"></span>Phone</a>
+                    <a ><span class="glyphicon glyphicon-phone icons"></span>Phone</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-gift icons"></span>Date of Birth</a>
+                    <a ><span class="glyphicon glyphicon-gift icons"></span>Date of Birth</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-education icons"></span>Education</a>
+                    <a ><span class="glyphicon glyphicon-education icons"></span>Education</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-sunglasses icons"></span>Skills</a>
+                    <a ><span class="glyphicon glyphicon-sunglasses icons"></span>Skills</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-briefcase icons"></span>Work experience</a>
+                    <a ><span class="glyphicon glyphicon-briefcase icons"></span>Work experience</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-ok-circle icons"></span>Submit</a>
+                    <a ><span class="glyphicon glyphicon-ok-circle icons"></span>Submit</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-chevron-down icons"></span>Dropdown</a>
+                    <a ><span class="glyphicon glyphicon-chevron-down icons"></span>Dropdown</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="fa fa-transgender icons"></span>Gender</a>
+                    <a ><span class="fa fa-transgender icons"></span>Gender</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-headphones icons"></span>Hobby</a>
+                    <a ><span class="glyphicon glyphicon-headphones icons"></span>Hobby</a>
                     <p class="nav-divider"></p>
 
-                    <a href="#"><span class="glyphicon glyphicon-picture icons"></span>Image</a>
+                    <a ><span class="glyphicon glyphicon-picture icons"></span>Image</a>
                     <p class="nav-divider"></p>
                 </div>
 
@@ -118,23 +173,42 @@
                     </label>
 
                     <a href="#" class="menu-item"> <i class="fa fa-eye"></i> </a>
-                    <a href="#" class="menu-item"> <i class="fa fa-floppy-o"></i> </a>
+                    <a href="#" id="save" class="menu-item"> <i class="fa fa-floppy-o"></i> </a>
                     <a href="#" class="menu-item"> <i class="fa fa-trash"></i> </a>
                 </nav>
             </div>
 
             <!--Workspace-->
-            <div class="col-sm-8 col-md-8 col-xs-10 title">
-                <label>Title</label>
+            <div class="col-sm-8 col-md-8 col-xs-10 title" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <label id="titleForm">Title</label>
                 <hr>
-                <div class="drag hidden-xs">
+                <div class="drag hidden-xs" id="drag">
                     <p><span class="glyphicon glyphicon-move"></span>Drag your question here from left</p>
                 </div>
-                <div class="submit">
-                    <button placeholder="" id="input_2" type="button" class="form-submit-button" data-component="button">Submit</button>
-                </div>
+
+                     <!-- Drop Area -->
+                    <div id="dropArea">
+
+                    </div>
+		 <input  id="submit_btn"  type="submit" value="Submit">
             </div>
             <div class="col-sm-2 hidden-xs col-md-2"></div>
         </div>
+
+        <!-- Hidden Modal-->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span class="close">&times;</span>
+                    <h2 id="first_row">DIRECT LINK OF YOUR FORM </h2>
+                    <h5>Your form is securely published and ready to use at this address<h5>
+                            <input type="text" id="modal-id" value="https://www.google.com" readonly></input>
+                            <button id="copy-link">Copy Link </button>
+                            <button id="open-new-tab">Open In New Tab</button>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
