@@ -1,17 +1,61 @@
 document.getElementById("start").addEventListener("click", startGame);
+Ships = {
+    '1': 4,
+    '2': 3,
+    '3': 2,
+    '4': 1
+};
+function checkShip(size, id) {
+    if (size === 0) {
+        return true;
+    }
+    if (Number(id) % 10 + Number(size) > 11) {
+        alert("false");
+        return false;
+    }
+    var x = Number(id[0]);
+    var y = Number(id[1]);
+    for (var i = x - 1; i <= x + 1; ++i) {
+        for (var j = y -1; j <= y + 1 ; ++j) {
+            if ((i !== -1 && j !== -1) && (i !== 10 && j !== 10)) {
+                var newId = "" + i + j;
+                if (document.getElementById(newId).style.backgroundColor !== "") {
 
-function printShips(size, direction , id) {
-    document.getElementById(id).style.background = "red";
-    for (var i = 0; i < size; ++i) {
-        if (direction === "rigth") {
-            newId = (Number(id) + i) + "";
-            document.getElementById(newId).style.background = "red";
-        } else if (direction === "bottom") {
-            newId = (Number(id) + i * 10) + "";
-            document.getElementById(newId).style.background = "red";
+                    return false;
+                }
+            }
         }
     }
+    id = "" + x + (y + 1);
+    return checkShip(size -1, id)
+}
 
+function printShips(size, direction , id) {
+    if (checkShip(size, id)) {
+        for (var i = 0; i < size; ++i) {
+            if (direction === "rigth") {
+                newId = (Number(id) + i);
+                if (newId < 10) {
+                    newId = "0" + newId
+                } else {
+                    newId += "";
+                }
+                document.getElementById(newId).style.backgroundImage = "url('images/shp.jpg')";
+                document.getElementById(newId).style.backgroundSize = "cover";
+                document.getElementById(newId).style.backgroundColor = "red";
+            } else if (direction === "bottom") {
+                newId = "" + i + id;
+                document.getElementById(newId).style.backgroundImage = "url('images/shp.jpg')";
+                document.getElementById(newId).style.backgroundSize = "cover";
+                document.getElementById(newId).style.backgroundColor = "red";
+            }
+        }
+        --Ships[size];
+        if (Ships[size] === 0) {
+            size += "";
+            document.getElementById(size).style.display = 'none';
+        }
+    }
 }
 
 var size = 0;
@@ -23,7 +67,7 @@ function allowDrop(ev) {
 
 function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
-    size = ev.target.id;
+    size = Number(ev.target.id);
 }
 
 function drop(ev) {
@@ -64,7 +108,7 @@ function drowTable(row, column, id) {
 }
 
 function drowShip(size) {
-    var content = "<img src='images/shp.png' class='part' id= " + size + " draggable='true' ondragstart='drag(event)'>";
+    var content = "<img src='images/shp.png' class='part' id= " + size + " draggable='true' ondragstart='drag(event)' style='width:" + size * 40 + "px '>";
     document.getElementById("ships").innerHTML += content;
 }
 
