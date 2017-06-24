@@ -1,10 +1,14 @@
-var sh = 0;
+var score = 0;
 var arr = [];
 var countShips = 0;
 var start = false;
 var p = 0;
 var count = 0;
 var globalShip;
+
+var play = function() {
+	document.getElementById("startGame").style.display = "none";
+}
 
 for(var i = 0; i < 10; i++){
     arr[i] = [];    
@@ -31,6 +35,7 @@ $(document).ready(function(){
 			square.addEventListener("click", function () {
 				if (findShip(this.id) === "end"){
 					document.getElementById("gameOver").style.display = "block";
+					document.getElementById("gameOver").innerHTML += "<br><br><span>Attempts  " + score + "</span>";
 			}});						
 		}
 	}
@@ -53,9 +58,6 @@ var createShip = function(size, class_name,shipsContainer){
 	}
 }
 
-/*Dragndrop*/
-
-
 function keyDownTextField (e) {
   var keyCode = e.keyCode;
   	if(keyCode === 32) {
@@ -70,6 +72,7 @@ function keyDownTextField (e) {
   		}
   	}
 }
+/*Dragndrop*/
 $(document).ready(function(){
 	for(var i = 0; i < 10; ++i){
 		drag(i);
@@ -112,13 +115,6 @@ var drag = function(shNum){
 		    		shipsContainer.appendChild(ship);
 		    		ship.style.top = (160 - Number(ship.className[5]) * 40) + "px";
 		    		ship.style.left = Number(ship.id[5] * 40) + "px";
-		    		/*if (ship.horVer === "v") {
-		    			var x = Number(ship.offsetWidth);
-				  		var y = Number(ship.offsetHeight);		
-				  		ship.style.height = x + "px";
-				  		ship.style.width = y + "px";
-		    		}*/
-
 		    	} else {
 		    		ship.style.display = "none";
 		        }
@@ -220,12 +216,14 @@ var findShip = function(squareId) {
 		var y = squareId[2];
 		if(arr[x][y] ===  1){
 			document.getElementById("s" + x + y).style.backgroundColor = "red";
+			score++;
 			count++;
 			if (count === 20) {
 				return "end";
 			}
 		} else {
-			document.getElementById("s" + x + y).style.backgroundColor = "#ddd";
+			score++;
+			document.getElementById("s" + x + y).style.opacity = "0.2";
 		}
 	}
 }

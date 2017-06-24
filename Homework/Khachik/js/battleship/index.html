@@ -4,15 +4,17 @@
 		<title>Battleship</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script type="text/javascript" src="js/ship.js"></script>
 	</head>
 	<body>
-	<h1>Battleship</h1>	
+	<h1 id="heading">Battleship</h1>	
 	<div id="shipCont">
 	</div>
 	<div id="gameboard">
 	</div>
 	<button id="start">Start game</button>
+	<div id="startGame"><button type="button" id="play" class="btn btn-primary" onclick="play()">Play</button></div>
 	<div id="gameOver"><span>Game Over</span></div>
 	</body>
 </html>
