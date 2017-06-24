@@ -175,9 +175,17 @@ function find(td) {
             document.getElementById(x + '' + y).style.backgroundColor = "#ffffff";
         }
     }
-    if (win === 20) {
-        alert('YOU WIN');
-        location.reload();
+    if (win === 20 ) {
+        newGame();
         return 0;
     }
+}
+function newGame() {
+    document.getElementById('start1').innerHTML = "New Game";
+    document.getElementById("forms").style.display = "none";
+    document.getElementById("gamer_1").style.display = "none";
+    document.getElementById('win').style.display = 'block';
+    document.getElementById('start1').onclick = function() {
+        location.reload();
+    };
 }

@@ -25,6 +25,15 @@ table, td {
     border: 1px solid black;
 }
 
+#win {
+    width: 80%;
+    margin-left: 10%;
+    padding-bottom: 42%;
+    background: url("../images/win5.jpg") no-repeat;
+    background-size: cover;
+    display: none;
+}
+
 .shipImage {
      width: 75%;
      margin-left: 14%;
