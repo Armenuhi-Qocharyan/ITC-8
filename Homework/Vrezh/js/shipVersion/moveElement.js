@@ -1,3 +1,4 @@
+
 var startButton = document.getElementById('startButton');
 var startImage = document.getElementById('startImage');
 var replaceButton = document.getElementById('replace');
@@ -6,10 +7,11 @@ replaceButton.style.display = "none";
 function startGame() {
     startButton.style.display = "none";
     startImage.style.display = "none";
+    var workAre = new workArea();
     var shipArea = createShipArea();
-    var workAre = workArea();
 
     function workArea() {
+        this.shipCount = 18;
         this.table = document.createElement('table');
         this.table.id = "workArea";
         for (var i = 0; i < 10; ++i) {
@@ -22,7 +24,6 @@ function startGame() {
                 td.id = "sq";
                 tr.appendChild(td);
             }
-            this.table.style.float = "right";
             this.table.appendChild(tr);
             document.body.appendChild( this.table);
         }
@@ -32,7 +33,6 @@ function startGame() {
         for (var i = 0; i < 10; ++i) {
             for (var j = 0; j < 10; ++j) {
                 document.getElementById('workArea').rows[i].cells[j].style.background = "grey";
-
             }
         }
     }
@@ -40,12 +40,8 @@ function startGame() {
     function createShipArea() {
         var shipArea = document.createElement('div');
         shipArea.id = "shipArea";
-        shipArea.style.float = "left";
         shipArea.style.background = "grey";
         document.body.appendChild(shipArea);
-        shipArea.style.margin = "10px";
-        shipArea.style.width = "300px";
-        shipArea.style.height = screen.height / 2 + "px";
         return shipArea;
     }
 
@@ -55,6 +51,7 @@ function startGame() {
             this.ship.style.float = "left";
         }
         this.ship.style.background = "red";
+        this.ship.style.border = "dotted";
         this.ship.id = "ship";
         this.ship.style.margin = "0px";
         this.ship.style.left = shipArea.style.left;
@@ -67,6 +64,7 @@ function startGame() {
         this.number = number;
         this.ship = document.createElement('div');
         this.ship.style.background = "red";
+        this.ship.style.float = "left";
         this.rotate = rotate;
         this.items = [];
         if (this.rotate) {
@@ -132,7 +130,9 @@ function startGame() {
                     if (shipArea.childNodes.length == 0) {
                         replaceButton.style.display = "block";
                         replaceButton.onclick = function () {
-                            replaceArea()
+                            replaceButton.onmousedown = null;
+                            replaceButton.textContent = "18";
+                            replaceArea();
                         }
                     }
                     return;
@@ -193,7 +193,14 @@ function startGame() {
                     element.style.background = "red";
                     element.id = "contain";
                     element.onmousedown = function () {
+                        element.onmousedown = null;
                         element.style.background = "red";
+                        workAre.shipCount--;
+                        replaceButton.textContent =  workAre.shipCount;
+                        if (workAre.shipCount == 0) {
+                            replaceButton.style.display = "none";
+                            workAre.table.style.display = "none";
+                        }
                     }
                 }
                 create();
