@@ -1,0 +1,53 @@
+body {
+    background-image:url('resouces/ship.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.startImage {
+    margin: auto;
+    width: 100%;
+}
+
+.startButton {
+    width: 100%;
+    background-color: cadetblue;
+    font-size: 500%;
+    color: white;
+    vertical-align: middle;
+}
+
+.square {
+    border:1px solid #CCC;
+    border-collapse:collapse;
+    width: 30px;
+    height: 30px;
+    padding:0; margin:0;
+}
+
+.square1 {
+    widht: 20
+}
+
+.shipArea {
+    width: 12%;
+    background-color: grey;
+    float:left;
+}
+
+.ship {
+	margin-left: 0px;
+    width: 10%;
+
+}
+
+table {
+    border-collapse: collapse;
+    float: left;
+	width: 400px;
+	height: 400px;
+}
+
+.tdBorder {
+
+}
