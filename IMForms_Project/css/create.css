@@ -257,6 +257,8 @@ hr {
 
 
 .RemoveButton {
+    display: none;
+
 }
 
 #plus {
