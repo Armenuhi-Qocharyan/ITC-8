@@ -1,4 +1,4 @@
-
+var STEP = 50;
 var startButton = document.getElementById('startButton');
 var startImage = document.getElementById('startImage');
 var replaceButton = document.getElementById('replace');
@@ -17,22 +17,41 @@ function startGame() {
         for (var i = 0; i < 10; ++i) {
             var tr = document.createElement("tr");
             for (var j = 0; j < 10; ++j) {
-                var td = document.createElement("td");
-                td.classList.add("square");
-                var aText = document.createTextNode(" ");
-                td.appendChild(aText);
-                td.id = "sq";
-                tr.appendChild(td);
+                function create() {
+                    var td = document.createElement("td");
+                    td.classList.add("square");
+                    var aText = document.createTextNode(" ");
+                    td.appendChild(aText);
+                    td.id = "sq";
+                    tr.appendChild(td);
+                }
+                create();
             }
             this.table.appendChild(tr);
-            document.body.appendChild( this.table);
+            document.getElementById('container').appendChild(this.table);
         }
     }
 
     function replaceArea() {
         for (var i = 0; i < 10; ++i) {
             for (var j = 0; j < 10; ++j) {
-                document.getElementById('workArea').rows[i].cells[j].style.background = "grey";
+                function  create() {
+                    var td = document.getElementById('workArea').rows[i].cells[j];
+                    td.style.background = "grey";
+                    if(td.id != "contain") {
+                        td.onmousedown = function () {
+                            --STEP;
+                            if (STEP == 0) {
+                                shipArea.childNodes[0].textContent = "YOU ARE WINE !!!"
+                                workAre.table.style.display = "none";
+                                return;
+                            }
+                            shipArea.childNodes[0].textContent = workAre.shipCount + "-------------" + STEP;
+                            td.style.backgroundColor = "transparent";
+                        }
+                    }
+                }
+                create();
             }
         }
     }
@@ -40,8 +59,9 @@ function startGame() {
     function createShipArea() {
         var shipArea = document.createElement('div');
         shipArea.id = "shipArea";
-        shipArea.style.background = "grey";
-        document.body.appendChild(shipArea);
+        shipArea.classList.add('shipArea');
+        shipArea.style.background = "cadetblue";
+        document.getElementById('container').appendChild(shipArea);
         return shipArea;
     }
 
@@ -50,8 +70,9 @@ function startGame() {
         if (rotate) {
             this.ship.style.float = "left";
         }
-        this.ship.style.background = "red";
-        this.ship.style.border = "dotted";
+        this.ship.style.backgroundCilor = "red";
+        this.ship.style.backgroundImage = "url('resouces/ship-icon.png')";
+        this.ship.style.backgroundSize = "cover"
         this.ship.id = "ship";
         this.ship.style.margin = "0px";
         this.ship.style.left = shipArea.style.left;
@@ -87,6 +108,7 @@ function startGame() {
         };
         this.ship.ondblclick = function (e) {
             ship1.ship.style.display = "none";
+            shipArea.removeChild(ship1.ship);
             ship1 = new shipDiv(ship1.number, !ship1.rotate);
             shipArea.appendChild(ship1.ship);
         }
@@ -117,21 +139,22 @@ function startGame() {
         }
         ship.onmouseup = function (e) {
             document.onmousemove = null;
-            ship.onmouseup = null;
             var bound = ship.getBoundingClientRect();
             ship.style.display = "none";
             var elem1 = document.elementFromPoint(e.clientX, e.clientY);
-
             if (elem1 && elem1.id == 'sq') {
-                ship.style.left = elem1.getBoundingClientRect().left + 'px';
-                ship.style.top = elem1.getBoundingClientRect().top + 'px';
                 if (elementHov(e, bound)) {
                     shipArea.removeChild(ship);
                     if (shipArea.childNodes.length == 0) {
+                        shipArea.style.display = "none";
                         replaceButton.style.display = "block";
                         replaceButton.onclick = function () {
-                            replaceButton.onmousedown = null;
-                            replaceButton.textContent = "18";
+                            shipArea.style.display = "block";
+                            var message = document.createElement('p');
+                            message.classList.add('btn');
+                            shipArea.appendChild(message);
+                            replaceButton.style.display = "none";
+                            message.textContent = workAre.shipCount + "-------------"  + STEP;
                             replaceArea();
                         }
                     }
@@ -146,13 +169,13 @@ function startGame() {
          for (var i = 1; i <= 4; ++i) {
              for (var j = 4; j > 0; j -= i) {
                  function create () {
-                     var ship = new shipDiv(i, true);
+                     var ship = new shipDiv(i, false);
                      shipArea.appendChild(ship.ship);
                  }
                  create();
              }
          }
-     }
+    }
     createShips();
     document.onmouseup = function () {
         document.onmousemove = null;
@@ -161,8 +184,8 @@ function startGame() {
     function elementHov(e, bound) {
         var h = bound.height / 40;
         var w = bound.width / 40;
-        var left = e.clientX - 39;
-        var top = e.clientY - 39;
+        var left = e.clientX - 40;
+        var top = e.clientY - 40;
         var isCorrect = true;
         var counter = w > h ? w : h;
         for (var j = 0; j < counter; ++j) {
@@ -187,8 +210,8 @@ function startGame() {
             for (var j = 0; j < counter; ++j) {
                 function create() {
                     var element;
-                    if (w > h) element = document.elementFromPoint(bound.left + 40 * j, bound.top);
-                    else element = document.elementFromPoint(bound.left, bound.top + 40 * j);
+                    if (w > h) element = document.elementFromPoint(e.clientX + 40 * j,e.clientY);
+                    else element = document.elementFromPoint(e.clientX, e.clientY + 40 * j);
                     var item = new shipItem(false);
                     element.style.background = "red";
                     element.id = "contain";
@@ -196,9 +219,9 @@ function startGame() {
                         element.onmousedown = null;
                         element.style.background = "red";
                         workAre.shipCount--;
-                        replaceButton.textContent =  workAre.shipCount;
+                        shipArea.childNodes[0].textContent =  workAre.shipCount + "-------------" + STEP;
                         if (workAre.shipCount == 0) {
-                            replaceButton.style.display = "none";
+                            shipArea.childNodes[0].textContent = "YOU ARE WON !!!"
                             workAre.table.style.display = "none";
                         }
                     }

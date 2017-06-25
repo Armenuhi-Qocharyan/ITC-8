@@ -1,13 +1,21 @@
 body {
-    background-image:url('resouces/ship.jpg');
+    background-image:url('../resouces/ship.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 130%;
+}
+
+.container {
+    width: 400px;
+    margin: auto;
 }
 
 .btn {
     width: 400px;
     color: white;
-    background-color: black;
+    background-color: cadetblue;
+    height: 40px;
+    text-align: center;
+    font-size: 200%;
 }
 
 .startImage {
@@ -35,4 +43,8 @@ table {
     border-collapse: collapse;
 	width: 400px;
 	height: 400px;
+}
+
+.shipArea {
+    height: 160px;
 }
