@@ -1,6 +1,7 @@
 global = "";
 cnt = 0;
-
+localStorage.getItem("name",name);
+document.getElementById('right-text').innerHTML =name;
 function newDrop(event) {
     event.preventDefault();
     var drop_target = event.target;

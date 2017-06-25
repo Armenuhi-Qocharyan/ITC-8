@@ -1,12 +1,14 @@
-var checkEmail = true;
-var checkPsw = true;
-var checkUname = true;
-var checkRepeat = true;
+var checkEmail = false;
+var checkPsw = false;
+var checkUname = false;
+var checkRepeat = false;
 
 
 function validator () {
     if (true == checkEmail && true == checkPsw && true == checkUname && true == checkRepeat) {
         document.getElementById("submit").disabled=false;
+	name = document.getElementById('user').value;
+	localStorage.setItem("name",name);
     }   
 }
 
@@ -61,3 +63,4 @@ function validateUsername (username) {
         validator();
     }
 }
+

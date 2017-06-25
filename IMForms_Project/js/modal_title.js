@@ -1,3 +1,7 @@
+    localStorage.getItem("name",name);
+    document.getElementById('right-text').innerHTML =name;
+
+
 // Get the modal
 var modal = document.getElementById('myModal');
 
