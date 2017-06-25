@@ -1,13 +1,16 @@
 global = "";
 cnt = 0;
-localStorage.getItem("name",name);
-document.getElementById('right-text').innerHTML =name;
+var isValid = true,
+    testId = /myid/;
+
+localStorage.getItem("name", name);
+document.getElementById('right-text').innerHTML = name;
+
 function newDrop(event) {
     event.preventDefault();
     var drop_target = event.target;
     var drag_target_id = event.dataTransfer.getData('target_id');
-    var testId = /myid/;
-    if (false == testId.test(drop_target.id)) {
+    if (false === testId.test(drop_target.id)) {
         drop_target = drop_target.parentNode;
     }
     var drag_target = $('#' + drag_target_id)[0];
@@ -20,10 +23,17 @@ function newDrop(event) {
     }
 }
 
-function newDrag(event) {
-    event.dataTransfer.setData('target_id', event.target.id);
+function drag(ev, otherId) {
+    isValid = true;
+    ev.dataTransfer.setData("text", ev.target.id);
+    global = otherId;
 }
 
+
+function newDrag(event) {
+    isValid = false;
+    event.dataTransfer.setData('target_id', event.target.id);
+}
 
 function createDragable(newDiv) {
     newDiv.ondragstart = function(event) {
@@ -48,31 +58,29 @@ function Add(myId) {
     document.getElementById("dropArea").appendChild(newDiv);
     $("#drag").hide();
     cnt++;
-    newDiv.onmouseover = function () {
-    	mouseOnbutton(newDiv);
-    }
-    newDiv.onmouseleave = function () {
 
-	mouseOutButton(newDiv);
+    newDiv.onmouseover = function() {
+        mouseOnbutton(newDiv);
+    }
+    newDiv.onmouseleave = function() {
+
+        mouseOutButton(newDiv);
     }
     newDiv.draggable = true;
     createDragable(newDiv);
-
-
-
 }
 
-function mouseOnbutton (newDiv) {
-   var allChildNodes = newDiv.getElementsByTagName('button');
-   var len = allChildNodes.length - 1;
-   allChildNodes[len].style.display="initial";
+function mouseOnbutton(newDiv) {
+    var allChildNodes = newDiv.getElementsByTagName('button');
+    var len = allChildNodes.length - 1;
+    allChildNodes[len].style.display = "initial";
 }
 
 
-function mouseOutButton (newDiv) {
-   var allChildNodes = newDiv.getElementsByTagName('button');
-   var len = allChildNodes.length - 1;
-   allChildNodes[len].style.display="none";
+function mouseOutButton(newDiv) {
+    var allChildNodes = newDiv.getElementsByTagName('button');
+    var len = allChildNodes.length - 1;
+    allChildNodes[len].style.display = "none";
 }
 
 
@@ -88,15 +96,8 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
-function drag(ev, otherId) {
-    ev.dataTransfer.setData("text", ev.target.id);
-    global = otherId;
-
-}
-
 function drop(ev) {
-    if (global == "") {
-        return;
+    if (isValid == true) {
+        Add(global);
     }
-    Add(global);
 }

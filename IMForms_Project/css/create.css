@@ -55,6 +55,7 @@ body {
 }
 
 .plus {
+    margin: 0;
     padding-left: 10px;
 }
 
@@ -258,11 +259,10 @@ hr {
 
 .RemoveButton {
     display: none;
-
 }
 
-#plus {
-    float: right;
+.hide {
+    display: none;
 }
 
 .btn-circle {
@@ -275,7 +275,7 @@ hr {
     border-radius: 15px;
     border: none;
     background-color: #2FA7AB;
-    margin-bottom: 30px;
+    margin: 20px 0 30px 15px;
 
 }
 
