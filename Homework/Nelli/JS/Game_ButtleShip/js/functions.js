@@ -7,41 +7,42 @@ Ships = {
 };
 
 var player_2Area = [
-    ['1','0','0','1','1','1','0','0','1','1'],
+    ['0','0','0','1','1','1','0','0','1','1'],
     ['1','0','0','0','0','0','0','0','0','0'],
     ['1','0','0','0','0','0','0','0','0','0'],
     ['1','0','1','1','0','0','1','1','1','0'],
+    ['1','0','0','0','0','0','0','0','0','0'],
+    ['0','0','0','0','0','0','0','1','0','0'],
     ['0','0','0','0','0','0','0','0','0','0'],
-    ['0','0','0','0','0','0','0','0','0','0'],
-    ['0','0','0','0','0','1','0','0','0','0'],
     ['1','0','1','0','0','0','0','0','1','0'],
     ['0','0','0','0','0','0','0','0','1','0'],
-    ['1','0','0','0','0','0','0','0','0','0']
+    ['0','0','0','1','0','0','0','0','0','0']
 ];
 
 var player1Count = 0;
 var player2Count = 0;
 
+
 function  find(id) {
+    var element = document.getElementById(id);
     if (id[0] === 's') {
         var i = Number(id[1]);
         var j = Number(id[2]);
+        if (element.style.backgroundColor === "yellow" ||element.style.backgroundColor === "green") {
+            return;
+        }
         if (player_2Area[i][j] === '1') {
-            document.getElementById(id).style.backgroundImage = "url('images/shp.jpg')";
-            document.getElementById(id).style.backgroundSize = "cover";
+            element.style.backgroundImage = "url('images/shp.jpg')";
+            element.style.backgroundSize = "cover";
+            element.style.backgroundColor = "yellow";
             ++player1Count;
         } else {
-            document.getElementById(id).style.background = "green";
+            element.style.background = "green";
         }
         if (player1Count === 20) {
-            gameOver = true;
             alert("You win");
             document.getElementById("shipArea1").style.display = "none";
             document.getElementById("shipArea2").style.display = "none";
-            return;
-        } else if (player2Count === 20) {
-            gameOver = true;
-            alert("Computer win");
             return;
         }
         setTimeout(computerStep , 400);
@@ -51,14 +52,25 @@ function  find(id) {
 function  computerStep() {
     var i = Math.ceil(Math.random() * 10 - 1);
     var j = Math.ceil(Math.random() * 10 - 1);
-    alert("My step row = " + i + " column = " + j);
     var id = "" + i + j;
-    if (document.getElementById(id).style.backgroundColor === "red") {
-        document.getElementById(id).style.backgroundImage = "url('images/delete.jpg')";
-        document.getElementById(id).style.backgroundSize = "cover";
+    var element = document.getElementById(id);
+    if (element.style.backgroundColor === "yellow" || element.style.backgroundColor === "green") {
+        computerStep();
+        return;
+    }else if (element.style.backgroundColor === "red") {
+        element.style.backgroundImage = "url('images/delete.jpg')";
+        element.style.backgroundSize = "cover";
+        element.style.backgroundColor = "yellow";
         ++player2Count;
+        if (player2Count === 20) {
+            alert("Computer win");
+            document.getElementById("shipArea1").style.display = "none";
+            document.getElementById("shipArea2").style.display = "none";
+            return;
+        }
     } else {
-        document.getElementById(id).style.background = "green";
+        element.style.background = "green";
+        return;
     }
 }
 
@@ -107,14 +119,15 @@ function printShips(size, direction , id) {
                 } else {
                     newId += "";
                 }
-                document.getElementById(newId).style.backgroundImage = "url('images/shp.jpg')";
-                document.getElementById(newId).style.backgroundSize = "cover";
-                document.getElementById(newId).style.backgroundColor = "red";
+                element = document.getElementById(newId);
+                element.style.backgroundImage = "url('images/shp.jpg')";
+                element.style.backgroundSize = "cover";
+                element.style.backgroundColor = "red";
             } else if (direction === "bottom") {
                 newId = "" + i + id;
-                document.getElementById(newId).style.backgroundImage = "url('images/shp.jpg')";
-                document.getElementById(newId).style.backgroundSize = "cover";
-                document.getElementById(newId).style.backgroundColor = "red";
+                element.style.backgroundImage = "url('images/shp.jpg')";
+                element.style.backgroundSize = "cover";
+                element.style.backgroundColor = "red";
             }
         }
         --Ships[size];
@@ -182,21 +195,21 @@ function drowShip(size) {
 }
 
 function setElementId() {
-    row = document.getElementById("shipArea1").childNodes[0].childNodes[0].childElementCount;
-    column = document.getElementById("shipArea1").childNodes[0].childNodes[0].childNodes[0].childElementCount;
+    row = document.getElementById("shipArea1").childNodes[0].childNodes[0];
+    column = document.getElementById("shipArea1").childNodes[0].childNodes[0].childNodes[0];
 
-    for (i = 0; i < row; ++i) {
-        for (j = 0; j < column; ++j) {
-            document.getElementById("shipArea1").childNodes[0].childNodes[0].childNodes[i].childNodes[j].id = i + '' + j;
+    for (i = 0; i < row.childElementCount; ++i) {
+        for (j = 0; j < column.childElementCount; ++j) {
+            row.childNodes[i].childNodes[j].id = i + '' + j;
         }
     }
 
-    row = document.getElementById("shipArea2").childNodes[0].childNodes[0].childElementCount;
-    column = document.getElementById("shipArea2").childNodes[0].childNodes[0].childNodes[0].childElementCount;
+    row = document.getElementById("shipArea2").childNodes[0].childNodes[0];
+    column = document.getElementById("shipArea2").childNodes[0].childNodes[0].childNodes[0];
 
-    for (i = 0; i < row; ++i) {
-        for (j = 0; j < column; ++j) {
-            document.getElementById("shipArea2").childNodes[0].childNodes[0].childNodes[i].childNodes[j].id = 's' + i + '' + j;
+    for (i = 0; i < row.childElementCount; ++i) {
+        for (j = 0; j < column.childElementCount; ++j) {
+            row.childNodes[i].childNodes[j].id = 's' + i + '' + j;
         }
     }
 }
