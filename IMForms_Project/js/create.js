@@ -61,11 +61,11 @@ function Add(myId) {
 
     newDiv.onmouseover = function() {
         mouseOnbutton(newDiv);
-    }
+    };
     newDiv.onmouseleave = function() {
 
         mouseOutButton(newDiv);
-    }
+    };
     newDiv.draggable = true;
     createDragable(newDiv);
 }
