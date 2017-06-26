@@ -1,36 +1,109 @@
 #body {
-    background-color: #ccc;
-    font-family: arial;
-    font-size: 30px;
-    color: #fff;
+    background-image: url("../sources/battleship.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #content {
-    background: linear-gradient(#00969c, #01b6ac);
-    border: 0.1px solid #00969c;
-    border-radius: 4px;
+    border: none;
     margin: auto;
     margin-top: 5%;
-    padding: 2%;
-    width: 40%;
+    padding: 0%;
+    width: 50%;
     height: auto;
 }
 
 #button {
     display: block;
     margin: auto;
+    box-shadow: 0px 0px 1px 1px rgba(10, 10, 10, 0.2); 
+    background-color: rgba(10, 10, 10, 0.4);
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    outline: none;
+    font-family: arial;
+    font-size: 30%;
 }
 
-.table {
-    border: 0.5px solid #fff;
-    border-collapse: collapse;
-    margin: 2%;
-    width: 50%;
+#button:hover {
+    color: #73b0de;
+    border-color: #73b0de;
+}
+
+#button:active {
+    transform: translateY(0.5px);
+}
+
+#play {
+    display: none;
+    margin: auto;
+    margin-top: 50%;
+    box-shadow: 0px 0px 1px 1px rgba(10, 10, 10, 0.2); 
+    background-color: rgba(10, 10, 10, 0.4);
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    outline: none;
+    font-family: arial;
+    font-size: 30%;
+}
+
+#play:hover {
+    color: #73b0de;
+    border-color: #73b0de;
+}
+
+#play:active {
+    transform: translateY(0.5px);
 }
 
 .cell {
-    width: 10%;
-    border: 0.5px solid #fff;
-    padding-bottom: 7%;
-    background-color: rgba(7, 7, 7, 0.3);
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-sizing: border-box;
+    border: 0.3px solid #cfcfcf;
+    width: 10px;
+    height: 10px;
+}
+
+#shipContainer {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    border: 0.3px solid #cfcfcf;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 80px;
+    height: 100px;
+    font-family: arial;
+    font-size: 50%;
+    color: #fff;
+    text-align: center;
+}
+
+.ship_1, .ship_2, .ship_3, .ship_4 {
+    position: absolute;
+    display: inline;
+    box-sizing: border-box;
+    border: 0.2px solid #888;
+    background-color: #ccc;
+    width: 10px;
+}
+
+.ship_1 {
+    height: 10px;
+}
+
+.ship_2 {
+    height: 20px;
+}
+
+.ship_3 {
+    height: 30px;
+}
+
+.ship_4 {
+    height: 40px;
 }

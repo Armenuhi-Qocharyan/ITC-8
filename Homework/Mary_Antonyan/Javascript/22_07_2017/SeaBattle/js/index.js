@@ -1,87 +1,73 @@
-var dragged;
+var scores = 0,
+    board = [],
+    layingShips = 0;
 
-function showOther() {
-    var otherTable = document.getElementById("other");
-    otherTable.style.width = '100%';
-
-    var ownTable = document.getElementById("own");
-    ownTable.style.width = '0';
-
-    removeShips();
-}
-
-function showOwn() {
-    var ownTable = document.getElementById("own");
-    if (ownTable.style.width != '100%') {
-        ownTable.style.width = '100%';
-
-        var otherTable = document.getElementById("other");
-        otherTable.style.width = '0';
-
-        drawShips();
-    }
-}
-
-function drawShips() { 
-    var content = document.getElementById("content");
-    for (var i = 0; i < 4; ++i) {
-        var icon = document.createElement('span');
-        icon.setAttribute("class", "fa fa-ship");
-        icon.style.fontSize = '24px';
-        icon.style.draggable = 'true';
-        content.appendChild(icon);
-        icon.addEventListener("drag", function(event) {
-        }, false);
-
-        icon.addEventListener("dragstart", function(event) {
-            dragged = event.target;
-            event.target.style.opacity = 0.5;
-        }, false);
-
-        icon.addEventListener("dragend", function(event) {
-            event.target.style.opacity = "";
-        }, false);
-
-        icon.addEventListener("dragover", function(event) {
-            event.preventDefault();
-        }, false);
-
-        icon.addEventListener("dragleave", function(event) {
-            if (event.target.className == "cell dropzone") {
-                event.target.style.background = "";
-            }
-        }, false);
-
-        icon.addEventListener("drop", function(event) {
-            event.preventDefault();
-            if (event.target.className == "cell dropzone") {
-                event.target.style.background = "";
-                dragged.parentNode.removeChild(dragged);
-                event.target.appendChild(dragged);
-            }
-        }, false);
-    }
-}
-
-function removeShips() {
-    for (var i = 0; i < 4; ++i) {
-        content.removeChild(content.lastChild);
-    }
-}
-
-function createTable() {
+function start() {
+    // Prepare area
+    var content = document.getElementById("cont");
+    content.setAttribute("id", "content");
+    document.body.style.backgroundImage = "url('sources/wallpaper.jpg')";
     var button = document.getElementById("button");
     button.style.display = 'none';
-    var tables = document.getElementsByClassName("table");
-    for (var i = 0, count = tables.length; i < count; ++i) {
+    var play = document.getElementById("play");
+    play.style.display = 'block';
+    
+    // Create initial board
+    for (var i = 0; i < 10; ++i) {
+        board[i] = [];
         for (var j = 0; j < 10; ++j) {
-            var row = tables[i].insertRow(j); 
-            for (var k = 0; k < 10; ++k) {
-                var cell = row.insertCell(k);
-                cell.setAttribute("class", "cell");
-                cell.className += " dropzone";
-            }
+            board[i][j] = 0;
+        } 
+    }
+    drawTable();
+}
+
+function drawTable() {
+    var rows = 10,
+        columns = 10,
+        side = 10,
+        content = document.getElementById("content");
+
+    // Create cells
+    for (var i = 0; i < rows; ++i) {
+        for (var j = 0; j < columns; ++j) {
+            var cell = document.createElement('div');
+            content.appendChild(cell);
+            cell.setAttribute("id", id);
+            cell.setAttribute("class", "cell");
+            marginTop = i * side + 15;
+            marginLeft = j * side + 25;
+            cell.style.top = marginTop + "px";
+            cell.style.left = marginLeft + "px";
+            var id = "cell_" + i + "_" + j; 
+           // cell.addEventListener("click",)
         }
     }
-    showOwn();    
+    drawShipContainer();
 }
+
+function drawShipContainer() {
+    // Draw ship container with ships
+    var shipContainer = document.getElementById("shipContainer");
+    shipContainer.style.display = 'block';
+    for (var i = 1, j = 4; i < 5; ++i, --j) {
+        var className = "ship_" + i;
+        drawShip(className, j, shipContainer);
+    }
+}
+
+function drawShip(className, count, shipContainer) {
+    // Draw current ship in container
+    for (var i = 0; i < count; ++i) {
+        ++layingShips;
+        var currentShip = document.createElement('div');
+        currentShip.className = className;
+        var top = (layingShips < 7) ? "15px" : "40px",
+            right = (layingShips < 7) ? layingShips * 10.5 : (layingShips - 6) * 10.5;
+        currentShip.style.top = top;
+        currentShip.style.right = right + "px";
+        shipContainer.appendChild(currentShip);
+    }
+}
+
+
