@@ -52,6 +52,7 @@ var createShip = function(size, class_name,shipsContainer){
 		ship.style.top = (200 - Number(ship.className[5]) * 40 -40) + "px";
 		ship.style.left = (p * 40 - 40) + "px";
 		shipsContainer.appendChild(ship);
+
 	}
 }
 
