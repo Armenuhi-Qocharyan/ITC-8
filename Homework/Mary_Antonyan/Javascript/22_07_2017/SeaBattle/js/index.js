@@ -1,3 +1,5 @@
+var dragged;
+
 function showOther() {
     var otherTable = document.getElementById("other");
     otherTable.style.width = '100%';
@@ -22,17 +24,48 @@ function showOwn() {
 
 function drawShips() { 
     var content = document.getElementById("content");
-    var icon = document.createElement('div');
-    icon.setAttribute("class", "fa fa-ship");
-    icon.style.fontSize = '8px';
-    icon.style.draggable = 'true';
-    content.insertBefore(icon, content.children[3]);
+    for (var i = 0; i < 4; ++i) {
+        var icon = document.createElement('span');
+        icon.setAttribute("class", "fa fa-ship");
+        icon.style.fontSize = '24px';
+        icon.style.draggable = 'true';
+        content.appendChild(icon);
+        icon.addEventListener("drag", function(event) {
+        }, false);
+
+        icon.addEventListener("dragstart", function(event) {
+            dragged = event.target;
+            event.target.style.opacity = 0.5;
+        }, false);
+
+        icon.addEventListener("dragend", function(event) {
+            event.target.style.opacity = "";
+        }, false);
+
+        icon.addEventListener("dragover", function(event) {
+            event.preventDefault();
+        }, false);
+
+        icon.addEventListener("dragleave", function(event) {
+            if (event.target.className == "cell dropzone") {
+                event.target.style.background = "";
+            }
+        }, false);
+
+        icon.addEventListener("drop", function(event) {
+            event.preventDefault();
+            if (event.target.className == "cell dropzone") {
+                event.target.style.background = "";
+                dragged.parentNode.removeChild(dragged);
+                event.target.appendChild(dragged);
+            }
+        }, false);
+    }
 }
 
 function removeShips() {
-    var ships = document.getElementsByClassName("fa fa-ship");
-    for (var i = 0, len = ships.length; i < len; ++i) {
-        ships[i].remove();
+    for (var i = 0; i < 4; ++i) {
+        content.removeChild(content.lastChild);
     }
 }
 
@@ -46,34 +79,9 @@ function createTable() {
             for (var k = 0; k < 10; ++k) {
                 var cell = row.insertCell(k);
                 cell.setAttribute("class", "cell");
-//                cell.setAttribute("id", "cell" + j + k);
+                cell.className += " dropzone";
             }
         }
     }
     showOwn();    
 }
-
-function dragStart(ev) {
-    ev.dataTransfer.effectAllowed='move';
-    ev.dataTransfer.setData("Text", ev.target.getAttribute('id'));   
-    ev.dataTransfer.setDragImage(ev.target,100,100);
-    return true;
-}
-
-function dragEnter(ev) {
-    event.preventDefault();
-    return true;
-}
-
-function dragOver(ev) {
-    event.preventDefault();
-}
-
-function dragDrop(ev) {
-    var data = ev.dataTransfer.getData("Text");
-    ev.target.appendChild(document.getElementById(data));
-    ev.stopPropagation();
-    return false;
-}
-
-

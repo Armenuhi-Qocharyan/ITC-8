@@ -1,59 +1,73 @@
-#forms {
-    width: 83%;
-    height: 10%;
-    margin: 2%;
-    border:solid 1px black;
-    box-shadow: 10px 10px 5px #888888;
-}
-
-.ship {
-    width: 100px;
-    height: 100px;
-    margin:1%;
-    background-color: #8dded8;
-    display: inline-block;
-}
 #gamer_1 {
     display: inline-block;
-    width: 40%;
+    width: 50%;
     height: 30%;
-    margin-left: 2%;
+    margin-left: 25%;
     border:solid 1px black;
-    box-shadow: 10px 10px 5px #888888;
+    box-shadow: 5px 5px 5px 5px #000000;
+    background: url("../images/sea3.jpg");
+    background-size: cover;
+
 }
-
-
-#gamer_2 {
-    display: inline-block;
-    width: 40%;
-    height: 30%;
-    margin-left: 2%;
+.myTable {
+    margin:auto;
+    opacity: 0.7;
+}
+#forms{
+    width: 96%;
+    height: 10%;
+    margin:0 2% 2% 2%;
     border:solid 1px black;
-    box-shadow: 10px 10px 5px #888888;
+    box-shadow: 2px 2px 2px 2px #000000;
+    background-color: #dbf7ff;
 }
-
-.formClass{
-    height: 100px;
-    background-color: red;
-}
-#idName[index]{
-    margin:1%;
-    background-color: #8dded8;
-    display: inline-block;
-}
-
-.myForms {
-    margin:1%;
-    background-color: #8dded8;
-    display: inline-block;
-}
-.forma {
-    margin:1%;
-    background-color: #c7ffee;
-}
-
-
-
 table, td {
     border: 1px solid black;
+}
+
+#win {
+    width: 80%;
+    margin-left: 10%;
+    padding-bottom: 42%;
+    background: url("../images/win5.jpg") no-repeat;
+    background-size: cover;
+    display: none;
+}
+
+.shipImage {
+     width: 75%;
+     margin-left: 14%;
+     padding-bottom: 36%;
+     background: url("../images/ship.jpg") no-repeat;
+     background-size: cover;
+ }
+
+.startButton, .startButton1 {
+    border-radius: 30px;
+    background-color: #2926ff;
+    color:white;
+    margin-top:2%;
+    margin-left: 45%;
+    width: 12%;
+    height: 60px;
+}
+
+.startButton:hover, .startButton1:hover {
+    font-size: x-large;
+    background-color: #11107a;
+}
+#start1 {
+    visibility: hidden;
+}
+.img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: solid 1px #000;
+    margin: 1% 1% 0.5% 1%;
+    background-color: #1efcff;
+}
+
+.tdClass {
+    background-color: #1efcff;
 }

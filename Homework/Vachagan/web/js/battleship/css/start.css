@@ -1,0 +1,13 @@
+body {
+    background: url("../image/start.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    text-align: center;
+}
+
+.mtbutton {
+    margin-top: 35%;
+    width: 150px;
+    height: 60px;
+    font-size: 40px;
+}

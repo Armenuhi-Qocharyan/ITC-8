@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="../js/script.js" defer></script>
+</head>
+<body  onload="CreateSea('sea'), Ships()">
+
+<!--onload="CreateSea(10), Ship('F',4,'ship4'), Ship('T',3,'ship3')" -->
+
+    <div class="warArea" id="sea">
+
+    </div>
+
+    <button class="mtbutton" type="button" id="play" onclick="play()">Start</button>
+    <div class="lose" id="win">
+        <button class="reset" type="button" onclick="location.reload();">Reset</button>
+    </div>
+
+    <div class="warArea" id="sea2" style="display: none">
+
+    </div>
+
+    <div class="shipF" id="ship4">
+
+    </div>
+    <div class="shipF" id="ship3">
+
+    </div>
+    <div class="shipF" id="ship2">
+
+    </div>
+    <div class="shipF" id="ship1">
+
+    </div>
+
+
+
+</body>
+</html>

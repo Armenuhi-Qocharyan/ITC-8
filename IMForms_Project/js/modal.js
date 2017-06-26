@@ -36,3 +36,5 @@ $("#open-new-tab").click(function(){
     var win = window.open(url, "Form");
     win.focus();
 });
+var title=localStorage.getItem("title");
+document.getElementById('titleForm').innerHTML = title;

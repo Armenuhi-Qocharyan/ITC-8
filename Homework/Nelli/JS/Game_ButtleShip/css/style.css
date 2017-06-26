@@ -27,9 +27,9 @@ body {
 .ships {
     background-color: #ffffff;
     display:none;
-    width: 60%;
+    width: 40%;
     height: 80px;
-    margin-left: 20%;
+    margin-left: 7%;
     margin-top: 2%;
     box-shadow: 10px 10px 5px #888888;
 }
@@ -49,7 +49,7 @@ table {
 .partOfShip{
     border: solid 1px #000;
     margin: 0;
-    background-size: cover;
+    background-color: #fff;
 }
 
 .ship {
@@ -63,15 +63,17 @@ table {
     width: 38px;
     height: 38px;
     border: solid 1px #000;
-    margin-left: 0.5%;
+    margin-left: 6%;
     margin-top: 2%;
-    background-color: #f96b7d;
+    background-color: #0dbbab;
 }
 
 #shipArea2 table td {
-    background-color: #f96b7d;
+    background-color:  #0dbbab;
 }
 
-#4 {
-    width: 150px;
+.goButton {
+    display: none;
+    margin-left: 20%;
+    margin-top: 1%;
 }

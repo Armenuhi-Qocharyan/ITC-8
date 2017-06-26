@@ -1,0 +1,112 @@
+body {
+	background-image: url(../container/sea.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;;
+}
+
+#tables {
+    display: flex;    
+}
+
+.rotate {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+#table1, #table2 {
+    border: 1px solid black;
+    background-image: url(../container/sea.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0 150px;
+}
+
+td {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 20px;
+    border: 1px solid black;
+    
+}
+
+#ships {
+    margin: 80px 150px;
+    text-align: center;
+    display: flex;
+}
+
+
+#carrier {
+	background-color: #28c5ed;
+	height: 40px;
+    border: none;
+    color: white;
+    width: 200px;
+    padding: 10px;	
+	margin: 10px;
+
+}
+
+#battleship {
+	background-color: #28c5ed;
+    height: 40px;
+    width: 150px;
+    padding: 10px;
+    border: none;
+    color: white;
+	margin: 10px;
+
+}
+
+
+#cruiser {
+	background-color: #28c5ed;
+    height: 40px;
+    width: 120px;
+    padding: 10px;
+    border: none;
+    color: white;
+	margin: 10px;
+}
+
+#frigate {
+	background-color: #28c5ed;
+	height: 40px;
+    width: 80px;
+    padding: 10px;
+    border: none;
+    color: white;
+	margin: 10px;
+
+}
+
+.Image {
+	background-image: url(../container/ship.png);
+	background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.right {
+	background-image: url(../container/right.png);
+	background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.wrong {
+	background-image: url(../container/wrong.gif);
+	background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#init {
+	background-color: #28c5ed;
+	margin: 200px 0 0 700px;
+	padding: 50px;
+	font-size: 24px;
+	color: white;
+	border-radius: 20px;
+}
+

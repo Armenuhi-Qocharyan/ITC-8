@@ -1,3 +1,7 @@
+    localStorage.getItem("name",name);
+    document.getElementById('right-text').innerHTML =name;
+
+
 // Get the modal
 var modal = document.getElementById('myModal');
 
@@ -29,9 +33,9 @@ $("#copy-link").click(function(){
 });
 
 $("#open-new-tab").click(function(){
-    var title = document.getElementById("modal-id").value;
+    title = document.getElementById("modal-id").value;
     if (title !== ""){
         window.location.href='create.html';
     }
+    localStorage.setItem("title",title);
 });
-        document.getElementById('titleForm').innerHTML = title;

@@ -35,6 +35,7 @@ body {
 
 #imforms {
     padding: 20px;
+    cursor:pointer;
 }
 
 .sidemenu {
@@ -54,6 +55,7 @@ body {
 }
 
 .plus {
+    margin: 0;
     padding-left: 10px;
 }
 
@@ -73,13 +75,11 @@ body {
     background-color: white;
 }
 
-.nav-divider {
-    background-color: #727272;
-    height: 1px;
-    border: none;
+hr {
+    margin: 10px 0;
 }
 
-.sidenav a {
+.sidenav li {
     padding: 8px 8px 8px 20px;
     text-decoration: none;
     font-size: 20px;
@@ -87,13 +87,14 @@ body {
     display: block;
     transition: 0.3s;
     white-space: nowrap;
+    list-style: none;
 }
 
 .icons {
     padding-right: 10px;
 }
 
-.sidenav a:hover, .offcanvas a:focus {
+.sidenav li:hover, .offcanvas li:focus {
     color: #0D9AA0;
 }
 
@@ -257,5 +258,24 @@ body {
 
 
 .RemoveButton {
-    float: right;
+    display: none;
 }
+
+.hide {
+    display: none;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    border: none;
+    background-color: #2FA7AB;
+    margin: 20px 0 30px 15px;
+
+}
+
