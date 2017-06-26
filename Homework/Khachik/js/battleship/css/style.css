@@ -92,6 +92,15 @@ body {
 	height:80px;
 	display: inline-block;
 	position: absolute;
+	/*background-image: url("../img/cater.png");
+	background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow:hidden;
+	*/
 }
 
 .ship_1 {
@@ -99,14 +108,32 @@ body {
 }
 .ship_3 {
 	height:120px;
+/*	background-image: url("../img/medium_ship.png");
+	background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow:hidden;
+*/
 }
 
 .ship_4 {
 	height:160px;
+/*	background-image: url("../img/layner.png");
+	background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow:hidden;
+*/
 }
 
 #start {
-	display: inline-block;
+	display: none;
 	text-align: center;
 	margin-left:37.5%;
 	width: 25%;
