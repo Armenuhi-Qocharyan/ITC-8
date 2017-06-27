@@ -1,17 +1,30 @@
 var getShip = function () {
-    console.log(this.className);
     currentShip = this;
 };
-
-var dropShip = function () {
+var clickInTable = function () {
     if (gameIsStarted) {
+        if (this.id[0] !== '2') return;
+        var i = (+this.id[2]),
+            j = (+this.id[4]);
+        if (arrBoard1[i][j] === 1) {
+            this.style.backgroundColor = "red";
+            document.getElementById("1." + i + '.' + j).style.backgroundColor = "black";
+            ++wound;
+            if (wound === 20) {
+                gameIsStarted = false;
+                alert("Game Over");
+            }
+        } else {
+            this.style.backgroundColor = "green";
+        }
 
-    } else if (currentShip != null) {
+    } else if (currentShip !== null) {
         if (checkValidDrop(currentShip.className, this.id)) {
             drawShipInBoard(currentShip, this);
-            console.log(this.id);
             hideShip(currentShip);
             currentShip = null;
+            --shipCount;
+            gameIsStarted = (shipCount === 0);
         } else {
             alert("Invalid Position");
         }
@@ -31,8 +44,7 @@ var drawTable = function (location, tableId) {
             var newCol = document.createElement("TD");
             newCol.setAttribute("id", tableId + "."  + i + "." + j);
             newCol.setAttribute("class", "");
-            newCol.addEventListener("click",dropShip);
-            //newCol.appendChild(document.createTextNode("B"))
+            newCol.addEventListener("click",clickInTable);
             newTrow.appendChild(newCol);
         }
     }
@@ -56,49 +68,61 @@ var hideShip = function (ship) {
 
 var checkValidDrop  = function(shipType, position){
     if (position[0] !== "1") return false;
-
+    var shipLength = +(shipType[4]),
+        row = +(position[2]),
+        col = +(position[4]);
+    for (var i = row; i < row + shipLength; ++i) {
+        if (i > 9 || arrBoard1[i][col] !== undefined) return false;
+    }
     return true;
-};
-
-var dropToBoard = function () {
-
 };
 
 var drawShipInBoard = function (ship, position) {
     var shipLength = +(ship.className[4]),
         row = +(position.id[2]),
         col = +(position.id[4]);
-        //console.log(row, col);
-
     for (var i = row - 1; i < row + shipLength +1; ++i) {
-        if (i < 0) continue;
+        if (i < 0 || i > 9) continue;
         for (var j = col - 1; j <= col + 1; j++) {
-            if (j < 0) continue;
-            document.getElementById("1." + i + "." +j).style.backgroundColor = "green";
-            console.log(i, j);
-
+            if (j < 0 || j > 9) continue;
+            if (i >= row && i < row + shipLength && j === col){
+                document.getElementById("1." + i + "." +j).style.backgroundColor = "yellow";
+                arrBoard1 [i][j] = 1;
+            } else {
+                //document.getElementById("1." + i + "." +j).style.backgroundColor = "green";
+                arrBoard1 [i][j] = 0;
+            }
         }
     }
-    //position.style.backgroundColor = 'green';
 };
 
-var div1 = document.createElement("div");
-var div2 = document.createElement("div");
-var div3 = document.createElement("div");
+var declareArr = function (arr) {
+    for(var i = 0; i < 10; i++) {
+        arr[i] = [];
+    }
+};
+
+var tablesDiv = document.createElement("div"),
+    div1 = document.createElement("div"),
+    div2 = document.createElement("div"),
+    div3 = document.createElement("div");
 
 var gameIsStarted = false,
-    currentShip;
+    currentShip = null,
+    shipCount = 10,
+    wound = 0,
+    arrBoard1 = [];
 
+declareArr(arrBoard1);
 
 div1.setAttribute("class", "board");
 div1.setAttribute("title", "board1");
-
 div2.setAttribute("class", "board");
 div2.setAttribute("title", "board2");
-
 div3.setAttribute("class", "shipBoard");
+tablesDiv.setAttribute("class", "tablesDiv");
 
-table1 = drawTable(div1, 1);
+drawTable(div1, 1);
 drawTable(div2, 2);
 
 drawShip(div3, 4);
@@ -112,6 +136,7 @@ drawShip(div3, 1);
 drawShip(div3, 1);
 drawShip(div3, 1);
 
-document.body.appendChild(div1);
-document.body.appendChild(div2);
+tablesDiv.appendChild(div1);
+tablesDiv.appendChild(div2);
 document.body.appendChild(div3);
+document.body.appendChild(tablesDiv);
