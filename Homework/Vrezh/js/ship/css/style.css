@@ -1,0 +1,60 @@
+body {
+    background-image: url('../resources/background.jpg');
+    background-size: cover;
+}
+
+.shipArea {
+    width: 40%;
+    background-color: #CCCCCC;
+    float: left;
+    margin-right: 5%;
+}
+
+.warArea {
+    border-collapse: collapse;
+    width: 400px;
+    height: 400px;
+    background-color: rgba(0, 200, 200, 0.5);
+    float: left;
+    margin: auto;
+    padding: 0;
+}
+
+.warAreaItem {
+    width: 40px;
+    height:40px;
+    border:1px solid darkgreen;
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+.shipElement {
+    width: 40px;
+    height:40px;
+    background-color: darkblue;
+}
+
+.replaceButton {
+    background-color: darkgray;
+    color: white;
+    width: 200px;
+    height: 60px;
+    font-size: 120%;
+    border-radius: 30px;
+    margin: auto;
+    margin-bottom: 5%;
+}
+
+.absolute {
+    width: 100%;
+    position: absolute;
+    display: none;
+    background-color: transparent;
+}
+
+.messageText {
+    color: brown;
+    font-size: 1000%;
+    text-align: center;
+}

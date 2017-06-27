@@ -1,8 +1,15 @@
-body {
-	background-image: url(../container/sea.jpg);
+.start {
+	background: url(../container/sea.jpg) center center fixed;
     background-size: cover;
-    background-repeat: no-repeat;;
+    background-repeat: no-repeat;
+	text-align: center;
 }
+
+.game {
+    background-color: #9de7f9;
+}
+
+
 
 #tables {
     display: flex;    
@@ -21,7 +28,7 @@ body {
     background-image: url(../container/sea.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    margin: 0 150px;
+	margin: 0 20px 0 50px;
 }
 
 td {
@@ -33,7 +40,7 @@ td {
 }
 
 #ships {
-    margin: 80px 150px;
+    margin: 60px 0 60px 60px;
     text-align: center;
     display: flex;
 }
@@ -44,7 +51,7 @@ td {
 	height: 40px;
     border: none;
     color: white;
-    width: 200px;
+    width: 180px;
     padding: 10px;	
 	margin: 10px;
 
@@ -53,7 +60,7 @@ td {
 #battleship {
 	background-color: #28c5ed;
     height: 40px;
-    width: 150px;
+    width: 120px;
     padding: 10px;
     border: none;
     color: white;
@@ -65,7 +72,7 @@ td {
 #cruiser {
 	background-color: #28c5ed;
     height: 40px;
-    width: 120px;
+    width: 100px;
     padding: 10px;
     border: none;
     color: white;
@@ -75,8 +82,8 @@ td {
 #frigate {
 	background-color: #28c5ed;
 	height: 40px;
-    width: 80px;
-    padding: 10px;
+    width: 60px;
+    padding: 5px;
     border: none;
     color: white;
 	margin: 10px;
@@ -90,23 +97,51 @@ td {
 }
 
 .right {
-	background-image: url(../container/right.png);
+	background-image: url(../container/boom.png);
 	background-size: cover;
     background-repeat: no-repeat;
 }
 
 .wrong {
-	background-image: url(../container/wrong.gif);
+	background-image: url(../container/oops.png);
+	background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.yes {
+	background-image: url(../container/right.png);
+	background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.no {
+	background-image: url(../container/wrong.png);
 	background-size: contain;
     background-repeat: no-repeat;
 }
 
 #init {
 	background-color: #28c5ed;
-	margin: 200px 0 0 700px;
 	padding: 50px;
 	font-size: 24px;
 	color: white;
 	border-radius: 20px;
+	border-color: #5dd3ea;
+	position: absolute;
+    top: 40%;
 }
+
+.win {
+	background: url(../container/Win.jpg) center center fixed;
+	background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+.lose {
+	background: url(../container/game_over.jpg) center center fixed;
+	background-size: cover;
+    background-repeat: no-repeat;
+}
+	
 
