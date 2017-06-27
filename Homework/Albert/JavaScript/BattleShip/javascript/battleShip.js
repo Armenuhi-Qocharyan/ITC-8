@@ -64,7 +64,6 @@ function drag(ev) {
 }
 function drop(ev) {
     ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
     id = ev.target.id;
     printShips(size, id);
 }
@@ -142,12 +141,12 @@ function count(size) {
     }
 }
 
-function setElementId(parentId) {
-    var row = document.getElementById(parentId).childNodes[0].childNodes[0].childElementCount;
-    var column = document.getElementById(parentId).childNodes[0].childNodes[0].childNodes[0].childElementCount;
+function setElementId(tableId) {
+    var row = document.getElementById(tableId).childNodes[0].childNodes[0].childElementCount;
+    var column = document.getElementById(tableId).childNodes[0].childNodes[0].childNodes[0].childElementCount;
     for (var i = 0; i < row; ++i) {
         for (var j = 0; j < column; ++j) {
-            document.getElementById(parentId).childNodes[0].childNodes[0].childNodes[i].childNodes[j].id = i + '' + j;
+            document.getElementById(tableId).childNodes[0].childNodes[0].childNodes[i].childNodes[j].id = i + '' + j;
         }
     }
 }
