@@ -5,6 +5,7 @@ var messageDiv = document.getElementById('absolute');
 var shipPlace = shipArea(),
     warPlace = new warArea(),
     shipCount = 20,
+    maxStep = 50;
     reg = /[0-9][0-9]$/;
 
 
@@ -41,18 +42,21 @@ function replaceWarArea () {
         for (var j = 0; j < 10; ++j) {
             function create() {
                 var cell = warPlace.area.rows[i].cells[j];
-                cell.style.backgroundColor = "cadetblue";
+                cell.style.backgroundColor = "darkblue";
                 cell.onmousedown = function (mouse) {
-                    if (cell.childNodes.length != 0) {
-                        if (18 == --shipCount) {
-                            messageDiv.style.display = "block";
-                            messageDiv.style.height = screen.height;
-                        }
-
+                    cell.onmousedown = null;
+                    --shipCount;
+                    --maxStep;
+                    if (cell.childNodes.length != 0 && 0 == shipCount) {
+                        messageDiv.style.display = "block";
+                        messageDiv.style.height = screen.height;
+                    } else if (0 == maxStep){
+                        messageDiv.style.display = "block";
+                        messageDiv.style.height = screen.height;
+                        document.getElementById('message').textContent = "YOU ARE WIN !!!";
                     } else {
                         cell.style.backgroundColor = "transparent";
                     }
-                    cell.onmousedown == null;
                 }
             }
             create();
@@ -147,7 +151,6 @@ document.onmouseup = function () {
     document.onmousemove = null
 };
 
-
 function isFixed(ship, id) {
     if (id.match(reg)) {
         var nextRowId = !ship.rotate ? (Number(id[0]) + ship.size - 1) : Number(id[0]),
@@ -176,8 +179,8 @@ function  mouseUp(mouse, ship) {
                 var hoverElement = document.getElementById(String(rowId + j) + String(collId + i));
                 if (hoverElement && hoverElement.tagName == 'TD') {
                     hoverElement.id = "hover" + String(i) + j ;
-                    hoverElement.style.background = "green";
-                    var elem = document.elementFromPoint(hoverElement.getBoundingClientRect().left +2,hoverElement.getBoundingClientRect().top);
+                    hoverElement.style.background = "darkgray";
+                    var elem = document.elementFromPoint(hoverElement.getBoundingClientRect().left + 2,hoverElement.getBoundingClientRect().top);
                     if (elem.className == "shipElement") {
                         child = new shipElement(false);
                         hoverElement.appendChild(child.element);
@@ -199,6 +202,7 @@ function shipPlaceRemoveChild(ship) {
         warPlace.area.style.float = "none";
     }
 }
+
 function  reload() {
     location.reload();
 }
