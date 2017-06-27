@@ -1,12 +1,13 @@
+body {
+    background-color: azure;
+}
 .board {
     height: 50%;
     padding: 3%;
     float: left;
-
 }
 .shipBord {
     padding: 3%;
-    float: left;
 }
 table, th, td {
     border: 3px solid black;
@@ -14,9 +15,10 @@ table, th, td {
 }
 th, td {
     padding: 20px;
+    background: transparent;
 }
-td {
 
-}
-button {
+.ship1, .ship2, .ship3, .ship4 {
+    margin-right: 5px;
+    background-color: yellow;
 }
