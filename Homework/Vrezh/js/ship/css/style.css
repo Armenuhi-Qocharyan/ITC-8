@@ -1,0 +1,55 @@
+.shipArea {
+    width: 40%;
+    margin: 5%;
+    background-color: #CCCCCC;
+    float: left;
+}
+
+.warArea {
+    border-collapse: collapse;
+    width: 400px;
+    height: 400px;
+    background-color: beige;
+    float: left;
+    margin: auto;
+    padding: 0;
+}
+
+.warAreaItem {
+    width: 40px;
+    height:40px;
+    border:1px solid #CCC;
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+.shipElement {
+    width: 40px;
+    height:40px;
+    background-color: cadetblue;
+}
+
+.replaceButton {
+    background-color: brown;
+    color: white;
+    width: 200px;
+    height: 60px;
+    font-size: 120%;
+    border-radius: 100%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.absolute {
+    width: 100%;
+    position: absolute;
+    display: none;
+    background-color: #CCCCCC;
+}
+
+.messageText {
+    color: brown;
+    font-size: 1000%;
+    text-align: center;
+}
