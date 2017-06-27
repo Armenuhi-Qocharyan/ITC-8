@@ -1,5 +1,5 @@
 function fire(element){
-	if (element.className=="s1" || element.className=="s2" || element.className=="s3"||element.className=="s4"){
+	if (element.className=="s1e"){
 		element.setAttribute("class","dmg");
 	} else if (element.className=='dmg'){
 		alert('You were already there')
@@ -101,6 +101,19 @@ function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.className);
     ev.dataTransfer.setData("id", ev.target.id);
 };
+function createenemy() {
+    for (var i=0;i<12;i++){
+        for (var j=0;j<12;j++){
+	    var z=document.getElementById(i+''+j);
+	    if(z.className == "s1"){
+		z.setAttribute("class","s1e");
+	    }
+	    z.setAttribute("onclick","fire(this)")
+	}
+    }
+    alert("start game");
+};
+    counter = 10;
 function drop(ev) {
     var classname = ev.target.className;
     if (classname === "w"){
@@ -118,9 +131,14 @@ function drop(ev) {
             setShip1(idname);
         }
 	document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-     } else {
+    --counter;
+    if(counter == 0){
+	createenemy();
+    };
+    } else {
 	alert("wrong location");
     }
     ev.preventDefault();
+
 };
 window.addEventListener("DOMContentLoaded", init);

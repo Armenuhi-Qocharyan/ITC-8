@@ -42,13 +42,13 @@ div{
         background-position: center;
     }
 .s2 {
-        background-image: url(../imgs/s2.png);   
+        background-image: url(../imgs/s2.PNG);   
         background-repeat: no-repeat;
         background-position: center;
 	   height: 85px;
 }
 .s3 {
-        background-image: url(../imgs/s3.png);   
+        background-image: url(../imgs/s3.PNG);   
         background-repeat: no-repeat;
         background-position: center;
 	   height: 140px;
@@ -58,6 +58,11 @@ div{
         background-repeat: no-repeat;
         background-position: center;
 	   height: 180px;
+}
+.s1e{
+	       background-image: url(../imgs/369197.png);
+
+
 }
 .miss{
         background-color: white;
