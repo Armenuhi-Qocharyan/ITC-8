@@ -61,11 +61,10 @@ function Add(myId) {
 
     newDiv.onmouseover = function() {
         mouseOnbutton(newDiv);
-    }
+    };
     newDiv.onmouseleave = function() {
-
         mouseOutButton(newDiv);
-    }
+    };
     newDiv.draggable = true;
     createDragable(newDiv);
 }
@@ -76,13 +75,11 @@ function mouseOnbutton(newDiv) {
     allChildNodes[len].style.display = "initial";
 }
 
-
 function mouseOutButton(newDiv) {
     var allChildNodes = newDiv.getElementsByTagName('button');
     var len = allChildNodes.length - 1;
     allChildNodes[len].style.display = "none";
 }
-
 
 function Remove(This) {
     cnt--;

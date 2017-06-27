@@ -1,35 +1,33 @@
-var score = 0;
-var arr = [];
-var countShips = 0;
-var start = false;
-var p = 0;
-var count = 0;
-var globalShip;
-
-var play = function() {
-	document.getElementById("startGame").style.display = "none";
-}
+var score = 0,
+	countShips = 0,
+	start = false,
+	p = 0,
+	count = 0,
+	globalShip,
+	arr = new Array(10);
 
 for(var i = 0; i < 10; i++){
-    arr[i] = [];    
+	arr[i] = new Array(10);
     for(var j = 0; j < 10; j++){ 
         arr[i][j] = 0;    
     }    
 }
 
+var play = function() {
+	document.getElementById("startGame").style.display = "none";
+}
+
+
 $(document).ready(function(){
-	var rows = 10;
-	var cols = 10;
-	var squareSize = 40;
-	var gameBoardContainer = document.getElementById("gameboard");
-	var left = 0;
-	for (var i = 0; i < cols; i++) {
-		for (j = 0; j < rows; j++) {
+	var	gameBoardContainer = document.getElementById("gameboard"),
+		shipsContainer = document.getElementById("shipCont");
+	for (var i = 0; i < 10; i++) {
+		for (j = 0; j < 10; j++) {
 			var square = document.createElement("div");
 			gameBoardContainer.appendChild(square);
 			square.id = 's' + j + i;			
-			var topPosition = j * squareSize;
-			var leftPosition = i * squareSize;			
+			var topPosition = j * 40,
+				leftPosition = i * 40;			
 			square.style.top = topPosition + 'px';
 			square.style.left = leftPosition + 'px';
 			square.addEventListener("click", function () {
@@ -39,7 +37,6 @@ $(document).ready(function(){
 			}});						
 		}
 	}
-	var shipsContainer = document.getElementById("shipCont");
 	createShip(4,"ship_1", shipsContainer);
 	createShip(3,"ship_2", shipsContainer);
 	createShip(2,"ship_3", shipsContainer);
@@ -55,21 +52,19 @@ var createShip = function(size, class_name,shipsContainer){
 		ship.style.top = (200 - Number(ship.className[5]) * 40 -40) + "px";
 		ship.style.left = (p * 40 - 40) + "px";
 		shipsContainer.appendChild(ship);
+
 	}
 }
 
 function keyDownTextField (e) {
   var keyCode = e.keyCode;
   	if(keyCode === 32) {
-  		var x = Number(globalShip.offsetWidth);
-  		var y = Number(globalShip.offsetHeight);		
+  		var x = Number(globalShip.offsetWidth),
+  		    y = Number(globalShip.offsetHeight);		
   		globalShip.style.height = x + "px";
   		globalShip.style.width = y + "px";
-  		if(globalShip.horVer === "h"){
-  			globalShip.horVer = "v";
-  		} else {
-  			globalShip.horVer = "h";
-  		}
+  		globalShip.horVer = (globalShip.horVer === "h") ? (globalShip.horVer = "v") : (globalShip.horVer = "h");
+  		
   	}
 }
 /*Dragndrop*/
@@ -91,7 +86,6 @@ var drag = function(shNum){
 		    ship.style.position = 'absolute';
 		    moveAt(e);
 		    document.body.appendChild(ship);
-		    ship.style.zIndex = 1000; 
 		    function moveAt(e) {
 		    	if(ship.horVer === "h"){
 		        	ship.style.left = e.pageX - ship.offsetWidth / 2 + 'px';
@@ -108,16 +102,14 @@ var drag = function(shNum){
 		    }
 		    ship.onmouseup = function(e) {
 		    	ship.style.display = 'none';
-		    	var elem = document.elementFromPoint(event.clientX, event.clientY);
+		    	var elem = document.elementFromPoint(e.clientX, e.clientY);
 		    	if (endDrag(elem, ship) === "block"){
 		    		var shipsContainer = document.getElementById("shipCont");
 		    		ship.style.display = "block";
 		    		shipsContainer.appendChild(ship);
 		    		ship.style.top = (160 - Number(ship.className[5]) * 40) + "px";
 		    		ship.style.left = Number(ship.id[5] * 40) + "px";
-		    	} else {
-		    		ship.style.display = "none";
-		        }
+		    	} 
 		        document.onmousemove = null;
 		        ship.onmouseup = null;
 		    }
@@ -132,7 +124,17 @@ var endDrag = function(elem, ship) {
 	if (elem.id === "" || elem.id === "shipCont" || (elem.id[0] === "s" && elem.id[1] === "h" || elem.id === "start")) {
 		return "block";
 	} else {
-		if(ship.horVer === "h"){
+		check = allocation(elem,ship,check);
+		if (check === true) {
+			return drawShip(elem,ship,"h");
+		} else {
+			return "block";
+		}
+	}
+}
+
+var allocation = function(elem, ship, check) {
+	if(ship.horVer === "h"){
 			for(var i = 0; i < Number(ship.className[5]); ++i) {
 				if (Number(elem.id[1]) + i === 10) {
 					return "block";
@@ -144,30 +146,25 @@ var endDrag = function(elem, ship) {
 					break;
 				}
 			}
-		} else {
-			for(var i = 0; i < Number(ship.className[5]); ++i) {
-				if (Number(elem.id[2]) + i === 10) {
-					return "block";
-				}
-				var newElem = document.getElementById("s"  + elem.id[1] + (Number(elem.id[2]) + i));
-				check = true;
-				if (!shipInBoard(newElem,ship)){
-					check = false;
-					break;
-				}
+	} else {
+		for(var i = 0; i < Number(ship.className[5]); ++i) {
+			if (Number(elem.id[2]) + i === 10) {
+				return "block";
+			}
+			var newElem = document.getElementById("s"  + elem.id[1] + (Number(elem.id[2]) + i));
+			check = true;
+			if (!shipInBoard(newElem,ship)){
+				check = false;
+				break;
 			}
 		}
-		if (check === true) {
-			return drawShip(elem,ship,"h");
-		} else {
-			return "block";
-		}
 	}
+	return check;
 }
 
 var shipInBoard = function(elem, ship) {
-	var x = Number(elem.id[1]);
-	var y = Number(elem.id[2]);
+	var x = Number(elem.id[1]),
+        y = Number(elem.id[2]);
 	for(var i = x - 1; i <= x + 1; ++i){
 		for(var j = y - 1; j <= y + 1; ++j){
 			var newId = "s" + i + j;
@@ -183,26 +180,27 @@ var shipInBoard = function(elem, ship) {
 
 var drawShip = function(elem,ship) {
 	countShips++;
+	var x = Number(elem.id[1]),
+	    y = Number(elem.id[2]);
 	if(ship.horVer === "h"){
-		var x = Number(elem.id[1]);
-		var y = Number(elem.id[2]);
 		for(var i = 0; i < Number(ship.className[5]); ++i) {
 			document.getElementById("s" + (x  + i) + y).style.backgroundColor = "#afafaf";
 			arr[x + i][y] = 1;
 		}
-		return "none";
 	} else {
-		var x = Number(elem.id[1]);
-		var y = Number(elem.id[2]);
 		for(var i = 0; i < Number(ship.className[5]); ++i) {
 			document.getElementById("s" + x + (y + i)).style.backgroundColor = "#afafaf";
 			arr[x][y + i] = 1;
 		}
-		return "none";
 	}
- }
+	if (countShips === 10) {
+		document.getElementById("start").style.display = "inline-block";
+	}
+	return "none";
+}
 
 var clearBoard = function() {
+	document.getElementById("start").style.display = "none";
 	for (var i = 0; i < 10 ; ++i) {
 		for (var j = 0; j < 10 ; ++j) {
 			document.getElementById("s" + i + j).style.backgroundColor = "white";
@@ -212,16 +210,16 @@ var clearBoard = function() {
 
 var findShip = function(squareId) {
 	if (start === true) {
-		var x = squareId[1];
-		var y = squareId[2];
-		if(arr[x][y] ===  1){
+		var x = squareId[1],
+		    y = squareId[2];
+		if(arr[x][y] ===  1 &&  document.getElementById("s" + x + y).style.backgroundColor != "red"){
 			document.getElementById("s" + x + y).style.backgroundColor = "red";
 			score++;
 			count++;
 			if (count === 20) {
 				return "end";
 			}
-		} else {
+		} else if(document.getElementById("s" + x + y).style.opacity  != "0.2" && document.getElementById("s" + x + y).style.backgroundColor != "red") {
 			score++;
 			document.getElementById("s" + x + y).style.opacity = "0.2";
 		}

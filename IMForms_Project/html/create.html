@@ -28,6 +28,7 @@
     <script src="../js/create.js" defer></script>
     <script type="text/javascript" src="../js/convertFormValuesToJson.js" defer></script>
     <script type="text/javascript" language="Javasciript" src="../js/edu.js" defer></script>
+    <script type="text/javascript" language="Javasciript" src="../js/cv.js" defer></script>
 
 </head>
 
@@ -198,8 +199,8 @@
                <span class="hamburger hamburger-3"></span>
             </label>
 
-                <a href="#" class="menu-item"> <i class="fa fa-eye"></i> </a>
-                <a href="#" id="save" class="menu-item"> <i class="fa fa-floppy-o"></i> </a>
+                <a href="cv.html" class="menu-item" onclick="saveCv()"> <i class="fa fa-eye"></i> </a>
+                <a href="#" id="save" class="menu-item" onclick="saveCv()"> <i class="fa fa-floppy-o"></i> </a>
                 <a href="create.html" class="menu-item"> <i class="fa fa-trash"></i> </a>
             </nav>
         </div>
@@ -216,7 +217,7 @@
             <div id="dropArea">
 
             </div>
-            <input id="submit_btn" type="submit" value="Submit">
+            <input id="submit_btn" type="submit" value="Submit" >
         </div>
         <div class="col-sm-2 hidden-xs col-md-2"></div>
     </div>
@@ -230,7 +231,7 @@
                 <h2 id="first_row">DIRECT LINK OF YOUR FORM </h2>
                 <h5>Your form is securely published and ready to use at this address
                     <h5>
-                        <input type="text" id="modal-id" value="https://www.google.com" readonly></input>
+                        <input type="text" id="modal-id" value="http://localhost:63342/IMForms_Project/html/cv.html" readonly></input>
                         <button id="copy-link">Copy Link </button>
                         <button id="open-new-tab">Open In New Tab</button>
             </div>
