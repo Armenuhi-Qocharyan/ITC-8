@@ -149,7 +149,7 @@ function  find(id) {
     if (id[0] === 's') {
         var i = Number(id[1]);
         var j = Number(id[2]);
-        if (element.style.backgroundColor === "yellow" ||element.style.backgroundColor === "green") {
+        if (element.style.backgroundColor === "yellow" ||element.style.opacity === "0.2") {
             return;
         }
         if (player_2Area[i][j] === '1') {
@@ -171,7 +171,7 @@ function  computerStep() {
     var j = Math.ceil(Math.random() * 10 - 1);
     var id = String(10 * i + j);
     var element = document.getElementById(id);
-    if (element.style.backgroundColor === "yellow" || element.style.backgroundColor === "green") {
+    if (element.style.backgroundColor === "yellow" || element.style.opacity === "0.2") {
         computerStep();
     }else if (element.style.backgroundColor === "red") {
         setClass(id, "yellow", "url('images/del.jpg')");
