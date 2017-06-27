@@ -32,7 +32,6 @@ var drawTable = function (location, tableId) {
             newCol.setAttribute("id", tableId + "."  + i + "." + j);
             newCol.setAttribute("class", "");
             newCol.addEventListener("click",dropShip);
-            //newCol.appendChild(document.createTextNode("B"))
             newTrow.appendChild(newCol);
         }
     }
@@ -60,26 +59,25 @@ var checkValidDrop  = function(shipType, position){
     return true;
 };
 
-var dropToBoard = function () {
-
-};
-
 var drawShipInBoard = function (ship, position) {
     var shipLength = +(ship.className[4]),
         row = +(position.id[2]),
         col = +(position.id[4]);
-        //console.log(row, col);
-
     for (var i = row - 1; i < row + shipLength +1; ++i) {
-        if (i < 0) continue;
+        console.log(i);
+        if (i < 0 || i > 9) continue;
         for (var j = col - 1; j <= col + 1; j++) {
-            if (j < 0) continue;
-            document.getElementById("1." + i + "." +j).style.backgroundColor = "green";
+            console.log(j);
+            if (j < 0 || j > 9) continue;
+            if (i >= row && i < row + shipLength && j == col){
+                document.getElementById("1." + i + "." +j).style.backgroundColor = "yellow";
+            } else {
+                document.getElementById("1." + i + "." +j).style.backgroundColor = "green";
+            }
             console.log(i, j);
 
         }
     }
-    //position.style.backgroundColor = 'green';
 };
 
 var div1 = document.createElement("div");
