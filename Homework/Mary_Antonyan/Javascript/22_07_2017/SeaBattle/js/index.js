@@ -1,12 +1,12 @@
 var scores = 0,
     board = [],
-    layingShips = 0;
-    shipsOnBoard = 0;
-    hitten = 0;
-    missed = 0;
+    layingShips = 0,
+    shipsOnBoard = 0,
+    hitten = 0,
+    missed = 0,
     start = false;
 
-function start() {
+document.getElementById("button").addEventListener('click', function start() {
     // Prepare area
     var content = document.getElementById("cont");
     content.setAttribute("id", "content");
@@ -15,7 +15,7 @@ function start() {
     button.style.display = 'none';
     var play = document.getElementById("play");
     play.style.display = 'block';
-    
+
     // Create initial board
     for (var i = 0; i < 10; ++i) {
         board[i] = [];
@@ -24,12 +24,12 @@ function start() {
         } 
     }
     drawTable();
-}
+});
 
 function drawTable() {
     var rows = 10,
         columns = 10,
-        side = 10,
+        side = 40,
         content = document.getElementById("content");
 
     // Create cells
