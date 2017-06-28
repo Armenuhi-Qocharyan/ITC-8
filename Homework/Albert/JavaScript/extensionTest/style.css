@@ -1,9 +1,14 @@
-#click_me {
-    background-color: rgb(203, 203, 201);
-    margin-top:10%;
-    width:150%;
+#changeBack, #changeImg, #refresh {
+    background-color: rgb(189, 189, 189);
+    margin:2% 2% 2% 2%;
+    width:27%;
     box-shadow:2px 2px 2px 2px black;
 }
+
+#changeBack:hover, #changeImg:hover, #refresh:hover{
+    font-size: 18px;
+}
+
 #global {
-    width: 100%;
+    width: 400px;
 }
