@@ -1,7 +1,10 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
+	<script src="popup.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<style type="text/css">
 		body{
@@ -16,13 +19,13 @@
 		}
 		.onOff {
 			margin-top:130px;
-			margin-left: 10px;
+			margin-left: 8%;
+			width: 40%;
 		}
 	</style>
 </head>
 <body>
-	<button class="btn btn-primary onOff" type="button" onclick="onOff()">Enable</button>
-	<button class="btn btn-primary onOff" type="button" onclick="onOff()"">Disable</button>
-	<script type="text/javascript" src="contant.js"></script>
+	<button class="btn btn-primary onOff" type="button" id="click-me">Start</button>
+	<button class="btn btn-primary onOff" type="button" id="back">Cancel</button>
 </body>
 </html>
