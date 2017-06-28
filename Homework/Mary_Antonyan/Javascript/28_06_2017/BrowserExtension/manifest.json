@@ -1,0 +1,16 @@
+{
+    "name": "Browser Extension Popup Example",
+    "manifest_version": 2,
+    "version": "1.0",
+    "description": "Click on buttons in extension popup window to change images",
+    "browser_action": {
+        "default_icon": "unnamed.png",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "permissions": [
+        "tabs", "http://*/*", "https://*/*"
+    ]
+}

@@ -78,24 +78,35 @@ function drawShip(className, count, shipContainer) {
         currentShip.style.top = top;
         currentShip.style.right = right + "px";
         shipContainer.appendChild(currentShip);
+        currentShip.addEventListener('hover', drag(layingShips));
     }
 }
 
 // Drag and drop functionality
-function drag(shipNumber) {
+var drag = function(shipNumber) {
     var ship = document.getElementById("ship_" + shipNumber);
+    // Catch click event
     ship.onmousedown = function(e) {
         ship.style.position = "absolute";
-        function moveTo(e) {
-            ship.style.left = e.pageX + "px";
-            ship.style.top = e.pageY + "px";
-        }
-        moveTo(e);
+        moveAt(e);
         document.body.appendChild(ship);
-        document.onmousemove = moveTo(e);
+        ship.style.zIndex = 1000;
+
+        // Function for walking after mouse
+        function moveAt(e) {
+            ship.style.left = e.pageX + 'px';
+            ship.style.top = e.pageY + 'px';
+        }
+
+        // Move ship after mouse
+        document.onmousemove = function(e) {
+            moveAt(e);
+        };
+
+        // Drop ship into board
         ship.onmouseup = function(e) {
             ship.style.display = "none";
-            var element = document.elementFromPoint(e.client, e.clientY);
+            var element = document.elementFromPoint(e.clientX, e.clientY);
             if (endDrag(element, ship) === "block") {
                 var shipContainer = document.getElementById("shipContainer");
                 ship.style.display = "block";
@@ -116,7 +127,7 @@ function drag(shipNumber) {
 var endDrag = function(element, ship) {
     var check = false;
     if (element.id === "" || element.id === "shipContainer" ||
-        element.id[0] === "s" || element.id === "play") {
+        element.id[0] === "" || element.id === "play") {
         return "block";
     } else {
         check = locate(element, ship, check);
@@ -186,9 +197,6 @@ function clearBoard() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    for (var i = 0; i < 10; ++i) {
-        drag(i);
-    }
     document.getElementById("play").addEventListener("click", function() {
         if (shipsOnBoard === 10 && start === false) {
             clearBoard();
