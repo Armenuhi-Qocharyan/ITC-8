@@ -1,6 +1,3 @@
-var getShip = function () {
-    currentShip = this;
-};
 var clickInTable = function () {
     if (gameIsStarted) {
         if (this.id[0] !== '2') return;
@@ -41,12 +38,10 @@ var drawTable = function (location, tableId) {
 
     for (var i = 0; i < 10; i++) {
         var newTrow = document.createElement("tr");
-        newTrow.setAttribute("id", location.title + "tr" + i);
         newTable.appendChild(newTrow);
         for (var j = 0; j < 10; j++) {
             var newCol = document.createElement("TD");
             newCol.setAttribute("id", tableId + "."  + i + "." + j);
-            newCol.setAttribute("class", "");
             newCol.addEventListener("click",clickInTable);
             newTrow.appendChild(newCol);
         }
@@ -55,11 +50,13 @@ var drawTable = function (location, tableId) {
 };
 
 var drawShip = function (location, size) {
+    var getShip = function () {
+        currentShip = this;
+    };
     btn = document.createElement("button");
     btn.setAttribute("class", "ship" + size);
     btn.style.width = "40px";
     btn.style.height = (size * 40) + "px";
-    btn.setAttribute("draggable", "true");
     btn.addEventListener("click",getShip);
     location.appendChild(btn);
     return btn;
