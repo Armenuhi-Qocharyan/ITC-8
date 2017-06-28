@@ -15,6 +15,8 @@
 #button {
     display: block;
     margin: auto;
+    margin-top: 5%;
+    padding: 20px;
     box-shadow: 0px 0px 1px 1px rgba(10, 10, 10, 0.2); 
     background-color: rgba(10, 10, 10, 0.4);
     color: #fff;
@@ -37,15 +39,16 @@
 #play {
     display: none;
     margin: auto;
-    margin-top: 50%;
+    margin-top: 40%;
+    padding: 20px;
     box-shadow: 0px 0px 1px 1px rgba(10, 10, 10, 0.2); 
     background-color: rgba(10, 10, 10, 0.4);
     color: #fff;
     border: 1px solid #fff;
-    border-radius: 5px;
+    border-radius: 40px;
     outline: none;
     font-family: arial;
-    font-size: 30%;
+    font-size: 60px;
 }
 
 #play:hover {
@@ -74,9 +77,10 @@
     border: 0.3px solid #cfcfcf;
     border-radius: 2px;
     background-color: rgba(255, 255, 255, 0.3);
+    width: 400px;
     height: 400px;
     font-family: arial;
-    font-size: 50%;
+    font-size: 40px;
     color: #fff;
     text-align: center;
 }
@@ -118,6 +122,7 @@
 }
 
 #finish span, #gameover span {
+    display: none;
     font-family: arial;
     font-size: 40px;
     color: #ffffff;
