@@ -1,14 +1,29 @@
 {
+  "name": "Stackoverflow Popup Example",
   "manifest_version": 2,
-
-  "name": "Modify CSS and HTML",
-  "version": "0.1.0",
-  "description": "Lateral blog post demo extension",
-
+  "version": "0.1",
+  "description": "Run process on page activated by click in extension popup",
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*"
+  ],
   "content_scripts": [{
     "css": ["styles.css"],
-    "js": ["content.js"],
-    "matches": ["https://www.bing.com/images/discover?FORM=ILPMFT"]
-  }]
+
+    "matches": [
+      "<all_urls>"
+    ]
+  }],
+  "browser_action": {
+    "default_icon": {
+      "16": "icon32.png"
+    },
+    "default_popup": "popup.html"
+  }
 
 }
