@@ -18,6 +18,8 @@ var ship2 = new Ships(2, 3, '2');
 var ship3 = new Ships(3, 2, '3');
 var ship4 = new Ships(4, 1, '4');
 
+var arrShip = [0, ship1, ship2, ship3, ship4];
+
 function createForm(row, column, id) {
     var table = "<table id='gamer_11' class='myTable' cellpadding='22' cellspacing='2'>";
     for (var i = 1; i <= row; ++i) {
@@ -109,7 +111,8 @@ function printShips(size, id) {
             document.getElementById(printId).style.backgroundColor = "#1efcff";
             //document.getElementById(printId).setAttribute('class', 'printShips');
         }
-        count(size);
+        arrShip[size].count -= 1;
+        arrShip[size].checkCount(arrShip[size]);
         start+=1;
         checkStart();
     }
@@ -120,26 +123,7 @@ function checkStart() {
         document.getElementById('start1').style.visibility = 'visible';
     }
 }
-function count(size) {
-    switch(size){
-        case 1:
-            ship1.count -= 1;
-            ship1.checkCount(ship1);
-            break;
-        case 2:
-            ship2.count -= 1;
-            ship2.checkCount(ship2);
-            break;
-        case 3:
-            ship3.count -= 1;
-            ship3.checkCount(ship3);
-            break;
-        case 4:
-            ship4.count -= 1;
-            ship4.checkCount(ship4);
-            break;
-    }
-}
+
 
 function setElementId(tableId) {
     var row = document.getElementById(tableId).childNodes[0].childNodes[0].childElementCount;
