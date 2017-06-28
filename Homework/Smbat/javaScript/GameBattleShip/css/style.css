@@ -1,10 +1,16 @@
+h1 {
+    color: royalblue;
+}
 body {
     background-color: azure;
+    background-image: url('../resurses/img.jpg');
+    background-size: cover;
 }
 .board {
     height: 50%;
     padding: 3%;
     float: left;
+
 }
 .shipBord {
     padding: 3%;
@@ -12,13 +18,19 @@ body {
 table, th, td {
     border: 3px solid black;
     border-collapse: collapse;
+
 }
 th, td {
     padding: 20px;
-    background: transparent;
+    background-color: aqua;
+    opacity: 0.3;
 }
 
 .ship1, .ship2, .ship3, .ship4 {
-    margin-right: 5px;
+    margin-left: 10px;
+
+}
+button {
     background-color: yellow;
+    opacity: 0.5;
 }

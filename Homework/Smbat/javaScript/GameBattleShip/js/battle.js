@@ -8,7 +8,8 @@ var clickInTable = function () {
             j = (+this.id[4]);
         if (arrBoard1[i][j] === 1) {
             this.style.backgroundColor = "red";
-            document.getElementById("1." + i + '.' + j).style.backgroundColor = "black";
+            if (document.getElementById("1." + i + '.' + j).style.backgroundColor === "brown") return;
+            document.getElementById("1." + i + '.' + j).style.backgroundColor = "brown";
             ++wound;
             if (wound === 20) {
                 gameIsStarted = false;
@@ -86,6 +87,7 @@ var drawShipInBoard = function (ship, position) {
         for (var j = col - 1; j <= col + 1; j++) {
             if (j < 0 || j > 9) continue;
             if (i >= row && i < row + shipLength && j === col){
+                document.getElementById("1." + i + "." +j).style.opacity = 1;
                 document.getElementById("1." + i + "." +j).style.backgroundColor = "yellow";
                 arrBoard1 [i][j] = 1;
             } else {
