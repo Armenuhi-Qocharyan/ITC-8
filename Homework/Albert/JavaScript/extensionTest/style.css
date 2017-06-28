@@ -1,5 +1,9 @@
-#img1, #img2, #img3 {
-    background-color: rgb(255, 254, 187);
-    margin-top:20%;
+#click_me {
+    background-color: rgb(203, 203, 201);
+    margin-top:10%;
     width:150%;
+    box-shadow:2px 2px 2px 2px black;
+}
+#global {
+    width: 100%;
 }
