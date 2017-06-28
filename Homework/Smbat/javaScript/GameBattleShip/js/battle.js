@@ -7,9 +7,11 @@ var clickInTable = function () {
         var i = (+this.id[2]),
             j = (+this.id[4]);
         if (arrBoard1[i][j] === 1) {
-            this.style.backgroundColor = "red";
+            this.style.backgroundColor = "brown";
+            this.style.opacity = "0.8";
             if (document.getElementById("1." + i + '.' + j).style.backgroundColor === "brown") return;
             document.getElementById("1." + i + '.' + j).style.backgroundColor = "brown";
+            document.getElementById("1." + i + '.' + j).style.opacity = "0.5";
             ++wound;
             if (wound === 20) {
                 gameIsStarted = false;
