@@ -63,7 +63,6 @@ function Add(myId) {
         mouseOnbutton(newDiv);
     };
     newDiv.onmouseleave = function() {
-
         mouseOutButton(newDiv);
     };
     newDiv.draggable = true;
@@ -76,13 +75,11 @@ function mouseOnbutton(newDiv) {
     allChildNodes[len].style.display = "initial";
 }
 
-
 function mouseOutButton(newDiv) {
     var allChildNodes = newDiv.getElementsByTagName('button');
     var len = allChildNodes.length - 1;
     allChildNodes[len].style.display = "none";
 }
-
 
 function Remove(This) {
     cnt--;

@@ -14,14 +14,16 @@
         <script type="text/javascript" src="js/index.js" defer></script>
     </head>
 
-    <body id="body">
-        <div id="content">
-        <button id="button" onclick="createTable()">Start Game</button>
-            <table class="table" id="own" onclick="showOwn()">
-            </table>
-
-            <table class="table" id="other" onclick="showOther()">
-            </table>
-        </div>
+    <body id="body"> 
+            <button id="button" onclick="start()">Start Game</button>
+            <div id="cont">
+            </div>
+            <div id="shipContainer">
+                Ship Store
+                </br>
+            </div>
+            <button id="play" onclick="play()">Play!</button>
+            <div id="finish"><span>You Win!</span></div>
+            <div id="gameover"><span>Game Over!</span></div>
     </body>
 </html>

@@ -3,7 +3,6 @@ var getFormValues = function () {
     myJson = {};
     for (var i = 0, length = inputs.length; length > i; i++) {
         myJson[inputs[i].name] = inputs[i].value;
-
     }
     console.log(myJson);
     alert(myJson.firstname);

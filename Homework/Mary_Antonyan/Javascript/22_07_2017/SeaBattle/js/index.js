@@ -1,87 +1,219 @@
-var dragged;
+var scores = 0,
+    board = [],
+    layingShips = 0;
+    shipsOnBoard = 0;
+    hitten = 0;
+    missed = 0;
+    start = false;
 
-function showOther() {
-    var otherTable = document.getElementById("other");
-    otherTable.style.width = '100%';
-
-    var ownTable = document.getElementById("own");
-    ownTable.style.width = '0';
-
-    removeShips();
-}
-
-function showOwn() {
-    var ownTable = document.getElementById("own");
-    if (ownTable.style.width != '100%') {
-        ownTable.style.width = '100%';
-
-        var otherTable = document.getElementById("other");
-        otherTable.style.width = '0';
-
-        drawShips();
-    }
-}
-
-function drawShips() { 
-    var content = document.getElementById("content");
-    for (var i = 0; i < 4; ++i) {
-        var icon = document.createElement('span');
-        icon.setAttribute("class", "fa fa-ship");
-        icon.style.fontSize = '24px';
-        icon.style.draggable = 'true';
-        content.appendChild(icon);
-        icon.addEventListener("drag", function(event) {
-        }, false);
-
-        icon.addEventListener("dragstart", function(event) {
-            dragged = event.target;
-            event.target.style.opacity = 0.5;
-        }, false);
-
-        icon.addEventListener("dragend", function(event) {
-            event.target.style.opacity = "";
-        }, false);
-
-        icon.addEventListener("dragover", function(event) {
-            event.preventDefault();
-        }, false);
-
-        icon.addEventListener("dragleave", function(event) {
-            if (event.target.className == "cell dropzone") {
-                event.target.style.background = "";
-            }
-        }, false);
-
-        icon.addEventListener("drop", function(event) {
-            event.preventDefault();
-            if (event.target.className == "cell dropzone") {
-                event.target.style.background = "";
-                dragged.parentNode.removeChild(dragged);
-                event.target.appendChild(dragged);
-            }
-        }, false);
-    }
-}
-
-function removeShips() {
-    for (var i = 0; i < 4; ++i) {
-        content.removeChild(content.lastChild);
-    }
-}
-
-function createTable() {
+function start() {
+    // Prepare area
+    var content = document.getElementById("cont");
+    content.setAttribute("id", "content");
+    document.body.style.backgroundImage = "url('sources/wallpaper.jpg')";
     var button = document.getElementById("button");
     button.style.display = 'none';
-    var tables = document.getElementsByClassName("table");
-    for (var i = 0, count = tables.length; i < count; ++i) {
+    var play = document.getElementById("play");
+    play.style.display = 'block';
+    
+    // Create initial board
+    for (var i = 0; i < 10; ++i) {
+        board[i] = [];
         for (var j = 0; j < 10; ++j) {
-            var row = tables[i].insertRow(j); 
-            for (var k = 0; k < 10; ++k) {
-                var cell = row.insertCell(k);
-                cell.setAttribute("class", "cell");
-                cell.className += " dropzone";
+            board[i][j] = 0;
+        } 
+    }
+    drawTable();
+}
+
+function drawTable() {
+    var rows = 10,
+        columns = 10,
+        side = 10,
+        content = document.getElementById("content");
+
+    // Create cells
+    for (var i = 0; i < rows; ++i) {
+        for (var j = 0; j < columns; ++j) {
+            var cell = document.createElement('div');
+            content.appendChild(cell);
+            cell.setAttribute("id", id);
+            cell.setAttribute("class", "cell");
+            marginTop = i * side + 60;
+            marginLeft = j * side + 100;
+            cell.style.top = marginTop + "px";
+            cell.style.left = marginLeft + "px";
+            var id = "cell_" + i + "_" + j; 
+            cell.addEventListener("click", function() {
+                if (hitShip(this.id) === "finish") {
+                    document.getElementById("finish").style.display = "block";
+                } else if (hitShip(this.id) === "gameover") {
+                    document.getElementById("gameover").style.display = "block";
+                }
+            });
+        }
+    }
+    drawShipContainer();
+}
+
+// Draw ship container with ships
+function drawShipContainer() {
+    var shipContainer = document.getElementById("shipContainer");
+    shipContainer.style.display = 'block';
+    for (var i = 1, j = 4; i < 5; ++i, --j) {
+        var className = "ship_" + i;
+        drawShip(className, j, shipContainer);
+    }
+}
+
+// Draw current ship in container
+function drawShip(className, count, shipContainer) {
+    for (var i = 0; i < count; ++i) {
+        ++layingShips;
+        var currentShip = document.createElement('div');
+        currentShip.className = className;
+        currentShip.id = "ship_" + layingShips;
+        var top = (layingShips < 7) ? "60px" : "160px",
+            right = (layingShips < 7) ? layingShips * 40.5 : (layingShips - 6) * 40.5;
+        currentShip.style.top = top;
+        currentShip.style.right = right + "px";
+        shipContainer.appendChild(currentShip);
+    }
+}
+
+// Drag and drop functionality
+function drag(shipNumber) {
+    var ship = document.getElementById("ship_" + shipNumber);
+    ship.onmousedown = function(e) {
+        ship.style.position = "absolute";
+        function moveTo(e) {
+            ship.style.left = e.pageX + "px";
+            ship.style.top = e.pageY + "px";
+        }
+        moveTo(e);
+        document.body.appendChild(ship);
+        document.onmousemove = moveTo(e);
+        ship.onmouseup = function(e) {
+            ship.style.display = "none";
+            var element = document.elementFromPoint(e.client, e.clientY);
+            if (endDrag(element, ship) === "block") {
+                var shipContainer = document.getElementById("shipContainer");
+                ship.style.display = "block";
+                shipContainer.appendChild(ship);
+                ship.style.top = (Number(ship.className[6]) * 40) + "px";
+                ship.style.left = Number(ship.id[6] * 40) + "px";
+            }
+
+            document.onmousemove = null;
+            ship.onmouseup = null;
+        }
+    }
+    ship.ondragstart = function() {
+        return false;
+    }
+}
+
+var endDrag = function(element, ship) {
+    var check = false;
+    if (element.id === "" || element.id === "shipContainer" ||
+        element.id[0] === "s" || element.id === "play") {
+        return "block";
+    } else {
+        check = locate(element, ship, check);
+        if (check === true) {
+            return locateShip(element, ship);
+        } else {
+            return "block";
+        }
+    }
+}
+
+// Check location possibility for each ship
+function locate(element, ship, check) {
+    for (var i = 0; i < Number(ship.className[6]); ++i) {
+        if (Number(element.id[6]) + i === 10) {
+            return "block";
+        } 
+        var newElement = document.getElementById("ship_" + element.id[4] + (Number(element.id[6] + i)));
+        check = true;
+        if (!shipIsInBoard(newElement, ship)) {
+            check = false;
+            break;
+        }
+    }
+    return check;
+}
+
+// Check if ship can be located in board or not
+function shipIsInBoard(element, ship) {
+    var x = Number(element.id[4]),
+        y = Number(element.id[6]);
+    for (var i = x -1; i <= x + 1; ++i) {
+        for (var j = y - 1; j <= y + 1; ++j) {
+            var newID = "ship_" + i + "_" + j;
+            if (i != -1 && j != -1 && i != 10 && j != 10) {
+                if (document.getElementById(newId).style.backgroundColor != "") {
+                return false;
+                }
             }
         }
     }
-    showOwn();    
+    return true;
+}
+
+function locateShip(element, ship) {
+    ++shipsOnBoard;
+    var x = Number(element.id[4]),
+        y = Number(element.id[6]);
+    for (var o = 0; i < Number(ship.className[6]); ++i) {
+        document.getElementById("ship_" + x + "_" + (y + i)).style.background = "a7a7a7";
+        board[x][y + i] = 1;
+    }
+
+    if (shipsOnBoard === 10) {
+        document.getElementById("play").style.display = "inline-block";
+    }
+    return "none";
+}
+
+function clearBoard() {
+    document.getElementById("play").style.display = "none";
+    for (var i = 0; i < 10; ++i) {
+        for (var j = 0; j < 10; ++j) {
+            document.getElementById("ship_" + i + "_" + j).style.backgroundColor = "#fff";
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    for (var i = 0; i < 10; ++i) {
+        drag(i);
+    }
+    document.getElementById("play").addEventListener("click", function() {
+        if (shipsOnBoard === 10 && start === false) {
+            clearBoard();
+            start = true;
+        }
+    });
+});
+
+function hitShip(cellId) {
+    if (start === true) {
+        var x = cellId[4],
+            y = cellId[6];
+        if (board[x][y] === 1 && document.getElementById("ship_" + x + "_" + y).style.backgroundColor != "#ff0000") {
+            document.getElementById("ship_" + x + "_" + y).style.backgroundColor = "#ff0000";
+            ++hitten;
+            if (hitten === 20) {
+                return "finish";
+            }
+        } else if (document.getElementById("ship_" + x + "_" + y).style.opacity != "0.1" && document.getElementById("ship_" + x + "_" + y).style.backgroundColor != "#ff0000") {
+            ++missed;
+            document.getElementById("ship_" + x + "_" + y).style.opacity = "0.1";
+            if (missed === 20) {
+                return "gameover";
+            }
+        }
+
+    }
 }

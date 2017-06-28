@@ -1,0 +1,2 @@
+I'm content of myfile.txt
+

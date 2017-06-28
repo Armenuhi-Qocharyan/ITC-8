@@ -71,3 +71,14 @@ table, td {
 .tdClass {
     background-color: #1efcff;
 }
+
+.printShips {
+    background-image: url("../images/ship7.png");
+    background-size : cover;
+    background-color: #1efcff;
+}
+.play {
+    background-image: url("../images/harc.png");
+    background-size : cover;
+    background-color: #1efcff;
+}
