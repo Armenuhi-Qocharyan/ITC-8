@@ -15,12 +15,21 @@ function collision($div1, $div2) {
     if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) {
         return false;
     }
+    $div1.width("100px");
+    $div1.height("100px");
+    $div2.hide();
     return true;
 }
 
 
 window.setInterval(function() {
-    $('#result').text(collision($('#div1'), $('#div3')) || collision($('#div2'), $('#div3')) || collision($('#div1'), $('#div2')));
+    $('#result').text(collision($('#div1'), $('#div2'))
+        || collision($('#div2'), $('#div3'))
+        || collision($('#div3'), $('#div1'))
+        || collision($('#div3'), $('#div2'))
+        || collision($('#div2'), $('#div1'))
+        || collision($('#div1'), $('#div3'))
+    );
 }, 200);
 
 
