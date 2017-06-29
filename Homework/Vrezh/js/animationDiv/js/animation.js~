@@ -1,0 +1,98 @@
+var content = document.getElementById('container');
+content.className = "container";
+content.style.width = screen.width/2  +"px";
+content.style.height = screen.height/2 + "px"
+var circles =[];
+var colors = ["red", "green", "blue"];
+createCircles()
+
+var container = {
+    x: 100,
+    y: 100,
+    width: screen.width/2,
+    height: screen.height/2
+};
+
+
+function circle() {
+    this.x = Math.random() * (700 - 130) + 130;
+    this.y =  Math.random() * (400 - 140) + 140;
+    this.r = Math.random() * (15 - 3) + 3;
+    this.vx = Math.random() * (3 - 1) + 1;
+    this.vy = Math.random() * (3 - 1) + 1
+};
+
+function  createCircles() {
+    var crc;
+    for (var i = 0, j = 0; i < 15; ++i) {
+        crc = new circle();
+        crc.color = colors[j];
+        circles[i] = crc;
+        j = j == 2 ? 0 : ++j;
+    }
+}
+
+function createObjects() {
+    for (var i = 0; i < 15; ++i) {
+        var circle = document.createElement('div');
+        circle.style.backgroundColor = circles[i].color;
+        circle.style.left = circles[i].x + "px";
+        circle.style.top = circles[i].y + "px";
+        circle.className = "circle";
+        content.appendChild(circle);
+    }
+}
+createObjects();
+
+function moveObjects() {
+        for (var i = 0; i < circles.length; ++i) {
+            if (circles[i] && circles[i].x + circles[i].vx < container.x || circles[i].x + 2 * circles[i].r	 > container.x + container.width) {
+                circles[i].vx = -circles[i].vx;
+            }
+
+            if (circles[i] && circles[i].y + 2 * circles[i].r + circles[i].vy > container.y + container.height || circles[i].y + circles[i].vy < container.y) {
+                circles[i].vy = -circles[i].vy;
+            }
+
+            circles[i].y += circles[i].vy;
+            circles[i].x += circles[i].vx;
+            content.childNodes[i].style.width = circles[i].r * 2 + "px";
+            content.childNodes[i].style.height = circles[i].r * 2 + "px";
+            content.childNodes[i].style.left = circles[i].x + "px";
+            content.childNodes[i].style.top = circles[i].y + "px";
+            for (var j = 0; j < circles.length; j++) {
+                joinOrChangePosition(i, j);
+            }
+        }
+}
+var id = setInterval(moveObjects, 10);
+
+function isTouch(i, j) {
+        if (Math.abs((circles[i].x + circles[i].r +circles[i].vx - (circles[j].x + circles[j].r + circles[j].vx))) < Math.abs(circles[i].r + circles[j].r) &&
+            Math.abs((circles[i].y + circles[i].r + circles[i].vy - (circles[j].y + circles[j].r + circles[j].vy))) < Math.abs(circles[i].r + circles[j].r)) {
+            return true;
+        }
+    return false;
+}
+
+function joinOrChangePosition(i, j) {
+    if (circles[i] && circles[j] && circles[i] != circles[j] && isTouch(i, j)) {
+        if (circles[i].color == circles[j].color) {
+            circles[i].r = Math.sqrt(Math.pow(circles[i].r, 2) + Math.pow(circles[j].r, 2));
+            circles.splice(j, 1);
+            content.removeChild(content.childNodes[j]);
+        } else {
+            circles[i].vx = circles[j].vx;
+            circles[i].vy = circles[j].vy;
+            circles[j].vx = -circles[j].vx;
+            circles[j].vy = -circles[j].vy;
+        }
+    }
+}
+
+
+
+
+
+
+

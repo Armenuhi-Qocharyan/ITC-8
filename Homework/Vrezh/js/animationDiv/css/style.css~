@@ -1,0 +1,12 @@
+.container {
+    background: black;
+    width: 800px;
+    height: 500px;
+    margin-left: 100px;
+    margin-top: 100px;
+}
+
+.circle {
+
+    position: absolute;
+}
