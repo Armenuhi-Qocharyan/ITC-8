@@ -1,30 +1,39 @@
+var width = 19, height = 19, mineNumber = 50; 
+var winner = (height-1)*(width-1) - mineNumber;
 function fire(element){
-	if(element.id == "zx"){
-		element.removeAttribute('id');
-	}
-	if (element.className=="s1"){
+	if(element.getAttribute("style") !== null){
+	}else if (element.className=="s1"){
 		element.setAttribute("class","dmg");
 		alert("game over");
 	}else if(element.className=='w') {
 		element.setAttribute("class","z0");
 		idname = parseInt(element.id);
-		change_classname(idname+1,idname-1,idname-11,idname-12,idname-13,idname+11,idname+12,idname+13);
+		--winner;
+		change_classname(idname+1,idname-1,idname-width,idname-width-1,idname-width-2,idname+height,idname+height+1,idname+height+2);
 	}else if(element.className=='z1'){
 		element.setAttribute("class","z11");
+		--winner
 	}else if(element.className=='z2'){
 		element.setAttribute("class","z22");
+		--winner
 	}else if(element.className=='z3'){
 		element.setAttribute("class","z33");
+		--winner
 	}else if(element.className=='z4'){
 		element.setAttribute("class","z44");
+		--winner
 	}else if(element.className=='z5'){
 		element.setAttribute("class","z55");
+		--winner
 	}else if(element.className=='z6'){
 		element.setAttribute("class","z66");
+		--winner
 	}else if(element.className=='z7'){
 		element.setAttribute("class","z7");
+		--winner
 	}else if(element.className=='z8'){
 		element.setAttribute("class","z88");
+		--winner
 	}else if (element.className=='dmg' ){
 		alert('You were already there')
 	}
@@ -37,27 +46,35 @@ function change_classname(){
 	}
 	if(element.className == 'z1'){
 	    element.className = 'z11';
+		--winner
 	}
 	if(element.className == 'z2'){
 	    element.className = 'z22';
+		--winner
 	}
 	if(element.className == 'z3'){
 	    element.className = 'z33';
+		--winner
 	}
 	if(element.className == 'z4'){
 	    element.className = 'z44';
+		--winner
 	}
 	if(element.className == 'z5'){
 	    element.className = 'z55';
+		--winner
 	}
 	if(element.className == 'z6'){
 	    element.className = 'z66';
+		--winner
 	}
 	if(element.className == 'z7'){
 	    element.className = 'z77';
+		--winner
 	}
 	if(element.className == 'z8'){
 	    element.className = 'z88';
+		--winner
 	}
     }
 }
@@ -87,29 +104,31 @@ function check(){
 	}
 
 }
-var setShip = function(i,j){
-			playerMap[i][j]="s1";
-			check(i,j+1,i,j-1,i+1,j-1,i+1,j,i+1,j+1,i-1,j-1,i-1,j,i-1,j+1);
+var setMine = function(i,j){
+	playerMap[i][j]="s1";
+	check(i,j+1,i,j-1,i+1,j-1,i+1,j,i+1,j+1,i-1,j-1,i-1,j,i-1,j+1);
 
 }
 
-var genShipsArrangement = function(ts,playr){
+var genMineArrangement = function(){
 	var set = false;
-	var p = playr;
-	var typeShip = 1;
 	while (!set){
-		var i = parseInt(Math.random() * 10);
-		var j = parseInt(Math.random() * 10);
+		var i = parseInt(Math.random() * width);
+		var j = parseInt(Math.random() * height);
 		
-		if (i<11 & i>0 & j>0 & j<11 & (playerMap[i][j] !== 's1') ){
+		if (i<height & i>0 & j>0 & j<width & (playerMap[i][j] !== 's1') ){
 				set = true;
-				setShip(i,j) 
+				setMine(i,j) 
 		}
 	}
 }
 function right(element){
     if(event.button === 2){
-        element.setAttribute("style", "background-image: url('imgs/zx.PNG')");
+	if(element.getAttribute("style") == null & element.className !== 'z'){
+            element.setAttribute("style", "background-image: url('imgs/zx.PNG')");
+	} else {
+	    element.removeAttribute("style");
+	}
     } else if(event.button === 0){
 	fire(element);
     }
@@ -122,7 +141,7 @@ function randomInteger(min, max) {
 function start(){
     var bool = true;
     while(bool){
-        var id = randomInteger(0,143);
+        var id = randomInteger(0,width*height-1);
 	if(document.getElementById(id).className == 'w'){
 	    fire(document.getElementById(id));
 	    bool = false;
@@ -130,39 +149,26 @@ function start(){
     }
 }
 function init(){
-	var width = 12, height = 12;
 	enemy = document.querySelector('.js-enemy')
  	
  	playerMap = new Array();
 
-	for (var i=0;i<width;i++){
+	for (var i=0;i<=width;i++){
 		playerMap[i] = new Array();
-		for (var j=0;j<height;j++){
-			if(i == 0 || i == 11 || j==0 || j == 11){
+		for (var j=0;j<=height;j++){
+			if(i == 0 || i == width || j==0 || j == height){
 			playerMap[i][j] = 'z';
 			} else {
 			playerMap[i][j] = 'w';
 			}
 		}
 	}
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
-	genShipsArrangement(1,1);
+	for(var i = 0; i < mineNumber; ++i){
+		genMineArrangement(1,1);
+	}
 	var k = 0;
-	for (var i=0;i<width;i++){
-		for (var j=0;j<height;j++){
+	for (var i=0;i<=width;i++){
+		for (var j=0;j<=height;j++){
 			z=document.createElement('div');
 			z.className = playerMap[i][j];
 			z.setAttribute("onmousedown","right(this)")
@@ -171,6 +177,7 @@ function init(){
 			enemy.appendChild(z);
 		}
 	}
-			start();
+	start();
+	
 };
 window.addEventListener("DOMContentLoaded", init);
