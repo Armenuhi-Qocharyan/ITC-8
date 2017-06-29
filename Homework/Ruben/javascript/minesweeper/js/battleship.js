@@ -1,4 +1,3 @@
-
 function fire(element){
 	if(element.id == "zx"){
 		element.removeAttribute('id');
@@ -8,6 +7,8 @@ function fire(element){
 		alert("game over");
 	}else if(element.className=='w') {
 		element.setAttribute("class","z0");
+		idname = parseInt(element.id);
+		change_classname(idname+1,idname-1,idname-11,idname-12,idname-13,idname+11,idname+12,idname+13);
 	}else if(element.className=='z1'){
 		element.setAttribute("class","z11");
 	}else if(element.className=='z2'){
@@ -27,6 +28,38 @@ function fire(element){
 	}else if (element.className=='dmg' ){
 		alert('You were already there')
 	}
+}
+function change_classname(){
+    for(var i = 0, len = arguments.length; i < len; ++i ){
+	var element = document.getElementById(arguments[i])
+	if(element.className == 'w'){
+	    fire(element);
+	}
+	if(element.className == 'z1'){
+	    element.className = 'z11';
+	}
+	if(element.className == 'z2'){
+	    element.className = 'z22';
+	}
+	if(element.className == 'z3'){
+	    element.className = 'z33';
+	}
+	if(element.className == 'z4'){
+	    element.className = 'z44';
+	}
+	if(element.className == 'z5'){
+	    element.className = 'z55';
+	}
+	if(element.className == 'z6'){
+	    element.className = 'z66';
+	}
+	if(element.className == 'z7'){
+	    element.className = 'z77';
+	}
+	if(element.className == 'z8'){
+	    element.className = 'z88';
+	}
+    }
 }
 function check(){
 	for(var i = 0,  len = arguments.length; i<len; ++i){
@@ -76,15 +109,28 @@ var genShipsArrangement = function(ts,playr){
 }
 function right(element){
     if(event.button === 2){
-        element.setAttribute("id", "zx");
+        element.setAttribute("style", "background-image: url('imgs/zx.PNG')");
     } else if(event.button === 0){
 	fire(element);
     }
 }
-
+function randomInteger(min, max) {
+    var rand = min - 0.5 + Math.random() * (max - min + 1)
+    rand = Math.round(rand);
+    return rand;
+}
+function start(){
+    var bool = true;
+    while(bool){
+        var id = randomInteger(0,143);
+	if(document.getElementById(id).className == 'w'){
+	    fire(document.getElementById(id));
+	    bool = false;
+	}
+    }
+}
 function init(){
 	var width = 12, height = 12;
-	player = document.querySelector('.js-player')
 	enemy = document.querySelector('.js-enemy')
  	
  	playerMap = new Array();
@@ -114,17 +160,17 @@ function init(){
 	genShipsArrangement(1,1);
 	genShipsArrangement(1,1);
 	genShipsArrangement(1,1);
-
+	var k = 0;
 	for (var i=0;i<width;i++){
 		for (var j=0;j<height;j++){
-
 			z=document.createElement('div');
 			z.className = playerMap[i][j];
 			z.setAttribute("onmousedown","right(this)")
-			player.appendChild(z);
+			z.setAttribute("oncontextmenu","return false")
+			z.setAttribute("id",k++);
 			enemy.appendChild(z);
 		}
 	}
+			start();
 };
-
 window.addEventListener("DOMContentLoaded", init);

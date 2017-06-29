@@ -1,13 +1,13 @@
 .player_field { 
-      width: 570px;
+      width: 568px;
       height: 570px;
       float: left;
       border: 1px solid black;
     }
 
 .enemy_field { 
-      width: 570px;
-      height: 570px;
+      width: 564px;
+      height: 564px;
       float: left;
       border: 1px solid black;
       margin-left: 100px;
@@ -83,6 +83,7 @@ div{
 
 .z{
       background-image: none;
+      background-color: purple;
     }
 .dmg{
        background-color: gray;
