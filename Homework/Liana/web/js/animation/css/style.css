@@ -1,0 +1,12 @@
+body {
+    text-align: center;
+    background-image: url('../container/background.jpg');
+    background-size: cover;
+}
+
+#my_canvas {
+    margin-top: 30px;
+    border-radius: 5%;
+    opacity: 0.5;
+
+}
