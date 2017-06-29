@@ -13,7 +13,7 @@
     "tabs", "http://*/*", "https://*/*"
   ],
   "content_scripts": [{
-    "css": ["styles.css"],
+    "js": ["contentscript.js"],
 
     "matches": [
       "<all_urls>"

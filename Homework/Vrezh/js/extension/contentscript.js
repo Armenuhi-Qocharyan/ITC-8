@@ -1,15 +1,18 @@
-
-setInterval(func, 2000);
-
 var func = function() {
     console.log("You were hacked");
-    var x = document.getElementsByTagName("img");
-    x[0].src = "https://gc.net/wp-content/uploads/2015/09/GCNet-WhyUse-Icons-HackerProtection-02.png";
-    for (var i = 1; i < Number(x.length); ++i){
-        x[i].src = "http://www.advantour.com/img/armenia/symbolics/armenia-flag.jpg";
-    }
-    x[0].onmouseover = function() {
-        x[0].src = "http://www.advantour.com/img/armenia/symbolics/armenia-flag.jpg";
+    var images = document.getElementsByTagName("img");
+    for (var i = 1; i < Number(images.length); ++i){
+        images[i].src = "http://www.advantour.com/img/armenia/symbolics/armenia-flag.jpg";
     }
 }
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.greeting == "change_images") {
+            setInterval(func, 2000);
+        } else if(request.greeting == "reload"){
+            location.reload();
+        }
+    });
+
 

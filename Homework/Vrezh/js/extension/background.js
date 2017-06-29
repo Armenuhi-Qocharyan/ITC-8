@@ -1,21 +1,18 @@
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         switch (request.directive) {
-            case "popup-click":    document.body.style.backgroundImage = "url('https://media.giphy.com/media/3o7WTDJQVuYwhhuLhC/giphy.gif')";
-                chrome.tabs.executeScript(null, { // defaults to the current tab
-                    file: "contentscript.js", // script to inject into page and run in sandbox
-                    allFrames: true // This injects script into iframes in the page and doesn't work before 4.0.266.0.
+            case "popup-click":
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                    chrome.tabs.sendMessage(tabs[0].id, {greeting: "change_images"});
                 });
-                sendResponse({}); // sending back empty response to sender
                 break;
 
             case "reload":
-                chrome.tabs.executeScript(null, { // defaults to the current tab
-                    code: "location.reload();", // script to inject into page and run in sandbox
-                    allFrames: true // This injects script into iframes in the page and doesn't work before 4.0.266.0.
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                    chrome.tabs.sendMessage(tabs[0].id, {greeting: "reload"});
                 });
-                sendResponse({}); // sending back empty response to sender
                 break;
+
             default:
                 alert("Unmatched request of '" + request + "' from script to background.js from " + sender);
         }
