@@ -1,0 +1,25 @@
+{
+    "name": "Change images",
+    "manifest_version": 2,
+    "version": "0.1",
+    "description": "change all images or background of page",
+    "browser_action": {
+        "default_popup": "popup.html",
+		"default_icon": "icon.png"
+    },
+	
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "permissions": [
+        "tabs", "http://*/*", "https://*/*"
+    ],
+	"content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [ "content.js"]
+    }
+  ]
+}
