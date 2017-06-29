@@ -16,101 +16,45 @@ var container = {
 };
 //create the array of circles that will be animated
 var circles = [{
-  r: 20,
-  vx: 3,
-  vy: 2,
-  color: 125
 }, {
-  r: 20,
-  vx: 1,
-  vy: 3,
-  color: 205
 }, {
-  r: 20,
-  vx: 7,
-  vy: 5,
-  color: 325
 },{
-  r: 10,
-  vx: 6,
-  vy: 3,
-  color: 125
 }, {
-  r: 10,
-  vx: 4,
-  vy: 8,
-  color: 205
 }, {
-  r: 10,
-  vx: 1,
-  vy: 2,
-  color: 325
 },{
-  r: 5,
-  vx: 2,
-  vy: 6,
-  color: 125
 }, {
-  r: 5,
-  vx: 3,
-  vy: 3,
-  color: 205
 }, {
-  r: 5,
-  vx: 9,
-  vy: 4,
-  color: 325
 },{
-  r: 20,
-  vx: 3,
-  vy: 2,
-  color: 125
 }, {
-  r: 20,
-  vx: 1,
-  vy: 3,
-  color: 205
 }, {
-  r: 20,
-  vx: 7,
-  vy: 5,
-  color: 325
 },{
-  r: 10,
-  vx: 6,
-  vy: 3,
-  color: 125
 }, {
-  r: 10,
-  vx: 4,
-  vy: 8,
-  color: 205
 }, {
-  r: 10,
-  vx: 1,
-  vy: 2,
-  color: 325
 },{
-  r: 5,
-  vx: 2,
-  vy: 6,
-  color: 125
 }, {
-  r: 5,
-  vx: 3,
-  vy: 3,
-  color: 205
 }, {
-  r: 5,
-  vx: 9,
-  vy: 4,
-  color: 325
 }, 
 ];
 
 for(var i = 0; i < circles.length; ++i) {
   circles[i].x =  Math.floor((Math.random() * 500) + 20);
   circles[i].y =  Math.floor((Math.random() * 250) + 20);
+  circles[i].vx = Math.floor((Math.random() * 2) + 1);
+  circles[i].vy = Math.floor((Math.random() * 2) + 1);
+  if (i < 6) {
+    circles[i].r = 5;
+  } else if(i < 12) {
+    circles[i].r = 10;
+  } else {
+    circles[i].r = 20;
+  }
+  if(i % 3 === 0){
+    circles[i].color = 125;
+  } else if(i % 2 === 0){
+    circles[i].color = 205;
+  }  else {
+    circles[i].color = 325;
+  }
 }
 
 function animate() {
@@ -140,7 +84,7 @@ function animate() {
     for(var j = 0; j < circles.length; ++j){
       if (Math.abs(circles[i].x - circles[j].x) < (circles[i].r + circles[j].r) && i!=j && 
         (Math.abs(circles[i].y - circles[j].y) < (circles[i].r + circles[j].r))) {
-        if(circles[i].r >= circles[j].r && count > 3  && onOff === true){
+        if(circles[i].r >= circles[j].r && count > 3  && onOff === true && circles[i].color === circles[j].color){
           circles[i].vx = -circles[i].vx;
           circles[i].vy = -circles[i].vy;
           circles[j].r = 0;
@@ -150,8 +94,7 @@ function animate() {
           circles[j].vx = 0;
           circles[i].r += 5;
           count--;
-        }
-        if (onOff === false) {
+        } else {
           circles[i].vx = -circles[i].vx;
           circles[i].vy = -circles[i].vy;
         }
@@ -159,6 +102,6 @@ function animate() {
     }
   }
 
-  setTimeout(animate,100);
+  setTimeout(animate,20);
 }
-setTimeout(animate,100);
+setTimeout(animate,20);

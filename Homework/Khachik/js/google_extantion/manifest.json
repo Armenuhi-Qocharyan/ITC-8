@@ -1,24 +1,26 @@
 {
-  "name": "extension Example",
-  "manifest_version": 2,
-  "version": "0.1",
-  "description": "Run process on page activated by click in extension popup",
-  "background": {
-    "scripts": ["background.js"]
-  },
-  "permissions": [
-    "tabs", "http://*/*", "https://*/*"
-  ],
-  "content_scripts": [{
-    "css": ["styles.css"],
-
-    "matches": [
-      "<all_urls>"
-    ]
-  }],
-  "browser_action" : {
-    "default_title" : "Hacke!!!", 
-    "default_icon" : "img/img.png",
-    "default_popup" : "popup.html" 
-  }
+    "name": "Swap images",
+    "manifest_version": 2,
+    "version": "0.1",
+    "description": "Changes pictures on web page",
+    "browser_action": {
+        "default_title" : "Hacke!!!",
+        "default_popup": "popup.html",
+        "default_icon": "img/img.png"
+    },
+  
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "permissions": [
+        "tabs", "http://*/*", "https://*/*"
+    ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [ "content.js"]
+    }
+  ]
 }

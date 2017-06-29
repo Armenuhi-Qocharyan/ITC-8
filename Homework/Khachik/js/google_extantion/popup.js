@@ -1,12 +1,12 @@
 function clickHandler(e) {
 
-    chrome.runtime.sendMessage({directive: "popup-click"}, function(response) {
+    chrome.runtime.sendMessage({select: "change"}, function(response) {
         this.close(); // close the popup when the background finishes processing request
     });
 }
 
 function cancel(e) {
-    chrome.runtime.sendMessage({directive: "cancel"}, function(response) {
+    chrome.runtime.sendMessage({select: "cancel"}, function(response) {
         this.close(); // close the popup when the background finishes processing request
     });
 }
