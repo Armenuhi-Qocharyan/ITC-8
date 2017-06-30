@@ -10,13 +10,14 @@
 }
 
 .button {
+    min-width: 240px;
     display: block;
     background-color: #fdfdfd;
     color: #00969c;
     font-family: arial;
     border: none;
     outline: none;
-    font-size: 250%;
+    font-size: 40px;
     box-shadow: 4px 4px 5px #555555;
     padding: 3%;
     margin-top: 20px;
