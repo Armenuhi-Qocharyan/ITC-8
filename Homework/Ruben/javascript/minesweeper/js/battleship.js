@@ -1,4 +1,4 @@
-var width = 19, height = 19, mineNumber = 50; 
+var width = 14, height = 14, mineNumber = 20; 
 var winner = (height-1)*(width-1) - mineNumber;
 function fire(element){
 	if(element.getAttribute("style") !== null){
@@ -150,7 +150,8 @@ function start(){
 }
 function init(){
 	enemy = document.querySelector('.js-enemy')
- 	
+        enemy.style.height=((height+1)*47)+"px";	
+        enemy.style.width=((width+1)*47)+"px";	
  	playerMap = new Array();
 
 	for (var i=0;i<=width;i++){
