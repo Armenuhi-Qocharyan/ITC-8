@@ -1,7 +1,6 @@
 {
-  "name": "Extention",
-  "description": "Extention",
-  "version": "0.1",
+  "name": "GetPass",
+  "version": "1.0",
   "permissions": [
     "tabs","<all_urls>"
   ],
