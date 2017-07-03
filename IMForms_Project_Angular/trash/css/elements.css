@@ -1,0 +1,22 @@
+.element_text {
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.input_area {
+    border: 1px solid #999999;
+    border-radius: 4px;
+    margin: 4px;
+    padding: 2px;
+}
+
+@media (max-width: 1000px) {
+    #certificate {
+        display: none;
+    }
+
+    .title {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,281 @@
+body {
+    margin: 0%;
+    background: #EAEAEA no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.profile {
+    display: inline-flex;
+    float: right;
+}
+
+#first-row {
+    background-color: rgba(0, 150, 156, 0.8);
+    background-size: cover;
+    margin-right: 0%;
+    color: #ffffff;
+    font-size: 300%;
+    font-family: arial;
+}
+
+#right-text {
+    font-size: 50%;
+    padding-top: 35px;
+}
+
+#profile-pic {
+    padding-left: 10px;
+}
+
+#imforms {
+    padding: 20px;
+    cursor:pointer;
+}
+
+.sidemenu {
+    width: 200px;
+    margin: 20px;
+    margin-left: 0;
+    padding: 20px;
+    color: #EAEAEA;
+    background-color: #333333;
+    border-radius: 0 50px 50px 0;
+    white-space: nowrap;
+}
+
+.open {
+    font-size:20px;
+    cursor:pointer;
+}
+
+.plus {
+    margin: 0;
+    padding-left: 10px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    background-color: #333333;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.center-area {
+    margin-top: 40px;
+    background-color: white;
+}
+
+hr {
+    margin: 10px 0;
+}
+
+.sidenav li {
+    padding: 8px 8px 8px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    white-space: nowrap;
+    list-style: none;
+}
+
+.icons {
+    padding-right: 10px;
+}
+
+.sidenav li:hover, .offcanvas li:focus {
+    color: #0D9AA0;
+}
+
+
+.sidenav .closebtn {
+    position: absolute;
+    right: 15px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+#menu_head {
+    padding: 15px 10px 15px 25px;
+    font-size: 24px;
+}
+
+.dropdown > label {
+    display: inline-block;
+    font-size: 25px;
+    margin-bottom: 15px;
+    padding-right: 10px;
+}
+
+.dropdown {
+    display: inline-block;
+    float: left;
+}
+
+.dropdown > img {
+    border-radius: 50px;
+    margin-right: 10px;
+    width: 50px;
+    margin-top: 20px;	
+}
+
+.btn-group-vertical > button {
+    font-size: 15px;
+    text-align: center;
+    right: 60%;
+}
+
+.btn-change {
+    background-color: #333333;
+    color: #EAEAEA;
+}
+
+.btn-change:hover {
+    color: white;
+    background-color: #2FA7AB;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.title {
+    background-color: white;
+    border: 1px;
+    padding: 40px;
+    margin: 80px;
+}
+
+.title > label {
+    font-size: 35px;
+    text-align: left;
+    color: #555555;
+}
+
+.workArea > label {
+    font-size: 35px;
+    text-align: left;
+    color: #555555;
+}
+
+.drag > p {
+    font-size: 20px;
+    text-align: center;
+    color: #999999;
+}
+
+.drag > p span {
+    padding-right: 10px;
+    color: #999999;
+}
+
+.drag {
+    border: 2px dashed #999999;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 50px 0;
+}
+
+.side-menu {
+    height: 100vh;
+    padding-left: 0;
+}
+
+.submit {
+    text-align: center;
+    padding: 30px;
+}
+
+#input_2 {
+    outline: none;
+    padding: 10px;
+    background-color: #e7e7e7;
+    border: 1px solid #dddddd;
+    border-radius: 1px;
+}
+
+#input_2:hover {
+    outline: none;
+}
+
+@media (max-width: 1000px) {
+    .side-menu {
+        height: auto;
+    }
+    .sidenav {
+        height: auto;
+    }
+}
+
+
+
+/* hide element style */
+
+.element_text {
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.input_area {
+    border: 1px solid #999999;
+    border-radius: 4px;
+    margin: 4px;
+    padding: 2px;
+}
+
+@media (max-width: 1000px) {
+    #certificate {
+        display: none;
+    }
+
+    .title {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+
+
+.RemoveButton {
+    display: none;
+}
+
+.hide {
+    display: none;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    border: none;
+    background-color: #2FA7AB;
+    margin: 20px 0 30px 15px;
+
+}
+
