@@ -1,0 +1,7 @@
+/home/smbat/netbeans-8.2-linux.sh
+/home/smbat/jdk-8u121-nb-8_2-linux-x64.sh
+/home/smbat/Data_Structures/netbeans-8.2-linux.sh
+/home/smbat/Downloads/PTL7064.tar.gz
+/home/smbat/Downloads/мюзикл......«Լույս, որ հաղթեց խավարին» մյուզիքլ.mp4
+/home/smbat/.local/share/Trash/files/netbeans-8.2-linux.sh
+/home/smbat/.local/share/Trash/files/Data_Structures.tar.gz
