@@ -30,7 +30,14 @@ var circles = [{
     vx: 6,
     vy: 8,
     color: 200
-}, {
+},{
+    x: 100,
+    y: 200,
+    r: 10,
+    vx: 6,
+    vy: 8,
+    color: 25
+},{
     x: 90,
     y: 150,
     r: 10,
@@ -51,6 +58,13 @@ var circles = [{
     vx: 6,
     vy: 3,
     color: 25
+},{
+    x: 80,
+    y: 300,
+    r: 10,
+    vx: 6,
+    vy: 3,
+    color: 120
 }, {
     x: 50,
     y: 25,
