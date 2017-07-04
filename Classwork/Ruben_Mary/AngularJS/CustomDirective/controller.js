@@ -1,7 +1,7 @@
 app.directive("login", function() {
     return {
         template : "<form style='font-family: arial'>\
-            <fieldset>\
+            <fieldset style='float: left'>\
             <legend>Login</legend>\
             <h4 style='margin-bottom: 7px'>Username</h4>\
             <input type='text' placeholder='Enter username...'>\
