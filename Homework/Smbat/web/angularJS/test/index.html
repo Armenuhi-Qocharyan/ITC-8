@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TestAngJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script type="text/javascript" src="app.js" defer></script>
+
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl" ng-init="h=5;l=6;names=[
+{name:'name1',country:'country1'},
+{name:'name2',country:'country2'},
+{name:'name3',country:'country3'}
+]">
+    <p>First Name: <input type="text" ng-model="fname"></p>
+    <p>Last Name: <input type="text" ng-model="lname"></p>
+    <br>
+    <h1 >{{fname + " " + lname}}</h1>
+    <br>
+    <h1>{{h * l}}</h1>
+    <br>
+    <li ng-repeat="x in names">
+        {{ x.name + " " + x.country }}
+    </li>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script type="text/javascript" src="script.js" defer></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+    <p>Select a Person:</p>
+
+    <select ng-model="selectedPerson" ng-options="y.fname for (x, y) in names">
+    </select>
+
+    <h1>First Name: {{selectedPerson.fname}}</h1>
+    <h1>Last Name: {{selectedPerson.lname}}</h1>
+    <h2>Age: {{selectedPerson.age}} years old</h2>
+
+</div>
+
+</body>
+</html>
