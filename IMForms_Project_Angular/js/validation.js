@@ -1,86 +1,40 @@
-var checkEmail = false,
-    checkPsw = false,
-    checkUname = false,
-    checkRepeat = false;
+(function(angular) {
 
+var app = angular.module('form-example-modify-validators', []);
 
-function validator() {
-    if (true == checkEmail && true == checkPsw && true == checkUname && true == checkRepeat) {
-        document.getElementById("submit").disabled = false;
-        name = document.getElementById('user').value;
-        localStorage.setItem("name", name);
+app.directive('overwriteEmail', function() {
+  var EMAIL_REGEXP1 = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@gmail\.com$/;
+  var EMAIL_REGEXP2 = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@mail\.ru$/;
+
+  return {
+    require: '?ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      // only apply the validator if ngModel is present and AngularJS has added the email validator
+      if (ctrl && ctrl.$validators.email) {
+
+        // this will overwrite the default AngularJS email validator
+        ctrl.$validators.email = function(modelValue) {
+          return ctrl.$isEmpty(modelValue) || EMAIL_REGEXP1.test(modelValue) || EMAIL_REGEXP2.test(modelValue);
+        };
+      }
     }
-}
+  };
+});
+app.directive('overwrite-password', function() {
+var Password_REGEXP = /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$/;
+alert("a");
+  return {
+    require: '?ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      // only apply the validator if ngModel is present and AngularJS has added the email validator
+      if (ctrl && ctrl.$validators.password) {
 
-function validateEmail(email) {
-    var regularExpression = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if ("" == email) {
-        document.getElementById("alertEmail").style.display = "block";
-        document.getElementById("alertEmail").innerHTML = "Please, fill out this field";
-        document.getElementById("submit").disabled = true;
-        checkEmail = false;
-    } else if (!regularExpression.test(email)) {
-        document.getElementById("alertEmail").style.display = "block";
-        document.getElementById("alertEmail").innerHTML = "Invalid mail format";
-        document.getElementById("submit").disabled = true;
-        checkEmail = false;
-    } else {
-        document.getElementById("alertEmail").style.display = "none";
-        checkEmail = true;
-        validator();
+        // this will overwrite the default AngularJS email validator
+        ctrl.$validators.password = function(modelValue) {
+          return ctrl.$isEmpty(modelValue) || Password_REGEXP.test(modelValue);
+        };
+      }
     }
-}
-
-function validatePassword(password) {
-    var regularExpression = /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$/;
-    if ("" == password) {
-        document.getElementById("alertPsw").style.display = "block";
-        document.getElementById("submit").disabled = true;
-        document.getElementById("alertPsw").innerHTML = "Please, fill out this field";
-    } else if (!regularExpression.test(password)) {
-        document.getElementById("alertPsw").style.display = "block";
-        document.getElementById("submit").disabled = true;
-        document.getElementById("alertPsw").innerHTML = "Password should contain 6-20 symbols(required one lowercase letter and one number)";
-        checkPsw = false;
-    } else {
-        document.getElementById("alertPsw").style.display = "none";
-        checkPsw = true;
-        validator();
-    }
-}
-
-function validateRepeat(repeat) {
-    var password = document.getElementById("password").value;
-    if ("" == repeat) {
-        document.getElementById("alertRepeat").style.display = "block";
-        document.getElementById("submit").disabled = true;
-        document.getElementById("alertRepeat").innerHTML = "Please, fill out this field";
-    } else if (repeat != password) {
-        document.getElementById("alertRepeat").style.display = "block";
-        document.getElementById("submit").disabled = true;
-        document.getElementById("alertRepeat").innerHTML = "Passwords doesn't match";
-        checkRepeat = false;
-    } else {
-        document.getElementById("alertRepeat").style.display = "none";
-        checkRepeat = true;
-        validator();
-    }
-}
-
-function validateUsername(username) {
-    if ("" == username) {
-        document.getElementById("alertUname").style.display = "block";
-        document.getElementById("submit").disabled = true;
-        document.getElementById("alertUname").innerHTML = "Please, fill out this field";
-    } else if (username.length > 15 || username.indexOf(' ') != -1) {
-        document.getElementById("alertUname").style.display = "block";
-        document.getElementById("submit").disabled = true;
-        document.getElementById("alertUname").innerHTML = "Username should not contain spaces and more than 15 symbols";
-        checkUname = false;
-    } else {
-        document.getElementById("alertUname").style.display = "none";
-        checkUname = true;
-        validator();
-    }
-}
+  };
+});
+})(window.angular);
