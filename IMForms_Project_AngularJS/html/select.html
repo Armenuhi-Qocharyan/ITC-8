@@ -19,15 +19,19 @@
         <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="../js/modal_title.js" defer></script>
+        
+        
+         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="../app/app.js" defer></script>
+        <script src="../app/controllers/selectCtrl.js" defer></script>
     </head>
 
-    <body>
+    <body ng-app="myApp" ng-controller="select">
         <!--Navbar-->
         <!-- TODO Should not we support mobile version ?-->
         <div class="row" id="first-row">
             <div class="col-md-2" >
-                <h3 id="imforms" onclick="window.location.href='select.html'">IMForms</h3>
+                <h3 id="imforms" ng-click="go('')">IMForms</h3>
             </div>
             <div class="col-md-8"></div>
             <div class="col-md-2">
@@ -40,7 +44,7 @@
                             <img src="../sources/user.png" alt="View">
                             <div class="dropdown-content">
                                 <div class="btn-group-vertical">
-                                    <button type="button" class="btn btn-change btn-lg" onclick="window.location.href='../index.html'">Logout</button>
+                                    <button type="button" class="btn btn-change btn-lg" ng-click="go('../index.html')">Logout</button>
                                 </div>
                             </div>
                         </div>
@@ -57,24 +61,23 @@
             </div>
 
             <div class="col-sm-6 col-md-6 button_area">
-                <button class="button" id="new_form" type="button" > New Form </button>
-                <button class="button" id="my_forms" type="button" onclick="window.location.href='table.html'"> My Forms </button>  
+                <button class="button" id="new_form" type="button" ng-click="show=true" > New Form </button>
+                <button class="button" id="my_forms" type="button" ng-click="go('./table.html')"> My Forms </button>
             </div>            
         </div>
 	<!-- Hidden Modal-->
-        <div id="myModal" class="modal">
+        <div id="myModal" class="modal" ng-if="show">
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-body">
-                    <span class="close" id="close">&times;</span>
+                    <span class="close" id="close" ng-click="hide()" >&times;</span>
                     <h2 id="first_row">Form Name </h2>
-                    <h5>Enter a short descriptive title for this form <h5>
-                            <input type="text" id="modal-id" placeholder="Title me"></input>
-                            <button id="copy-link">Cancel </button>
-                            <button id="open-new-tab" >Continiue</button>
+                    <h5>Enter a short descriptive title for this form </h5>
+                            <input type="text" id="modal-id" ng-model="title" placeholder="Title me">
+                            <button id="copy-link" ng-click="hide()" >Cancel </button>
+                            <button id="open-new-tab"ng-click="go('./create.html')" >Continue</button>
                 </div>
             </div>
         </div>
-
     </body>
 </html>
