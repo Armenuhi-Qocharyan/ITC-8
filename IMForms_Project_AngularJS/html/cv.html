@@ -22,12 +22,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' defer></script>
     <script type="text/javascript" src="../js/convertFormValuesToJson.js" defer></script>
-    <script src="../js/cv.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="../app/cvApp.js" defer></script>
+    <script src="../app/controllers/cvCtrl.js" defer></script>
 
 </head>
 
-<body onload="Build()">
-
+<body ng-app="cvApp" ng-controller="cvCtrl">
+<email></email>
 <!-- Hidden elements -->
 <form class="name forms" id="cvElementfullName" style="display: none;">
     <label for="fname">First Name</label>
@@ -40,7 +42,7 @@
     <br>
     <input class="inputs" type="text" id="lname" name="lastname" placeholder="Your last name..">
 
-    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" onclick="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
+    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" ng-click="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
     </button>
 </form>
 
@@ -49,7 +51,7 @@
     <br>
     <input class="inputs" type="email" name="email" id="mail">
 
-    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" onclick="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
+    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" ng-click="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
     </button>
 </form>
 
@@ -62,7 +64,7 @@
         <option value="usa">USA</option>
     </select>
 
-    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" onclick="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
+    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" ng-click="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
     </button>
 </form>
 
@@ -71,8 +73,8 @@
 
     <label >Education</label>
     <br>
-    <input onclick="enable(this.parentNode.id)" id="radiobtn1" class="inputs radiobtn" type="radio" name="education">yes
-    <input onclick="disable(this.parentNode.id)" class="inputs radiobtn" type="radio" name="education" checked>no
+    <input ng-click="enable(this.parentNode.id)" id="radiobtn1" class="inputs radiobtn" type="radio" name="education">yes
+    <input ng-click="disable(this.parentNode.id)" class="inputs radiobtn" type="radio" name="education" checked>no
     <br>
     <input class="inputs" id="edu" list="university" name="university" disabled>
     <datalist id="university">
@@ -80,9 +82,9 @@
         <option value="NPUA">
     </datalist>
     <br>
-    <input id="plus" type="button" value="+" onclick="addInput(this.parentNode.id)">
+    <input id="plus" type="button" value="+" ng-click="addInput(this.parentNode.id)">
 
-    <button type="button" id="remove" class="btn btn-danger btn-circle btn-xl RemoveButton" onclick="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
+    <button type="button" id="remove" class="btn btn-danger btn-circle btn-xl RemoveButton" ng-click="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
     </button>
 </form>
 
@@ -91,7 +93,7 @@
     <br>
     <input class="inputs" type="tel" name="usrtel">
 
-    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" onclick="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
+    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" ng-click="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
     </button>
 </form>
 
@@ -101,7 +103,7 @@
     <br>
     <input class="inputs" type="date" name="bday">
 
-    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" onclick="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
+    <button type="button" class="btn btn-danger btn-circle btn-xl RemoveButton" ng-click="Remove(this)"><i class="glyphicon glyphicon-remove"></i>
     </button>
 </form>
 

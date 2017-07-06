@@ -30,6 +30,7 @@
     <script src="../js/cv.js" defer></script>
     <script src="../app/createApp.js"></script>
     <script src="../app/directives/elements.js"></script>
+    <script src="../app/constants/createConst.js"></script>
     <script src="../app/controllers/createCtrl.js"></script>
 </head>
 
@@ -71,46 +72,14 @@
     <!--Side navbar-->
     <div class="side-menu">
         <div class="col-sm-2 side-menu">
-            <div id="mySidenav" class="sidenav" ng-controller="sideBar">
+            <div id="mySidenav" class="sidenav" ng-controller="sideBar" ng-init="idName">
                 <li href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</li>
                 <li href="#" id="menu_head">Form Elements</li>
                 <hr>
-                <li onclick="Add(this.id)" id="fullName" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-user icons"></span>Full Name</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="email" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-envelope icons"></span>Email</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="address" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-map-marker icons"></span>Address</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="phone" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-phone icons"></span>Phone</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="birthday" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-gift icons"></span>Date of Birth</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="education" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-education icons"></span>Education</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="skills" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-sunglasses icons"></span>Skills</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="work" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-briefcase icons"></span>Work experience</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="submit" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-ok-circle icons"></span>Submit</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="dropdown" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-chevron-down icons"></span>Dropdown</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="gender" draggable="true" ondragstart="drag(event,this.id)"><span class="fa fa-transgender icons"></span>Gender</li>
-                <hr>
-                <li onclick="Add(this.id)" id="hobby" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-headphones icons"></span>Hobby</li>
-
-                <hr>
-                <li onclick="Add(this.id)" id="photo" draggable="true" ondragstart="drag(event,this.id)"><span class="glyphicon glyphicon-picture icons"></span>Image</li>
+		<div ng-repeat="obj in Data">
+		    <li onclick="Add(this.id)" id={{obj.idName}} draggable="true" ondragstart="drag(event,this.id)"><span class={{obj.className}}></span>{{obj.name}}</li>
+                   <hr>
+		</div>
             </div>
 
             <div class="sidemenu">
