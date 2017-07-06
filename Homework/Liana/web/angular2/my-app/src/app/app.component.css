@@ -1,0 +1,13 @@
+.header {
+    background-color: #2FA7AB;
+    padding: 2px;
+}
+
+.title {
+   color: white;
+   font-size: 32px;
+}
+
+.form-control {
+   margin-bottom: 10px;
+}
