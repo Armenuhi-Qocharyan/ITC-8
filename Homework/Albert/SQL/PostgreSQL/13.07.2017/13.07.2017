@@ -103,6 +103,74 @@ CREATE TABLE students (
 ALTER TABLE students OWNER TO postgres;
 
 --
+-- Name: subjects; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE subjects (
+    title character varying(100) NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE subjects OWNER TO postgres;
+
+--
+-- Name: itcsubjectmaxmin; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW itcsubjectmaxmin AS
+ SELECT students.itc,
+    subjects.title,
+    max(exams.score) AS max,
+    min(exams.score) AS min
+   FROM students,
+    subjects,
+    exams
+  WHERE ((exams.studentsid = students.id) AND (exams.subjectsid = subjects.id))
+  GROUP BY students.itc, subjects.title
+  ORDER BY students.itc;
+
+
+ALTER TABLE itcsubjectmaxmin OWNER TO postgres;
+
+--
+-- Name: nameitcavg; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW nameitcavg AS
+ SELECT students.name,
+    students.itc,
+    avg(exams.score) AS avg
+   FROM students,
+    subjects,
+    exams
+  WHERE ((exams.studentsid = students.id) AND (exams.subjectsid = subjects.id))
+  GROUP BY students.name, students.itc
+  ORDER BY students.name;
+
+
+ALTER TABLE nameitcavg OWNER TO postgres;
+
+--
+-- Name: namesubjectavgcountofitc; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW namesubjectavgcountofitc AS
+ SELECT students.name,
+    subjects.title,
+    avg(exams.score) AS avg,
+    count(students.itc) AS count_of_itc
+   FROM students,
+    subjects,
+    exams
+  WHERE ((exams.studentsid = students.id) AND (exams.subjectsid = subjects.id))
+  GROUP BY students.name, subjects.title
+  ORDER BY students.name;
+
+
+ALTER TABLE namesubjectavgcountofitc OWNER TO postgres;
+
+--
 -- Name: students_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -122,18 +190,6 @@ ALTER TABLE students_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE students_id_seq OWNED BY students.id;
 
-
---
--- Name: subjects; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE subjects (
-    title character varying(100) NOT NULL,
-    id integer NOT NULL
-);
-
-
-ALTER TABLE subjects OWNER TO postgres;
 
 --
 -- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres

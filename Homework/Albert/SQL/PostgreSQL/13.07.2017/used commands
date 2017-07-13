@@ -1,6 +1,6 @@
 Task1: Show students name, info for itc and avg score.
 
-select students.name,students.itc,avg(exams.score) from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by name,itc order by name;
+create view nameItcAvg as select students.name,students.itc,avg(exams.score) from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by name,itc order by name;
 
 name |  itc  |         avg         
 ------+-------+---------------------
@@ -14,7 +14,7 @@ name |  itc  |         avg
 
 Task2:Show student name, subject title, avg and how many times participated in itc.
 
-select students.name, subjects.title,avg(exams.score),count(itc) as Count_Of_ITC from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by name,title order by name;
+create view nameSubjectAvgCountOfItc as select students.name, subjects.title,avg(exams.score),count(itc) as Count_Of_ITC from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by name,title order by name;
 
 name |   title    |         avg         | count_of_itc 
 ------+------------+---------------------+--------------
@@ -36,7 +36,7 @@ name |   title    |         avg         | count_of_itc
 
 Task 3:Show itc, what subjects were,max and min score from this subject. 
 
-select students.itc, subjects.title, max(exams.score),min(exams.score) from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by itc,title order by itc;
+create view itcSubjectMaxMin as select students.itc, subjects.title, max(exams.score),min(exams.score) from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by itc,title order by itc;
 
   itc  |   title    | max | min 
 -------+------------+-----+-----
