@@ -1,0 +1,356 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.7
+-- Dumped by pg_dump version 9.5.7
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: itc; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE itc AS ENUM (
+    'itc-1',
+    'itc-2',
+    'itc-3',
+    'itc-4',
+    'itc-5',
+    'itc-6',
+    'itc-7',
+    'itc-8'
+);
+
+
+ALTER TYPE itc OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: exams; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE exams (
+    id integer NOT NULL,
+    studentsid integer,
+    subjectsid integer,
+    score integer NOT NULL,
+    CONSTRAINT exams_studentsid_check CHECK ((studentsid > 0)),
+    CONSTRAINT exams_subjectsid_check CHECK ((subjectsid > 0))
+);
+
+
+ALTER TABLE exams OWNER TO postgres;
+
+--
+-- Name: exams_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE exams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE exams_id_seq OWNER TO postgres;
+
+--
+-- Name: exams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE exams_id_seq OWNED BY exams.id;
+
+
+--
+-- Name: students; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE students (
+    name character varying(50) NOT NULL,
+    surname character varying(100) NOT NULL,
+    id integer NOT NULL,
+    itc itc NOT NULL
+);
+
+
+ALTER TABLE students OWNER TO postgres;
+
+--
+-- Name: subjects; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE subjects (
+    title character varying(100) NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE subjects OWNER TO postgres;
+
+--
+-- Name: itcsubjectmaxmin; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW itcsubjectmaxmin AS
+ SELECT students.itc,
+    subjects.title,
+    max(exams.score) AS max,
+    min(exams.score) AS min
+   FROM students,
+    subjects,
+    exams
+  WHERE ((exams.studentsid = students.id) AND (exams.subjectsid = subjects.id))
+  GROUP BY students.itc, subjects.title
+  ORDER BY students.itc;
+
+
+ALTER TABLE itcsubjectmaxmin OWNER TO postgres;
+
+--
+-- Name: nameitcavg; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW nameitcavg AS
+ SELECT students.name,
+    students.itc,
+    avg(exams.score) AS avg
+   FROM students,
+    subjects,
+    exams
+  WHERE ((exams.studentsid = students.id) AND (exams.subjectsid = subjects.id))
+  GROUP BY students.name, students.itc
+  ORDER BY students.name;
+
+
+ALTER TABLE nameitcavg OWNER TO postgres;
+
+--
+-- Name: namesubjectavgcountofitc; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW namesubjectavgcountofitc AS
+ SELECT students.name,
+    subjects.title,
+    avg(exams.score) AS avg,
+    count(students.itc) AS count_of_itc
+   FROM students,
+    subjects,
+    exams
+  WHERE ((exams.studentsid = students.id) AND (exams.subjectsid = subjects.id))
+  GROUP BY students.name, subjects.title
+  ORDER BY students.name;
+
+
+ALTER TABLE namesubjectavgcountofitc OWNER TO postgres;
+
+--
+-- Name: students_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE students_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE students_id_seq OWNER TO postgres;
+
+--
+-- Name: students_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE students_id_seq OWNED BY students.id;
+
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE subjects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE subjects_id_seq OWNER TO postgres;
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE subjects_id_seq OWNED BY subjects.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY exams ALTER COLUMN id SET DEFAULT nextval('exams_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY students ALTER COLUMN id SET DEFAULT nextval('students_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subjects ALTER COLUMN id SET DEFAULT nextval('subjects_id_seq'::regclass);
+
+
+--
+-- Data for Name: exams; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY exams (id, studentsid, subjectsid, score) FROM stdin;
+1	1	1	10
+2	2	1	9
+3	3	1	8
+4	4	1	7
+5	1	2	20
+6	2	2	19
+7	3	2	18
+8	4	2	17
+9	1	3	30
+10	2	3	29
+11	3	3	28
+12	4	3	27
+13	9	4	50
+\.
+
+
+--
+-- Name: exams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('exams_id_seq', 13, true);
+
+
+--
+-- Data for Name: students; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY students (name, surname, id, itc) FROM stdin;
+aaa	aaaaa	1	itc-1
+bbb	bbbbb	2	itc-2
+ccc	ccccc	3	itc-3
+ddd	ddddd	4	itc-4
+xxx	xxxxx	9	itc-5
+\.
+
+
+--
+-- Name: students_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('students_id_seq', 9, true);
+
+
+--
+-- Data for Name: subjects; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY subjects (title, id) FROM stdin;
+C++	1
+JavaScript	2
+Python	3
+bash	4
+\.
+
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('subjects_id_seq', 4, true);
+
+
+--
+-- Name: exams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY exams
+    ADD CONSTRAINT exams_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: students_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY students
+    ADD CONSTRAINT students_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subjects
+    ADD CONSTRAINT subjects_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: exams_studentsid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY exams
+    ADD CONSTRAINT exams_studentsid_fkey FOREIGN KEY (studentsid) REFERENCES students(id);
+
+
+--
+-- Name: exams_subjectsid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY exams
+    ADD CONSTRAINT exams_subjectsid_fkey FOREIGN KEY (subjectsid) REFERENCES subjects(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
