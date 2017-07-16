@@ -39,9 +39,10 @@ def averageScoreAndCountITC(students) :
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("host", default = "localhost", help = "host", type = str) 
-    parser.add_argument("port", default = "27017", help = "port", type = int);
+    parser.add_argument("host", help = "host", nargs = '?', default = "localhost", type = str) 
+    parser.add_argument("port", help = "port", nargs = '?', default = 27017, type = int);
     args = parser.parse_args()
+    print args
 
     client = MongoClient()
     client = MongoClient(args.host, args.port)
