@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `Cameras`;
 CREATE TABLE `Cameras` (
   `name` varchar(15) NOT NULL,
   `location` varchar(20) DEFAULT NULL,
-  `mark` varchar(20) DEFAULT NULL,
-  `is_on_line` tinyint(1) DEFAULT NULL,
+  `is_on_line` tinyint(1) NOT NULL,
+  `firm` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,40 +37,40 @@ CREATE TABLE `Cameras` (
 
 LOCK TABLES `Cameras` WRITE;
 /*!40000 ALTER TABLE `Cameras` DISABLE KEYS */;
-INSERT INTO `Cameras` VALUES ('Camera 1',NULL,'mark1',NULL),('Camera 2',NULL,'mark2',NULL),('Camera 3',NULL,'mark1',NULL);
+INSERT INTO `Cameras` VALUES ('Camera 1',NULL,0,NULL),('Camera 2',NULL,0,NULL),('Camera 3',NULL,0,NULL);
 /*!40000 ALTER TABLE `Cameras` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `CamerasFicsedObjectsCountByDate`
+-- Temporary table structure for view `CamerasObjects`
 --
 
-DROP TABLE IF EXISTS `CamerasFicsedObjectsCountByDate`;
-/*!50001 DROP VIEW IF EXISTS `CamerasFicsedObjectsCountByDate`*/;
+DROP TABLE IF EXISTS `CamerasObjects`;
+/*!50001 DROP VIEW IF EXISTS `CamerasObjects`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `CamerasFicsedObjectsCountByDate` (
-  `name` tinyint NOT NULL,
+/*!50001 CREATE TABLE `CamerasObjects` (
+  `camera_name` tinyint NOT NULL,
   `date` tinyint NOT NULL,
-  `count(Traffic.camera_id)` tinyint NOT NULL
+  `object_count` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `ObjectByDate`
+-- Temporary table structure for view `CurrentDataobjects`
 --
 
-DROP TABLE IF EXISTS `ObjectByDate`;
-/*!50001 DROP VIEW IF EXISTS `ObjectByDate`*/;
+DROP TABLE IF EXISTS `CurrentDataobjects`;
+/*!50001 DROP VIEW IF EXISTS `CurrentDataobjects`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `ObjectByDate` (
-  `image_url` tinyint NOT NULL,
+/*!50001 CREATE TABLE `CurrentDataobjects` (
   `date` tinyint NOT NULL,
+  `image_url` tinyint NOT NULL,
   `name` tinyint NOT NULL,
   `location` tinyint NOT NULL,
-  `mark` tinyint NOT NULL,
-  `is_on_line` tinyint NOT NULL
+  `is_on_line` tinyint NOT NULL,
+  `firm` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -83,13 +83,14 @@ DROP TABLE IF EXISTS `Traffic`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Traffic` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `image_url` varchar(1000) NOT NULL,
-  `date` varchar(30) NOT NULL,
   `camera_id` varchar(15) NOT NULL,
+  `date` date DEFAULT NULL,
+  `image_url` varchar(500) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `image_url` (`image_url`),
   KEY `camera_id` (`camera_id`),
   CONSTRAINT `Traffic_ibfk_1` FOREIGN KEY (`camera_id`) REFERENCES `Cameras` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +99,7 @@ CREATE TABLE `Traffic` (
 
 LOCK TABLES `Traffic` WRITE;
 /*!40000 ALTER TABLE `Traffic` DISABLE KEYS */;
-INSERT INTO `Traffic` VALUES (11,'/sf/asdf/...png','10.07.2017','Camera 1'),(12,'/sf/asdf/..1.png','11.07.2017','Camera 2'),(13,'/sf/asdf/...png','13.07.2017','Camera 3'),(14,'/sf/asdf/...png','11.07.2017','Camera 1'),(15,'/sf/asdf/...1.png','13.07.2017','Camera 1'),(16,'/sf/asdf/...1.png','13.07.2017','Camera 2'),(17,'/sf/asdf/...1.png','9.07.2017','Camera 3'),(18,'/sf/asdf/...1.png','13.07.2017','Camera 2');
+INSERT INTO `Traffic` VALUES (31,'Camera 1','2017-07-09','href://sfd/'),(32,'Camera 2','2017-07-01','href://sfd/s'),(33,'Camera 1','2017-07-10','href://sfd/asfd'),(34,'Camera 3','2017-07-09','href://sfd/fd'),(35,'Camera 2','2017-07-01','href://sfd/ds'),(36,'Camera 2','2017-07-08','href://sfd/asf');
 /*!40000 ALTER TABLE `Traffic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,12 +113,11 @@ DROP TABLE IF EXISTS `Users`;
 CREATE TABLE `Users` (
   `name` varchar(15) NOT NULL,
   `surname` varchar(15) NOT NULL,
-  `email` varchar(255) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `role` varchar(50) NOT NULL,
-  PRIMARY KEY (`password`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `password` (`password`)
+  `email` varchar(255) NOT NULL,
+  `role` enum('simple','admin') NOT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `unique_index` (`name`,`surname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -131,11 +131,11 @@ LOCK TABLES `Users` WRITE;
 UNLOCK TABLES;
 
 --
--- Final view structure for view `CamerasFicsedObjectsCountByDate`
+-- Final view structure for view `CamerasObjects`
 --
 
-/*!50001 DROP TABLE IF EXISTS `CamerasFicsedObjectsCountByDate`*/;
-/*!50001 DROP VIEW IF EXISTS `CamerasFicsedObjectsCountByDate`*/;
+/*!50001 DROP TABLE IF EXISTS `CamerasObjects`*/;
+/*!50001 DROP VIEW IF EXISTS `CamerasObjects`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -144,17 +144,17 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `CamerasFicsedObjectsCountByDate` AS select `Cameras`.`name` AS `name`,`Traffic`.`date` AS `date`,count(`Traffic`.`camera_id`) AS `count(Traffic.camera_id)` from (`Cameras` join `Traffic`) where (`Traffic`.`camera_id` = `Cameras`.`name`) group by `Cameras`.`name`,`Traffic`.`date` */;
+/*!50001 VIEW `CamerasObjects` AS select `Cameras`.`name` AS `camera_name`,`Traffic`.`date` AS `date`,count(`Traffic`.`camera_id`) AS `object_count` from (`Traffic` join `Cameras`) where (`Traffic`.`camera_id` = `Cameras`.`name`) group by `Cameras`.`name`,`Traffic`.`date` order by `Cameras`.`name` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `ObjectByDate`
+-- Final view structure for view `CurrentDataobjects`
 --
 
-/*!50001 DROP TABLE IF EXISTS `ObjectByDate`*/;
-/*!50001 DROP VIEW IF EXISTS `ObjectByDate`*/;
+/*!50001 DROP TABLE IF EXISTS `CurrentDataobjects`*/;
+/*!50001 DROP VIEW IF EXISTS `CurrentDataobjects`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -163,7 +163,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `ObjectByDate` AS select `Traffic`.`image_url` AS `image_url`,`Traffic`.`date` AS `date`,`Cameras`.`name` AS `name`,`Cameras`.`location` AS `location`,`Cameras`.`mark` AS `mark`,`Cameras`.`is_on_line` AS `is_on_line` from (`Traffic` join `Cameras`) where ((`Traffic`.`camera_id` = `Cameras`.`name`) and (`Traffic`.`date` = '13.07.2017')) */;
+/*!50001 VIEW `CurrentDataobjects` AS select `Traffic`.`date` AS `date`,`Traffic`.`image_url` AS `image_url`,`Cameras`.`name` AS `name`,`Cameras`.`location` AS `location`,`Cameras`.`is_on_line` AS `is_on_line`,`Cameras`.`firm` AS `firm` from (`Traffic` join `Cameras`) where ((`Traffic`.`camera_id` = `Cameras`.`name`) and (`Traffic`.`date` = '2017-07-09')) group by `Cameras`.`name`,`Traffic`.`date` order by `Cameras`.`name` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -177,4 +177,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-13  1:49:36
+-- Dump completed on 2017-07-17 21:57:09
