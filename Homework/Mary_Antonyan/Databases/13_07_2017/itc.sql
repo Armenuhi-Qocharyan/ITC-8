@@ -15,6 +15,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: itc; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE itc IS 'default administrative connection database';
+
+
+--
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -50,27 +57,6 @@ CREATE TABLE exams (
 ALTER TABLE exams OWNER TO postgres;
 
 --
--- Name: exams_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE exams_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE exams_id_seq OWNER TO postgres;
-
---
--- Name: exams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE exams_id_seq OWNED BY exams.id;
-
-
---
 -- Name: students; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -83,60 +69,6 @@ CREATE TABLE students (
 
 
 ALTER TABLE students OWNER TO postgres;
-
---
--- Name: students_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE students_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE students_id_seq OWNER TO postgres;
-
---
--- Name: students_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE students_id_seq OWNED BY students.id;
-
-
---
--- Name: subjects; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE subjects (
-    id integer NOT NULL,
-    name text NOT NULL
-);
-
-
-ALTER TABLE subjects OWNER TO postgres;
-
---
--- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE subjects_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE subjects_id_seq OWNER TO postgres;
-
---
--- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE subjects_id_seq OWNED BY subjects.id;
-
 
 --
 -- Name: trainings_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -165,6 +97,139 @@ CREATE TABLE trainings (
 ALTER TABLE trainings OWNER TO postgres;
 
 --
+-- Name: averageOfTraining; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW "averageOfTraining" AS
+ SELECT t.name AS "ITC",
+    st.name AS "Name",
+    st.surname AS "Surname",
+    avg(e.score) AS avg
+   FROM exams e,
+    trainings t,
+    students st
+  WHERE ((e.student_id = st.id) AND (e.training_id = t.id))
+  GROUP BY t.name, st.name, st.surname;
+
+
+ALTER TABLE "averageOfTraining" OWNER TO postgres;
+
+--
+-- Name: subjects; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE subjects (
+    id integer NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE subjects OWNER TO postgres;
+
+--
+-- Name: countOfMax; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW "countOfMax" AS
+ SELECT t.name AS "ITC",
+    sb.name AS "Subject",
+    max(e.score) AS "Max score",
+    count(e.score) AS count
+   FROM exams e,
+    trainings t,
+    subjects sb
+  WHERE ((e.subject_id = sb.id) AND (e.training_id = t.id))
+  GROUP BY t.name, sb.name, e.score
+  ORDER BY t.name;
+
+
+ALTER TABLE "countOfMax" OWNER TO postgres;
+
+--
+-- Name: countOfTrainings; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW "countOfTrainings" AS
+ SELECT st.name AS "Name",
+    st.surname AS "Surname",
+    sb.name AS "Subject",
+    max(e.score) AS "Max score",
+    min(e.score) AS "Min score",
+    count(t.name) AS count
+   FROM exams e,
+    students st,
+    subjects sb,
+    trainings t
+  WHERE ((e.student_id = st.id) AND (e.subject_id = sb.id) AND (e.training_id = t.id))
+  GROUP BY st.name, st.surname, sb.name;
+
+
+ALTER TABLE "countOfTrainings" OWNER TO postgres;
+
+--
+-- Name: exams_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE exams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE exams_id_seq OWNER TO postgres;
+
+--
+-- Name: exams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE exams_id_seq OWNED BY exams.id;
+
+
+--
+-- Name: students_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE students_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE students_id_seq OWNER TO postgres;
+
+--
+-- Name: students_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE students_id_seq OWNED BY students.id;
+
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE subjects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE subjects_id_seq OWNER TO postgres;
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE subjects_id_seq OWNED BY subjects.id;
+
+
+--
 -- Name: exams id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -190,6 +255,19 @@ ALTER TABLE ONLY subjects ALTER COLUMN id SET DEFAULT nextval('subjects_id_seq':
 --
 
 COPY exams (id, student_id, training_id, score, subject_id) FROM stdin;
+1	1	1	100	1
+2	1	1	99	2
+3	1	1	90	3
+4	1	2	100	1
+5	1	2	100	2
+6	1	2	100	3
+7	2	3	80	1
+8	2	3	90	2
+9	2	3	90	3
+10	2	4	90	1
+11	2	4	100	2
+12	2	4	90	3
+13	2	2	100	1
 \.
 
 
@@ -197,7 +275,7 @@ COPY exams (id, student_id, training_id, score, subject_id) FROM stdin;
 -- Name: exams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('exams_id_seq', 1, false);
+SELECT pg_catalog.setval('exams_id_seq', 13, true);
 
 
 --
