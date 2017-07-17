@@ -5,8 +5,8 @@ from pymongo import MongoClient
 
 def getDB():
     parser = argparse.ArgumentParser()
-    parser.add_argument("host", default = "localhost", help = "host", type = str) 
-    parser.add_argument("port", default = "27017", help = "port", type = int);
+    parser.add_argument("--host", default = "localhost", help = "host", type = str) 
+    parser.add_argument("--port", default = "27017", help = "port", type = int);
     args = parser.parse_args()
     client = MongoClient(args.host, args.port)    
     client.studentsDb.studentsColl.drop()
