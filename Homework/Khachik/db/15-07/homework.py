@@ -18,14 +18,17 @@ def func(pipeline):
     for doc in result:
         print(doc)
 
-print('Input 1 or 2')
-print('1 - [name][itc][average score]')
-print('2 - [itc][subject][max score][min score][exams number]')
-cin = raw_input()
-if cin == '1':
-    func(pipeline1)
-elif cin == '2':
-    func(pipeline2)
-else:
-    print("wrong input")
+def main():
+    print('Input 1 or 2')
+    print('1 - [name][itc][average score]')
+    print('2 - [itc][subject][max score][min score][exams number]')
+    cin = raw_input()
+    if cin == '1':
+        func(pipeline1)
+    elif cin == '2':
+        func(pipeline2)
+    else:
+        print("wrong input")
 
+if __name__ == "__main__":
+    main()
