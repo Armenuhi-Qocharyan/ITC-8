@@ -1,7 +1,8 @@
-Task1: Show students name, info for itc and avg score.
+--Task1: Show students name, info for itc and avg score.
 
 create view nameItcAvg as select students.name,students.itc,avg(exams.score) from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by name,itc order by name;
 
+/*
 name |  itc  |         avg         
 ------+-------+---------------------
  aaa  | itc-1 | 20.0000000000000000
@@ -9,13 +10,14 @@ name |  itc  |         avg
  ccc  | itc-3 | 18.0000000000000000
  ddd  | itc-4 | 17.0000000000000000
  xxx  | itc-5 | 50.0000000000000000
+*/
 
 
-
-Task2:Show student name, subject title, avg and how many times participated in itc.
+--Task2: Show student name, subject title, avg and how many times participated in itc.
 
 create view nameSubjectAvgCountOfItc as select students.name, subjects.title,avg(exams.score),count(itc) as Count_Of_ITC from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by name,title order by name;
 
+/*
 name |   title    |         avg         | count_of_itc 
 ------+------------+---------------------+--------------
  aaa  | C++        | 10.0000000000000000 |            1
@@ -31,13 +33,14 @@ name |   title    |         avg         | count_of_itc
  ddd  | JavaScript | 17.0000000000000000 |            1
  ddd  | Python     | 27.0000000000000000 |            1
  xxx  | bash       | 50.0000000000000000 |            1
+*/
 
 
-
-Task 3:Show itc, what subjects were,max and min score from this subject. 
+--Task 3: Show itc, what subjects were,max and min score from this subject. 
 
 create view itcSubjectMaxMin as select students.itc, subjects.title, max(exams.score),min(exams.score) from students,subjects,exams where studentsId=students.id and subjectsId=subjects.id group by itc,title order by itc;
 
+/*
   itc  |   title    | max | min 
 -------+------------+-----+-----
  itc-1 | C++        |  10 |  10
@@ -53,5 +56,4 @@ create view itcSubjectMaxMin as select students.itc, subjects.title, max(exams.s
  itc-4 | JavaScript |  17 |  17
  itc-4 | Python     |  27 |  27
  itc-5 | bash       |  50 |  50
-
-
+*/
