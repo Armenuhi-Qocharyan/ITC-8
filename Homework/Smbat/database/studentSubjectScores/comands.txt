@@ -1,8 +1,8 @@
 select DISTINCT a.Title, a.maxScore from (select sbj.Title, max(exm.score) as maxScore from subjects as sbj, exams as exm where sbj.id = exm.Subject_id group by sbj.id) as a inner join exams on a.maxScore = exams.score;
 
-select Subject_id, max(score), min(score) from exams group by Subject_id;
+select Subject_id, max(score), min(score), avg(score) from exams group by Subject_id;
 
-selec Name, Surname, AVG(score), COUNT(Subject_id) as examCount from students inner join exams on students.id = exams.Student_id group by Student_id ORDER BY examCount;
+select Name, Surname, AVG(score), COUNT(Subject_id) as examCount from students inner join exams on students.id = exams.Student_id group by Student_id ORDER BY examCount;
 
 
 --------- ImForms db ------

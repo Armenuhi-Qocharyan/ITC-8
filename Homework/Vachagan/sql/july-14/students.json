@@ -1,0 +1,1 @@
+{ "_id" : { "$oid" : "596909e041347de6abd58052" }, "name" : "Poxos", "surname" : "poxosyan", "subjects" : [ "c++", "python", "bash" ], "score" : { "c++" : "10", "python" : "7", "bash" : "6" } }
