@@ -12,19 +12,22 @@ def insertData(exams) :
             {
                 "Training":"ITC1", 
                 "Subject":"C++", 
-                "Score":"90"
+                "Score":90
                 },
             {
                 "Training":"ITC1",
                 "Subject":"Python",
-                "Score":"95"
+                "Score":95
                 },
             {
                 "Training":"ITC1", 
                 "Subject":"Linux", 
-                "Score":"100"
+                "Score":100
                 }]
             })
+
+def query(doc, criteria) :
+    pprint(list(doc.aggregate(criteria)))
 
 def main() :
     # Get arguments
@@ -51,10 +54,18 @@ def main() :
     insertData(exams)
 
     # First select criteria
-    selectCriteria = [{"$group" : { "_id" : { "ITC" : "$ITC", "Name" : "$Name", "Surname" : "$Surname", "Average" : {"$avg" : "$Exams.a.Score"}}}}]
+    firstSelectCriteria = [{"$unwind":"$Exams"},
+            {"$group" : { "_id" : { "ITC" : "$Exams.Training", "Name" : "$Name", "Surname" : "$Surname"}, "Average" : {"$avg" : "$Exams.Score"}}}]
 
-    # Get the result of the query
-    pprint(list(exams.aggregate(selectCriteria)))
+    # Second select criteria
+    secondSelectCriteria = [{"$unwind":"$Exams"}, {"$group": {"_id": {"Name":"$Name", "Surname":"$Surname"}, "Max":{"$max":"$Exams.Score"}, "Min":{"$min":"$Exams.Score"}}}]
+
+    # Get the results of the queries
+    print "\n\nQuery 1: Get average of each student for each training:"
+    query(exams, firstSelectCriteria)
+
+    print "\n\nQuery 2: Get max and min scores of each subject for each student:"
+    query(exams, secondSelectCriteria)
 
 if __name__ == "__main__" :
     main()
