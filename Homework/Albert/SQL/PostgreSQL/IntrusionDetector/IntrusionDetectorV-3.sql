@@ -226,6 +226,7 @@ SELECT pg_catalog.setval('cameras_id_seq', 2, true);
 
 COPY images (id, detecteddate, imagespath, camerasid, trafficid, detectedtime) FROM stdin;
 1	2017-07-07	images folder path-1	1	1	03:33:00
+2	2017-05-05	images folder path-2	2	2	05:55:00
 \.
 
 
@@ -233,7 +234,7 @@ COPY images (id, detecteddate, imagespath, camerasid, trafficid, detectedtime) F
 -- Name: images_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('images_id_seq', 1, true);
+SELECT pg_catalog.setval('images_id_seq', 2, true);
 
 
 --
@@ -242,8 +243,8 @@ SELECT pg_catalog.setval('images_id_seq', 1, true);
 
 COPY traffic (id, type, firstrundate, firstruntime) FROM stdin;
 1	people	2017-07-07	00:00:00
-2	car	2017-07-09	00:00:00
-3	car	2017-07-09	02:30:00
+2	car	2017-05-05	00:00:00
+3	car	2017-07-08	02:30:00
 \.
 
 
@@ -262,6 +263,14 @@ COPY users (email, password, role, name) FROM stdin;
 user1@mail.ru	password-1	admin	User-1
 user2@mail.ru	password-2	guest	User-2
 \.
+
+
+--
+-- Name: cameras_cameraname_latitude_longitude_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cameras
+    ADD CONSTRAINT cameras_cameraname_latitude_longitude_key UNIQUE (cameraname, latitude, longitude);
 
 
 --

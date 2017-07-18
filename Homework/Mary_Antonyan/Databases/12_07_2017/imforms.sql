@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `elements`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `elements` (
-  `element_id` int(11) NOT NULL AUTO_INCREMENT,
-  `element_title` varchar(30) NOT NULL,
-  PRIMARY KEY (`element_id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -61,15 +61,15 @@ DROP TABLE IF EXISTS `filled_forms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `filled_forms` (
-  `fill_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `form_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `filled_json` varchar(255) NOT NULL,
-  PRIMARY KEY (`fill_id`),
+  PRIMARY KEY (`id`),
   KEY `form_id` (`form_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `filled_forms_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `forms` (`form_id`),
-  CONSTRAINT `filled_forms_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+  CONSTRAINT `filled_forms_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `forms` (`id`),
+  CONSTRAINT `filled_forms_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -79,7 +79,7 @@ CREATE TABLE `filled_forms` (
 
 LOCK TABLES `filled_forms` WRITE;
 /*!40000 ALTER TABLE `filled_forms` DISABLE KEYS */;
-INSERT INTO `filled_forms` VALUES (1,1,1,'\"1\":[\"Mane\", \"Antonyan\"],\"2\":\"maneantonyan@gmail.com\",\"4\":\"14.05.00\",\"3\":\"Armenia,Lori,Vanadzor,...\"'),(2,1,1,'{\"1\":[\"Name\",\"Surname\"],\"2\":\"Email@email.com\",\"4\":\"DD.MM.YY\",\"3\":\"Some Address\"}'),(3,1,2,'{\"1\":[\"Name\",\"Surname\"],\"2\":\"Email@email.com\",\"4\":\"DD.MM.YY\",\"3\":\"Some Address\"}');
+INSERT INTO `filled_forms` VALUES (1,1,1,'\"1\":[\"Mane\", \"Antonyan\"],\"2\":\"maneantonyan@gmail.com\",\"4\":\"14.05.00\",\"3\":\"Armenia,Lori,Vanadzor,...\"'),(2,1,1,'{\"1\":[\"Name\",\"Surname\"],\"2\":\"Email@email.com\",\"4\":\"DD.MM.YY\",\"3\":\"Some Address\"}'),(3,2,2,'{\"1\":[\"Name\",\"Surname\"],\"2\":\"Email@email.com\",\"4\":\"DD.MM.YY\",\"3\":\"Some Address\"}');
 /*!40000 ALTER TABLE `filled_forms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,12 +91,12 @@ DROP TABLE IF EXISTS `forms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `forms` (
-  `form_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `content_json` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`form_id`),
+  PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `forms_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+  CONSTRAINT `forms_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -132,11 +132,11 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL,
-  `user_email` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
   `password` varchar(50) NOT NULL,
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -163,7 +163,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `filledForms` AS select `u`.`username` AS `User`,`f`.`content_json` AS `Form`,count(`ff`.`filled_json`) AS `Count` from ((`users` `u` join `forms` `f`) join `filled_forms` `ff`) where ((`u`.`user_id` = `f`.`user_id`) and (`u`.`user_id` = `ff`.`user_id`) and (`f`.`form_id` = `ff`.`form_id`)) group by `User`,`Form` */;
+/*!50001 VIEW `filledForms` AS select `u`.`username` AS `User`,`f`.`content_json` AS `Form`,count(`ff`.`filled_json`) AS `Count` from ((`users` `u` join `forms` `f`) join `filled_forms` `ff`) where ((`ff`.`form_id` = `f`.`id`) and (`ff`.`user_id` = `u`.`id`)) group by `User`,`Form` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -181,7 +181,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `imforms` AS select `u`.`username` AS `User`,`f`.`content_json` AS `Form`,count(`ff`.`filled_json`) AS `Count` from ((`users` `u` join `forms` `f` on((`u`.`user_id` = `f`.`user_id`))) join `filled_forms` `ff`) where ((`ff`.`user_id` = `u`.`user_id`) and (`ff`.`form_id` = `f`.`form_id`)) group by `User`,`Form` */;
+/*!50001 VIEW `imforms` AS select `u`.`username` AS `User`,`f`.`content_json` AS `Form`,count(`ff`.`filled_json`) AS `Count` from ((`users` `u` join `forms` `f` on((`u`.`id` = `f`.`user_id`))) join `filled_forms` `ff`) where ((`ff`.`user_id` = `u`.`id`) and (`ff`.`form_id` = `f`.`id`)) group by `User`,`Form` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -195,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-13  0:17:16
+-- Dump completed on 2017-07-17 23:04:05
