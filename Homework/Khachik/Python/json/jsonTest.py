@@ -17,4 +17,5 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(jsonNew.check('"a":"as"',"key"), 1)
 
 if __name__ == '__main__':
-    unittest.main()
+        import xmlrunner
+        unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports'))
