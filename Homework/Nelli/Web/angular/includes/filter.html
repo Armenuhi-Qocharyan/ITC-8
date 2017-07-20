@@ -4,7 +4,7 @@
         <th>Age</th>
         <th>Score</th>
     </thead>
-    <tr ng-repeat='student in students | filter: student.age >=18 && student.score >= 6'>
+    <tr ng-repeat='student in students' ng-if="student.age > 18 && student.score > 6">
         <td>{{student.name}}</td>
         <td>{{student.age}}</td>
         <td>{{student.score}}</td>

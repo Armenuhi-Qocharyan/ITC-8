@@ -2,7 +2,7 @@ var app = angular.module("Students", ["ngRoute"]);
 app.directive("students", function() {
     return {
         restrict: "E",
-        templateUrl: "../includes/students.html"
+        templateUrl: "./includes/students.html"
     };
 });
 app.controller('StudentsCtrl', function($scope) {
@@ -16,19 +16,26 @@ app.controller('StudentsCtrl', function($scope) {
             "name": "Liana",
             "age": 21,
             "score": 9
+        },
+        {
+            "name": "Aram",
+            "age": 15,
+            "score": 9
+        },
+        {
+            "name": "Hambardzum",
+            "age": 21,
+            "score": 5
         }
     ]
-    $scope.filter = function() {
-        $scope.condition;
-    }
 });
 
 app.config(function($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl: "../includes/students.html"
+            templateUrl: "./includes/students.html"
         })
         .when("/filtered", {
-            templateUrl: "../includes/filter.html"
+            templateUrl: "./includes/filter.html"
         });
 });
