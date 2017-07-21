@@ -1,0 +1,13 @@
+<table class="table">
+    <tr ng-repeat="student in data | filterByAge: isFiltred">
+        <td data-title="Name" >
+            {{student.name}}
+        </td>
+        <td data-title="Surname">
+            {{student.surname}}
+        </td>
+        <td data-title="Surname">
+            {{student.age}}
+        </td>
+    </tr>
+</table>

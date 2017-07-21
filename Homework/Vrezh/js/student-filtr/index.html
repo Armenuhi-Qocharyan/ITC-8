@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="app-module">
+<head>
+    <title>login-form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+    <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+    <script src="js/student.js" ></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body  ng-controller="app-controller">
+    <ng-header></ng-header>
+    <div class="form-style col-md-offset-1">
+        <ng-login-form></ng-login-form>
+    </div>
+    <div class="std-table col-md-offset-1">
+        <ng-student></ng-student>
+
+    </div>
+    <ng-footer></ng-footer>
+
+
+    
+</body>
+</html>
