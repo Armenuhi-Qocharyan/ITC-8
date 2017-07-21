@@ -10,9 +10,10 @@ if (myArgs.length != 2 ) {
     console.log("Error: Invalid number of arguments");
 } else {
     console.log(colors.green("Process ID: ", process.pid));
-    Finder.from(myArgs[1]).findFiles(myArgs[0], function(files) {
-        console.log(colors.blue(files));
-        console.log(colors.green("Script runtime: ", process.uptime()));
-        console.log(colors.green("Process memory usage", process.memoryUsage().heapUsed));
-    });
+    files = Finder.from(myArgs[1]).findFiles(myArgs[0]);
+    for (var i in files) {
+        console.log(colors.blue(files[i]));
+    }
+    console.log(colors.green("Script runtime: ", process.uptime()));
+    console.log(colors.green("Process memory usage", process.memoryUsage().heapUsed));
 }
