@@ -1,0 +1,14 @@
+{
+  "name": "users",
+  "version": "1.0.0",
+  "description": "Login and registration app",
+  "main": "user.js",
+  "author": "Liana",
+  "license": "ISC",
+  "dependencies": {
+    "argparse": "^1.0.9",
+    "line-by-line": "^0.1.5",
+    "prompt": "^1.0.0",
+    "replace": "^0.3.0"
+  }
+}
