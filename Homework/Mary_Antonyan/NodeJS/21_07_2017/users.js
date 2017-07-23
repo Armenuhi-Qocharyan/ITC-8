@@ -62,7 +62,7 @@ function login(fileName, username, password) {
 
 // Register the user
 function register(fileName, username, password, email, age) {
-    var data = "\n" + username + " " + password + " " + email +  " " + age;
+    var data = "\n" + username + " " + password + " " + email +  " " + age + "\n";
     file.appendFile(fileName, data, function(err) {
         if (err) {
             return console.log("Error: ", err.message, "\nNot registered");
@@ -98,14 +98,20 @@ function resetPassword(fileName, username, password, email, age, newPassword) {
 // Get information about specified user
 function getUserInfo(fileName, username) {
     var searchString = "\n" + username + " ";
-    // TODO complete this function
-    findInFile.find(searchString, '.', fileName)
+    findInFile.findSync(searchString, '.', fileName)
         .then(function(results) {
-            for (var result in results) {
-                var res = results[result];
-                console.log(res);
+        for (var result in results) {
+            var res = results[result].line;
+            for (var i in res) {
+                var user = res[i].split("\n");
+                for (var i in user) {
+                    if (user[i].length > 0) {
+                        console.log(user[i]);
+                    }
+                }
             }
-        });
+        }
+    });
 }
 
 
@@ -115,13 +121,18 @@ function getUsers(fileName) {
         if (err) {
             return console.log("Error: ", err.message);
         }
-        console.log(data);
+        var users = data.split("\n");
+        for (var i in users) {
+            if (users[i].length > 0) {
+                console.log(users[i]);
+            }
+        }
     });
 }
 
 function main() {
     var args = process.argv.slice(2);
-    var fileName = "./users.txt";
+    var fileName = "users.txt";
     checkArguments(args, fileName);
 }
 
