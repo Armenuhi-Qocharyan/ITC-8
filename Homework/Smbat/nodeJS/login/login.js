@@ -18,6 +18,8 @@ function checkArgs(args, fileUsers) {
         getUser(args[1], args[2]);
     } else if (command == "allusers" && argLength == 1) {
         allUsers();
+    } else {
+        console.log("Invalid Arguments");
     }
 }
 
