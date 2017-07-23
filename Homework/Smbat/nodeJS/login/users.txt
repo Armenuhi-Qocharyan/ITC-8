@@ -1,0 +1,3 @@
+Smbat newpass Smbat@gmail.com 30
+Gev newpass Gmbat@gmail.com 20
+Dav pass Dav@gmail.com 18
