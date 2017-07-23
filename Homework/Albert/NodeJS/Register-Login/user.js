@@ -59,7 +59,6 @@ var getUserInfo = function(myArgs) {
 }
 
 var getUsers = function() {
-    var readMe = fs.readFileSync('users.txt','utf8');
     console.log(colors.yellow('\n\tList all users\n\n', readMe));
 }
 
