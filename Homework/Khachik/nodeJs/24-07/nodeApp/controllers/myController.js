@@ -47,13 +47,11 @@ module.exports.deleteUser = function(req, res) {
     var userName = parseInt(req.params.name);
     db.result('delete from user_table where name = $1', userName)
         .then(function (result) {
-            /* jshint ignore:start */
             res.status(200)
             .json({
                 status: 'success',
                 message: `Removed ${result.rowCount} user`
             });
-        /* jshint ignore:end */
         })
     .catch(function (err) {
         return next(err);
@@ -61,15 +59,13 @@ module.exports.deleteUser = function(req, res) {
 }
 
 module.exports.deleteAllUsers = function(req, res) {
-    db.result('delete from user_table where name = $1', userName)
+    db.result('delete * from user_table1', userName)
         .then(function (result) {
-            /* jshint ignore:start */
             res.status(200)
             .json({
                 status: 'success',
                 message: `Removed ${result.rowCount} user`
             });
-        /* jshint ignore:end */
         })
     .catch(function (err) {
         return next(err);
