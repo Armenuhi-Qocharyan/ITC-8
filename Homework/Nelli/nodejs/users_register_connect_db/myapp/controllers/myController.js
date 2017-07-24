@@ -1,5 +1,5 @@
 var model = require('../models/myModel'),
-    MongoClient = model.MongoClient,
+    MongoClient = model.Client,
     url = model.url;
 
 module.exports.addUser = function(req, res) {
