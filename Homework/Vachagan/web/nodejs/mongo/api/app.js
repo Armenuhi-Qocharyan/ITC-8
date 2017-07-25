@@ -7,6 +7,22 @@ var bodyParser = require('body-parser');
 
 var router = require('./routes/router');
 
+var http = require ('http');
+var mongoose = require ("mongoose");
+
+var uristring =
+    process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/nodeApi';
+
+mongoose.connect(uristring, function (err, res) {
+    if (err) {
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+        console.log ('Succeeded connected to: ' + uristring);
+    }
+});
+
 var app = express();
 
 app.use(logger('dev'));

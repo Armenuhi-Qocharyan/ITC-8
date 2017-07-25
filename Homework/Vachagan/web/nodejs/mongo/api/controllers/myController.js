@@ -1,30 +1,41 @@
 var model = require('../models/myModel');
+var mongoose = require ("mongoose");
 
 module.exports.addUser = function(req, res) {
-    var userDetails = req.body;
-    model.users.push(userDetails);
-    res.send('{"status":"created"}');
-}
+    var PUser = mongoose.model('Users', model.userSchema);
+    var johndoe = new PUser (req.body);
+    johndoe.save(function (err) {if (err) console.log ('Error on save!')});
+    res.send('{"status": "inserted"}');
+};
 
 module.exports.getUsers = function(req, res) {
-    res.send(JSON.stringify(model.users));
-}
+    var MyModel = mongoose.model('Users', model.userSchema);
+    MyModel.find({}, function (err, docs) {
+        if(err) console.log(err);
+        res.send(docs);
+    });
+};
 
-module.exports.deleteUser = function(req, res) {
-    var index, username = req.params.username;
-    for (index in model.users) {
-        console.log(index);
-        console.log(model.users[index]);
-        if (model.users[index]['name'] === username) {
-            model.users.splice(index, 1);
-            break;
+module.exports.deleteUser =  function(req, res) {
+    var  username = req.params.username;
+    var MyModel = mongoose.model('Users',model.userSchema);
+    MyModel.find({}, function (err, docs) {
+        if(err) console.log(err);
+        for (i in docs) {
+            if (docs[i].name.first === username)
+            {
+                docs[i].remove({},function (err) {
+                    if(err) console.log(err);
+                });
+            }
         }
-    }
+        res.send('{"status":"deletedUser"}');
+    });
+};
 
-    res.send('{"status":"deleted"}');
-}
-
-module.exports.deleteAllUsers = function(req, res) {
-    model.users = [];
-    res.send('{"status":"all_deleted"}');
-}
+module.exports.deleteAllUsers =function(req, res) {
+    var MyModel = mongoose.model('Users',model.userSchema);
+    MyModel.remove({},function (err) {
+        res.send('{"status":"deleted"}');
+    });
+};
