@@ -7,7 +7,7 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://root:root:@localhost:5432/users';
+var connectionString = 'postgres://postgres:root:@localhost:5432/users';
 var db = pgp(connectionString);
 
 module.exports.addUser = function(req, res) {
