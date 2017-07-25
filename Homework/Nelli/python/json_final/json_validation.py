@@ -148,10 +148,13 @@ def is_valid_json(json):
     else:
         return 0
 
-json = raw_input("Enter json : ") 
-json = json.replace(" ","")
-print json
-if not is_valid_json(json):
-    print "Incorrect json format"
+def main ():
+    json = raw_input("Enter json : ") 
+    json = json.replace(" ","")
+    print json
+    if not is_valid_json(json):
+        print "Incorrect json format"
 
+
+if __name__ == '__main__': main()
 
