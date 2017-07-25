@@ -33,7 +33,7 @@ router.get('/users',  function(req, res) {
 	  if (err) throw err;
 	  db.collection("users").find({}).toArray(function(err, result) {
 		if (err) throw err;
-			console.log(result);
+			console.log(result.name);
 			res.send(JSON.stringify(result));
 			db.close();
 		}); 
