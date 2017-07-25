@@ -79,7 +79,7 @@ CREATE TABLE `filled_forms` (
 
 LOCK TABLES `filled_forms` WRITE;
 /*!40000 ALTER TABLE `filled_forms` DISABLE KEYS */;
-INSERT INTO `filled_forms` VALUES (1,1,1,'\"1\":[\"Mane\", \"Antonyan\"],\"2\":\"maneantonyan@gmail.com\",\"4\":\"14.05.00\",\"3\":\"Armenia,Lori,Vanadzor,...\"'),(2,1,1,'{\"1\":[\"Name\",\"Surname\"],\"2\":\"Email@email.com\",\"4\":\"DD.MM.YY\",\"3\":\"Some Address\"}'),(3,1,2,'{\"1\":[\"Name\",\"Surname\"],\"2\":\"Email@email.com\",\"4\":\"DD.MM.YY\",\"3\":\"Some Address\"}');
+INSERT INTO `filled_forms` VALUES (1,1,1,'\"1\":[\"Mane\", \"Antonyan\"],\"2\":\"maneantonyan@gmail.com\",\"4\":\"14.05.00\",\"3\":\"Armenia,Lori,Vanadzor,...\"'),(2,1,1,'{\"1\":[\"Name\",\"Surname\"],\"2\":\"Email@email.com\",\"4\":\"DD.MM.YY\",\"3\":\"Some Address\"}'),(3,2,2,'{\"1\":[\"Name\",\"Surname\"],\"2\":\"Email@email.com\",\"4\":\"DD.MM.YY\",\"3\":\"Some Address\"}');
 /*!40000 ALTER TABLE `filled_forms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +163,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `filledForms` AS select `u`.`username` AS `User`,`f`.`content_json` AS `Form`,count(`ff`.`filled_json`) AS `Count` from ((`users` `u` join `forms` `f`) join `filled_forms` `ff`) where ((`u`.`id` = `f`.`user_id`) and (`u`.`id` = `ff`.`user_id`) and (`f`.`id` = `ff`.`form_id`)) group by `User`,`Form` */;
+/*!50001 VIEW `filledForms` AS select `u`.`username` AS `User`,`f`.`content_json` AS `Form`,count(`ff`.`filled_json`) AS `Count` from ((`users` `u` join `forms` `f`) join `filled_forms` `ff`) where ((`ff`.`form_id` = `f`.`id`) and (`ff`.`user_id` = `u`.`id`)) group by `User`,`Form` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -195,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-16 17:11:54
+-- Dump completed on 2017-07-17 23:04:05

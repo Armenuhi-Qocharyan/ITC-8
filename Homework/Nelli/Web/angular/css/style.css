@@ -1,0 +1,23 @@
+table {
+    width: 60%;
+    margin: auto;
+}
+
+thead {
+    background: #999;
+}
+
+footer {
+    background: #000;
+    color: #fff;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.pages {
+    width: 50px;
+    font-size: medium;
+    margin: auto;
+}

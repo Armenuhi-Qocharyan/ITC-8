@@ -6,56 +6,73 @@ def insert(collection):
     collection.insert({
         "name":"Nelli",
         "itc":"itc_8",
-        "subjects":{
-            "c++":8,
-            "python":5
+        "exams":{
+            "exam1":{
+                "subject":"c++",
+                "score":7
+            },
+            "exam2":{
+                "subject":"python",
+                "score":7
+            }
         }
     })
-    collection.insert({
-        "name":"Liana",
-        "itc":"itc_8",
-        "subjects":{
-            "c++":9,
-            "python":10
-        }
-    })
- 
+
+def print_items(collection,pipeline): 
+    result = collection.aggregate(pipeline)
+    for item in result:
+        print item['_id'],
+        print item['avg'],
+        print item['min'],
+        print item['max']
+
 def print_students_avg(collection):
-    all_students = collection.find()
-    print " itc " + " name " + " avg "
-    for student in all_students:
-        print student["itc"] + " " + student["name"],
-        scores = student["subjects"].values()
-        print sum(scores) / float(len(scores))
+    pipeline = [{
+        "$group":
+        {
+            "_id" : {"itc":'$itc',"student":'$name'},
+            "avg1" : {'$avg':'$exams.exam1.score'},
+            "avg2" : {'$avg':'$exams.exam2.score'},
+        }
+    }]
+    result = collection.aggregate(pipeline)
+    for item in result:
+        print item['_id'],
+        print (item['avg1']+item['avg2'])/2
 
 
-def subject_min_max_score(collection):
-    subjects = ["c++","python"]
-    for subject in subjects:
-        min_score = 10
-        max_score = 0
-        key = "subjects." + subject
-        result = collection.find({key:{'$exists': True}})
-        for item in result:
-            score = item["subjects"].get(subject)
-            if min_score > score:
-                min_score = score 
-            if max_score < score:
-                max_score = score
-        print subject,
-        print "min = ",
-        print min_score,
-        print " max = ",
-        print max_score
+def print_subjects_min_max(collection):
+    pipeline1 = [{
+        "$group":
+        {
+            "_id" : {"itc":'$itc',"subject":'$exams.exam1.subject'},
+            "avg" : {'$avg':'$exams.exam1.score'},
+            "min" : {'$min':'$exams.exam1.score'},
+            "max" : {'$max':'$exams.exam1.score'}
+        }
+    }]
+    pipeline2 = [{
+        "$group":
+        {
+            "_id" : {"itc":'$itc',"subject":'$exams.exam2.subject'},
+            "avg" : {'$avg':'$exams.exam2.score'},
+            "min" : {'$min':'$exams.exam2.score'},
+            "max" : {'$max':'$exams.exam2.score'}
+        }
+    }]
+    print_items(collection,pipeline1)
+    print_items(collection,pipeline2)
+
 
 parser = argparse.ArgumentParser()
-parser.add_argument("host", default = "localhost", help = "host", type = str) 
-parser.add_argument("port", default = "27017", help = "port", type = int);
+parser.add_argument("--host", default = "localhost", help = "host", type = str) 
+parser.add_argument("--port", default = "27017", help = "port", type = int);
 args = parser.parse_args()
-client = MongoClient()
 client = MongoClient(args.host, args.port)
-db = client.itc
-collection = db.students
+db = client.students
+collection = db.itc_1
 insert(collection)
+print "Task 1 print students avg"
 print_students_avg(collection)
-subject_min_max_score(collection)
+print "Task 2 print subjects avg min and max score"
+print_subjects_min_max(collection)
