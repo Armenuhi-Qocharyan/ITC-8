@@ -12,6 +12,6 @@ module.exports = function(app) {
     var myController = require('../controllers/myController');
     app.get('/users', myController.getUsers);
     app.post('/users', myController.addUsers);
-    //app.delete('/user/:username', myController.deleteUser);
-    //app.delete('/user', myController.deleteAllUsers);
+    app.delete('/user/:username', myController.deleteUser);
+    app.delete('/user', myController.deleteAllUsers);
 }

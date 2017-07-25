@@ -10,8 +10,10 @@ module.exports.getUsers = function(req, res) {
 }
 
 module.exports.deleteUser = function(req, res) {
-    var userName = parseInt(req.params.name);
+    var username = req.params.username;
+    model.userDelete(username);
 }
 
 module.exports.deleteAllUsers = function(req, res) {
+    model.allUsersDelete();
 }

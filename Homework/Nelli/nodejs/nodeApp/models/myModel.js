@@ -10,11 +10,11 @@ var db = require('postgres-gen')(options);
 var dao = require('postgres-gen-dao');
 var users = dao({ db: db, table: 'users' });
 
-var userInfo = { 'name': 'John Public', 'email': 'user@gmail.com','age': 23 };
+var userInfo = { 'name': 'John', 'email': 'user@gmail.com','age': 23 };
 
 module.exports.addUser = function() {
     users.upsert(userInfo).then(function() {
-    	console.log("Users added");
+    	console.log("User added");
     })
 };
 
@@ -29,5 +29,18 @@ module.exports.getAllUsers = function() {
     });
 };
 
+module.exports.userDelete = function(username) {
+    db.transaction(function*() {
+	var user = yield users.findOne('name = ?', username);
+    	yield users.delete(user);
+    	console.log("User deleted");
+    });
+};
 
+module.exports.allUsersDelete = function() {
+    db.transaction(function*() {
+        yield users.delete('id > 0');
+    	console.log("All Users deleted");
+    });
+};
 
