@@ -10,4 +10,4 @@ var userSchema = new mongoose.Schema({
     age: { type: Number, min: 0 }
 });
 
-module.exports.userSchema = userSchema;
+module.exports = userSchema;
