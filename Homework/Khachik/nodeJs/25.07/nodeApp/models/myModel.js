@@ -9,32 +9,44 @@ var options = {
 var db = require('postgres-gen')(options);
 
 var dao = require('postgres-gen-dao');
-var user_table = dao({ db: db, table: 'user_table' });
+var users_table = dao({ db: db, table: 'users_table' });
 
 
 
-var b = { 'name': 'John Public', 'email': 'user@gmail.com','age': 23 };
+var b = { name: 'John Public', email : 'user@gmail.com',age: 23 };
 
-module.exports.addUser = function() {
-    user_table.upsert(b).then(function() {
-        console.log("successfully added")
-    })
+module.exports.addUser = function(r) {
+    console.log(r.body);
+    users_table.upsert(r.body).then(function() {
+        console.log("Successfully added");
+        return 'Successfully added.';
+    }) .catch(function () {
+        console.log("Uncorrect request");
+    });
 };
 
 
 module.exports.getUsers = function() {
-    user_table.find().then(function(users) {
-        console.log(users);
+    users_table.find().then(function(us) {
+        console.log(us);
+        return us;
+    }).catch(function () {
+        console.log("Promise Rejected");
     });
-}
+};
 
 
-module.exports.deleteUser = function(req) {
+
+
+module.exports.deleteUser = function(r) {
     db.transaction(function*() {
-        var userName = parseInt(req.params.name);
-        var b = yield user_table.findOne('name = ?', userName);
-        yield dao.delete(b);
-    });
+        var userName = r.params.username;
+        var b = yield users_table.findOne('name = ?', userName);
+        console.log(b.id);
+        yield users_table.delete('id = $id', {"id" : b.id});
+    }).then(function(suc) {
+        return '{"status":200, "body":"User successfully deleted"}'
+    }).catch
 }
 
 module.exports.deleteAllUsers = function() {
