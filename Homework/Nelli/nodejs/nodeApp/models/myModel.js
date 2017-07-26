@@ -10,37 +10,46 @@ var db = require('postgres-gen')(options);
 var dao = require('postgres-gen-dao');
 var users = dao({ db: db, table: 'users' });
 
-var userInfo = { 'name': 'John', 'email': 'user@gmail.com','age': 23 };
 
-module.exports.addUser = function() {
+module.exports.addUser = function(userInfo) {
     users.upsert(userInfo).then(function() {
     	console.log("User added");
     })
 };
 
-module.exports.getAllUsers = function() {
+module.exports.getAllUsers = function(res) {
     users.find().then(function(users) {
-    	console.log("List of all users");
-    	for (index in users) {
-	    for (key in users[index]) {	
-	    	console.log(key + " : " + users[index][key]);
-            }
-    	}
+        res.send(JSON.stringify(users));
+        res.status(200).json({success: true, "body": "All Users Info"});
+    }).catch(function(err) {
+        res.send(JSON.stringify({"status": "400", "body": "Bad request"}));
+        res.status(400).json({success: true, "body": "Bad Request"});
     });
 };
 
-module.exports.userDelete = function(username) {
+module.exports.userDelete = function(username,res) {
     db.transaction(function*() {
 	var user = yield users.findOne('name = ?', username);
     	yield users.delete(user);
-    	console.log("User deleted");
+    }).then(function(suc) {
+        res.send(JSON.stringify({"status": "200", "body": "User Deleated"}));
+        res.status(200).json({success: true, "body": "User Deleted"});
+    }).catch(function(err) {
+        res.send(JSON.stringify({"status": "400", "body": "Bad request"}));
+        res.status(400).json({success: true, "body": "Bad Request"});
     });
 };
 
-module.exports.allUsersDelete = function() {
+
+module.exports.allUsersDelete = function(res) {
     db.transaction(function*() {
         yield users.delete('id > 0');
-    	console.log("All Users deleted");
+    }).then(function(suc) {
+        res.send(JSON.stringify({"status": "200", "body": "All Users Deleated"}));
+        res.status(200).json({success: true, "body": "All Users Deleted"});
+    }).catch(function(err) {
+        res.send(JSON.stringify({"status": "400", "body": "Bad request"}));
+        res.status(400).json({success: true, "body": "Bad Request"});
     });
 };
 
