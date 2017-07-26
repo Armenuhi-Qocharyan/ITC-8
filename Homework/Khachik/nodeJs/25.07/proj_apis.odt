@@ -1,0 +1,126 @@
+﻿4.Camera Details
+
+4.1 Get Camera by id
+Returns camera information by camera id. 
+URL:
+{base-URL}/camera/:[camera_id]
+Method:
+GET
+URL Parameters:
+Required: 
+camera_id=[string] – the camera  id.
+Optional:  None
+Data Params: None
+Success Response: 
+Code: 200
+Content: 
+{“name”:<camera_name>, "lng": <longitude>, "lat": <latitude>, “status”: <camera working status>,”description”:<some_info>,”last_run_date”:<date>}
+Example:
+{“name”:”camera_1”, "lng": 9.450626, "lat": 9.450626, “status”: true ,”description” : ”My favorite camera”,”last_run_date”:26/07/17 0:32}
+Error Response: 
+Code: 400 Bad Request
+Code: 404 Not Found
+Code: 500 Internal Server Error
+
+Sample Call:
+curl -X GET "http://localhost:3000/camera_id/1"
+curl -X GET "http://localhost:3000/camera_id/15"
+
+Response Examples:
+
+400 Bad Request
+{"message" : "Wrong request."} 
+
+404 Not Found
+{"message" : "Camera with this id is not found"} 
+
+500 Internal Server Error
+{"message" : "An unknown internal error occurred."} 
+
+4.2 Delete Camera Details
+
+Deletes camera information by camera id.
+URL:
+{base-URL}/camera/:[camera_id]	
+Method:
+DELETE
+URL Parameters:
+Required: 
+camera_id=[string] – the camera  id.
+Optional:  
+username=[string] – Encoded username. 
+pass=[string] – all – Encoded password.
+Data Params: None
+Success Response: 
+Code: 200
+Content: 
+{“message” : <Message about camera deleting >}
+Example:
+{“message”:”camera successfully deleted”}
+Error Response: 
+Code: 400 Bad Request
+Code: 404 Not Found
+Code: 500 Internal Server Error
+Code: 401 Unauthorized
+
+Sample Call:
+curl -X GET "http://localhost:3000/camera_id/1?username=fda5a74c6&pass=fda5a74c9”
+Response Examples:
+
+400 Bad Request
+{"message" : "Wrong request."} 
+
+404 Not Found
+{"message" : "Camera with this id is not found"} 
+
+500 Internal Server Error
+{"message" : "An unknown internal error occurred."} 
+
+401 Unauthorized
+
+{"message" : "Authentication failed"} 
+
+Update Camera Details
+
+Changes camera information by camera id.
+URL:
+{base-URL}/camera/:[camera_id]	
+Method:
+PUT
+URL Parameters:
+Required: 
+camera_id=[string] – the camera  id.
+Optional:  
+username=[string] – Encoded username. 
+pass=[string] – all – Encoded password.
+Data Params: 
+We are passing json object with information about camera.
+{“name” : <camera_name>, "lng" : <longitude>, "lat" : <latitude>, “status” : <camera working status>, ”description” : <some_info>, ”last_run_date” : <date>}
+Success Response: 
+Code: 200
+Content: 
+{“message” : <Message about camera Updating >}
+Example:
+{“message”:”camera successfully updated”}
+Error Response: 
+Code: 400 Bad Request
+Code: 404 Not Found
+Code: 500 Internal Server Error
+Code: 401 Unauthorized
+
+Sample Call:
+curl -X PUT "http://localhost:3000/camera_id/1?username=fda5a74c6&pass=fda5a74c9”  --data {“name”:”camera_1”, "lng": 9.450626, "lat": 9.450626, “status”: true ,”description” : ”My favorite camera”,”last_run_date”:26/07/17 0:32}
+Response Examples:
+
+400 Bad Request
+{"message" : "Wrong request."} 
+
+404 Not Found
+{"message" : "Camera with this id is not found"} 
+
+500 Internal Server Error
+{"message" : "An unknown internal error occurred."} 
+
+401 Unauthorized
+
+{"message" : "Authentication failed"} 
