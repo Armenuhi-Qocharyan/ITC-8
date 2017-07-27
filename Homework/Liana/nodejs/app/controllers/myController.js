@@ -1,15 +1,26 @@
-var mongoose = require("mongoose"),
-    userSchema = require('../models/model'),
-    User = mongoose.model('users', userSchema);
-module.exports.addUser = function(req, res) {
+var User = require('../models/model');
 
-    var newUser = new User(req.body);
+module.exports.addUser = function(req, res, next) {
+
+    var newUser = new User( req.body );
+    
     newUser.save(function(err) {
         if (err) {
-            console.log('Error on save!');
+           if (err.errors.age) {
+                return res.status(400).send(err.errors.age.message );
+           } 
+           if (err.errors['name.last']) {
+                return res.status(400).send(err.errors['name.last'].message );
+           } 
+           if (err.errors['name.first']) {
+                return res.status(400).send(err.errors['name.first'].message );
+           } else {
+               return next(err);
+           }  
         }
-    })
+         
     res.send('{"status": "inserted"}');
+    })
 };
 
 module.exports.getUsers = function(req, res) {
@@ -17,22 +28,18 @@ module.exports.getUsers = function(req, res) {
     User.find({}, function(err, users) {
 
         if (err) {
-            return handleError(err);
+            return res.status(400).send("Error: Can't find data");
         }
-
         res.send(users);
-
     })
-
 };
 
-module.exports.deleteUser = function(req, res) {
-
+module.exports.deleteUser = function(req, res, next) {
     User.remove({
         'age': 2
     }, function(err) {
         if (err) {
-            return handleError(err);
+            return next(err);
         }
     });
 
@@ -40,10 +47,10 @@ module.exports.deleteUser = function(req, res) {
 
 };
 
-module.exports.deleteAllUsers = function(req, res) {
+module.exports.deleteAllUsers = function(req, res, next) {
     User.remove({}, function(err) {
         if (err) {
-            return handleError(err);
+            return next(err);
         }
     });
     res.send('{"status":"Alldeleted"}');
