@@ -2,24 +2,24 @@ var User = require('../models/model');
 
 module.exports.addUser = function(req, res, next) {
 
-    var newUser = new User( req.body );
-    
+    var newUser = new User(req.body);
+
     newUser.save(function(err) {
         if (err) {
-           if (err.errors.age) {
-                return res.status(400).send(err.errors.age.message );
-           } 
-           if (err.errors['name.last']) {
-                return res.status(400).send(err.errors['name.last'].message );
-           } 
-           if (err.errors['name.first']) {
-                return res.status(400).send(err.errors['name.first'].message );
-           } else {
-               return next(err);
-           }  
+            if (err.errors.age) {
+                res.status(400).send(err.errors.age.message);
+            } else if (err.errors['name.last']) {
+                res.status(400).send(err.errors['name.last'].message);
+            } else if (err.errors['name.first']) {
+                res.status(400).send(err.errors['name.first'].message);
+            } else {
+                return next(err);
+            }
+
+        } else {
+            res.send('{"status": "inserted"}');
         }
-         
-    res.send('{"status": "inserted"}');
+
     })
 };
 

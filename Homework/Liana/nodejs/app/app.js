@@ -1,17 +1,18 @@
 var express = require('express'),
+    events = require('events'),
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    http = require ('http'),         // For serving a basic web page.
-    mongoose = require ("mongoose"), // The reason for this demo.
+    http = require('http'), // For serving a basic web page.
+    mongoose = require("mongoose"), // The reason for this demo.
     users = require('./routes/users'),
     app = express(),
     uristring =
-        process.env.MONGOLAB_URI ||
-        process.env.MONGOHQ_URL ||
-        'mongodb://localhost/nodeDb';
+    process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/nodeDb';
 
 /*
 mongoose.connect(uristring, function (err, res) {
@@ -23,7 +24,7 @@ mongoose.connect(uristring, function (err, res) {
     }
 });
 */
-mongoose.connect(uristring, { auto_reconnect: true }); 
+mongoose.connect(uristring, { auto_reconnect: true });
 
 /*
 mongoose.connection.on('connected', function () {  
@@ -44,28 +45,29 @@ mongoose.connection.on('disconnected', function () {
 
 var db = mongoose.connection;
 
-  db.on('connecting', function() {
+db.on('connecting', function() {
+    eventEmitter.emit('connection');
     console.log('connecting to MongoDB...');
-  });
+});
 
-  db.on('error', function(error) {
+db.on('error', function(error) {
     console.error('Error in MongoDb connection: ' + error);
     mongoose.disconnect();
-  });
-  db.on('connected', function() {
+});
+db.on('connected', function() {
     console.log('MongoDB connected!');
-  });
-  db.once('open', function() {
+});
+db.once('open', function() {
     console.log('MongoDB connection opened!');
-  });
-  db.on('reconnected', function () {
+});
+db.on('reconnected', function() {
     console.log('MongoDB reconnected!');
-  });
-  db.on('disconnected', function() {
+});
+db.on('disconnected', function() {
     console.log('MongoDB disconnected!');
-    mongoose.connect(uristring, {server:{auto_reconnect:true}});
-  });
-  mongoose.connect(uristring, {server:{auto_reconnect:true}});
+    mongoose.connect(uristring, { server: { auto_reconnect: true } });
+});
+mongoose.connect(uristring, { server: { auto_reconnect: true } });
 
 
 
@@ -89,19 +91,25 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
-    next(err)
-*/
+    //  next(err)
 
-  if (req.xhr) {
-    res.status(500).send({ error: 'Something failed!' })
-  } else {
-    next(err)
-  }
+
+    if (req.xhr) {
+        res.status(500).send({ error: 'Something failed!' })
+    } else {
+        next(err)
+    }
 
 
 });
 
+var eventEmitter = new events.EventEmitter();
+
+eventEmitter.on('connection', function() {
+    console.log('emmiter');
+});
+
+
+
 
 module.exports = app;
-
-
