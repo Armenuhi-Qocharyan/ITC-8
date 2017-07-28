@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cross-origin request</title>
+        <style>
+            input {
+                margin-bottom: 10px;
+            }
+        </style>
+
+        <script>
+            var sendRequest = function() {
+                console.log("function");
+                var http = new XMLHttpRequest();
+                var url = "http://localhost:3000/users";
+                var params = [];
+                var elements = document.getElementsByTagName("input");
+                for (var i in elements) {
+                    params.push(elements[i].value);
+                }
+                console.log(params);
+                http.open("POST", url, true);
+
+                //Send the proper header information along with the request
+                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                http.onreadystatechange = function() {
+                    //Call a function when the state changes.
+                    if(http.readyState == 4 && http.status == 200) {
+                        alert(http.responseText);
+                    }
+                }
+                http.send(params);
+            }
+        </script>
+    </head>
+
+    <body>
+        <div>
+            <b>Username</b>
+            <input type="text"/>
+            <br>
+            <b>Email</b>
+            <input type="text"/>
+            <br>
+            <b>Password</b>
+            <input type="text"/>
+            <br>
+            <b>Confirm Password</b>
+            <input type="text"/>
+            <br>
+            <button onclick="sendRequest()">Register</button>
+        </div>
+    </body>
+</html>
