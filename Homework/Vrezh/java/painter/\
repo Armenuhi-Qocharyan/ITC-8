@@ -1,0 +1,26 @@
+import Painter.Triangle;
+import java.io.PrintStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+//import java.io.OutputStream;
+
+public class Main {
+    public static void main(String[] args) {
+        Triangle triangle = new Triangle();      
+        PrintStream printStream = new PrintStream(System.out);
+        triangle.draw(printStream, '*');
+        try(FileOutputStream fileStream = new FileOutputStream("a.txt"); ) {
+            printStream = new PrintStream(fileStream);
+            System.out.println("fasd");
+
+            triangle.draw(printStream, '*');
+        } catch(IOException error) {
+            System.out.println(error);
+        }///home/vrezh/Desktop/ITC-8/Homework/Vrezh/java/painter/a.txt");
+               // final String dir = System.getProperty("user.dir");
+        //System.out.println("current dir = " + dir);
+
+        
+        //System.out.println("Hello World!"); // Display the string.
+    }
+}
