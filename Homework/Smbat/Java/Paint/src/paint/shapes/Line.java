@@ -15,10 +15,27 @@ public class Line implements Shape {
     
     public boolean draw(PrintStream out, char symbol) {
         String[][] canvas = new String[100][100];
-        for (String[] canva : canvas) {
-            Arrays.fill(canva, "~");
-        }
+        int x1 = point1.getX();
+        int y1 = point1.getY();
+        int x2 = point2.getX();
+        int y2 = point2.getY();
+
+        double m = (Math.abs(y2-y1)/Math.abs(x2-x1));
+        double b = y1 - (m * x1);
         
+        for (int i = 0; i < canvas.length; i++) {
+            for (int j = 0; j < canvas[0].length; j++) {
+                if (i == (int)(m * j + b)) {
+                    canvas[i][j] = symbol + "";
+                    out.print(symbol);
+                } else {
+                    canvas[i][j] = " ";
+                    out.print("~");
+                }
+            }
+            out.println();
+
+        }
         
         return true;
     }
