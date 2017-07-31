@@ -23,8 +23,8 @@ public class Main{
         if (drawMethod == 1) {
             printStream = new PrintStream(System.out, true);
         } else if (drawMethod == 2) {
-//            OutputStream file = new FileOutputStream("draw.txt");
-//            printStream = new PrintStream(file);
+//            OutputStream file = new FileOutputStream("draw.txt"); TODO
+//            printStream = new PrintStream(file);  TODO
             printStream = new PrintStream(System.out, true);
         } else {
             System.out.println("Input error: Please enter 1 or 2.");
