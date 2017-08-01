@@ -18,17 +18,28 @@ public class Ball {
      	this.m = m;
     }
     
-    public int getX(int minute) {
+    public int getX(double minute) {
         this.x += this.vx * minute;
-	if (this.x > this.canvasX || this.x < 0) {
-	    this.vx = -this.vx;
-            this.vy = -this.vy;
+	if (this.x > this.canvasX) {
+            rotate();
+            this.x = this.x - this.canvasY;
  	}
+        if (this.x < 0) {
+	    this.x = -this.x;
+        }
 	return this.x; 
     }
     
-    public int getY(int minute) {
+    public int getY(double minute) {
         this.y += this.vy * minute;
+	if (this.y > this.canvasY) {
+            rotate();
+            this.y = this.y - this.canvasY;
+ 	}
+        if (this.y < 0) {
+            rotate();
+	    this.y = -this.y;
+        }
 	return this.y;
     }
     
@@ -43,13 +54,16 @@ public class Ball {
     public boolean drag(Ball otherBall) {
 	if (this.x == otherBall.getX(0) && this.y == otherBall.getY(0)) {
 	    double impulse = getImpulse() - otherBall.getImpulse();
-            this.vx = -this.vx;
-            this.vy = -this.vy;
-            otherBall.vx = -otherBall.vx;
-            otherBall.vy = -otherBall.vy;
+            rotate();
+	    otherBall.rotate();
 	    return true;
         }
         return false;
+    }
+    
+    private void rotate() {
+	this.vx = -this.vx;
+     	this.vy = -this.vy;
     }
     
 }
