@@ -1,6 +1,7 @@
 package Print;
+import java.io.*;
 public interface Print {
-    public void drawOnTerminal(byte[] content);
-    public void drawOnFile(byte[] content,String fileName);
-    public byte[] shape(char mark, int size);
+    public void draw(PrintStream out,String content);
+ // public void drawOnFile(byte[] content,String fileName);
+    public String shape(char mark, int size);
 }
