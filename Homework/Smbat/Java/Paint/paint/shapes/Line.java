@@ -25,7 +25,7 @@ public class Line implements Shape {
         
         for (int i = 0; i < canvas.length; i++) {
             for (int j = 0; j < canvas[0].length; j++) {
-                if (i == (int)(m * j + b)) {
+                if (i < (m * j + b + 0.5) && i > (m * j + b - 0.5)) {
                     canvas[i][j] = symbol + "";
                     out.print(symbol);
                 } else {
@@ -34,10 +34,7 @@ public class Line implements Shape {
                 }
             }
             out.println();
-
         }
-        
         return true;
     }
-    
 }
