@@ -58,12 +58,12 @@ public class Ball {
 
     private void checkWallCollision(int i) {
         if (x - r == 0 || x + r == 100) {
-            System.out.println("Collision to wall in " + i + " second\n");
-            inverseX();
+            System.out.println("Collision to wall in " + i + " second\n" + this);
+            inverseVx();
         }
         if (y - r == 0 || y + r == 100) {
             System.out.println("Collision to wall in " + i + " second\n");
-            inverseY();
+            inverseVy();
         }
     }
     
@@ -71,15 +71,17 @@ public class Ball {
         // m1 * v1 + m2 * v2 = m1 * v1' + m2 * v2'
         // m1 * v1^2 + m2 * v2^2 = m1 * v1'^2 + m2 * v2'^2
         // We need to found final speeds and accept it as ball's new speed
-        inverseX();
-        inverseY();
+        inverseVx();
+        inverseVy();
+        other.inverseVx();
+        other.inverseVy();
     }
 
-    private void inverseX() {
+    private void inverseVx() {
         vx = -vx;
     }
 
-    private void inverseY() {
+    private void inverseVy() {
         vy = -vy;
     } 
 }
