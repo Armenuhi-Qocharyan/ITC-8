@@ -1,14 +1,16 @@
+// This Class impliments object Ball
 
 package objects; 
 
 public class Ball {
-    private double x;
-    private double y;
-    private double vx;
-    private double vy;
-    private double m;
-    private double r;
+    private double x;   //  coordinate X
+    private double y;   //  coordinate Y
+    private double vx;  //  Speed Y
+    private double vy;  //  Speed Y
+    private double m;   //  Weight
+    private double r;   //  Radius
 
+//-------------------------- Constructors----------------------
     public Ball(double x, double y, double m, double r) {
         this.x = x;
         this.y = y;
@@ -27,6 +29,7 @@ public class Ball {
         this.vy = vy;
     }
 
+//------------------ Getters -------------------------
     public double getX() {
         return x;
     }
@@ -38,13 +41,27 @@ public class Ball {
     public double getR() {
         return r;
     }
+    public double getVx() {
+        return vx;
+    }
+    public double getVy() {
+        return vy;
+    }
 
+//----------------------------Seters---------------------------
+    public void setV(double vx, double vy) {
+        this.vx = vx;
+        this.vy = vy;
+    }
+
+//---------------------------Calculate coordinates from spendTime-----------------
     public void move (double spendTime) {
         x += vx * spendTime;
         y += vy * spendTime;
         
     }
 
+//-----------------------------Print Ball Parameters----------------------------------
     public void print() {
         System.out.println ("x = " + x + "  y = " + y + "  vx = " + vx + "  vy = " + vy);
     }
