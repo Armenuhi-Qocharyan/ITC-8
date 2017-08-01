@@ -1,3 +1,5 @@
+# I created the logic of the program but did not change the vectors when the ball touched something.
+
 *Billiard game :
 
  *Functionality :
