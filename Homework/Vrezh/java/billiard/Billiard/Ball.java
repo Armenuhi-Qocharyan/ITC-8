@@ -7,8 +7,7 @@ public class Ball {
     private float coordX;
     private float coordY;
     private float vectorX;
-    private float vectorY;    
-     
+    private float vectorY;     
 
     public Ball(float r, float w, float cX, float cY, float vX, float vY) {
         radius = r;
