@@ -1,0 +1,20 @@
+# I created the logic of the program but did not change the vectors when the ball touched something.
+
+*Billiard game :
+
+ *Functionality :
+    *create table,
+    *create balls,
+    *beat the ball
+
+.
+├── Billiard
+│   ├── Ball.class
+│   ├── Ball.java
+│   ├── Table.class
+│   ├── Table.java
+│   └── Table$side.class
+├── Main.class
+├── Main.java
+└── READMY.txt
+
