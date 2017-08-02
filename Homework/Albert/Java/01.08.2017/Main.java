@@ -10,7 +10,7 @@ public class Main {
         for (minut = 1; minut < time; ++minut) {
             ball1.move();
             ball2.move();
-            if (ball1.ballCollision(ball2)) {
+            if (ball1.getDistance(ball2) <= ball1.getR() + ball2.getR()) {
                 check = true;
                 break;
             }        
