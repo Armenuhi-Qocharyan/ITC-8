@@ -1,0 +1,5 @@
+0;0;Artur;ARM;40;10;winchester;
+100;100;Mahmed;AZE;20;10;ak-47;
+-100;100;Vardan;ARM;50;25;winchester;
+0;250;Aliev;AZE;100;12;tt-36;
+-500;250;Artur;ARM;40;10;winchester;
