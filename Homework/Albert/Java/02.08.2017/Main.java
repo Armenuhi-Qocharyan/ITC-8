@@ -1,32 +1,35 @@
 import war.*;
 import java.util.*;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        BattleField battleField = createSoldier();
-        startGame(battleField);
+    public static void main(String[] args) throws IOException {
+        BattleField battleField = new BattleField();
+        try {
+            battleField = createSoldier();
+            startGame(battleField);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public static BattleField createSoldier() {
-        Bullet bulletFirst = new Bullet(1, 1); //bullet count, bullet size
-        Weapon weaponFirst = new Weapon("pistol", 35, 500, 500, bulletFirst); //type, damage, diapason, speed, bulletObj
-        Soldier soldierFirst = new Soldier("Jack", "us", 100, weaponFirst, 0, 0, 25); // name, nationality, life, weaponObj, x, y, size
-    
-        Bullet bulletSecond = new Bullet(20, 1); //bullet count, bullet size
-        Weapon weaponSecond = new Weapon("pistol", 35, 500, 500, bulletSecond); //type, damage, diapason, speed, bulletObj
-        Soldier soldierSecond = new Soldier("Sim", "rus", 100, weaponSecond, 200, 200, 25); // name, nationality, life, weaponObj, x, y, size
-        
-        BattleField battleField = new BattleField();
-        battleField.setSoldier(soldierFirst);
-        battleField.setSoldier(soldierSecond);
+    public static BattleField createSoldier() throws IOException{
+        BattleField battleField = new BattleField();;
+        try{
+            ReadFile readFile = new ReadFile();
+            battleField = readFile.read();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
         return battleField;
-    }     
-
+    }
+    
     public static boolean soldierIsDead(Soldier soldier) {
         return (soldier.getLife() <= 0);
             
     }
+
     public static void printSoldierName(BattleField battleField) {
         int i = 0;
         for (Soldier soldier : battleField.getSoldier()) {
@@ -35,6 +38,7 @@ public class Main {
             ++i;
         }
     }
+
     public static void printAllSoldier(BattleField battleField) {
         for (Soldier soldier : battleField.getSoldier()) {
             soldier.printSoldierInfo();
@@ -71,4 +75,3 @@ public class Main {
         }
     }
 }
-
