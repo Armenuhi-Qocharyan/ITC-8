@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import {MdDialogModule} from 'md-dialog/dialog';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-dialog',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
