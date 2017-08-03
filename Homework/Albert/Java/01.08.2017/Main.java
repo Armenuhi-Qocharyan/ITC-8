@@ -1,57 +1,29 @@
-import Shapes.*;
-import java.io.*;
-import java.util.*;
+import Balls.*;
 
 public class Main {
-
-    public static void main(String[] args) throws FileNotFoundException{
-
-        Scanner scanInt = new Scanner(System.in);
-        System.out.println("Select shape:  1-Point, 2-Line, 3-Rectangle : ");
-        int indexShape = scanInt.nextInt();
-
-        Scanner scanChar = new Scanner(System.in);
-        System.out.println("Enter symbol: ");
-        char symbol = scanChar.next().charAt(0);
-
-        Scanner fileTerm = new Scanner(System.in);
-        System.out.println("Select 1-File, 2-Terminal: ");
-        int indexFileTerm = fileTerm.nextInt();
-
-        checkShape(indexShape, symbol, indexFileTerm);
-
-    }
-    public static void checkShape(int indexShape, char symbol, int indexFileTerm) throws FileNotFoundException {
-        Shape shape = null;
-        switch(indexShape) {
-            case 1:
-                shape = new Point();
-                drawShape(shape, symbol, indexFileTerm);
+    public static void main(String[] args) {
+        Ball ball1 = new Ball(0, 0,5,10,90);
+        Ball ball2 = new Ball(50,0,5,10,180);
+        int time = 150;
+        boolean check = false;
+        int minut = 0;
+        for (minut = 1; minut < time; ++minut) {
+            ball1.move();
+            ball2.move();
+            if (ball1.getDistance(ball2) <= ball1.getR() + ball2.getR()) {
+                check = true;
                 break;
-            case 2:
-                shape = new Line();
-                drawShape(shape, symbol, indexFileTerm);
-                break;
-            case 3:
-                shape = new Rectangle();
-                drawShape(shape, symbol, indexFileTerm);
-                break;
-            default:
-                System.out.println("Incorrect input!");
-                break;  
+            }        
         }
+        checkCollision(check, ball1, ball2, minut);
     }
-    
-    public static void drawShape(Shape shape, char symbol, int indexFileTerm) throws FileNotFoundException {
-        if (indexFileTerm == 1) {
-	        OutputStream os = new FileOutputStream("test.txt");
-	        PrintStream printStream = new PrintStream(os);
-	        shape.draw(printStream, symbol);
-        } else if (indexFileTerm == 2) {
-	        shape.draw(System.out, symbol);
+
+    public static void checkCollision(boolean check, Ball ball1, Ball ball2, int sec) {
+        if (check) {
+            System.out.println("In the " + sec + "`th minut two balls collided");
         } else {
-            System.out.println("Incorrect Input.");
-            return;
+            System.out.println("Not Collision");
         }
     }
 }
+
