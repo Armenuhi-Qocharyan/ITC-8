@@ -1,0 +1,27 @@
+-------------------- War --------------------
+
+--- Description ---
+This program illustrates the war between soldiers, each of which has:
+    -- Name
+    -- Nationality
+    -- Radius
+    -- Health
+    -- Coordinates
+    -- Weapon
+
+The weapon is described with the following parameters    
+    -- Bullets
+    -- Firing distance
+    -- Deadly ability
+
+The bullets are described with:
+    -- Radius
+    -- Fire direction
+    -- Speed
+
+--- Project structure ---
+/README         - Readme file which contains general information about project
+/Main.java      - Entry point of project
+/Input/         - Files that contain input parameters for project
+/Tests/         - Contains unit tests
+/Classes/       - Contains class definitions used in project
