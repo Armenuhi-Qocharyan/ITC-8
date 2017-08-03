@@ -81,7 +81,7 @@ public class Soldier {
                 }
             }
         } else {
-            System.out.println("No bullets!!!");
+            System.out.println("\nNo bullets!!!\n");
             return false;
         }
         return false;
@@ -96,14 +96,14 @@ public class Soldier {
         System.out.println("Soldier Name           : " + this.name);
         System.out.println("Soldier Nationality    : " + this.nation);
         System.out.println("Soldier Life           : " + this.life);    
-        System.out.println("Soldier coordinate X   : " + this.x);
-        System.out.println("Soldier coordinate Y   : " + this.y);
-        System.out.println("Soldier size           : " + this.size);
+        //System.out.println("Soldier coordinate X   : " + this.x);
+        //System.out.println("Soldier coordinate Y   : " + this.y);
+        //System.out.println("Soldier size           : " + this.size);
 
         System.out.println("Weapon type            : " + this.weapon.getType());
         System.out.println("Weapon damage          : " + this.weapon.getDamage());
-        System.out.println("Weapon fire of diapason: " + this.weapon.getDiapason());
-        System.out.println("Bullet movement speed  : " + this.weapon.getSpeed());
+        //System.out.println("Weapon fire of diapason: " + this.weapon.getDiapason());
+        //System.out.println("Bullet movement speed  : " + this.weapon.getSpeed());
         System.out.println("Weapon bullet count    : " + this.weapon.getBullet().getCount());
         System.out.println("\n-------------------------------------------------------\n");
     }

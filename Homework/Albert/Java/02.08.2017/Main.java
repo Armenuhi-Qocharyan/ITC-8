@@ -3,10 +3,15 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Bullet bulletFirst = new Bullet(20, 1); //bullet count, bullet size
+        BattleField battleField = createSoldier();
+        startGame(battleField);
+
+    }
+
+    public static BattleField createSoldier() {
+        Bullet bulletFirst = new Bullet(1, 1); //bullet count, bullet size
         Weapon weaponFirst = new Weapon("pistol", 35, 500, 500, bulletFirst); //type, damage, diapason, speed, bulletObj
         Soldier soldierFirst = new Soldier("Jack", "us", 100, weaponFirst, 0, 0, 25); // name, nationality, life, weaponObj, x, y, size
-
     
         Bullet bulletSecond = new Bullet(20, 1); //bullet count, bullet size
         Weapon weaponSecond = new Weapon("pistol", 35, 500, 500, bulletSecond); //type, damage, diapason, speed, bulletObj
@@ -14,32 +19,56 @@ public class Main {
         
         BattleField battleField = new BattleField();
         battleField.setSoldier(soldierFirst);
-        battleField.setSoldier(soldierFirst);
-        
-        soldierFirst.fire(soldierSecond, 45); 
+        battleField.setSoldier(soldierSecond);
+        return battleField;
+    }     
 
-        soldierFirst.printSoldierInfo();      
-        soldierSecond.printSoldierInfo();     
+    public static boolean soldierIsDead(Soldier soldier) {
+        return (soldier.getLife() <= 0);
+            
     }
-/*
-    public static Bullet createBullet(int count, int size) {
-        if (count >= 0 && size >= 1) {
-            return (new Bullet(count, size)); //bullet count, bullet size
+    public static void printSoldierName(BattleField battleField) {
+        int i = 0;
+        for (Soldier soldier : battleField.getSoldier()) {
+            System.out.print(i + 1 + "-");
+            System.out.print(soldier.getName() + "\n");
+            ++i;
         }
-        return null;
     }
-    public static Weapon createWeapon(String type, int damage, int diapason, int speed, Bullet bullet) {
-        if ((type == "pistol" || type == "sniper") && damage >= 1 && diapason >= 300 && speed >= 100) {
-            return (new Weapon(type, damage, diapason, speed, bullet)); //type, damage, diapason, speed, bullet obj
+    public static void printAllSoldier(BattleField battleField) {
+        for (Soldier soldier : battleField.getSoldier()) {
+            soldier.printSoldierInfo();
         }
-        return null;
     }
-
-    public static Soldier createSoldiers(String name, String nation, int life, int x, int y, int size, Weapon weapon) {
-        if (life > 0 && size > 15) {
-            return (new Soldier(name, nation, life, weapon, x, y, size)); // name, nationality, life, weaponObj
+    
+    public static void startGame(BattleField battleField) {
+        while (battleField.getSoldier().size() > 1) {
+            Scanner input = new Scanner(System.in);
+            System.out.print("\nSelect 1-Soldier info, 2-Fire :");
+            int action = input.nextInt();
+            if (1 == action) {
+                printAllSoldier(battleField);
+            } else if (2 == action) {
+                printSoldierName(battleField);
+                System.out.print("Select soldier who will shoot: ");
+                int i = input.nextInt();
+                System.out.print("Select soldier who will be the target: ");
+                int j = input.nextInt();
+                if (i == j || 0 > i || i > battleField.getSoldier().size() || 0 > j || j > battleField.getSoldier().size()) {
+                    System.out.println("Incorrect input!!!");
+                    return;
+                }
+                ArrayList<Soldier> allSoldier = battleField.getSoldier();
+                allSoldier.get(i-1).fire(allSoldier.get(j-1), 45);
+                if(soldierIsDead(allSoldier.get(j-1))) {
+                    battleField.getSoldier().remove(j-1);
+                    System.out.println("Remained only one soldier!!! END GAME !!!");
+                }
+            } else {
+                System.out.println("Incorrect action input!!!");
+                return;
+            }
         }
-        return null;
     }
-*/
 }
+
