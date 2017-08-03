@@ -24,13 +24,21 @@ public class Solder {
     public int getLife() {
         return this.life;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getNation() {
+        return this.nation;
+    }
     public double getDistance(Solder secondSolder) {
         return Math.sqrt((this.x - secondSolder.getX()) * (this.x - secondSolder.getX()) +
                         (this.y - secondSolder.getY()) * (this.y - secondSolder.getY()));
     }
     public  boolean fire(Solder secondSolder, String weapon, double angle) {
         double realAngle = this.getAngle(secondSolder);
-        if (angle == realAngle) {
+        //if (angle == realAngle) {
             switch(weapon) {
                 case "gun":
                     secondSolder.life -= 10;
@@ -44,7 +52,7 @@ public class Solder {
                 default:
                     System.out.println("Undefined weapon " + weapon);
             }
-        }
+        //} 
         return secondSolder.isKilled();
     } 
     private boolean isKilled() {
