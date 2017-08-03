@@ -1,12 +1,18 @@
 package war;
+import java.util.ArrayList;
 
 public class BattleField {
     private ArrayList<Soldier> soldiers;
 
-    public void addSoldier(Soldier soldier) {
-        soldiers.add(soldier);
+    public BattleField() { 
+        soldiers = new ArrayList<Soldier>();
+
     }
-    public ArrayList<Soldier> getSoldiers {
+
+    public void setSoldier(Soldier soldier) {
+        this.soldiers.add(soldier);
+    }
+    public ArrayList<Soldier> getSoldier() {
         return this.soldiers;
     }
 }

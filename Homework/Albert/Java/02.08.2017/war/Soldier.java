@@ -5,17 +5,17 @@ public class Soldier {
     private String name;
     private String nation;
     private int life;
+    private Weapon weapon;
     private int x;
     private int y;
-    private Weapon weapon;
     private int size;
     
-    public Soldier(String name, String nation, int life, Weapon weapon, int size) {
+    public Soldier(String name, String nation, int life, Weapon weapon, int x, int y, int size) {
         this.name = name;
         this.nation = nation;
         this.life = life;
-        this.x = weapon.getBullet().getX();
-        this.y = weapon.getBullet().getY();
+        this.x = x;
+        this.y = y;
         this.weapon = weapon;
         this.size = size;
     }
@@ -41,16 +41,16 @@ public class Soldier {
         return this.life;
     }
 
-    public void setCoordX(int x) {
+    public void setX(int x) {
         this.x = x;
     }
-    public int getCoordX() {
+    public int getX() {
         return this.x;
     }
-    public void setCoordY(int y) {
+    public void setY(int y) {
         this.y = y;
     }
-    public int getCoordY() {
+    public int getY() {
         return this.y;
     }
     public void setWeapon(Weapon weapon) {
@@ -69,25 +69,30 @@ public class Soldier {
     }
 
     public boolean fire(Soldier soldier, int angle) {
-        int newX = 0, newY = 0;
-        for(int i = 0; i < this.weapon.getDiapason() / this.weapon.getSpeed(); ++i) {
-            newX = (int)(this.weapon.getSpeed() * Math.sin(Math.toRadians(angle)));
-            this.weapon.getBullet().setMoveX(newX); 
-            newY = (int)(this.weapon.getSpeed() * Math.cos(Math.toRadians(angle)));
-            this.weapon.getBullet().setMoveY(newY); 
-            if(this.check(soldier)) {
-                soldier.life -= this.weapon.getDamage();
-                return true;
+        if (this.weapon.getBullet().getCount() > 0) {
+            this.weapon.getBullet().setCount(this.weapon.getBullet().getCount()-1);
+            int newX = 0, newY = 0;
+            for(int i = 0; i < this.weapon.getDiapason(); i+=soldier.size) {
+                newX += (int)(soldier.size * Math.sin(Math.toRadians(angle)));
+                newY += (int)(soldier.size * Math.cos(Math.toRadians(angle)));
+                if(this.check(soldier, newX, newY)) {
+                    soldier.life -= this.weapon.getDamage();
+                    return true;
+                }
             }
+        } else {
+            System.out.println("No bullets!!!");
+            return false;
         }
         return false;
     }
 
-    public boolean check(Soldier soldier) {
-         return (Math.sqrt((this.weapon.getBullet().getMoveX() - soldier.x) * (this.weapon.getBullet().getMoveX() - soldier.x) + (this.weapon.getBullet().getMoveY() - soldier.y) * (this.weapon.getBullet().getMoveY() - soldier.x)) <= this.weapon.getBullet().getSize() + soldier.size);
+    public boolean check(Soldier soldier, int newX, int newY) {
+         return (Math.sqrt((newX - soldier.x) * (newX - soldier.x) + (newY - soldier.y) * (newY - soldier.y)) <= this.weapon.getBullet().getSize() + soldier.size);
     }
 
     public void printSoldierInfo() {
+        System.out.println("\n-------------------------------------------------------\n");
         System.out.println("Soldier Name           : " + this.name);
         System.out.println("Soldier Nationality    : " + this.nation);
         System.out.println("Soldier Life           : " + this.life);    
@@ -100,6 +105,7 @@ public class Soldier {
         System.out.println("Weapon fire of diapason: " + this.weapon.getDiapason());
         System.out.println("Bullet movement speed  : " + this.weapon.getSpeed());
         System.out.println("Weapon bullet count    : " + this.weapon.getBullet().getCount());
+        System.out.println("\n-------------------------------------------------------\n");
     }
     
 }
