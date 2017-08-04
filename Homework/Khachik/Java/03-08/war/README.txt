@@ -9,8 +9,8 @@
 
 3) Folder structure
 .
-├── balls
-│   ├── Ball.java
+├── objs
+│   ├── Objs.java
 │   └── Meadow.java
 ├── interfaces
 │   └── Soldier.java
