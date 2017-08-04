@@ -6,8 +6,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.lang.Integer;
+
 public class Field {
-    private Solder[] solders = new Solder[3];
+    private Solder[] solders = new Solder[2];
+    private int canvasSize;
+
+    public Field(int size) {
+        this.canvasSize = size;
+    }
+
+    public int getSize() {
+        return this.canvasSize;
+    }
     public void AddSoldersFromFile(String filename) {
 	    try {
 			File file = new File(filename);
@@ -33,11 +43,28 @@ public class Field {
 		} catch (IOException e) {
 			e.printStackTrace();
         } 
-        
-       /* public void printSoldersInfo() {
-            for (solder: solders) {
-                System.out.println()
-            }
-        }*/
     }
+        public boolean isSolder(int x, int y) {
+            for (Solder solder : solders) {
+                if (solder.getX() == x && solder.getY() == y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+       public void printSoldersInfo() {
+            for (Solder solder: solders) {
+                System.out.print(solder.getName());
+                System.out.println(solder.getNation());
+            }
+        }
+
+        public void war() {
+            if (!solders[0].fire(solders[1], "gun", solders[0].getAngle(solders[1]))) {
+                System.out.println("Solder didn't kill he has life : ");
+                System.out.println(solders[1].getLife());
+            }
+        }
+ 
 }
