@@ -65,13 +65,17 @@ public class Main {
                 ArrayList<Soldier> allSoldier = battleField.getSoldier();
                 allSoldier.get(i-1).fire(allSoldier.get(j-1), 45);
                 if(soldierIsDead(allSoldier.get(j-1))) {
+                    System.out.println(allSoldier.get(j-1).getName() + " is dead");
                     battleField.getSoldier().remove(j-1);
-                    System.out.println("Remained only one soldier!!! END GAME !!!");
                 }
             } else {
                 System.out.println("Incorrect action input!!!");
                 return;
             }
+        }
+        if (battleField.getSoldier().size() <= 1) {
+            System.out.println("Remained only one soldier!!! END GAME !!!");
+            return;
         }
     }
 }

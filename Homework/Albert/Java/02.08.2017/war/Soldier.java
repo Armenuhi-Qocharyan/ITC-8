@@ -69,6 +69,7 @@ public class Soldier {
     }
 
     public boolean fire(Soldier soldier, int angle) {
+        boolean checkHit = false;
         if (this.weapon.getBullet().getCount() > 0) {
             this.weapon.getBullet().setCount(this.weapon.getBullet().getCount()-1);
             int newX = 0, newY = 0;
@@ -76,13 +77,19 @@ public class Soldier {
                 newX += (int)(soldier.size * Math.sin(Math.toRadians(angle)));
                 newY += (int)(soldier.size * Math.cos(Math.toRadians(angle)));
                 if(this.check(soldier, newX, newY)) {
+                    System.out.println("The bullet hit the soldier " + soldier.getName());
                     soldier.life -= this.weapon.getDamage();
+                    checkHit = true;
                     return true;
                 }
             }
         } else {
             System.out.println("\nNo bullets!!!\n");
             return false;
+        }
+
+        if(!checkHit) {
+            System.out.println("The bullet did not hit the soldier " + soldier.getName());
         }
         return false;
     }
