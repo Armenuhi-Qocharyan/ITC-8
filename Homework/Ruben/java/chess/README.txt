@@ -16,5 +16,5 @@ Folder structure.
     └── README
 
 To run
-   javac Chess
+   javac Chess.java
    java Chess
