@@ -1,3 +1,5 @@
+package board;
+import figurs.*;
 
 public class Board {
     private Piece[][] board;
@@ -6,13 +8,8 @@ public class Board {
         board = new Piece[rows][cols];
     }
 
-    public boolean setPiece(Piece piece, int row, int col) {
-        if (this.board[row][col] == null) {
-            this.board[row][col] = piece;
-            return true;
-        } else {
-            return false;
-        }
+    public void setPiece(Piece piece, int row, int col) {
+        this.board[row][col] = piece;
     }
 
     public void removePiece(int row, int col) {
@@ -24,13 +21,22 @@ public class Board {
     }
 
     public void printBoard() {
-        for (Piece[] row : board) {
-            for (Piece piece : row) {
-            	if (piece != null) {
-            		System.out.print(piece.getType() + " ");
+        for (int i = -1; i < 8; ++i) {
+	    if(i != -1) {
+	        System.out.print("  " + i + "  ");
+	    } else {
+		System.out.print("     ");
+	    }
+            for (int j = 0; j < 8; ++j) {
+		if(i == -1) {
+		    System.out.print(" " + j + " ");
+		} else {
+            	if (board[i][j] != null) {
+            		System.out.print(board[i][j].getType() + " ");
             	} else {
             		System.out.print(" _ ");
             	}
+		}
             }
             System.out.println("\n");
         }
