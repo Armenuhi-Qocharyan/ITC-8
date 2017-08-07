@@ -21,7 +21,17 @@ public class Poun extends Figure {
 
     @Override
     public boolean checkStep(Point newPosition) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int x = this.position.x;
+        int y = this.position.y;
+        int newX = newPosition.x;
+        int newY = newPosition.y;
+        int deltaX = Math.abs(newX - x);
+        int deltaY = Math.abs(newY - y);
+        
+        if (deltaX == deltaY && deltaX != 0 && deltaY != 0) {
+            return true;
+        }
+        return false;
     }
     
 }

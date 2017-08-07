@@ -7,15 +7,17 @@ package chess;
 
 /**
  *
- * @author nelli
+ * @author liana
  */
-public class Chess {
+public interface Figure {
 
     /**
-     * @param args the command line arguments
+     * 
+     * @param row
+     * @param column
+     * @param figures
+     * @return
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+    public boolean isValidStep (int row, int column, Figure[][] figures);
+    public String getColor();
 }
