@@ -1,10 +1,25 @@
-//import detected module
 "use strict";
+//import detected module
+Object.defineProperty(exports, "__esModule", { value: true });
+//import { Object } from './../models/object';
 class ObjectController {
+    //object = new Object();
     constructor() {
     }
     getObjects(req, res, next) {
-        res.send("Get all Objects");
+        /*       try {
+                   this.object.getObjects()
+                   
+               } catch (err) {
+                   res.send(err);
+               }
+               
+               /*    .then(function(data) {
+                       res.send("Get all Objects");
+                   })
+                   .catch(function(err) {
+                       res.send(err);
+                   });*/
     }
     getObjectById(req, res, next) {
         res.send("Get Object by id");
@@ -17,6 +32,6 @@ class ObjectController {
     }
 }
 exports.ObjectController = ObjectController;
-const objectController = new ObjectController();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = objectController;
+//const objectController = new ObjectController();
+//export default objectController;
+//# sourceMappingURL=dtObjController.js.map

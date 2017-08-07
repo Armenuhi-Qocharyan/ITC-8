@@ -20,10 +20,19 @@ export class CameraController {
     }
 
     public deleteCameraById(req: Request, res: Response, next: NextFunction) {
+        if (!req.cookies.hasOwnProperty("decodedToken")) {
+            //there is no token, user unauthorized
+            return res.json({
+                success: false,
+                message: 'User is not authorized - no token provided'
+            });
+        }        
+        //!!! There is such a user in the DB ? req.cookies['decodedToken'].userNaem, req.cookies['decodedToken'].password
         res.send("Delete Camera by id");
     }
 
     public updateCameraById(req: Request, res: Response, next: NextFunction) {
+        //!!! There is such a user in the DB ? req.cookies['decodedToken'].userNaem, req.cookies['decodedToken'].password
         res.send("Update Camera by id");
     }
     

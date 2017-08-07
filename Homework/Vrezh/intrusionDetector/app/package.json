@@ -6,19 +6,21 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@types/body-parser": "0.0.33",
+    "@types/jsonwebtoken": "^7.2.3",
+    "@types/morgan": "^1.7.32",
+    "@types/uuid": "^3.4.0",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "^4.15.3",
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
+    "node-uuid": "^1.4.8",
     "serve-favicon": "~2.4.2",
-    "typescript": "^2.0.6",
-    "@types/body-parser": "0.0.33",
-    "@types/morgan": "^1.7.32"
+    "typescript": "^2.0.6"
   },
   "devDependencies": {
     "typescript": "^2.0.6"
   }
 }
-
