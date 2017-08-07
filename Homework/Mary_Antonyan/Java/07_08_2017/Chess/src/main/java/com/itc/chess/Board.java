@@ -58,11 +58,15 @@ public class Board {
      */
     public static void printBoard() {
         for (int i = 0; i < 8; ++i) {
+            System.out.print("   " + i + " ");
+        }
+        
+        for (int i = 0; i < 8; ++i) {
+            System.out.print("\n   ");
             for (int j = 0; j < 8; ++j) {
                 System.out.print("+----");
             }
-            System.out.println("+"); 
-            System.out.print("|");
+            System.out.print("+\n" + i + "  |"); 
 
             for (int j = 0; j < 8; ++j) {
                 if (board[i][j] == null) {
@@ -120,14 +124,15 @@ public class Board {
                     }
                 }
             }
-            System.out.println();
-
-            for (int j = 0; j < 8; ++j) {
-                System.out.print("+----"); 
-            }
-            System.out.println("+");
         }
-    }
+        
+        System.out.println();
+        System.out.print("   ");
+        for (int j = 0; j < 8; ++j) {
+                System.out.print("+----");
+        }
+        System.out.println("+");
+    }   
 
     /**
      * Executes the game

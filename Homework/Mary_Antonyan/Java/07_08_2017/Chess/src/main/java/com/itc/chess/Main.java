@@ -33,7 +33,7 @@ public class Main {
             toY = in.nextInt();
         
             Board.execute(new Point(fromX, fromY), new Point(toX, toY));
-            System.out.print("Press Q to quit");
+            System.out.print("Press Q to quit, press any key to continue... ");
             flag = in.next();
         } while (!flag.equals("q") && !flag.equals("Q"));
     } 
