@@ -11,7 +11,7 @@ public class Fild extends Style {
         figure = f;
     }
 
-    public Figire getFigure() {
+    public Figure getFigure() {
         return figure;
     }
 

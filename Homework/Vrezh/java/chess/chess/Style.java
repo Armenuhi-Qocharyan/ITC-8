@@ -1,8 +1,9 @@
 package chess;
 
 
+
 public abstract class Style {
-    public enum Color { 
+    public static enum Color { 
         WHITE, BLACK 
     };
 
@@ -10,7 +11,7 @@ public abstract class Style {
     protected int row;
     Color color;
     
-    Style(String col, int row, Color c) {
+    Style(char col, int r, Color c) {
         column = col;
         row = r;
         color = c;
