@@ -1,5 +1,4 @@
 package figurs;
-import board.*;
 
 public class Knight extends Piece {
     private String type;
@@ -31,23 +30,13 @@ public class Knight extends Piece {
         return this.color;
     }
     
-    public void step(Board b, int row, int col, int newRow, int newCol) {
-	if (newCol < 8 && newRow < 8 && newCol >= 0 && newRow >= 0) {
-            if(b.getPiece(newRow, newCol) == null || b.getPiece(newRow, newCol).getColor() != b.getPiece(row, col).getColor()){
+    public boolean step(int row, int col, int newRow, int newCol) {
 		int deltaRow = newRow - row;
 		int deltaCol = newCol - col;
 		if(deltaRow*deltaRow + deltaCol*deltaCol == 5) {
-                    b.setPiece(this, newRow, newCol);
-                    b.removePiece(row, col);
+		    return true;
 		} else {
-		    System.out.println("Dont move\n");
+		    return false;
 		}
-            } else {
-                System.out.println("My piece\n");
-            }
-        } else {
-            System.out.println("Wrong location\n");
-        }
-
     }
 }

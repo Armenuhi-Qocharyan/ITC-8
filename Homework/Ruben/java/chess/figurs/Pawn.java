@@ -1,5 +1,4 @@
 package figurs;
-import board.*;
 
 public class Pawn extends Piece {
     private String type;
@@ -32,16 +31,12 @@ public class Pawn extends Piece {
         return this.color;
     }
     
-    public void step(int row, int col, int newRow, int newCol) {
+    public boolean step(int row, int col, int newRow, int newCol) { 
 	if (Math.abs(newRow - row) == 1 && newCol == col && newCol < 8 && newRow < 8 && newCol >= 0 && newRow >= 0) {
-	    /*if(b.getPiece(newRow, newCol) == null || b.getPiece(newRow, newCol).getColor() != b.getPiece(row, col).getColor()){
-	        b.setPiece(this, newRow, newCol);
-	        b.removePiece(row, col);
-	    } else {
-		System.out.println("My piece\n");
-	    }*/
+	    return true;
 	} else {
 	    System.out.println("Wrong location\n");
+	    return false;
 	}
     }
 }

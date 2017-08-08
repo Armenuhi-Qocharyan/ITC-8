@@ -1,4 +1,4 @@
-This program is intended for print chess board with figurs and move figurs;
+This program is intended for chess game with JFrame;
 
 Folder structure.
     ├── figurs
@@ -10,11 +10,11 @@ Folder structure.
     │   ├── Pawn.java
     │   └── Knight.java
     │   
-    ├── Chess.java
-    ├── board
-    │   └── Board.java
+    ├── ChessFrame.java
+    ├── Main.java
+    │   
     └── README
 
 To run
-   javac Chess.java
-   java Chess
+   javac Main.java
+   java Main
