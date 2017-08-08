@@ -1,3 +1,5 @@
+package figurs;
+import board.*;
 
 public abstract class Piece {
 
@@ -24,9 +26,7 @@ public abstract class Piece {
         return new int[]{this.row, this.col};
     }
 
-    public void setPosition(int[] pos) {
-    }
-
     public abstract String getType();
-    public abstract Boolean step(Board b, int row, int col);
+    public abstract String getColor();
+    public abstract void step(Board b, int row, int col, int newRow, int newCol);
 }
