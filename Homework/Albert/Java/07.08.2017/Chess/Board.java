@@ -23,43 +23,19 @@ class Board {
             board[i][0][0].setName((char)j);
         }
 
-        board[1][1][0].setName('r');
-        board[1][1][0].setColor('B');
-        board[1][8][0].setName('r');
-        board[1][8][0].setColor('B');
-        board[8][1][0].setName('R');
-        board[8][1][0].setColor('W');
-        board[8][8][0].setName('R');
-        board[8][8][0].setColor('W');
+        char[] black = {'*','r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'};
+        char[] white = {'*','R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'};
 
-        board[1][2][0].setName('n');
-        board[1][2][0].setColor('B');
-        board[1][7][0].setName('n');
-        board[1][7][0].setColor('B');
-        board[8][2][0].setName('N');
-        board[8][2][0].setColor('W');
-        board[8][7][0].setName('N');
-        board[8][7][0].setColor('W');
 
-        board[1][3][0].setName('b');
-        board[1][3][0].setColor('B');
-        board[1][6][0].setName('b');
-        board[1][6][0].setColor('B');
-        board[8][3][0].setName('B');
-        board[8][3][0].setColor('W');
-        board[8][6][0].setName('B');
-        board[8][6][0].setColor('W');
+        for (int i = 1, j = 1, k = 0; j < 9; ++j) {
+            board[i][j][k].setName(black[j]);
+            board[i][j][k].setColor('B');
+        }
 
-        board[1][4][0].setName('q');
-        board[1][4][0].setColor('B');
-        board[8][4][0].setName('Q');
-        board[8][4][0].setColor('W');
-
-        board[1][5][0].setName('k');
-        board[1][5][0].setColor('B');
-
-        board[8][5][0].setName('K');
-        board[8][5][0].setColor('W');
+        for (int i = 8, j = 1, k = 0; j < 9; ++j) {
+            board[i][j][k].setName(white[j]);
+            board[i][j][k].setColor('W');
+        }
 
         for (int i = 1; 9 > i; i++) {
             board[2][i][0].setName('p');
