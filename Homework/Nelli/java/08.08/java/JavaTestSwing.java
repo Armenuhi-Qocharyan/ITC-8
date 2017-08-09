@@ -51,8 +51,8 @@ public class JavaTestSwing {
                 showMainFigures(figures, g, 0);
                 showPowns( "./images/pown.png", g, 1);
 
-		showMainFigures(figures, g, 6);
-                showPowns( "./images/pown.png", g, 7);
+		showMainFigures(figures, g, 7);
+                showPowns( "./images/pown.png", g, 6);
 
         }
         private void showMainFigures(String[] figures, Graphics g, int lineNumber) {
