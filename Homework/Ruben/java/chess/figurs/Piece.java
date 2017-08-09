@@ -28,5 +28,5 @@ public abstract class Piece {
 
     public abstract String getType();
     public abstract String getColor();
-    public abstract void step(Board b, int row, int col, int newRow, int newCol);
+    public abstract void step(int row, int col, int newRow, int newCol);
 }
