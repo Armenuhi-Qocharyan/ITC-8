@@ -47,7 +47,7 @@ public class Main {
             System.out.println("\n***NO*** 2 FIGURES HAVE THE SAME COLOR ***\n");
             boards.printBoard();
         } else if (figure.getName() == 46 && tmp.getName() == 46) {
-            System.out.println("\n***NO*** 2 FIGURES HAVE THE SAME COLOR ***\n");
+            System.out.println("\n***NO*** CHOOSE FIGURE ***\n");
             boards.printBoard();
         } else {
             figure.setColor(boards.getColor(i1,j1));
@@ -89,10 +89,14 @@ public class Main {
                     figure = new King();
                     checkMove(figure,boards);
                     break;
+                case 6:
+                    figure = new Queen();
+                    checkMove(figure,boards);
+                    break;
             }
-            System.out.print("Press 1-Pawn(Zinvor), 2-Knight(Dzi) 3-Rook(Navak), 4-Bishop(Pix), 5-King, 6-EXIT : ");
+            System.out.print("Press 1-Pawn(Zinvor), 2-Knight(Dzi) 3-Rook(Navak), 4-Bishop(Pix), 5-King, 6-Queen, 7-EXIT : ");
             Scanner input = new Scanner(System.in);
             choose = input.nextInt();
-        } while(6 != choose);
+        } while(7 != choose);
     }
 }
