@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Main{
+public class Main {
     private static ArrayList<Long> rowList = new ArrayList<Long>();
     private static ArrayList<Long> rowLink = new ArrayList<Long>();
     private static ArrayList<Long> rowMap = new ArrayList<Long>();
@@ -13,10 +13,10 @@ public class Main{
     private static HashSet<Integer> set=new HashSet<Integer>();  
     private static SortedSet<Integer> sSet = new TreeSet<Integer>(); 
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 	
 
-	for (int i = 0; i < 50000; ++i){
+	for (int i = 0; i < 50000; ++i) {
 	    list.add(i);
 	    link.add(i);
 	    map.put(i, i);
@@ -28,15 +28,21 @@ public class Main{
 	mapFunc();
 	setFunc();
 	sSetFunc();
-	System.out.println("name " + " insert " + " find " + " delete " + " index ");
-	System.out.println("list " + rowList);
-	System.out.println("link " + rowLink);
-	System.out.println("map " + rowMap);
-	System.out.println("set " + rowSet);
-	System.out.println("Sset " + rowSset);
+	System.out.println("name       | " + " insert " + " delete " + " find " + " index ");
+	System.out.println("----------------------------------------------------");
+	System.out.println("ArrayList  | " + rowList);
+	System.out.println("----------------------------------------------------");
+	System.out.println("LinkedList | " + rowLink);
+	System.out.println("----------------------------------------------------");
+	System.out.println("HashMap    | " + rowMap);
+	System.out.println("----------------------------------------------------");
+	System.out.println("HashSet    | " + rowSet);
+	System.out.println("----------------------------------------------------");
+	System.out.println("SortedSet  | " + rowSset);
+	System.out.println("----------------------------------------------------");
     }
     
-    private static void listFunc(){
+    private static void listFunc() {
 	long time = System.nanoTime();
 	list.add(4500, 7);
 	rowList.add(System.nanoTime() - time);
@@ -55,7 +61,7 @@ public class Main{
 	
     }
     
-    private static void linkFunc(){
+    private static void linkFunc() {
 	long time = System.nanoTime();
 	link.add(4500, 7);
 	rowLink.add(System.nanoTime() - time);
@@ -74,7 +80,7 @@ public class Main{
 	
     }
     
-    private static void mapFunc(){
+    private static void mapFunc() {
 	long time = System.nanoTime();
 	map.put(4500, 7);
 	rowMap.add(System.nanoTime() - time);
@@ -93,7 +99,7 @@ public class Main{
 	
     }
     
-    private static void setFunc(){
+    private static void setFunc() {
 	long time = System.nanoTime();
 	set.add(4500);
 	rowSet.add(System.nanoTime() - time);
@@ -105,29 +111,19 @@ public class Main{
 	time = System.nanoTime();
 	set.contains(1000);
 	rowSet.add(System.nanoTime() - time);
-	
-/*	time = System.nanoTime();
-	set.get(1000);
-	setIndex = System.nanoTime() - time;
-*/	
     }
     
-    private static void sSetFunc(){
+    private static void sSetFunc() {
 	long time = System.nanoTime();
-	set.add(4500);
+	sSet.add(4500);
 	rowSset.add(System.nanoTime() - time);
 	
 	time = System.nanoTime();
-	set.remove(1000);
+	sSet.remove(1000);
 	rowSset.add(System.nanoTime() - time);
 	
 	time = System.nanoTime();
-	set.contains(1000);
+	sSet.contains(1000);
 	rowSset.add(System.nanoTime() - time);
-	
-/*	time = System.nanoTime();
-	Sset.get(1000);
-	rowSset.add(System.nanoTime() - time);
-*/	
     }
 }
