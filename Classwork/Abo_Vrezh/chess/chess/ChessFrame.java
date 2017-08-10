@@ -52,24 +52,23 @@ public class ChessFrame extends JFrame implements ActionListener {
             }
         }
         this.add(board);
-        addFigure();
+        initFigure();
 
     }
 
     public void actionPerformed(ActionEvent e) {
         JButton b = (JButton)e.getSource();
-        System.out.println(boardField.indexOf(b));
+        System.out.println("row: " + b.getClientProperty("row") + "\ncolumn: " +  b.getClientProperty("col"));
         if (selected) {
-            
             selected = false;
         } else {
-            b.setBackground(Color.GREEN);
+            //b.setBackground(Color.GREEN);
             //this.requestFocuse();
             selected = true;
         }
     }
 
-    public void addFigure() {
+    public void initFigure() {
         try { 
             String[] black = {"image/rookB.png", "image/knight1B.jpg", "image/bishopB.png", "image/queenB.jpg", "image/kingB.png", "image/bishopB.png", "image/knight1B.jpg", "image/rookB.png"};
             String[] white = {"image/rookW.png", "image/knightW.png", "image/bishop1W.png", "image/queenW.jpg", "image/king1W.png", "image/bishop1W.png", "image/knightW.png", "image/rookW.png"};
@@ -78,7 +77,7 @@ public class ChessFrame extends JFrame implements ActionListener {
                 Image img = ImageIO.read(getClass().getResource(black[j]));
                 img = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH );
                 boardField[i][j].setIcon(new ImageIcon(img));
-                boardField[i][j].setText(black[j]);
+                //boardField[i][j].setText(black[j]);
             }
        
    
@@ -86,21 +85,21 @@ public class ChessFrame extends JFrame implements ActionListener {
                 Image img = ImageIO.read(getClass().getResource(white[j]));
                 img = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH );
                 boardField[i][j].setIcon(new ImageIcon(img));
-                boardField[i][j].setText(white[j]);
+                //boardField[i][j].setText(white[j]);
             }
 
             for (int i = 0; 8 > i; i++) {
                 Image img = ImageIO.read(getClass().getResource("image/pawnB.png"));
                 img = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH );
                 boardField[1][i].setIcon(new ImageIcon(img));
-                boardField[1][i].setText("pawn");
+                //boardField[1][i].setText("pawn");
             }
 
             for (int i = 0; 8 > i; i++) {
                 Image img = ImageIO.read(getClass().getResource("image/pawn1W.jpg"));
                 img = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH );
                 boardField[6][i].setIcon(new ImageIcon(img));
-                boardField[6][i].setText("pawn");
+                //boardField[6][i].setText("pawn");
             }
         } catch(IOException e) {
             System.out.println(e);
