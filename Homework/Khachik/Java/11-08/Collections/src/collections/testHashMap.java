@@ -14,14 +14,16 @@ import java.util.Map;
  */
 public class testHashMap {
     public HashMap<String,String> hash;
+    private int membersNumber;
 
-    public testHashMap() {
+    public testHashMap(int membersNumber) {
+        this.membersNumber = membersNumber;
         this.hash = new HashMap<String, String>();
     }
     
     public  void addHashMap() {
         long startTime = System.nanoTime();
-        for (int i = 0; i < 1000; ++i) {
+        for (int i = 0; i < membersNumber; ++i) {
             String key = "key" + i;
             String value = "value" + i;
             this.hash.put(key, value);
@@ -48,7 +50,7 @@ public class testHashMap {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime)/3600;
         System.out.print(" " + duration );
-        for (int i = 0; i < (6 - this.getNumberLength(duration)); i++) {
+        for (int i = 0; i < (11 - this.getNumberLength(duration)); i++) {
             System.out.print(" ");
         }
         System.out.print("|");

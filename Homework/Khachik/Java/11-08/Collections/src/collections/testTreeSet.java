@@ -5,26 +5,26 @@
  */
 package collections;
 
-import java.util.ArrayList;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  *
  * @author xacho
  */
-public class testArrayList {
-    private final ArrayList<Integer> arr;
+public class testTreeSet {
+    private final TreeSet<Integer> tree;
     private int membersNumber;
-    
-    public testArrayList(int membersNumber) {
+
+    public testTreeSet(int membersNumber) {
         this.membersNumber = membersNumber;
-        this.arr = new ArrayList<Integer>();
+        this.tree = new TreeSet<>();
     }
     
-    
-    public void addArrayList() {
+    public void addTreeSet() {
         long startTime = System.nanoTime();
-        for (int i = 0; i < membersNumber; ++i) {
-            this.arr.add(i);
+        for(int i = 0; i < membersNumber; ++i) {
+            tree.add(i);
         }
         long endTime = System.nanoTime();
         long duration = (endTime - startTime)/3600;
@@ -35,10 +35,10 @@ public class testArrayList {
         System.out.print("|");
     }
     
-    public int getByValue() {
+    public boolean getByValue() {
         long startTime = System.nanoTime();
-        Integer a = this.membersNumber / 2;
-        int result = this.arr.indexOf(a);
+        Integer a = membersNumber / 2;
+        boolean result = tree.contains(a);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime)/3600;
         System.out.print(" " + duration );
@@ -49,10 +49,10 @@ public class testArrayList {
         return result;
     }
     
-    public boolean deleteFromList() {
+    public boolean deleteFromTreeSet() {
         long startTime = System.nanoTime();
-        Integer a = this.membersNumber / 2;
-        boolean result = this.arr.remove(a);
+        Integer a = membersNumber / 2;
+        boolean result = tree.remove(a);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime)/3600;
         System.out.print(" " + duration );
@@ -63,19 +63,10 @@ public class testArrayList {
         return result;
     }
     
-    public Integer getByIndex() {
-        long startTime = System.nanoTime();
-        Integer a = this.membersNumber / 2;
-        int result = this.arr.get(a);
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime)/3600;
-        System.out.print(" " + duration );
-        for (int i = 0; i < (11 - this.getNumberLength(duration)); i++) {
-            System.out.print(" ");
-        }
-        System.out.print("|\n");
-        return result;
+    public void getByIndex() {
+        System.out.print("    NULL    |\n");
     }
+    
     
     public Integer getNumberLength(long arg1) {
         int length = 0;
