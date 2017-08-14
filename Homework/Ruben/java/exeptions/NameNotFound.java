@@ -1,5 +1,7 @@
 import java.lang.Exception;
-public class NameNotFound extends Exception {
+import java.io.FileNotFoundException;
+
+public class NameNotFound extends FileNotFoundException{
     public NameNotFound(String message){
 	super(message);
     }
