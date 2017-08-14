@@ -1,4 +1,4 @@
-This programm trows custom ecseption when input number is 0.
+This programm trows custom runtime exception when input number is 0.
 
 To build programm.
 
