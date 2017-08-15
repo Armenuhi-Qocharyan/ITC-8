@@ -1,0 +1,29 @@
+{
+    "students": [
+        {
+            "name":"Vachagan",
+            "surname":"Hovhannisyan",
+            "homeworks":["C++", "Java", "Maven"]
+        },
+        {
+            "name":"Liana",
+            "surname":"Andreasyan",
+            "homeworks":["C++", "Java", "Maven"]
+        },
+        {
+            "name":"Smbat",
+            "surname":"Dallakyan",
+            "homeworks":["C++", "Java", "Maven"]
+        },
+        {
+            "name":"Mary",
+            "surname":"Antonyan",
+            "homeworks":["C++", "Java", "Maven"]
+        },
+        {
+            "name":"Ruben",
+            "surname":"Ghalayan",
+            "homeworks":["C++", "Java", "Maven"]
+        }
+    ]
+}
