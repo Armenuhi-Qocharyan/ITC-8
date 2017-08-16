@@ -25,7 +25,6 @@ public class App {
             Object res = print(myobj, "homeworks");
             System.out.println(res);
         }
-      //  Object res = print(myobj, "name");
     }
 
     public static JSONObject reader (String path, String anun)  {
@@ -41,8 +40,6 @@ public class App {
                 JSONObject a = iterator.next();
                 String name = (String) a.get("name");
                 if (name.equals(anun)) {
-                    return a;
-                    /*
                     System.out.print("name: " + name + ",\t");
                     String surname = (String) a.get("surname");
                     System.out.print("surname: " + surname + ",\t");
@@ -54,7 +51,7 @@ public class App {
                     }
 
                     System.out.println();
-                     */
+                    return a;
                 }
             }
             
@@ -70,6 +67,10 @@ public class App {
         }
         return null;
 
+    }
+    
+    public static Object print(JSONObject obj, String type) {
+        return obj.get(type);
     }
 
     public static void writer (JSONArray array) {
@@ -95,8 +96,4 @@ public class App {
         }
     }
     
-    public static Object print(JSONObject obj, String type) {
-           return obj.get(type);
-       
     }
-}

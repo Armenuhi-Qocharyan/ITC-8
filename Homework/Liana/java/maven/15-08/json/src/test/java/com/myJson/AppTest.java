@@ -1,38 +1,38 @@
 package com.myJson;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
+import org.junit.*;
+import static org.junit.Assert.assertEquals;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+public class AppTest  {
+    @Test
+    public void testReader() {
+        JSONObject object = new JSONObject();
+        object.put("name","aa");
+        object.put("surname","bb");
+        JSONArray homeworks = new JSONArray();
+        homeworks.add("h1");
+        homeworks.add("h2");
+        homeworks.add("h3");
+        object.put("homeworks", homeworks);
+        JSONObject myObject = App.reader("./data.json","aa");
+        assertEquals(object, myObject);
     }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    public void testPrint() {
+        JSONObject object = new JSONObject();
+        object.put("name","aa");
+        object.put("surname","bb");
+        JSONArray homeworks = new JSONArray();
+        homeworks.add("h1");
+        homeworks.add("h2");
+        homeworks.add("h3");
+        object.put("homeworks", homeworks);
+        Object myObject = App.print(object,"name");
+        String test = "aa";
+        assertEquals("aa", myObject);
     }
 }
