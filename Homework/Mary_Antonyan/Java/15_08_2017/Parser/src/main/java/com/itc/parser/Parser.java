@@ -67,6 +67,7 @@ public class Parser {
         record(f, "Smbat", "Dallakyan", homeworks);
         record(f, "Mary", "Antonyan", homeworks);
         record(f, "Ruben", "Ghalayan", homeworks);
+        f.close();
         System.out.println("File closed...");
     }
     
