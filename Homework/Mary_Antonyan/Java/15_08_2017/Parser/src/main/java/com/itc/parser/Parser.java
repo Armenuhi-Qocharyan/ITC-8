@@ -80,27 +80,93 @@ public class Parser {
      */
     public ArrayList<Student> read() throws FileNotFoundException, IOException, ParseException {
         JSONParser parser = new JSONParser();
-        System.out.println("Trying to open the file...");
         FileReader f = new FileReader(this.file);
-        // ATTENTION! Here throws an exception
         Object obj = parser.parse(f);
         
-        System.out.println("Started reading file...");
         JSONObject jsonObject = (JSONObject)obj;
         JSONArray stds = (JSONArray)jsonObject.get("students");
-        Iterator<String> iterator = stds.iterator();
-
+        Iterator<JSONObject> iterator = stds.iterator();
+        
         ArrayList<Student> students = new ArrayList<>();
         while (iterator.hasNext()) {
-            String name = (String)jsonObject.get("name");
-            String surname = (String)jsonObject.get("surname");
-            ArrayList<String> homeworks = new ArrayList<>();
-            JSONArray hmws = (JSONArray)jsonObject.get("homeworks");
+            JSONObject next = iterator.next();
+            JSONArray hmws = (JSONArray)next.get("homeworks");
+            String name = (String)next.get("name");
+            String surname = (String)next.get("surname");
+
             Iterator<String> iter = hmws.iterator();
+            ArrayList<String> homeworks = new ArrayList<>();
             while (iter.hasNext()) {
                 homeworks.add(iter.next());
             }
             students.add(new Student(name, surname, homeworks));
+        }
+        return students;
+    }
+    
+    /**
+     * Get student form json by name 
+     * 
+     * @param studentName student name
+     * @return list of students with given names
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ParseException 
+     */
+    public ArrayList<Student> getByName(String studentName) throws FileNotFoundException, IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        FileReader f = new FileReader(this.file);
+        Object obj = parser.parse(f);
+        
+        JSONObject jsonObject = (JSONObject)obj;
+        JSONArray stds = (JSONArray)jsonObject.get("students");
+        Iterator<JSONObject> iterator = stds.iterator();
+        
+        ArrayList<Student> students = new ArrayList<>();
+        while (iterator.hasNext()) {
+            JSONObject next = iterator.next();
+            String name = (String)next.get("name");
+            if (name.equals(studentName)) {
+                String surname = (String)next.get("surname");
+                JSONArray hmws = (JSONArray)next.get("homeworks");
+                Iterator<String> iter = hmws.iterator();
+                ArrayList<String> homeworks = new ArrayList<>();
+                while (iter.hasNext()) {
+                    homeworks.add(iter.next());
+                }
+                students.add(new Student(name, surname, homeworks));
+            }
+        }
+        return students;
+    }
+    
+    /**
+     * Get student from json by homework list
+     * 
+     * @param studentHomeworks homework list
+     * @return list of students with given homework list
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ParseException 
+     */
+    public ArrayList<Student> getByHomework(ArrayList<String> studentHomeworks) throws FileNotFoundException, IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        FileReader f = new FileReader(this.file);
+        Object obj = parser.parse(f);
+        
+        JSONObject jsonObject = (JSONObject)obj;
+        JSONArray stds = (JSONArray)jsonObject.get("students");
+        Iterator<JSONObject> iterator = stds.iterator();
+        
+        ArrayList<Student> students = new ArrayList<>();
+        while (iterator.hasNext()) {
+            JSONObject next = iterator.next();
+            JSONArray hmws = (JSONArray)next.get("homeworks");
+            if (hmws.equals(studentHomeworks)) {
+                String name = (String)next.get("name");
+                String surname = (String)next.get("surname");
+                students.add(new Student(name, surname, studentHomeworks));
+            }
         }
         return students;
     }

@@ -77,8 +77,8 @@ public class Student {
      * Print information about student
      */
     public void print() {
-        System.out.println("Name: " + this.name);
+        System.out.println("\nName: " + this.name);
         System.out.println("Surname: " + this.surname);
-        System.out.print("Homeworks: " + homeworks.toString());
+        System.out.print("Homeworks: " + homeworks.toString() + "\n");
     }
 }

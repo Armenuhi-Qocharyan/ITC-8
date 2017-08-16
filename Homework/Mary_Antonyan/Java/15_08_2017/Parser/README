@@ -1,0 +1,47 @@
+--- Title ---
+JSON Parser
+
+
+--- Description ---
+This project represents getByName and getByHomework operations with json file.
+Unit tests are attached too.
+
+
+---Structure ---
+.
+├── info.json
+├── pom.xml
+└── src
+    ├── main
+    │   └── java
+    │       └── com
+    │           └── itc
+    │               └── parser
+    │                   ├── Main.java
+    │                   ├── Parser.java
+    │                   └── Student.java
+    └── test
+        └── java
+            └── com
+                └── itc
+                    └── parser
+                        └── ParserTest.java
+
+
+--- Execute ---
+    mvn package
+    java -cp target/Parser-1.0-SNAPSHOT-jar-with-dependencies.jar com.itc.parser.Main
+
+
+--- View test results ---
+    mvn test
+    [vim target/surefire-reports/com.itc.parser.ParserTest.txt]
+
+
+--- View documentation ---
+    mvn javadoc:javadoc
+    google-chrome target/site/apidocs/index.html
+
+
+--- Finally ---
+    mvn clean
