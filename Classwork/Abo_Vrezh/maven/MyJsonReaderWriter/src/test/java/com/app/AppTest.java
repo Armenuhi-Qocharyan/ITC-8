@@ -1,38 +1,67 @@
 package com.app;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+//import org.junit.TestCase;
+//import org.junit.TestSuite;
+import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.json.simple.JSONObject;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+
+//extends TestCase 
+public class AppTest {
+    App app;
+
+    @Before
+    public void init() {
+        app = new App();
+        System.out.println("Before");
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    @Test
+    public void testGetObject() {
+        JSONObject jsonObj = new JSONObject("[{\"homeworks\":[\"h1\",\"h2\",\"h3\"],\"surname\":\"sn1\",\"name\":\"n1\"}]");
+            
+        assertEquals(jsonObj, app.getObject(app.getJSONArray, "name"));
+    } 
+
+    @Test
+    public void testNameOrSurname() {
+        assertEquals("sn1", app.getNameOrSurname(app.getJSONObject(), "name"));
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+
+
+    /*
+    @Test
+    public void testSum1() {
+        System.out.println("Test");
+        assertEquals(50, com.app.App.sum(20,30));
     }
+
+    @After
+    public void testSum2() {
+        System.out.println("After");
+    }
+
+    @Before
+    public void testSum3() {
+        System.out.println("Before");
+    }
+    @BeforeClass
+    public static void testSum4() {
+        System.out.println("Before Class");
+    }
+
+    @AfterClass
+    public static void testSum5() {
+        System.out.println("After Class");
+    }
+    */
 }
