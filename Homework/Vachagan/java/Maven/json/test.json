@@ -1,0 +1,27 @@
+[ 
+{
+    "Name": "Artur",
+    "Age": 999,
+    "Countries": [
+        "India",
+        "England",
+        "Australia"
+    ]
+},
+{
+    "Name": "Vardan",
+    "Age": 999,
+    "Countries": [
+        "England",
+        "Australia"
+    ]
+},
+{
+    "Name": "Armen",
+    "Age": 999,
+    "Countries": [
+        "India",
+        "Australia"
+    ]
+}
+]
