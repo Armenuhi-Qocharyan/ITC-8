@@ -1,0 +1,18 @@
+[
+    {
+        "name": "n1",
+        "surname": "sn1",
+        "homeworks": ["h1", "h2", "h3"]
+    },
+    {
+        "name": "n2",
+        "surname": "sn2",
+        "homeworks": ["h1", "h2", "h3"]
+    },
+    {
+        "name": "n3",
+        "surname": "sn3",
+        "homeworks": ["h1", "h2", "h3"]
+    }
+
+]

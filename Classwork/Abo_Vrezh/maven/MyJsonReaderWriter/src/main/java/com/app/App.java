@@ -1,0 +1,55 @@
+package com.app;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+/**
+ * Hello world!
+ *
+ */
+ 
+
+
+public class App 
+{
+    public static JSONObject getObject(JSONArray array, String name) {
+        for (Object object : array ) {
+            if (((JSONObject)(object)).get("name").equals( name)) {
+                return (JSONObject)object;
+            }
+        }
+        return null;
+    }
+
+    public static void getNameOrSurname(JSONObject object, String nameOrSurname) {
+        if (nameOrSurname == "name") {
+            System.out.println("name : " + object.get(nameOrSurname));
+        } else if (nameOrSurname == "Surname"){
+            System.out.println("surname : " + object.get(nameOrSurname));
+        }else {
+            System.out.println("Incorrect input");
+        }
+    }
+
+    public static void main( String[] args )
+    {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONArray a = (JSONArray) parser.parse(new FileReader("data.json"));
+            JSONObject o = getObject(a,"n1");
+            getNameOrSurname(o, "name");
+
+            System.out.println(o);
+            //System.out.println(getObject(a, "n1").get("surname"));
+        } catch (IOException e) {
+        
+        } catch (ParseException e) {
+        
+        }
+        System.out.println( "Hello World!" );
+    }
+}
