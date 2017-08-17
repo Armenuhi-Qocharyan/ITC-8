@@ -19,6 +19,7 @@ public class AppTest {
 
     App app;
     JSONObject obj = new JSONObject();
+    int dependecy=0;
 
     @BeforeClass
     public void init() {
@@ -51,6 +52,23 @@ public class AppTest {
         assertEquals("n1", app.getNameOrSurname(obj,"name"));
     }
 
+
+
+    @Test
+    public void initEnvironmentTest() {
+        System.out.println(this.dependecy);
+        dependecy += 1000;
+    }
+
+    @Test(dependsOnMethods={"initEnvironmentTest"})
+    public void testmethod() {
+        System.out.println(this.dependecy);
+    }
+
+    @Test(enabled = false)
+    public void testsetProperty() {
+        System.out.println("Ignored this test method!!!");
+    }
 
     @Test(groups="group1")
     public void testSum1() {
