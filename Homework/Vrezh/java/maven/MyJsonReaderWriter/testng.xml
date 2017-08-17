@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Custom suit" parallel="none">
+
+    <parameter name="first-name"  value="Cedric"/>
+    <parameter name="first-name1"  value="Cedric"/>
+
+    <test verbose="1" name="TestNG" annotations="JDK">
+        <classes>
+            <class name="com.app.AppTest">
+                <methods>
+                    <include name="testString"/>
+                    <include name="testGetObject"/>
+
+                </methods>
+
+            </class>
+        </classes>
+    </test>
+</suite>
