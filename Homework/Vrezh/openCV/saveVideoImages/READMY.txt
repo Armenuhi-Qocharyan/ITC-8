@@ -1,0 +1,22 @@
+Save images which ficsed default camera 
+---------------------------------------
+
+Functionality
+-------------
+    * save 4 images ficsed default camera
+
+How run program
+----------------
+    Go to directory programm:
+        * cmake CMakeLists.txt
+        * make 
+        * ./saveImages
+
+Programm structure
+------------------
+.
+├── CMakeLists.txt
+├── main.cpp
+└── READMY.txt
+
+
