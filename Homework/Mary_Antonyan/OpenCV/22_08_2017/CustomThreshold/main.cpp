@@ -2,8 +2,7 @@
 #include <iostream>
 using namespace cv;
 
-Mat threshold(String path) {
-    Mat image = imread(path, IMREAD_GRAYSCALE);
+Mat threshold(Mat image) {
     Mat thresholdImage(image.rows, image.cols, CV_8UC1);
 
     for (int x = 0; x < image.rows; x++)
@@ -21,7 +20,14 @@ int main(int argc, char** argv) {
         std::cout << "Error: Missing command line argumanets.\n\tUsage: ./CustomThreshold <image_path>" << std::endl;
         return -1;
     }
-    Mat thresholdImage = threshold(argv[1]);
+
+    Mat image = imread(argv[1], IMREAD_GRAYSCALE);
+    if (!image.data) {
+        std::cout << "Image not found" << std::endl;
+        return -1;
+    }
+
+    Mat thresholdImage = threshold(image);
     namedWindow("Custom threshold window", 1);
     imshow("Custom threshold window", thresholdImage);
 

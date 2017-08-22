@@ -1,8 +1,7 @@
 #include "opencv2/opencv.hpp"
 using namespace cv;
 
-Mat convertToGray(String path) {
-    Mat image = imread(path);
+Mat convertToGray(Mat image) {
     Mat grayImage = image.clone();
     int gray = 0;
     for (int y = 0; y < image.rows; y++)
@@ -26,7 +25,13 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    Mat grayImage = convertToGray(argv[1]);
+    Mat image = imread(argv[1]);
+    if (!image.data) {
+        std::cout << "Image not found" << std::endl;
+        return -1;
+    }
+
+    Mat grayImage = convertToGray(image);
     namedWindow("Custom grayscaled window", 1);
     imshow("Custom grayscaled window", grayImage);
 
