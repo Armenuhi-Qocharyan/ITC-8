@@ -1,0 +1,12 @@
+--- Title ---
+Video Test
+
+
+--- Description ---
+This project represents testing the work of opencv with video.
+
+
+--- Execute ---
+    cmake .
+    make
+    ./VideoTest <video_path> images/image.jpg
