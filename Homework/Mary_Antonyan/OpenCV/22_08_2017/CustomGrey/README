@@ -1,0 +1,12 @@
+--- Title ---
+Custom Grey
+
+
+--- Description ---
+This project represents "custom grey".
+
+
+--- Execute ---
+    cmake .
+    make
+    ./CustomGrey <image_path>

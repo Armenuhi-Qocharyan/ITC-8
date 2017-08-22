@@ -5,7 +5,7 @@ using namespace cv;
 
 int main(int argc, char** argv) {
     if (argc != 2) {
-        std::cout << "Error: Missing command line argumanets.\n\tUsage: DisplayImage.out <Image_Path>" << std::endl;
+        std::cout << "Error: Missing command line argumanets.\n\tUsage: ./Test <Image_Path>" << std::endl;
         return -1;
     }
 
@@ -40,6 +40,12 @@ int main(int argc, char** argv) {
 
     // Save grayscale image
     imwrite("./gray_image.jpg", grayImage);
+
+    // Modify image to binary
+    namedWindow("Threshold image", WINDOW_AUTOSIZE);
+    Mat binaryImage;
+    threshold(grayImage, binaryImage, 128.0, 255.0, THRESH_BINARY);
+    imshow("Threshold image", binaryImage);
 
     waitKey(0);
     return 0;
