@@ -13,22 +13,24 @@ int main(int argc, char** argv) {
     if (!image.data) {
         std::cout << "No image data" << std::endl;
         return -1;
-    } else {
-        std::cout << "Found image ^^" << std::endl;
     }
 
+    // Show initial image
     namedWindow("Test image", WINDOW_AUTOSIZE);
+    imshow("Test image", image);
+
     // Draw line
-    line(image, *(new Point(0,0)), *(new Point(511,511)), *(new Scalar(255,0,0)), 5);
+    line(image, *(new Point(0,0)), *(new Point(100,100)), *(new Scalar(255,0,0)), 5);
 
     //Draw rectangle
     rectangle(image,*(new Point(50,0)), *(new Point(150,100)), *(new Scalar(0,255,0)), 3);
 
     // Draw circle
-    circle(image,*(new Point(447,63)), 63, *(new Scalar(0,0,255)), -1);
+    circle(image,*(new Point(250,100)), 50, *(new Scalar(0,0,255)), -1);
 
     // Show image with drawings
-    imshow("Test image", image);
+    namedWindow("Drawn image", WINDOW_AUTOSIZE);
+    imshow("Drawn image", image);
 
     // Modify image to grayscale
     namedWindow("Grayscale image", WINDOW_AUTOSIZE);
