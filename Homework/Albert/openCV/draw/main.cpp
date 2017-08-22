@@ -24,7 +24,6 @@ void changeColor(cv::Mat& image) {
     namedWindow("Custom change color image", WINDOW_NORMAL);
     for(int x = 0; x < image.rows; ++x) {
         for(int y = 0; y < image.cols; ++y) {
-            image.at<Vec3b>(Point(x, y));
             int color = (image.at<cv::Vec3b>(x,y)[0] + image.at<cv::Vec3b>(x,y)[1] + image.at<cv::Vec3b>(x,y)[2]) / 3;
                 image.at<cv::Vec3b>(x,y)[0] = color;
                 image.at<cv::Vec3b>(x,y)[1] = color;
