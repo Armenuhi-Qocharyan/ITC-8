@@ -9,20 +9,20 @@ using namespace cv;
 using namespace std;
 
 void showImage ( Mat image ) {
-    namedWindow( "Display window", 0);// Create a window for display.
-    resizeWindow("Display window", 1000,700);
-    imshow( "Display window", image );                   // Show our image inside it.
-    waitKey(0);         
+    namedWindow( "Original image", 0);// Create a window for display.
+    resizeWindow("Original image", 500,300);
+    moveWindow("Original image", 0,0);
+    imshow( "Original image", image );                   // Show our image inside it.
 }
 
 void showGrayImage ( Mat image ) {
     Mat gray_image;
     cvtColor( image, gray_image, CV_BGR2GRAY );
     imwrite( "../Gray_Image.jpg", gray_image );
-    namedWindow( "Display window2", 0);// Create a window for display.
-    resizeWindow("Display window2", 1000,700);
-    imshow( "Display window2", gray_image);                   // Show our image inside it.
-    waitKey(0);         
+    namedWindow( "Gray image", 0);// Create a window for display.
+    resizeWindow("Gray image", 500,300);
+    moveWindow("Gray image", 700,0);
+    imshow( "Gray image", gray_image);                   // Show our image inside it.
 }
 
 void thrashold ( Mat image ) {
@@ -33,12 +33,11 @@ void thrashold ( Mat image ) {
     double maxValue = 255; 
     // Binary Threshold
     threshold(image, dst, thresh, maxValue, THRESH_BINARY_INV);
-    namedWindow( "Display window3", 0);// Create a window for display.
-    resizeWindow("Display window3", 1000,700);
+    namedWindow( "Thrashold image", 0);// Create a window for display.
+    resizeWindow("Thrashold image", 500,300);
+    moveWindow("Thrashold image", 700,500);
     imwrite( "../trashold_Image.jpg", dst );
-    imshow( "Display window3", dst);                   // Show our image inside it.
-    waitKey(0);         
-
+    imshow( "Thrashold image", dst);                   // Show our image inside it.
 }
 
 void toCustomColor (Mat img) {
@@ -53,11 +52,11 @@ void toCustomColor (Mat img) {
             image.at<Vec3b>(Point(x,y)) = color;
         }
     }
-    namedWindow( "Display window4", 0);// Create a window for display.
-    resizeWindow("Display window4", 1000,700);
+    namedWindow( "Custom color image", 0);// Create a window for display.
+    resizeWindow("Custom color image", 500,300);
+    moveWindow("Custom color image", 0,500);
     imwrite( "../customColor_Image.jpg", image );
-    imshow( "Display window4", image);                   // Show our image inside it.
-    waitKey(0);         
+    imshow( "Custom color image", image);                   // Show our image inside it.
 }
 
 int main ( int argc, char** argv ) {
@@ -76,5 +75,6 @@ int main ( int argc, char** argv ) {
     showGrayImage(image);
     thrashold(image);
     toCustomColor(image);
+    waitKey(0);         
     return 0;
 }
