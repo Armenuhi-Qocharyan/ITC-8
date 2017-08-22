@@ -1,0 +1,12 @@
+--- Title ---
+Custom Threshold
+
+
+--- Description ---
+This project represents "custom threshold".
+
+
+--- Execute ---
+    cmake .
+    make
+    ./CustomThreshold <image_path>
