@@ -1,7 +1,0 @@
-Simulate balls' movement, each of which has: 
-    -- current coordinates (x, y)
-    -- speed (vx, vy)
-    -- mass (m)
-    -- radius (r)
-
-At each moment of time illustrate substitution of balls.
