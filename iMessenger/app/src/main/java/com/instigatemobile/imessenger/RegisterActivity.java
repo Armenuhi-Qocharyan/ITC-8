@@ -1,7 +1,9 @@
 package com.instigatemobile.imessenger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -31,10 +33,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         //initializing awesomevalidation object
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         //initializing view objects
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        buttonSubmit = (Button) findViewById(R.id.btnRegister);
+        initNameEmailPassword();
 
         //adding validation to edittexts
         awesomeValidation.addValidation(this, R.id.editTextName, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
@@ -43,11 +42,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         buttonSubmit.setOnClickListener(this);
     }
+    private void initNameEmailPassword() {
+        Log.d("init","init called");
+        editTextName = (EditText) findViewById(R.id.editTextName);
+        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        buttonSubmit = (Button) findViewById(R.id.btnRegister);
+    }
     private void submitForm() {
         //first validate the form then move ahead
         //if this becomes true that means validation is successfull
         if (awesomeValidation.validate()) {
             Toast.makeText(this, "Registration Successfull", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
 
             //process the data further
         }
