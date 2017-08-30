@@ -1,32 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash1_blur_2">
+    android:background="@drawable/login_register2_blur">
+
+    <ImageView
+        android:id="@+id/splashImageView"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:adjustViewBounds="false"
+        android:src="@drawable/chat_icon"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/splashImageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/splash_title"
-        android:textColor="@color/white"
-        android:textSize="55dp"
-        android:textStyle="bold"
-        android:fontFamily="@string/font_family"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="230dp" />
-
-    <TextView
-        android:id="@+id/slogan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:text="@string/splash_slogan"
-        android:textColor="@color/white"
+        android:textColor="#03caff"
         android:textSize="20dp"
         android:textStyle="italic"
         android:fontFamily="@string/font_family"
+        android:layout_below="@+id/splashImageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp" />
+        android:layout_marginTop="41dp" />
+
 </RelativeLayout>
