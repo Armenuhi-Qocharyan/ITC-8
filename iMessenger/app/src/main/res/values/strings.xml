@@ -23,6 +23,9 @@
         completions."
     </string>
 
+    <string name="nameerror">Enter Valid Name</string>
+    <string name="emailerror">Enter Valid Email</string>
+    <string name="passworderror">Enter Some Password</string>
     <!-- Strings related to register -->
 
 </resources>
