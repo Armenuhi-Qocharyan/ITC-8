@@ -1,1 +1,0 @@
-{ "options" : { "create" : "Students", "autoIndexId" : true, "flags" : 1 }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "Student.Students", "name" : "_id_" }, { "v" : 1, "key" : { "title" : 1 }, "ns" : "Student.Students", "name" : "title_1" }, { "v" : 1, "key" : { "ITC" : 1 }, "ns" : "Student.Students", "name" : "ITC_1" } ] }

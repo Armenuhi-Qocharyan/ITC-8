@@ -1,7 +1,0 @@
-short long thin slim
-16245 65241 15264 41652
-country animal city ocean
-2 5 10 25
-200 124 26 169
-50 72 64 121
-father brother uncle grandfather 

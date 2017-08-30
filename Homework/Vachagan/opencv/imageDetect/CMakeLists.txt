@@ -1,6 +1,0 @@
-cmake_minimum_required(VERSION 2.8)
-project( imageDetect )
-set (CMAKE_CXX_STANDARD 11)
-find_package( OpenCV REQUIRED )
-add_executable( imageDetect imageDetect.cpp )
-target_link_libraries( imageDetect ${OpenCV_LIBS} )
