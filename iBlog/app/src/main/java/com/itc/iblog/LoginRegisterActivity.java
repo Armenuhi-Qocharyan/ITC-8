@@ -1,13 +1,11 @@
 package com.itc.iblog;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
-import android.widget.Button;
-import android.view.View;
+
 import com.itc.iblog.fragments.loginFragment;
 
 
@@ -17,13 +15,15 @@ public class LoginRegisterActivity extends FragmentActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        if (savedInstanceState == null) {
+            Fragment fragment = new loginFragment(this);
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.commit();
+        } else {
 
-        Fragment fragment = new loginFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.contentFragment, fragment);
-        transaction.commit();
-
+        }
     }
 
     @Override

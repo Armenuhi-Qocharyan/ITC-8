@@ -4,9 +4,9 @@ package com.itc.iblog.fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +14,15 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.itc.iblog.MainActivity;
 import com.itc.iblog.R;
-
-import java.util.concurrent.Executor;
 
 public class registerFragment extends Fragment{
 
@@ -35,7 +33,16 @@ public class registerFragment extends Fragment{
     private Activity main;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    private Activity login;
 
+    public registerFragment(Activity login) {
+        super();
+        this.login = login;
+
+    }
+    public registerFragment() {
+        super();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +50,7 @@ public class registerFragment extends Fragment{
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(getActivity());
-        main = new Activity();
+        main = new MainActivity();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         Animation scale = AnimationUtils.loadAnimation(super.getContext(), R.anim.scale);
@@ -96,8 +103,12 @@ public class registerFragment extends Fragment{
                         if(task.isSuccessful()) {
                             Toast.makeText(getActivity(),"Registered successfully", Toast.LENGTH_SHORT).show();
                             progressDialog.cancel();
-                            /*Intent intent = new Intent(getContext(), MainActivity.class);
-                            startActivity(intent);*/
+
+                            Intent intent = new Intent(login,
+                                    MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            login.finish();
                         } else {
                             Toast.makeText(getActivity(),"Could not register. Please try again.", Toast.LENGTH_SHORT).show();
                             progressDialog.cancel();
