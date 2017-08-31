@@ -13,10 +13,6 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 
-/**
- * Created by abul on 30.08.17.
- */
-
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     //The view objects
@@ -43,7 +39,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         buttonSubmit.setOnClickListener(this);
     }
     private void initNameEmailPassword() {
-        Log.d("init","init called");
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);

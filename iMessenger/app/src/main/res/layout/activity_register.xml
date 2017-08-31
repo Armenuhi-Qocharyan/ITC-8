@@ -7,7 +7,6 @@
     android:fillViewport="true"
     android:background="@drawable/login_register2_blur">
 
-    <!--  Header  Starts-->
     <LinearLayout android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +14,6 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:orientation="vertical">
-
         <!-- Logo Start-->
         <ImageView android:src="@drawable/chat_icon"
             android:layout_width="wrap_content"
@@ -23,7 +21,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp" />
         <!-- Logo Ends -->
-        <!--  Header Ends -->
 
         <!-- Registration Form -->
         <!--  Name Label -->
@@ -58,6 +55,7 @@
                 android:hint="@string/hint_email"
                 android:textColorHint="@color/white"/>
         </android.support.design.widget.TextInputLayout>
+
         <!--  Password Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
