@@ -10,16 +10,19 @@
     <LinearLayout android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:orientation="vertical">
+        android:paddingTop="56dip"
+        android:paddingLeft="24dip"
+        android:paddingRight="24dip"
+        android:orientation="vertical"
+        android:weightSum="1">
+
         <!-- Logo Start-->
         <ImageView android:src="@drawable/chat_icon"
             android:layout_width="wrap_content"
             android:layout_height="100dip"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dip"
+            android:layout_weight="0.3"/>
         <!-- Logo Ends -->
 
         <!-- Registration Form -->
@@ -27,8 +30,8 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dip"
+            android:layout_marginBottom="8dip"
             android:defaultFocusHighlightEnabled="true">
             <EditText android:id="@+id/editTextName"
                 android:layout_width="match_parent"
@@ -36,15 +39,16 @@
                 android:textColorHighlight="@color/colorAccent"
                 android:textColor="@color/white"
                 android:hint="Name"
-                android:textColorHint="@color/white"/>
+                android:textColorHint="@color/white"
+                android:layout_weight="0.15"/>
         </android.support.design.widget.TextInputLayout>
 
         <!--  Email Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dip"
+            android:layout_marginBottom="8dip"
             android:defaultFocusHighlightEnabled="true">
             <EditText android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
@@ -53,15 +57,16 @@
                 android:textColorHighlight="@color/colorAccent"
                 android:textColor="@color/white"
                 android:hint="@string/hint_email"
-                android:textColorHint="@color/white"/>
+                android:textColorHint="@color/white"
+                android:layout_weight="0.15"/>
         </android.support.design.widget.TextInputLayout>
 
-        <!--  Password Label -->
+        <!--  Password Label -->>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dip"
+            android:layout_marginBottom="8dip"
             android:defaultFocusHighlightEnabled="true">
             <EditText android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
@@ -70,7 +75,8 @@
                 android:textColorHighlight="@color/colorAccent"
                 android:textColor="@color/white"
                 android:hint="@string/hint_password"
-                android:textColorHint="@color/white"/>
+                android:textColorHint="@color/white"
+                android:layout_weight="0.15"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Register Button -->
@@ -78,10 +84,11 @@
             android:background="@color/colorAccent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="24dip"
             android:text="Register New Account"
             android:gravity="center"
-            android:textSize="16dip" />
+            android:textSize="16dip"
+            android:layout_weight="0.15"/>
         <!-- Registration Form Ends -->
     </LinearLayout>
 
