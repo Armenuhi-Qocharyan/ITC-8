@@ -56,7 +56,7 @@
                 <EditText
                     android:layout_width = "fill_parent"
                     android:layout_height = "50dp"
-                    android:id = "@+id/email"
+                    android:id = "@+id/emailReg"
                     android:hint = "Email Address"
                     android:padding="10dp"
                     android:height="60dp"
@@ -89,7 +89,7 @@
                 <EditText
                     android:layout_width = "fill_parent"
                     android:layout_height = "50dp"
-                    android:id = "@+id/password"
+                    android:id = "@+id/passwordReg"
                     android:hint = "Password"
                     android:padding="10dp"
                     android:inputType = "textPassword"
@@ -123,14 +123,13 @@
                 <Button
                     android:layout_width = "fill_parent"
                     android:layout_height = "50dp"
-                    android:id = "@+id/button"
+                    android:id = "@+id/buttonRegister"
                     android:text="Register"
                     android:textColor="#000"
                     android:padding="10dp"
                     android:height="40dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:focusable = "true"
                     android:layout_marginTop = "50dp"
                     android:background="@drawable/edit_text"
                     android:backgroundTint="#fff"

@@ -31,11 +31,11 @@ public class loginFragment extends Fragment {
             }
         });
 
-        Button login = (Button) view.findViewById(R.id.button);
+        Button login = (Button) view.findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                System.out.println("login");
             }
         });
         return view;
