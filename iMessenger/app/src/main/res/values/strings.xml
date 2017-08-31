@@ -28,4 +28,16 @@
     <string name="passworderror">Enter Some Password</string>
     <!-- Strings related to register -->
 
+    <!-- Strings related to menu -->
+    <string name="action_language">Language</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_about">About Us</string>
+    <string name="search_title">Search</string>
+
+
+    <!-- Strings related to main -->
+    <string name="section_contacts">Contacts</string>
+    <string name="section_profile">My Profile</string>
+    <string name="section_favorites">Favorites</string>
+
 </resources>

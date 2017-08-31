@@ -1,5 +1,6 @@
 package com.instigatemobile.imessenger;
 
+import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import android.widget.TextView;
 
@@ -81,47 +83,32 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (id) {
+            case R.id.action_settings:
+                sayText("settings");
+                return true;
+            case R.id.action_language:
+                sayText("language");
+                return true;
+            case R.id.action_logout:
+                sayText("logout");
+                return true;
+            case R.id.action_about:
+                sayText("about us");
+                return true;
+            default:
+                sayText("other");
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
+    private void sayText(String str) {
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show();
     }
+
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -135,9 +122,19 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch(position){
+                case 0:
+                    Contacts contact = new Contacts();
+                    return contact;
+                case 1:
+                    Profile profile = new Profile();
+                    return profile;
+                case 2:
+                    Favorites favorite = new Favorites();
+                    return favorite;
+                default:
+                    return null;
+            }
         }
 
         @Override
@@ -150,11 +147,11 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.section_contacts);
                 case 1:
-                    return "SECTION 2";
+                    return getString(R.string.section_profile);
                 case 2:
-                    return "SECTION 3";
+                    return getString(R.string.section_favorites);
             }
             return null;
         }
