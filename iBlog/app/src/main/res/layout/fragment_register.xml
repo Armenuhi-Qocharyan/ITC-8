@@ -123,7 +123,7 @@
                 <Button
                     android:layout_width = "fill_parent"
                     android:layout_height = "50dp"
-                    android:id = "@+id/button"
+                    android:id = "@+id/reg"
                     android:text="Register"
                     android:textColor="#000"
                     android:padding="10dp"
