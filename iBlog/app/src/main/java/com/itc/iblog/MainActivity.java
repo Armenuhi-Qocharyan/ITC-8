@@ -82,19 +82,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.My_profile) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.Posts) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.Folowers) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.Favorite_post) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.About_us) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.Language) {
+
+        } else if (id == R.id.Log_out) {
 
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
