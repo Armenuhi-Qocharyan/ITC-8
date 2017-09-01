@@ -9,7 +9,7 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.instigatemobile.imessenger.profile.LoginFragment;
 import com.instigatemobile.imessenger.profile.RegisterFragment;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginRegisterActivity extends AppCompatActivity {
     //private RegisterFragment registerFragment;
     private LoginFragment loginFragment;
     private FragmentTransaction fragmentTransaction;
