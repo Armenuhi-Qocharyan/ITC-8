@@ -56,7 +56,7 @@ import java.util.Random;
                             waited += 100;
                         }
                         Intent intent = new Intent(Splashscreen.this,
-                                LoginRegisterActivity.class);
+                                MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         Splashscreen.this.finish();
