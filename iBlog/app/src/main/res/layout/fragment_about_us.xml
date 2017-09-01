@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:weightSum="1"
+    android:background="@drawable/background_img">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_weight="0.3"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+    <TextView
+        android:layout_weight="0.1"
+        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:textSize="40dp"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        android:text="iBLOG TEAM"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"/>
+
+    <android.support.v7.app.AlertController.RecycleListView
+        android:layout_weight="0.6"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp">
+    </android.support.v7.app.AlertController.RecycleListView>
+
+</LinearLayout>
