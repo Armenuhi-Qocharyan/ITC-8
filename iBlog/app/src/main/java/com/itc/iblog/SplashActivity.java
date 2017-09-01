@@ -2,7 +2,6 @@ package com.itc.iblog;
 
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
@@ -10,14 +9,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ImageView;
-import java.util.Random;
 
 
 /**
  * Created by liana on 8/30/17.
  */
 
-    public class Splashscreen extends AppCompatActivity {
+    public class SplashActivity extends AppCompatActivity {
         public void onAttachedToWindow() {
             super.onAttachedToWindow();
             Window window = getWindow();
@@ -55,15 +53,15 @@ import java.util.Random;
                             sleep(100);
                             waited += 100;
                         }
-                        Intent intent = new Intent(Splashscreen.this,
+                        Intent intent = new Intent(SplashActivity.this,
                                 LoginRegisterActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
-                        Splashscreen.this.finish();
+                        SplashActivity.this.finish();
                     } catch (InterruptedException e) {
                         // do nothing
                     } finally {
-                        Splashscreen.this.finish();
+                        SplashActivity.this.finish();
                     }
 
                 }
