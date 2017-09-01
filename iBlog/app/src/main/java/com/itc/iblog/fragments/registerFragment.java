@@ -21,8 +21,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.itc.iblog.MainActivity;
 import com.itc.iblog.R;
+import com.itc.iblog.models.UserModel;
 
 public class registerFragment extends Fragment{
 
@@ -34,6 +38,12 @@ public class registerFragment extends Fragment{
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private Activity login;
+    private EditText editTextSelectedAge;
+    private EditText editTextUsername;
+    private FirebaseDatabase database;
+    private FirebaseUser user;
+    //private DatabaseReference mDatabase;
+
 
     public registerFragment(Activity login) {
         super();
@@ -51,6 +61,8 @@ public class registerFragment extends Fragment{
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(getActivity());
         main = new MainActivity();
+        database =  FirebaseDatabase.getInstance();
+        user =  firebaseAuth.getCurrentUser();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         Animation scale = AnimationUtils.loadAnimation(super.getContext(), R.anim.scale);
@@ -59,6 +71,8 @@ public class registerFragment extends Fragment{
         editTextEmailReg = (EditText) view.findViewById(R.id.emailReg);
         editTextPassReg = (EditText) view.findViewById(R.id.passwordReg);
         editTextConfPassReg = (EditText) view.findViewById(R.id.confirm);
+        editTextSelectedAge = (EditText) view.findViewById(R.id.age);
+        editTextUsername = (EditText) view.findViewById(R.id.name);
         buttonRegister = (Button) view.findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +117,7 @@ public class registerFragment extends Fragment{
                         if(task.isSuccessful()) {
                             Toast.makeText(getActivity(),"Registered successfully", Toast.LENGTH_SHORT).show();
                             progressDialog.cancel();
-
+                            registerUserInfo();
                             Intent intent = new Intent(login,
                                     MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -117,4 +131,10 @@ public class registerFragment extends Fragment{
                 });
     }
 
+    public void registerUserInfo() {
+        String userId = user.getUid();
+        UserModel userModel = new UserModel(this.editTextUsername.getText().toString().trim(), this.editTextEmailReg.getText().toString().trim(), Integer.parseInt(this.editTextSelectedAge.getText().toString()));
+        DatabaseReference mRef =  database.getReference().child("Users").child(userId);
+        mRef.setValue(userModel);
+    }
 }

@@ -98,7 +98,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Create a new account ?"
-                    android:textSize="17sp"
+                    android:textSize="13sp"
                     android:textAlignment="gravity"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="#fff"
