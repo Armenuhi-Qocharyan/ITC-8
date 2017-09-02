@@ -105,7 +105,15 @@
                     android:gravity="center"
                     android:background="@android:color/transparent"/>
             </LinearLayout>
-
+            <ProgressBar
+                   android:id="@+id/progressBar_cyclic_login"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:minHeight="50dp"
+                   android:minWidth="50dp"
+                   android:theme = "@style/ProgressBar"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentTop="true" />
         </RelativeLayout>
     </ScrollView>
 

@@ -45,6 +45,7 @@ public class registerFragment extends Fragment{
     private EditText editTextUsername;
     private FirebaseDatabase database;
     private FirebaseUser user;
+    private ProgressBar progressBar;
     //private DatabaseReference mDatabase;
 
 
@@ -199,15 +200,29 @@ public class registerFragment extends Fragment{
         return view;
     }
 
+    public void onStart () {
+        super.onStart();
+        progressBar = getActivity().findViewById(R.id.progressBar_cyclic);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
     private void registerUser(View view) {
         String email = editTextEmailReg.getText().toString().trim();
         String pass = editTextPassReg.getText().toString().trim();
         String passConf = editTextConfPassReg.getText().toString().trim();
         String age = editTextSelectedAge.getText().toString().trim();
         String name = editTextUsername.getText().toString().trim();
+        String passPattern = "^(?=.*[0-9])(?=.*[a-z]).{6,}";
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if(TextUtils.isEmpty(email)) {
             editTextEmailReg.setError("Email is required");
+            return;
+        }
+
+
+        if(!email.matches(emailPattern)) {
+            editTextEmailReg.setError("Incorrect Email");
             return;
         }
 
@@ -234,17 +249,18 @@ public class registerFragment extends Fragment{
             editTextConfPassReg.setError("Passwords doesn't match");
             return;
         }
-        progressDialog.setMessage("Registering user...");
-        progressDialog.show();
 
+        if (!pass.matches(passPattern)) {
+            editTextConfPassReg.setError("Passwords doesn't match");
+        }
+        progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Toast.makeText(getActivity(),"Registered successfully", Toast.LENGTH_SHORT).show();
-                            progressDialog.cancel();
-                            // registerUserInfo();
+                            registerUserInfo();
                             Intent intent = new Intent(login,
                                     MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -252,8 +268,9 @@ public class registerFragment extends Fragment{
                             login.finish();
                         } else {
                             Toast.makeText(getActivity(),"Could not register. Please try again.", Toast.LENGTH_SHORT).show();
-                            progressDialog.cancel();
                         }
+                        progressBar.setVisibility(View.INVISIBLE);
+
                     }
                 });
     }

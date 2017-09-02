@@ -18,8 +18,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.security.ProviderInstaller;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,6 +40,8 @@ public class loginFragment extends Fragment {
     private EditText editTextEmail;
     private EditText editTextPass;
     private static final String Tag = "EmailPassword";
+    private ProgressBar progressBar;
+
     public loginFragment() {
     }
 
@@ -80,8 +84,20 @@ public class loginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        progressBar =  getActivity().findViewById(R.id.progressBar_cyclic_login);
+        progressBar.setVisibility(View.INVISIBLE);
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser);
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Intent intent = new Intent(login,
+                    MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+            login.finish();
+        }
     }
 
     private void signIn(String email, String password) {
@@ -95,6 +111,7 @@ public class loginFragment extends Fragment {
             return;
         }
         Log.d(Tag, "signIn:" + email);
+        progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -102,19 +119,14 @@ public class loginFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Log.d(Tag, "SignInWithEmail:success");
                             Toast.makeText(getActivity(),"Login successfully", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(login,
-                                    MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(intent);
-                            login.finish();
-                          //  FirebaseUser user = firebaseAuth.getCurrentUser();
-                            //updateUI(user);
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            updateUI(user);
                         } else {
                             Log.w(Tag, "SignInWithEmail:failure", task.getException());
                             Toast.makeText(getActivity(), "Authentication failed", Toast.LENGTH_SHORT).show();
-                          //  updateUI(null);
+                            updateUI(null);
                         }
-
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }
