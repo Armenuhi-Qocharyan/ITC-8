@@ -3,23 +3,23 @@ package com.instigatemobile.imessenger.profile;
 /**
  * Created by vachagan on 8/31/17.
  */
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.instigatemobile.imessenger.R;
 
-public class Profile  extends Fragment {
-    private ImageView  imageView;
+public class Profile extends Fragment {
+    private ImageView imageView;
     private ImageButton changeAvatar;
 
     @Override
@@ -38,7 +38,7 @@ public class Profile  extends Fragment {
         imageView.setImageDrawable(roundedImage);
         changeAvatar = (ImageButton) rootView.findViewById(R.id.changeAvatar);
 
-        changeAvatar.setOnClickListener( new View.OnClickListener() {
+        changeAvatar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -47,7 +47,6 @@ public class Profile  extends Fragment {
                 startActivity(intent);
             }
         });
-
 
 
         return rootView;

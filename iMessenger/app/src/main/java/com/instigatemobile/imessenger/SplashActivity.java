@@ -1,8 +1,8 @@
 package com.instigatemobile.imessenger;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class SplashActivity extends Activity {
     private static int SPLASH_TIME_OUT = 2500;
-    private TextView  textView;
+    private TextView textView;
     private ImageView imageView;
 
     @Override
@@ -24,8 +24,8 @@ public class SplashActivity extends Activity {
         performAnimationImage.setRepeatCount(1);
         performAnimationText.setRepeatCount(1);
 
-        imageView = (ImageView)findViewById(R.id.splashImageView);
-        textView = (TextView)findViewById(R.id.splashImageText);
+        imageView = (ImageView) findViewById(R.id.splashImageView);
+        textView = (TextView) findViewById(R.id.splashImageText);
         imageView.startAnimation(performAnimationImage);
         textView.startAnimation(performAnimationText);
         new Handler().postDelayed(new Runnable() {
@@ -36,7 +36,5 @@ public class SplashActivity extends Activity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
-
     }
-
 }

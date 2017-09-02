@@ -4,7 +4,6 @@ package com.instigatemobile.imessenger.profile;
  * Created by vrezh on 9/1/17.
  */
 
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;

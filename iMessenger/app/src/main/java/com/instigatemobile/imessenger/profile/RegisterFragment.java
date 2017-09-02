@@ -1,13 +1,10 @@
 package com.instigatemobile.imessenger.profile;
 
-
-import android.app.Activity;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
-import com.basgeekball.awesomevalidation.AwesomeValidation;
-import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.instigatemobile.imessenger.R;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
@@ -31,23 +25,29 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private ImageView chat_icon;
     private LinearLayout registerLayout;
     private FragmentManager fragmentManager;
-    private AwesomeValidation awesomeValidation;
 
     private LoginFragment loginFragment;
+    private ProgressBar bar;
     //private RegisterFragment registerFragment;
+
+    //private AwesomeValidation awesomeValidation;
+    //private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
+    //private static final String NAME_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";
+
     public RegisterFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_register, container, false);
-        register = (Button)view.findViewById(R.id.btnRegister);
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        bar = view.findViewById(R.id.progressBar);
+        register = (Button) view.findViewById(R.id.btnRegister);
         initViews();
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextName, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
+
+        //awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        //awesomeValidation.addValidation(getActivity(), R.id.editTextName, NAME_PATTERN, R.string.nameerror);
         //awesomeValidation.addValidation(getActivity(), R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.emailerror);
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextPassword, "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$", R.string.passworderror);
+        //awesomeValidation.addValidation(getActivity(), R.id.editTextPassword, PASSWORD_PATTERN, R.string.passworderror);
         setListeners();
         return view;
     }
@@ -66,19 +66,38 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private void setListeners() {
         register.setOnClickListener(this);
     }
+
     private void registerForm() {
-        //if (awesomeValidation.validate()) {
+        //if (this.awesomeValidation.validate()) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainer, loginFragment);
         fragmentTransaction.addToBackStack("Login");
         fragmentTransaction.commit();
         //}
     }
+
     @Override
     public void onClick(View view) {
+        new ProgressTask().execute();
         if (view == register) {
             registerForm();
         }
     }
 
+    private class ProgressTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            bar.setVisibility(View.VISIBLE);
+        }
+
+        protected void onPostExecute(Void result) {
+            bar.setVisibility(View.GONE);
+        }
+    }
 }
