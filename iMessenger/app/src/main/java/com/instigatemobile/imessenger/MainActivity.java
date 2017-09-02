@@ -1,5 +1,6 @@
 package com.instigatemobile.imessenger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -90,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_about:
                 sayText("about us");
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("ButtonID", id);
+                startActivity(intent);
                 return true;
             default:
                 sayText("other");
