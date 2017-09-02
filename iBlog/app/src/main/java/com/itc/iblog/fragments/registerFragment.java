@@ -244,7 +244,7 @@ public class registerFragment extends Fragment{
                         if(task.isSuccessful()) {
                             Toast.makeText(getActivity(),"Registered successfully", Toast.LENGTH_SHORT).show();
                             progressDialog.cancel();
-                            registerUserInfo();
+                            // registerUserInfo();
                             Intent intent = new Intent(login,
                                     MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
