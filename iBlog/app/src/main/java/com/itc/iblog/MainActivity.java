@@ -96,6 +96,10 @@ public class MainActivity extends AppCompatActivity
                         DatabaseReference ref = database.getReference("Posts");
                         ref.child(userName.getText().toString() + new Date().toString()).setValue(new DataModel(userName.getText().toString(),email.getText().toString(),R.drawable.user,0,"2 Sep 11:40",title,text,0,0));
                         Toast.makeText(MainActivity.this, " Your post successfuly added. ", Toast.LENGTH_SHORT).show();
+                        EditText postTitle = dialog.findViewById(R.id.add_post_title);
+                        postTitle.setText("");
+                        EditText postText = dialog.findViewById(R.id.add_post_text);
+                        postText.setText("");
                         dialog.dismiss();
                     }
                 });
