@@ -29,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             initAboutUsFragment();
         } else if(intValue == R.id.action_settings) {
             //initSettingsFragment();
-        } else {
+        } else if (intValue == R.id.action_logout) {
 
         }
     }

@@ -49,7 +49,6 @@ public class PersonAdapter  extends RecyclerView.Adapter<PersonAdapter.PersonVie
     public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.person_card, parent, false);
         PersonViewHolder personViewHolder = new PersonViewHolder(view);
-        //initializeData();
         return personViewHolder;
     }
 
