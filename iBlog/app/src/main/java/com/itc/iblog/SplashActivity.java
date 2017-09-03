@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 /**
@@ -23,7 +24,7 @@ import android.widget.ImageView;
         }
 
         Thread splashTread;
-        ImageView imageView;
+        TextView textView;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -39,9 +40,9 @@ import android.widget.ImageView;
             linearLayout.startAnimation(animation);
             animation = AnimationUtils.loadAnimation(this, R.anim.translate);
             animation.reset();
-            ImageView imageView = (ImageView) findViewById(R.id.splash_img);
-            imageView.clearAnimation();
-            imageView.startAnimation(animation);
+            textView = (TextView) findViewById(R.id.splash_text);
+            textView.clearAnimation();
+            textView.startAnimation(animation);
 
             splashTread = new Thread() {
                 @Override
