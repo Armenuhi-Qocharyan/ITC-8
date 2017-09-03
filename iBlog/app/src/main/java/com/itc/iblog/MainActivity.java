@@ -46,15 +46,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ImageView avatar;
+    private CircleImageView avatar;
     private DatabaseReference mDatabase;
     private TextView userName;
     private TextView email;
     private String avatarUrl;
-
+    private StorageReference storageRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,8 +141,12 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    /**
+     * Get user avatar image, username and email from firebase.
+     */
     private void setAvatar() {
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        this.storageRef = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = mDatabase.child("Users");
         dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent (new ValueEventListener() {
@@ -153,32 +159,32 @@ public class MainActivity extends AppCompatActivity
                 String url = (String) dataSnapshot.child("url").getValue();
                 MainActivity.this.userName.setText(user);
                 MainActivity.this.email.setText(userEmail);
-                MainActivity.this.avatarUrl = url;
+                avatarUrl = url;
+                // Get avatar image
+                StorageReference pathReference = MainActivity.this.storageRef.child(avatarUrl);
+                final long ONE_MEGABYTE = 1024 * 1024;
+                pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        if (bmp.equals(null)) {
+                            Toast.makeText(MainActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
+                        }
+                        MainActivity.this.avatar = (CircleImageView) findViewById(R.id.profile_avatar);
+                        avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        System.out.println("Image not found.");
+                    }
+                });
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {}
 
         });
-        StorageReference pathReference = storageRef.child("images/avatar.png");
-        final long ONE_MEGABYTE = 1024 * 1024;
-        pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
 
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                if (bmp.equals(null)) {
-                    Toast.makeText(MainActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
-                }
-                MainActivity.this.avatar = (ImageView) findViewById(R.id.imageView);
-                avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                System.out.println("Image not found.");
-            }
-        });
 
     }
 }
