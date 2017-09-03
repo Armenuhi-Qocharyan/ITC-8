@@ -12,6 +12,9 @@ public class DataModel {
     private int likeCount;
     private int commentCount;
 
+    public DataModel() {
+
+    }
     public DataModel(String name, String userSurname, int userImage, int postImage,String postTime, String postTitle, String postText, int likeCount, int commentCount) {
         this.userName = name;
         this.userSurname = userSurname;
