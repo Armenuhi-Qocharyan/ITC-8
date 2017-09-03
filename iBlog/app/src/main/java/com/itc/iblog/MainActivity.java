@@ -1,5 +1,8 @@
 package com.itc.iblog;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,12 +69,37 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setAvatar();
 
+
+        final Context context = this;
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog);
+
+        dialog.setTitle(" Add your post ");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(final View view) {
+                Button dialogButtonOk = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                dialogButtonOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String title = dialog.findViewById(R.id.add_post_title).toString();
+                        String text = dialog.findViewById(R.id.add_post_text).toString();
+                        dialog.dismiss();
+                    }
+                });
+                Button dialogButtonCencel = (Button) dialog.findViewById(R.id.dialogButtonCencel);
+                dialogButtonCencel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        EditText postTitle = dialog.findViewById(R.id.add_post_title);
+                        postTitle.setText("");
+                        EditText postText = dialog.findViewById(R.id.add_post_text);
+                        postText.setText("");
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
 
@@ -159,7 +188,7 @@ public class MainActivity extends AppCompatActivity
                 String url = (String) dataSnapshot.child("url").getValue();
                 MainActivity.this.userName.setText(user);
                 MainActivity.this.email.setText(userEmail);
-                avatarUrl = url;
+               // avatarUrl = url;
                 // Get avatar image
                 StorageReference pathReference = MainActivity.this.storageRef.child(avatarUrl);
                 final long ONE_MEGABYTE = 1024 * 1024;
@@ -186,5 +215,13 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

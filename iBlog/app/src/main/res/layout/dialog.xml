@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom = "2dp">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/add_post_title"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Post Title"
+            android:background="@drawable/dialog"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:height="70dp"/>
+
+        <EditText
+            android:id="@+id/add_post_text"
+            android:padding="10dp"
+            android:hint="Post Text"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:minLines="6"
+            android:gravity="top|left"
+            android:maxLines="10"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@drawable/dialog"
+            android:scrollbars="vertical"
+            android:layout_margin="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <Button
+                android:id="@+id/dialogButtonOK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Ok "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:backgroundTint="#78b6c2"
+                android:textColor="#fff"
+                android:layout_margin="5dp"
+                android:background="@drawable/dialog"/>
+            <Button
+                android:id="@+id/dialogButtonCencel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Cencel "
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:backgroundTint="#888"
+                android:textColor="#fff"
+                android:layout_margin="5dp"
+                android:background="@drawable/dialog"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>
+
