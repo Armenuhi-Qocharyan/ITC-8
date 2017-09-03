@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -46,6 +47,7 @@ import com.itc.iblog.models.DataModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -83,8 +85,16 @@ public class MainActivity extends AppCompatActivity
                 dialogButtonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String title = dialog.findViewById(R.id.add_post_title).toString();
-                        String text = dialog.findViewById(R.id.add_post_text).toString();
+                        EditText addTitle = dialog.findViewById(R.id.add_post_title);
+                        String title = addTitle.getText().toString();
+
+                        EditText addText = dialog.findViewById(R.id.add_post_title);
+                        String text = addTitle.getText().toString();
+
+                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference ref = database.getReference("Posts");
+                        ref.child(userName.getText().toString() + new Date().toString()).setValue(new DataModel(userName.getText().toString(),email.getText().toString(),R.drawable.user,0,"2 Sep 11:40",title,text,0,0));
+                        Toast.makeText(MainActivity.this, " Your post successfuly added. ", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
@@ -224,5 +234,9 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void addPost() {
+
     }
 }
