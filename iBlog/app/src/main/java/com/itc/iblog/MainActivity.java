@@ -190,31 +190,32 @@ public class MainActivity extends AppCompatActivity
                 MainActivity.this.email.setText(userEmail);
                // avatarUrl = url;
                 // Get avatar image
-                StorageReference pathReference = MainActivity.this.storageRef.child(avatarUrl);
-                final long ONE_MEGABYTE = 1024 * 1024;
-                pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        if (bmp.equals(null)) {
-                            Toast.makeText(MainActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
+                if (!avatarUrl.isEmpty()) {
+                    StorageReference pathReference = MainActivity.this.storageRef.child(avatarUrl);
+
+                    final long ONE_MEGABYTE = 1024 * 1024;
+                    pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            if (bmp.equals(null)) {
+                                Toast.makeText(MainActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
+                            }
+                            MainActivity.this.avatar = (CircleImageView) findViewById(R.id.profile_avatar);
+                            avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
                         }
-                        MainActivity.this.avatar = (CircleImageView) findViewById(R.id.profile_avatar);
-                        avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        System.out.println("Image not found.");
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            System.out.println("Image not found.");
+                        }
+                    });
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
 
         });
-
-
     }
     @Override
     public void onBackPressed() {

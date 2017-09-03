@@ -260,6 +260,7 @@ public class registerFragment extends Fragment{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Toast.makeText(getActivity(),"Registered successfully", Toast.LENGTH_SHORT).show();
+                            user = firebaseAuth.getCurrentUser();
                             registerUserInfo();
                             Intent intent = new Intent(login,
                                     MainActivity.class);
