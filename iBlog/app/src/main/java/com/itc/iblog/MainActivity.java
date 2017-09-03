@@ -42,6 +42,7 @@ import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.adapters.listAdapter;
 import com.itc.iblog.fragments.loginFragment;
 import com.itc.iblog.fragments.postsFragment;
+import com.itc.iblog.fragments.usersFragment;
 import com.itc.iblog.models.DataModel;
 
 import java.util.ArrayList;
@@ -111,12 +112,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        if(null == savedInstanceState) {
             Fragment fragment = new postsFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
             transaction.commit();
+        }
 
     }
 
@@ -157,6 +159,13 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.Favorite_post) {
 
+        } else if (id == R.id.Users) {
+            Fragment fragment = new usersFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.commit();
+
         } else if (id == R.id.About_us) {
 
         } else if (id == R.id.Language) {
@@ -190,7 +199,7 @@ public class MainActivity extends AppCompatActivity
                 MainActivity.this.email.setText(userEmail);
                 avatarUrl = url;
                 // Get avatar image
-                if (!avatarUrl.isEmpty()) {
+                if (avatarUrl != null) {
                     StorageReference pathReference = MainActivity.this.storageRef.child(avatarUrl);
 
                     final long ONE_MEGABYTE = 1024 * 1024;
