@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity
                 String url = (String) dataSnapshot.child("url").getValue();
                 MainActivity.this.userName.setText(user);
                 MainActivity.this.email.setText(userEmail);
-               // avatarUrl = url;
+                avatarUrl = url;
                 // Get avatar image
                 if (!avatarUrl.isEmpty()) {
                     StorageReference pathReference = MainActivity.this.storageRef.child(avatarUrl);

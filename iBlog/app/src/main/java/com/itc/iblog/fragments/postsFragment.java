@@ -32,11 +32,11 @@ public class postsFragment extends Fragment {
 
         List<DataModel> myDataset = new ArrayList<>();
         myDataset.add(new DataModel("Tomas","Smith",R.drawable.man,R.drawable.image,"2 Sep 11:40","Post title","It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. ",30,20));
-        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,R.drawable.background_img,"2 Sep 11:40","Post title","Post text",30,20));
-        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,0,"2 Sep 11:40","Post title","It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. ",30,20));
-        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,R.drawable.image,"2 Sep 11:40","","",30,20));
-        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,0,"2 Sep 11:40","Post title","",30,20));
-        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,0,"2 Sep 11:40","Post title","It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. ",30,20));
+        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,R.drawable.background_img,"2 Sep 11:40","Post title","Post text",10,13));
+        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,0,"2 Sep 11:40","Post title","It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. ",14,0));
+        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,R.drawable.image,"2 Sep 11:40","","",3,2));
+        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,0,"2 Sep 11:40","Post title","",100,80));
+        myDataset.add(new DataModel("Nelli","Melkonyan",R.drawable.user,0,"2 Sep 11:40","Post title","It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. ",124,130));
 
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
