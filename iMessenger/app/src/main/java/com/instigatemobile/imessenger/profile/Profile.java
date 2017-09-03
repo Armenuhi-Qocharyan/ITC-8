@@ -1,16 +1,12 @@
 package com.instigatemobile.imessenger.profile;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.CursorLoader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,10 +18,8 @@ import android.widget.LinearLayout;
 
 import com.instigatemobile.imessenger.R;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -54,7 +48,7 @@ public class Profile extends Fragment {
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View view) {
                 clickAction = 0;// clicked avatar ImageView
-                choseImageFromMedia();
+                choseImageFromMedia(RESULT_LOAD_IMAGE);
                 return true;
             }
         });
@@ -64,7 +58,7 @@ public class Profile extends Fragment {
             @Override
             public  void onClick(View view) {
                 clickAction = 1;// clicked change background button
-                choseImageFromMedia();
+                choseImageFromMedia(RESULT_LOAD_IMAGE);
             }
         });
         initProfileRecycleViewContent();
@@ -106,12 +100,12 @@ public class Profile extends Fragment {
 
     }
 
-    private void choseImageFromMedia() {
+    private void choseImageFromMedia(final int loadImage) {
         Intent intent = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-        startActivityForResult(intent, RESULT_LOAD_IMAGE);
+        startActivityForResult(intent, loadImage);
     }
 
     private void initProfileRecycleViewContent() {
@@ -126,7 +120,7 @@ public class Profile extends Fragment {
         contentList.add(new ProfileContent("Favorits", 10, R.mipmap.favorites));
         contentList.add(new ProfileContent("Contacts", 10, R.mipmap.contacts));
 
-        RVAdapter adapter = new RVAdapter(contentList);
+        ProfileContentAdapter adapter = new ProfileContentAdapter(contentList);
         recyclerView.setAdapter(adapter);
     }
 

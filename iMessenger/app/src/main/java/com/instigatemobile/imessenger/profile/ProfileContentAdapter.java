@@ -12,7 +12,7 @@ import com.instigatemobile.imessenger.R;
 import java.util.List;
 
 
-public class RVAdapter extends RecyclerView.Adapter <RVAdapter.ProfileViewHolder> {
+public class ProfileContentAdapter extends RecyclerView.Adapter <ProfileContentAdapter.ProfileViewHolder> {
     List<ProfileContent> profileContent;
 
 
@@ -31,7 +31,7 @@ public class RVAdapter extends RecyclerView.Adapter <RVAdapter.ProfileViewHolder
         }
     }
 
-    RVAdapter(List<ProfileContent> persons){
+    ProfileContentAdapter(List<ProfileContent> persons){
         this.profileContent = persons;
     }
 
