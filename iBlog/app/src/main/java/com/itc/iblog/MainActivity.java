@@ -1,5 +1,7 @@
 package com.itc.iblog;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +21,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.adapters.listAdapter;
 import com.itc.iblog.fragments.loginFragment;
 import com.itc.iblog.fragments.postsFragment;
@@ -34,12 +49,19 @@ import java.util.ListIterator;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ImageView avatar;
+    private DatabaseReference mDatabase;
+    private TextView userName;
+    private TextView email;
+    private String avatarUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setAvatar();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -116,5 +138,47 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void setAvatar() {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference dbRef = mDatabase.child("Users");
+        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent (new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userName = (TextView) findViewById(R.id.header_user_name);
+                email = (TextView) findViewById(R.id.header_user_email);
+                String user = (String) dataSnapshot.child("userName").getValue();
+                String userEmail = (String) dataSnapshot.child("email").getValue();
+                String url = (String) dataSnapshot.child("url").getValue();
+                MainActivity.this.userName.setText(user);
+                MainActivity.this.email.setText(userEmail);
+                MainActivity.this.avatarUrl = url;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+
+        });
+        StorageReference pathReference = storageRef.child("images/avatar.png");
+        final long ONE_MEGABYTE = 1024 * 1024;
+        pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                if (bmp.equals(null)) {
+                    Toast.makeText(MainActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
+                }
+                MainActivity.this.avatar = (ImageView) findViewById(R.id.imageView);
+                avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                System.out.println("Image not found.");
+            }
+        });
+
     }
 }
