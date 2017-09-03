@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(MainActivity.this, LoginRegisterActivity.class);
                         startActivity(intent);
-                        //MainActivity.this.finish();
+                        finish();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
     private void sayText(String str) {
         Toast.makeText(this, str, Toast.LENGTH_LONG).show();
     }

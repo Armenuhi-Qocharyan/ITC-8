@@ -39,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         FragmentManager fragmentManager =getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgmContainer, aboutUsFragment);
-        fragmentTransaction.addToBackStack("AboutUs");
+        //fragmentTransaction.addToBackStack("AboutUs");
         fragmentTransaction.commit();
     }
     private void initSettingsFragment() {
@@ -48,10 +48,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() == 1) {
-            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-            startActivity(intent);
-        }
+        System.out.println(fragmentManager.getBackStackEntryCount());
+        super.onBackPressed();
     }
 
 
