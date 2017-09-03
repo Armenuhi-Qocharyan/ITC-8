@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/person_card"
     card_view:cardCornerRadius="10dp"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"

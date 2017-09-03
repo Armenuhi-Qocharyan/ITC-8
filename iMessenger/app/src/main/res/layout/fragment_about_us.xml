@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:text="Instigate Mobile"
                 android:layout_marginTop="6dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="24dp"
                 android:fontFamily="@string/font_family"
                 android:textColor="@color/white"
                 android:textSize="32dp"/>
@@ -47,11 +47,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
+                android:drawableLeft="@drawable/call"
                 android:text="@string/contact"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:fontFamily="@string/font_family"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
@@ -60,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recycleViewPerson"
-            android:layout_margin="5dp">
+            android:layout_margin="3dp">
         </android.support.v7.widget.RecyclerView>
 
 
