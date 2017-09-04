@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,6 +18,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import static java.lang.Math.toIntExact;
+
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -46,10 +50,12 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView userName;
     private TextView email;
     private String avatarUrl;
+    private TextView userAge;
     private StorageReference storageRef;
     private FloatingActionButton floatingActionButton;
     private FirebaseUser user;
     private FirebaseDatabase database;
+    private Bitmap imageFromGallery;
 
 
     @Override
@@ -60,11 +66,12 @@ public class ProfileActivity extends AppCompatActivity {
         user =  FirebaseAuth.getInstance().getCurrentUser();
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_avatar);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setAvatar();
+        setImage("avatar");
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void setAvatar() {
+    private void setImage(final String img) {
         this.storageRef = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = mDatabase.child("Users");
@@ -83,12 +90,20 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userName = (TextView) findViewById(R.id.profile_username);
                 email = (TextView) findViewById(R.id.profile_email);
+                userAge = (TextView) findViewById(R.id.profile_age);
                 String user = (String) dataSnapshot.child("userName").getValue();
                 String userEmail = (String) dataSnapshot.child("email").getValue();
-                String url = (String) dataSnapshot.child("url").getValue();
+                Long age = (Long) dataSnapshot.child("age").getValue();
+                String url = "";
+                if (img.equals("avatar")) {
+                    url = (String) dataSnapshot.child("url").getValue();
+                } else if(img.equals("bg")) {
+                    url = (String) dataSnapshot.child("bg_url").getValue();
+                }
                 userName.setText(user);
                 email.setText(userEmail);
                 avatarUrl = url;
+                userAge.append(age.toString());
                 // Get avatar image
                 if (avatarUrl != null) {
                     StorageReference pathReference = storageRef.child(avatarUrl);
@@ -101,11 +116,15 @@ public class ProfileActivity extends AppCompatActivity {
                             if (bmp.equals(null)) {
                                 Toast.makeText(ProfileActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
                             }
-
-                            ProfileActivity.this.avatar = (FloatingActionButton) findViewById(R.id.floating_avatar);
-                            Bitmap bitmap = Bitmap.createScaledBitmap(bmp, 200, 200, false);
+                            Bitmap bitmap = Bitmap.createScaledBitmap(bmp, 260, 260, false);
                             Bitmap result = getCroppedBitmap(bitmap);
-                            avatar.setImageBitmap(result);
+                            if (img.equals("avatar")) {
+                                ProfileActivity.this.avatar = (FloatingActionButton) findViewById(R.id.floating_avatar);
+                                avatar.setImageBitmap(result);
+                            } else if(img.equals("bg")) {
+                                ImageView bgImage = (ImageView) findViewById(R.id.bg_image);
+                                bgImage.setImageBitmap(bmp);
+                            }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -142,6 +161,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
+        System.out.println(data);
         if (resultCode == RESULT_OK) {
             try {
                 final Uri imageUri = data.getData();
@@ -150,8 +170,11 @@ public class ProfileActivity extends AppCompatActivity {
 
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
                 putImageToStorage(selectedImage, filename);
                 changeUserInfo("images/" + filename);
+
+
                 this.avatar = (FloatingActionButton) findViewById(R.id.floating_avatar);
                 Bitmap bitmap = Bitmap.createScaledBitmap(selectedImage, 200, 200, false);
                 Bitmap result = getCroppedBitmap(bitmap);
