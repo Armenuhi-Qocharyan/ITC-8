@@ -15,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.instigatemobile.imessenger.MainActivity;
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.models.LoginRegister;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,11 +93,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (view == register) {
             goRegisterPage();
         } else if (view == login) {
-            //if (awesomeValidation.validate()) {
-            Intent redirect = new Intent(getActivity(), MainActivity.class);
-            getActivity().startActivity(redirect);
-            //}
+            LoginRegister loginRegister =  LoginRegister.initLoginRegister();
+            loginRegister.signIn(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
         }
+    }
+
+    public void redirect() {
+        //if (awesomeValidation.validate()) {
+        Intent redirect = new Intent(getActivity(), MainActivity.class);
+        getActivity().startActivity(redirect);
+        //}
     }
 
     private class ProgressTask extends AsyncTask<Void, Void, Void> {
@@ -113,5 +120,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(Void result) {
             bar.setVisibility(View.GONE);
         }
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

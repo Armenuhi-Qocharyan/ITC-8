@@ -17,13 +17,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.data.Profile;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+
 
 import static android.app.Activity.RESULT_OK;
 
-public class Profile extends Fragment {
+public class ProfileFragment extends Fragment {
+    private Profile profile;
     private View rootView;
     private ImageView imageView;
     private ImageButton changeAvatar;
@@ -34,6 +36,7 @@ public class Profile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        profile = new Profile("Aaaa", "a@mail.ru", "https://www.w3schools.com/css/paris.jpg" , "https://www.w3schools.com/css/paris.jpg", 5, 5);
     }
 
     @Override
@@ -116,11 +119,8 @@ public class Profile extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(llm);
 
-        ArrayList<ProfileContent> contentList  = new ArrayList<>();
-        contentList.add(new ProfileContent("Favorits", 10, R.mipmap.favorites));
-        contentList.add(new ProfileContent("Contacts", 10, R.mipmap.contacts));
 
-        ProfileContentAdapter adapter = new ProfileContentAdapter(contentList);
+        ProfileContentAdapter adapter = new ProfileContentAdapter(profile);
         recyclerView.setAdapter(adapter);
     }
 

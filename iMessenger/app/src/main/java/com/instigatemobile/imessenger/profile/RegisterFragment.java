@@ -13,8 +13,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.data.Profile;
+import com.instigatemobile.imessenger.models.DataBase;
+import com.instigatemobile.imessenger.models.LoginRegister;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
     private View view;
@@ -28,14 +32,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private LoginFragment loginFragment;
     private ProgressBar bar;
+    private Profile profile;
     //private RegisterFragment registerFragment;
 
     //private AwesomeValidation awesomeValidation;
     //private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
     //private static final String NAME_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";
 
-    public RegisterFragment() {
-    }
+    public RegisterFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,8 +71,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         register.setOnClickListener(this);
     }
 
-    private void registerForm() {
+    public void registerForm() {
         //if (this.awesomeValidation.validate()) {
+        initProfile();
+        DataBase dataBase = DataBase.initDataBase();
+        dataBase.insertProfile(profile);
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainer, loginFragment);
         fragmentTransaction.addToBackStack("Login");
@@ -80,7 +88,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         new ProgressTask().execute();
         if (view == register) {
-            registerForm();
+            LoginRegister loginRegister =  LoginRegister.initLoginRegister();
+            loginRegister.createAccount(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
         }
     }
 
@@ -100,4 +109,18 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             bar.setVisibility(View.GONE);
         }
     }
+
+    private void  initProfile() {
+        profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), " ", " ", 0, 0);
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    interface MyCallbackInterface {
+
+        void onDownloadFinished(String result);
+    }
+
 }

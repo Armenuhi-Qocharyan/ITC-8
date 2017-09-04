@@ -18,7 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.instigatemobile.imessenger.profile.Profile;
+import com.instigatemobile.imessenger.models.LoginRegister;
+import com.instigatemobile.imessenger.profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
 
+        Intent intent;
+
         switch (id) {
             case R.id.action_settings:
                 sayText("settings");
@@ -90,11 +93,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 sayText("logout");
-                pressedLogout();
+                LoginRegister loginRegister = LoginRegister.initLoginRegister();
+                intent = new Intent(MainActivity.this, LoginRegisterActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                loginRegister.signOut();
+                startActivity(intent);
+                //pressedLogout();
                 return true;
             case R.id.action_about:
                 sayText("about us");
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent = new Intent(MainActivity.this, SettingsActivity.class);
                 intent.putExtra("ButtonID", id);
                 startActivity(intent);
                 return true;
@@ -146,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     Contacts contact = new Contacts();
                     return contact;
                 case 1:
-                    Profile profile = new Profile();
+                    ProfileFragment profile = new ProfileFragment() ;
                     return profile;
                 case 2:
                     Favorites favorite = new Favorites();
