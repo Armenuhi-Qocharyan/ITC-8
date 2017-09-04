@@ -1,13 +1,11 @@
-package com.instigatemobile.imessenger.profile;
+package com.instigatemobile.imessenger.fragments;
 
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,12 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.instigatemobile.imessenger.Adapters.PersonAdapter;
-import com.instigatemobile.imessenger.Persons.Persons;
+import com.instigatemobile.imessenger.adapters.PersonAdapter;
 import com.instigatemobile.imessenger.R;
-
-import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class AboutUsFragment extends Fragment implements View.OnClickListener {
     private TextView name;

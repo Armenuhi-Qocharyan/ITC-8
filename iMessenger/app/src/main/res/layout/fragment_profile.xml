@@ -18,7 +18,6 @@
                 android:id="@+id/linerBackground"
                 android:layout_width="match_parent"
                 android:layout_height="276dp"
-                android:background="@drawable/profile_background"
                 android:orientation="vertical">
 
                 <!-- ProfileFragment avatar -->
@@ -28,7 +27,6 @@
                     android:layout_height="150dp"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/avatar"
                     android:layout_gravity="center"/>
 
                 <!-- ProfileFragment name -->

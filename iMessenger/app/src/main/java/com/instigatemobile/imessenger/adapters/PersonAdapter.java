@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.Adapters;
+package com.instigatemobile.imessenger.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.instigatemobile.imessenger.Persons.Persons;
+import com.instigatemobile.imessenger.models.Persons;
 import com.instigatemobile.imessenger.R;
 
 import java.util.ArrayList;

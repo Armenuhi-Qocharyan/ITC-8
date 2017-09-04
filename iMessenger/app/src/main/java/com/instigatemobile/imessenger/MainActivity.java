@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.instigatemobile.imessenger.models.LoginRegister;
-import com.instigatemobile.imessenger.profile.ProfileFragment;
+import com.instigatemobile.imessenger.controllers.LoginRegister;
+import com.instigatemobile.imessenger.fragments.ContactsFragment;
+import com.instigatemobile.imessenger.fragments.FavoritesFragment;
+import com.instigatemobile.imessenger.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -152,13 +154,13 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    Contacts contact = new Contacts();
+                    ContactsFragment contact = new ContactsFragment();
                     return contact;
                 case 1:
                     ProfileFragment profile = new ProfileFragment() ;
                     return profile;
                 case 2:
-                    Favorites favorite = new Favorites();
+                    FavoritesFragment favorite = new FavoritesFragment();
                     return favorite;
                 default:
                     return null;

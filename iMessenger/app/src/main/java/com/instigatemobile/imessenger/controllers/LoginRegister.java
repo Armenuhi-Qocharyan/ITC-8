@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.models;
+package com.instigatemobile.imessenger.controllers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -9,9 +9,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.instigatemobile.imessenger.LoginRegisterActivity;
-import com.instigatemobile.imessenger.profile.LoginFragment;
-import com.instigatemobile.imessenger.profile.RegisterFragment;
+import com.instigatemobile.imessenger.fragments.LoginFragment;
+import com.instigatemobile.imessenger.fragments.RegisterFragment;
 
 public class LoginRegister {
     private FirebaseAuth mAuth;

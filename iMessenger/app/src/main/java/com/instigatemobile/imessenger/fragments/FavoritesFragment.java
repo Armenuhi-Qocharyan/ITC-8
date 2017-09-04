@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger;
+package com.instigatemobile.imessenger.fragments;
 
 /**
  * Created by vachagan on 8/31/17.
@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Favorites extends Fragment {
+import com.instigatemobile.imessenger.R;
+
+public class FavoritesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

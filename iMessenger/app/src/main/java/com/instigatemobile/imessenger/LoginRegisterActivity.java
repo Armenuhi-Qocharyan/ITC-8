@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ProgressBar;
 
-import com.instigatemobile.imessenger.profile.LoginFragment;
+import com.instigatemobile.imessenger.fragments.LoginFragment;
 
 public class LoginRegisterActivity extends AppCompatActivity {
     private ProgressBar bar;

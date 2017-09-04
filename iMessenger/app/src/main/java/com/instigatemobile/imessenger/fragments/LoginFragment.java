@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.profile;
+package com.instigatemobile.imessenger.fragments;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.instigatemobile.imessenger.MainActivity;
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.models.LoginRegister;
+import com.instigatemobile.imessenger.controllers.LoginRegister;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

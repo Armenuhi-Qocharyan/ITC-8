@@ -6,10 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import com.instigatemobile.imessenger.profile.AboutUsFragment;
-import com.instigatemobile.imessenger.profile.LoginFragment;
+import com.instigatemobile.imessenger.fragments.AboutUsFragment;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
     //private RegisterFragment registerFragment;

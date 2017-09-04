@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.profile;
+package com.instigatemobile.imessenger.controllers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.profile;
+package com.instigatemobile.imessenger.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,9 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.data.Profile;
-import com.instigatemobile.imessenger.models.DataBase;
-import com.instigatemobile.imessenger.models.LoginRegister;
+import com.instigatemobile.imessenger.models.Profile;
+import com.instigatemobile.imessenger.controllers.DataBase;
+import com.instigatemobile.imessenger.controllers.LoginRegister;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
     private View view;

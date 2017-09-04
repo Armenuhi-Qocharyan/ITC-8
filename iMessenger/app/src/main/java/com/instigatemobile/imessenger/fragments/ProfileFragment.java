@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.profile;
+package com.instigatemobile.imessenger.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,8 +16,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.instigatemobile.imessenger.adapters.ProfileContentAdapter;
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.data.Profile;
+import com.instigatemobile.imessenger.controllers.RoundImage;
+import com.instigatemobile.imessenger.models.Profile;
 
 import java.io.FileNotFoundException;
 

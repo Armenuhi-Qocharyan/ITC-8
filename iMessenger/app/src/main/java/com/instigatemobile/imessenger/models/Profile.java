@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.data;
+package com.instigatemobile.imessenger.models;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

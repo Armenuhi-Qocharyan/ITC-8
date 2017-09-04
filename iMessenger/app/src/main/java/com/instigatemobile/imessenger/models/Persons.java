@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.Persons;
+package com.instigatemobile.imessenger.models;
 
 import android.net.Uri;
 

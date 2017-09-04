@@ -1,16 +1,10 @@
-package com.instigatemobile.imessenger.models;
-
-import android.print.PageRange;
+package com.instigatemobile.imessenger.controllers;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.instigatemobile.imessenger.data.Profile;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import com.instigatemobile.imessenger.models.Profile;
 
 public class DataBase {
     private DatabaseReference database;

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00CDFF</color>
+    <color name="colorPrimary">#1C2D49</color>
     <color name="colorPrimaryDark">#03497E</color>
     <color name="colorAccent">#00CDFF</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#dd656973</color>
     <color name="greyDark">#676767</color>
     <color name="transparent">#00000000</color>
+    <color name="mainActivityBg">#1B2A3D</color>
+    <color name="mycolor">#1C2D49</color>
 
 </resources>
