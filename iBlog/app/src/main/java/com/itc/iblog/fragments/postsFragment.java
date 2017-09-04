@@ -2,6 +2,7 @@ package com.itc.iblog.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.itc.iblog.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.listAdapter;
 import com.itc.iblog.models.DataModel;
@@ -51,9 +54,24 @@ public class postsFragment extends Fragment {
                     myDataset.add(post);
                 }
                 mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+                final FloatingActionButton fab = ((MainActivity) getActivity()).getFab();
 
-                // use this setting to improve performance if you know that changes
-                // in content do not change the layout size of the RecyclerView
+                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView mRecyclerView, int dx, int dy) {
+                        if (dy > 0 || dy<0 && fab.isShown()) {
+                            fab.hide();
+                        }
+                    }
+
+                    @Override
+                    public void onScrollStateChanged(RecyclerView mRecyclerView, int newState) {
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            fab.show();
+                        }
+                        super.onScrollStateChanged(mRecyclerView, newState);
+                    }
+                });
 
                 mRecyclerView.setHasFixedSize(true);
 
