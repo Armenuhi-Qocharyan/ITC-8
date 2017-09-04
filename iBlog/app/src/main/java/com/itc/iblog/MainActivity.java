@@ -73,12 +73,10 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setAvatar();
 
-
         final Context context = this;
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog);
-
         dialog.setTitle(" Add your post ");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,10 +166,15 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.My_profile) {
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.Posts) {
-
+            Fragment fragment = new postsFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.commit();
         } else if (id == R.id.Folowers) {
 
         } else if (id == R.id.Favorite_post) {
@@ -188,7 +191,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Language) {
 
         } else if (id == R.id.Log_out) {
-
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, LoginRegisterActivity.class)); //Go back to home page
+            finish();
         }
 
 
