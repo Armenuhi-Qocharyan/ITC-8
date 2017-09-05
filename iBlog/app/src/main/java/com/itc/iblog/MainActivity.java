@@ -13,7 +13,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity
     private TextView email;
     private String avatarUrl;
     private StorageReference storageRef;
-    public FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +73,49 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setAvatar();
 
+        final Context context = this;
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog);
+        dialog.setTitle(" Add your post ");
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Button dialogButtonOk = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                dialogButtonOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        EditText addTitle = dialog.findViewById(R.id.add_post_title);
+                        String title = addTitle.getText().toString();
 
+                        EditText addText = dialog.findViewById(R.id.add_post_title);
+                        String text = addTitle.getText().toString();
+
+                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference ref = database.getReference("Posts");
+                        ref.child(userName.getText().toString() + new Date().toString()).setValue(new DataModel(userName.getText().toString(),email.getText().toString(),R.drawable.user,0,"2 Sep 11:40",title,text,0,0));
+                        Toast.makeText(MainActivity.this, " Your post successfuly added. ", Toast.LENGTH_SHORT).show();
+                        EditText postTitle = dialog.findViewById(R.id.add_post_title);
+                        postTitle.setText("");
+                        EditText postText = dialog.findViewById(R.id.add_post_text);
+                        postText.setText("");
+                        dialog.dismiss();
+                    }
+                });
+                Button dialogButtonCencel = (Button) dialog.findViewById(R.id.dialogButtonCencel);
+                dialogButtonCencel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        EditText postTitle = dialog.findViewById(R.id.add_post_title);
+                        postTitle.setText("");
+                        EditText postText = dialog.findViewById(R.id.add_post_text);
+                        postText.setText("");
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -167,6 +207,7 @@ public class MainActivity extends AppCompatActivity
                     })
                     .setNegativeButton("No", null)
                     .show();
+
         }
 
 
@@ -232,9 +273,5 @@ public class MainActivity extends AppCompatActivity
 
     private void addPost() {
 
-    }
-
-    public FloatingActionButton getFab() {
-        return fab;
     }
 }

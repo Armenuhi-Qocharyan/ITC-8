@@ -54,25 +54,6 @@ public class postsFragment extends Fragment {
                     myDataset.add(post);
                 }
                 mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-                final FloatingActionButton fab = ((MainActivity) getActivity()).getFab();
-
-                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrolled(RecyclerView mRecyclerView, int dx, int dy) {
-                        if (dy > 0 || dy<0 && fab.isShown()) {
-                            fab.hide();
-                        }
-                    }
-
-                    @Override
-                    public void onScrollStateChanged(RecyclerView mRecyclerView, int newState) {
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            fab.show();
-                        }
-                        super.onScrollStateChanged(mRecyclerView, newState);
-                    }
-                });
-
                 mRecyclerView.setHasFixedSize(true);
 
                 // use a linear layout manager
