@@ -33,7 +33,6 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
              userSurname = (TextView) view.findViewById(R.id.user_surname);
              userImage = (ImageView) view.findViewById(R.id.user_image);
              postTime = (TextView) view.findViewById(R.id.post_time);
-             postImage = (ImageView) view.findViewById(R.id.post_image);
              postTitle = (TextView) view.findViewById(R.id.post_title);
              postText =  (TextView) view.findViewById(R.id.post_text);
              likeCount =  (TextView) view.findViewById(R.id.like_count);
@@ -62,14 +61,6 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
         holder.postTime.setText(post.getPostTime());
         holder.userImage.setImageResource(post.getUserImage());
         holder.postTitle.setText(post.getPostTitle());
-        holder.postText.setText(post.getPostText());
-        if (post.getPostImage() != 0) {
-            holder.postImage.setImageResource(post.getPostImage());
-            holder.postImage.setVisibility(View.VISIBLE);
-        } else {
-            holder.postImage.setVisibility(View.GONE);
-        }
-
         holder.likeCount.setText(post.getLikeCount() + "");
         holder.commentCount.setText(post.getCommentCount() + "");
     }

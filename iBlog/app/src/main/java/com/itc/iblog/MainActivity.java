@@ -6,16 +6,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -41,18 +48,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.itc.iblog.adapters.listAdapter;
 import com.itc.iblog.fragments.loginFragment;
 import com.itc.iblog.fragments.postsFragment;
 import com.itc.iblog.fragments.usersFragment;
 import com.itc.iblog.models.DataModel;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.atomic.AtomicReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -65,6 +82,10 @@ public class MainActivity extends AppCompatActivity
     private TextView email;
     private String avatarUrl;
     private StorageReference storageRef;
+    private String postId;
+    private Bitmap bitmap;
+    private ImageView imageView;
+    private Uri file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,12 +109,18 @@ public class MainActivity extends AppCompatActivity
                         EditText addTitle = dialog.findViewById(R.id.add_post_title);
                         String title = addTitle.getText().toString();
 
-                        EditText addText = dialog.findViewById(R.id.add_post_title);
-                        String text = addTitle.getText().toString();
+                        EditText addText = dialog.findViewById(R.id.add_post_text);
+                        String text = addText.getText().toString();
 
                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference ref = database.getReference("Posts");
-                        ref.child(userName.getText().toString() + new Date().toString()).setValue(new DataModel(userName.getText().toString(),email.getText().toString(),R.drawable.user,0,"2 Sep 11:40",title,text,0,0));
+                        postId = userName.getText().toString() + new Date().toString();
+                        ref.child(postId)
+                                .setValue(new DataModel(userName.getText().toString(),email.getText().toString(),
+                                        R.drawable.user,0, new Date().toString().substring(0,19),title,text,0,0));
+
+                        uploadImage();
+
                         Toast.makeText(MainActivity.this, " Your post successfuly added. ", Toast.LENGTH_SHORT).show();
                         EditText postTitle = dialog.findViewById(R.id.add_post_title);
                         postTitle.setText("");
@@ -113,6 +140,18 @@ public class MainActivity extends AppCompatActivity
                         dialog.dismiss();
                     }
                 });
+
+                Button addPostImage = (Button) dialog.findViewById(R.id.add_post_image);
+                addPostImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+                    }
+                });
+
                 dialog.show();
             }
         });
@@ -136,6 +175,20 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            file = data.getData();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -257,7 +310,26 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void addPost() {
-
+    private void uploadImage() {
+        if(file!=null)
+        {
+            FirebaseStorage storage=FirebaseStorage.getInstance();
+            StorageReference reference = storage.getReference();
+            StorageReference imagesRef = reference.child("Posts").child(postId).child("image");
+            UploadTask uploadTask = imagesRef.putFile(file);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MainActivity.this, "Error : "+e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(MainActivity.this, "Uploading Done!!!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(this, "file is null", Toast.LENGTH_SHORT).show();
+        }
     }
 }
