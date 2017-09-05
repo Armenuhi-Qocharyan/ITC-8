@@ -1,12 +1,16 @@
 package com.itc.iblog.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.itc.iblog.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.models.DataModel;
 
@@ -33,6 +37,7 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
              userSurname = (TextView) view.findViewById(R.id.user_surname);
              userImage = (ImageView) view.findViewById(R.id.user_image);
              postTime = (TextView) view.findViewById(R.id.post_time);
+             postImage = (ImageView) view.findViewById(R.id.post_image);
              postTitle = (TextView) view.findViewById(R.id.post_title);
              postText =  (TextView) view.findViewById(R.id.post_text);
              likeCount =  (TextView) view.findViewById(R.id.like_count);
@@ -61,6 +66,12 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
         holder.postTime.setText(post.getPostTime());
         holder.userImage.setImageResource(post.getUserImage());
         holder.postTitle.setText(post.getPostTitle());
+        holder.postText.setText(post.getPostText());
+
+        //holder.postImage.setImageBitmap(Bitmap.createScaledBitmap(post.getPostImage(), 500, 500, false));
+        //holder.postImage.setVisibility(View.VISIBLE);
+
+
         holder.likeCount.setText(post.getLikeCount() + "");
         holder.commentCount.setText(post.getCommentCount() + "");
     }

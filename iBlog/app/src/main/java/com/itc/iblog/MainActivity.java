@@ -73,6 +73,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity
     private Bitmap bitmap;
     private ImageView imageView;
     private Uri file;
+    public static int IMAGE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +99,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setAvatar();
-
         final Context context = this;
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final Dialog dialog = new Dialog(context);
@@ -124,6 +125,8 @@ public class MainActivity extends AppCompatActivity
                                         R.drawable.user,0, new Date().toString().substring(0,19),title,text,0,0));
 
                         uploadImage();
+                        Random r = new Random();
+                        IMAGE = r.nextInt(80 - 65) + 65;
 
                         Toast.makeText(MainActivity.this, " Your post successfuly added. ", Toast.LENGTH_SHORT).show();
                         EditText postTitle = dialog.findViewById(R.id.add_post_title);
@@ -147,12 +150,14 @@ public class MainActivity extends AppCompatActivity
 
                 Button addPostImage = (Button) dialog.findViewById(R.id.add_post_image);
                 addPostImage.setOnClickListener(new View.OnClickListener() {
+
+
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE);
                     }
                 });
 
@@ -183,7 +188,7 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             file = data.getData();
 
             try {
