@@ -5,8 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
+
 import android.os.Environment;
 import android.support.annotation.NonNull;
+
+import android.support.design.widget.FloatingActionButton;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import android.widget.ImageView;
+
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,8 +32,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import com.itc.iblog.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.listAdapter;
@@ -107,10 +115,6 @@ public class postsFragment extends Fragment {
                     myDataset.add(post);
                 }
                 mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-
-                // use this setting to improve performance if you know that changes
-                // in content do not change the layout size of the RecyclerView
-
                 mRecyclerView.setHasFixedSize(true);
 
                 // use a linear layout manager
@@ -135,3 +139,4 @@ public class postsFragment extends Fragment {
     }
 
 }
+
