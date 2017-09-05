@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
                         postId = userName.getText().toString() + new Date().toString();
                         ref.child(postId)
                                 .setValue(new DataModel(userName.getText().toString(),email.getText().toString(),
-                                        R.drawable.user,0, new Date().toString().substring(0,19),title,text,0,0));
+                                        R.drawable.user,postId, new Date().toString().substring(0,19),title,text,0,0));
 
                         uploadImage();
                         Random r = new Random();

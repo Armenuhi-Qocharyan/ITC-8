@@ -1,7 +1,9 @@
 package com.itc.iblog.adapters;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -9,7 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.models.DataModel;
@@ -59,7 +66,7 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         DataModel post = cardList.get(position);
         holder.userName.setText(post.getUserName());
         holder.userSurname.setText(post.getUserSurname());
@@ -68,9 +75,33 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
         holder.postTitle.setText(post.getPostTitle());
         holder.postText.setText(post.getPostText());
 
-        //holder.postImage.setImageBitmap(Bitmap.createScaledBitmap(post.getPostImage(), 500, 500, false));
-        //holder.postImage.setVisibility(View.VISIBLE);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
 
+        String path = post.getPostImagePath();
+        if (path != null) {
+            StorageReference pathReference = storageRef.child("Posts").child(post.getPostImagePath()).child("image");
+
+            final long ONE_MEGABYTE = 1024 * 1024;
+            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    if (bmp.equals(null)) {
+
+                    }
+
+                    holder.postImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, 500, 500, false));
+
+                    holder.postImage.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    System.out.println("Image not found.");
+                }
+            });
+        }
 
         holder.likeCount.setText(post.getLikeCount() + "");
         holder.commentCount.setText(post.getCommentCount() + "");

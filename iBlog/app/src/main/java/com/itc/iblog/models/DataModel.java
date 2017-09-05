@@ -6,7 +6,7 @@ public class DataModel {
     private String userSurname;
     private String postTime;
     private int userImage;
-    private int postImage;
+    private String postImagePath;
     private String postTitle;
     private String postText;
     private int likeCount;
@@ -15,11 +15,11 @@ public class DataModel {
     public DataModel() {
 
     }
-    public DataModel(String name, String userSurname, int userImage, int postImage,String postTime, String postTitle, String postText, int likeCount, int commentCount) {
+    public DataModel(String name, String userSurname, int userImage, String postImagePath,String postTime, String postTitle, String postText, int likeCount, int commentCount) {
         this.userName = name;
         this.userSurname = userSurname;
         this.userImage = userImage;
-        this.postImage = postImage;
+        this.postImagePath = postImagePath;
         this.postTitle = postTitle;
         this.postText = postText;
         this.likeCount = likeCount;
@@ -39,8 +39,8 @@ public class DataModel {
         return this.userImage;
     }
 
-    public int getPostImage() {
-        return this.postImage;
+    public String getPostImagePath() {
+        return this.postImagePath;
     }
 
     public String getPostTitle() {
@@ -58,6 +58,7 @@ public class DataModel {
     public int getCommentCount() {
         return commentCount;
     }
+
     public String getPostTime() {
         return this.postTime;
     }

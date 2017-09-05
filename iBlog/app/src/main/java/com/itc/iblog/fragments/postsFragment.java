@@ -75,41 +75,6 @@ public class postsFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     final DataModel post = messageSnapshot.getValue(DataModel.class);
-                    messageSnapshot.child("image").getValue();
-
-                    FirebaseStorage storage = FirebaseStorage.getInstance();
-                    // Create a storage reference from our app
-                    StorageReference storageRef = storage.getReference();
-
-                    StorageReference pathReference = storageRef.child("Posts").child(messageSnapshot.getKey()).child("image");
-
-
-                        final long ONE_MEGABYTE = 1024 * 1024;
-                        pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                            @Override
-                            public void onSuccess(byte[] bytes) {
-                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                if (bmp.equals(null)) {
-                                    Toast.makeText(getActivity(), "image not found.", Toast.LENGTH_SHORT).show();
-                                }
-                                ImageView postImage = (ImageView) view.findViewById(R.id.post_image);
-
-                                Display display = getActivity().getWindowManager().getDefaultDisplay();
-                                Point size = new Point();
-                                display.getSize(size);
-                                int width = size.x;
-
-                                //post.setPostImage(bmp);
-                                postImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, width - 50, 500, false));
-                                postImage.setVisibility(View.VISIBLE);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                System.out.println("Image not found.");
-                            }
-                        });
-
 
                     myDataset.add(post);
                 }
