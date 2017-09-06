@@ -9,26 +9,25 @@
     android:background="@drawable/background_img">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_weight="0.3"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        app:srcCompat="@drawable/instigate_logo" />
 
     <TextView
         android:layout_weight="0.1"
         android:layout_height="0dp"
         android:layout_width="wrap_content"
-        android:textSize="40dp"
+        android:textSize="16dp"
         android:fontFamily="sans-serif-medium"
         android:textStyle="bold"
-        android:text="iBLOG TEAM"
+        android:text=" +374 (60) 44 55 00"
         android:textColor="@color/colorWhite"
         android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/about_us_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
