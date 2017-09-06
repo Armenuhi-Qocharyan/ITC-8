@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/instigate_logo" />
 
     <TextView
-        android:layout_weight="0.1"
+        android:layout_weight="0.2"
         android:layout_height="0dp"
         android:layout_width="wrap_content"
         android:textSize="16dp"
@@ -28,8 +28,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/about_us_rv"
+        android:layout_weight="0.5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </LinearLayout>

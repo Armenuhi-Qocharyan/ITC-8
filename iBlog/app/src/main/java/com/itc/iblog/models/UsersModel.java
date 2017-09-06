@@ -17,6 +17,11 @@ public class UsersModel {
     public UsersModel() {
     }
 
+    public UsersModel(String userName, String url) {
+        this.userName = userName;
+        this.url = url;
+    }
+
     public UsersModel(String userName, String email, int age, String image) {
         this.age = age;
         this.userName = userName;
