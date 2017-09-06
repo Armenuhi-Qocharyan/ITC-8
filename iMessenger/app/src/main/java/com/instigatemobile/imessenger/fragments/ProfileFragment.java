@@ -1,11 +1,13 @@
 package com.instigatemobile.imessenger.fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +28,7 @@ import com.instigatemobile.imessenger.models.Profile;
 
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 
 import static android.app.Activity.RESULT_OK;
@@ -60,7 +63,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
             public void responseProfile(Profile prf) {
                 profile = prf;
                 storage = Storage.initStorage();
-                storage.downloadImageFromStorage(profile.getAvatar(), "background", callback);
+                storage.downloadImageFromStorage(profile.getBackground(), "background", callback);
                 storage.downloadImageFromStorage(profile.getAvatar(), "avatar", callback);
                 initProfileRecycleViewContent();
             }
@@ -112,15 +115,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
         changeBackground = (ImageButton) rootView.findViewById(R.id.changeBackground);
         background = (LinearLayout) rootView.findViewById(R.id.linerBackground);
 
-
-
         setListeners();
     }
 
     @Override
     public void onClick(View view) {
         if (view == changeBackground) {
-            clickAction = 0;// clicked avatar ImageView
+            clickAction = 0;// clicked change background button
             choseImageFromMedia(RESULT_LOAD_IMAGE);
         }
     }
@@ -128,7 +129,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     @Override
     public boolean onLongClick(View view) {
         if (view ==  imageView) {
-            clickAction = 1;// clicked change background button
+            clickAction = 1;// clicked avatar ImageView
             choseImageFromMedia(RESULT_LOAD_IMAGE);
         }
         return false;
@@ -144,21 +145,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
             Bitmap bitmap = null;
             try {
                 bitmap = BitmapFactory.decodeStream(this.getActivity().getContentResolver().openInputStream(selectedImage));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                String path = getRealPathFromURI(selectedImage);
+                InputStream stream = this.getActivity().getContentResolver().openInputStream(selectedImage);
 
-
-            }
-
-
-            if (clickAction == 0) {
-                storage.uploadImageToStorage(selectedImage, "avatar", callback);
+                if (clickAction == 1) {
+                    storage.uploadImageToStorage(stream, path, "avatar", callback);
 
                /* bitmap = quadraticImage(bitmap);
                 RoundImage roundedImage = new RoundImage(bitmap);
                 imageView.setImageDrawable(roundedImage);*/
-            } else if (clickAction == 0) {
-                storage.uploadImageToStorage(selectedImage, "background", callback);
+                } else if (clickAction == 0) {
+                    storage.uploadImageToStorage(stream, path, "background", callback);
 
                /* LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.linerBackground);
                 int sdk = android.os.Build.VERSION.SDK_INT;
@@ -167,10 +164,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
                 } else {
                     layout.setBackground(new BitmapDrawable(bitmap));
                 }*/
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+
+
             }
 
         }
 
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+
+        String thePath = "no-path-found";
+        String[] filePathColumn = {MediaStore.Images.Media.DISPLAY_NAME};
+        Cursor cursor = this.getActivity().getContentResolver().query(contentURI, filePathColumn, null, null, null);
+        if(cursor.moveToFirst()){
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            thePath = cursor.getString(columnIndex);
+        }
+        cursor.close();
+        return  thePath;
     }
 
     private void setListeners() {

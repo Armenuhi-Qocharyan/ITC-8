@@ -38,24 +38,24 @@ public class DataBase {
 
     public void changeProfileAvatar(String url) {
         FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-        database.child("users").child(user.getUid()).child("avatarURL").setValue(url);
+        database.child(user.getUid()).child("avatar").setValue(url);
     }
 
     public void changeProfileBackground(String url) {
         FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-        database.child("users").child(user.getUid()).child("backgroundURL").setValue(url);
+        database.child(user.getUid()).child("background").setValue(url);
     }
 
     public void getCurrentProfile(ProfileCallbackInterface profileCallback) {
         this.callback = profileCallback;
         FirebaseUser auth =  FirebaseAuth.getInstance().getCurrentUser();
-        System.out.println(auth.getUid());
         database.child(auth.getUid()).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
                         Profile profile = dataSnapshot.getValue(Profile.class);
+                        System.out.println(profile.getAvatar());
                         callback.responseProfile(profile);
                     }
                     @Override

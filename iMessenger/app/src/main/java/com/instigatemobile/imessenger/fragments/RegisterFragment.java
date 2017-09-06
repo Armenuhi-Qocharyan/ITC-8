@@ -111,7 +111,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     private void  initProfile() {
-        profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), " ", " ", 0, 0);
+        profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), "", "", 0, 0);
     }
 
     private void showMessage(String message) {

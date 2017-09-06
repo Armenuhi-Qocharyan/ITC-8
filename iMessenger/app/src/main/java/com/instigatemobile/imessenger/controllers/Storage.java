@@ -37,12 +37,10 @@ public class Storage {
         return storage;
     }
 
-    public void uploadImageToStorage(final Uri path, final String imageName, final ProfileCallbackInterface profileCallback) {
-        final String dbPath = "images/" + path.getLastPathSegment();
-        try {
-            StorageReference spaceRef = storageRef.child(dbPath);
+    public void uploadImageToStorage(InputStream stream, final String path, final String imageName, final ProfileCallbackInterface profileCallback) {
+        final String dbPath = "images/" + path;
 
-            InputStream stream = new FileInputStream(new File(path.getPath()));
+            StorageReference spaceRef = storageRef.child(dbPath);
             UploadTask uploadTask = spaceRef.putStream(stream);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -54,22 +52,18 @@ public class Storage {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    profileCallback.changeImage(dbPath, imageName);
 
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                    Bitmap bitmap = BitmapFactory.decodeFile(path.getPath(), options);
                     if (imageName.equals("avatar")) {
-                        profileCallback.setAvatar(bitmap);
+                        profileCallback.changeImage(dbPath, "avatar");
+                        downloadImageFromStorage(dbPath, "avatar", profileCallback);
                     } else if (imageName.equals("background")){
-                        profileCallback.setBackgroundAvatar(bitmap);
+                        profileCallback.changeImage(dbPath, "background");
+                        downloadImageFromStorage(dbPath, "background", profileCallback);
                     }
 
                 }
             });
-        } catch (FileNotFoundException exception) {
-            System.out.println(exception);
-        }
+
     }
 
     public void downloadImageFromStorage(String path, final String imageName, final ProfileCallbackInterface profileCallback) {
