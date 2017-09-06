@@ -35,17 +35,17 @@ public class LoginRegister {
         // -> registrationActivity.showProgressDialog();
         mRegisterFragment = registerFragment;
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(mRegisterFragment.getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            sendEmailVerification(mRegisterFragment.getActivity());
-                        } else {
-                            showMessage(mRegisterFragment.getActivity(), "Authentication failed.");
-                        }
-                            // -> registrationActivity.hideProgressDialog();
-                    }
-                });
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    sendEmailVerification(mRegisterFragment.getActivity());
+                } else {
+                    showMessage(mRegisterFragment.getActivity(), "Authentication failed.");
+                }
+                // -> registrationActivity.hideProgressDialog();
+            }
+        });
     }
 
 
@@ -68,19 +68,24 @@ public class LoginRegister {
 
     public void signIn(String email, String password, LoginFragment loginFragment) {
         // -> registrationActivity.validateForm();
-        // -> registrationActivity.showProgressDialog();
         mLoginFragment = loginFragment;
+        mLoginFragment.progressBarVisibility();
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(mLoginFragment.getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            mLoginFragment.redirect();
+                            if (user.isEmailVerified()) {
+                                mLoginFragment.redirect();
+                            } else {
+                                showMessage(mRegisterFragment.getActivity(), "Email verification failed");
+                            }
                         } else {
                             showMessage(mLoginFragment.getActivity(), "Authentication failed.");
                         }
-
+                        mLoginFragment.progressBarInvisibility();
                     }
                 });
     }

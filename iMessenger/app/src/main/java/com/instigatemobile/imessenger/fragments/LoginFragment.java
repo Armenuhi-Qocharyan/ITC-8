@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger.fragments;
+package  com.instigatemobile.imessenger.fragments;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -122,7 +122,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void showMessage(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+    public void progressBarVisibility() {
+        bar.setVisibility(ProgressBar.VISIBLE);
     }
+
+    public void progressBarInvisibility() {
+        bar.setVisibility(ProgressBar.INVISIBLE);
+    }
+
 }

@@ -45,7 +45,7 @@
 
                     <!-- Change background button -->
                     <ImageButton
-                        android:id="@+id/changeAvatar"
+                        android:id="@+id/changeBackground"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="left|bottom"

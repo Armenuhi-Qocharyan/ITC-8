@@ -16,59 +16,122 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.instigatemobile.imessenger.adapters.ProfileContentAdapter;
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.adapters.ProfileContentAdapter;
+import com.instigatemobile.imessenger.controllers.DataBase;
+import com.instigatemobile.imessenger.controllers.ProfileCallbackInterface;
 import com.instigatemobile.imessenger.controllers.RoundImage;
+import com.instigatemobile.imessenger.controllers.Storage;
 import com.instigatemobile.imessenger.models.Profile;
+
 
 import java.io.FileNotFoundException;
 
 
 import static android.app.Activity.RESULT_OK;
 
-public class ProfileFragment extends Fragment {
-    private Profile profile;
-    private View rootView;
-    private ImageView imageView;
-    private ImageButton changeAvatar;
+public class ProfileFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
     private final int RESULT_LOAD_IMAGE = 0;
     private int clickAction = 0;
+    private Profile profile;
+
+    private DataBase database;
+    private Storage storage;
+    private ProfileCallbackInterface callback;
+
+
+    private View rootView;
+    private ImageView imageView;
+    private ImageButton changeBackground;
+    private LinearLayout background;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        profile = new Profile("Aaaa", "a@mail.ru", "https://www.w3schools.com/css/paris.jpg" , "https://www.w3schools.com/css/paris.jpg", 5, 5);
+        initProfileCallbackMethods();
+        database = DataBase.initDataBase();
+        database.getCurrentProfile(callback);
+    }
+
+    private void initProfileCallbackMethods() {
+        callback = new ProfileCallbackInterface() {
+            @Override
+            public void responseProfile(Profile prf) {
+                profile = prf;
+                storage = Storage.initStorage();
+                storage.downloadImageFromStorage(profile.getAvatar(), "background", callback);
+                storage.downloadImageFromStorage(profile.getAvatar(), "avatar", callback);
+                initProfileRecycleViewContent();
+            }
+
+            @Override
+            public void changeImage(String path, String imageName) {
+                if (imageName == "avatar") {
+                    database.changeProfileAvatar(path);
+                } else if (imageName == "background") {
+                    database.changeProfileBackground(path);
+                }
+            }
+
+            @Override
+            public void setBackgroundAvatar(Bitmap imageBitmap) {
+                if (imageBitmap != null) {
+                    int sdk = android.os.Build.VERSION.SDK_INT;
+                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        background.setBackgroundDrawable(new BitmapDrawable(imageBitmap));
+                    } else {
+                        background.setBackground(new BitmapDrawable(imageBitmap));
+                    }
+                }
+            }
+
+            @Override
+            public void setAvatar(Bitmap imageBitmap) {
+                if (imageBitmap != null) {
+                    imageBitmap = quadraticImage(imageBitmap);
+                    RoundImage roundedImage = new RoundImage(imageBitmap);
+                    imageView.setImageDrawable(roundedImage);
+                } else {
+                    imageView.setImageResource(R.drawable.avatar1);
+
+                }
+            }
+        };
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
-        RoundImage roundedImage = new RoundImage(bm);
-
-        imageView = (ImageView) rootView.findViewById(R.id.avatar);
-        imageView.setImageDrawable(roundedImage);
-        imageView.setOnLongClickListener(new View.OnLongClickListener() {
-            public boolean onLongClick(View view) {
-                clickAction = 0;// clicked avatar ImageView
-                choseImageFromMedia(RESULT_LOAD_IMAGE);
-                return true;
-            }
-        });
-
-        changeAvatar = (ImageButton) rootView.findViewById(R.id.changeAvatar);
-        changeAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public  void onClick(View view) {
-                clickAction = 1;// clicked change background button
-                choseImageFromMedia(RESULT_LOAD_IMAGE);
-            }
-        });
-        initProfileRecycleViewContent();
-
+        initView();
         return rootView;
+    }
+
+    private  void initView() {
+        imageView = (ImageView) rootView.findViewById(R.id.avatar);
+        changeBackground = (ImageButton) rootView.findViewById(R.id.changeBackground);
+        background = (LinearLayout) rootView.findViewById(R.id.linerBackground);
+
+
+
+        setListeners();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == changeBackground) {
+            clickAction = 0;// clicked avatar ImageView
+            choseImageFromMedia(RESULT_LOAD_IMAGE);
+        }
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        if (view ==  imageView) {
+            clickAction = 1;// clicked change background button
+            choseImageFromMedia(RESULT_LOAD_IMAGE);
+        }
+        return false;
     }
 
     @Override
@@ -83,27 +146,38 @@ public class ProfileFragment extends Fragment {
                 bitmap = BitmapFactory.decodeStream(this.getActivity().getContentResolver().openInputStream(selectedImage));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+
+
             }
 
 
             if (clickAction == 0) {
-                bitmap = quadraticImage(bitmap);
-                Bitmap quadratic = bitmap;
+                storage.uploadImageToStorage(selectedImage, "avatar", callback);
+
+               /* bitmap = quadraticImage(bitmap);
                 RoundImage roundedImage = new RoundImage(bitmap);
-                imageView.setImageDrawable(roundedImage);
-            } else {
-                LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.linerBackground);
+                imageView.setImageDrawable(roundedImage);*/
+            } else if (clickAction == 0) {
+                storage.uploadImageToStorage(selectedImage, "background", callback);
+
+               /* LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.linerBackground);
                 int sdk = android.os.Build.VERSION.SDK_INT;
                 if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                     layout.setBackgroundDrawable(new BitmapDrawable(bitmap));
                 } else {
                     layout.setBackground(new BitmapDrawable(bitmap));
-                }
+                }*/
             }
 
         }
 
     }
+
+    private void setListeners() {
+        imageView.setOnLongClickListener(this);
+        changeBackground.setOnClickListener(this);
+    }
+
 
     private void choseImageFromMedia(final int loadImage) {
         Intent intent = new Intent(
@@ -147,6 +221,22 @@ public class ProfileFragment extends Fragment {
         }
         return bitmap;
     }
+/*
+    private void setBackgoundAvatar(int imageResourcesId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageResourcesId);
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            background.setBackgroundDrawable(new BitmapDrawable(bitmap));
+        } else {
+            background.setBackground(new BitmapDrawable(bitmap));
+        }
+    }
 
+    private void setAvatar(int imageResourcesId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageResourcesId);
+        bitmap = quadraticImage(bitmap);
+        RoundImage roundedImage = new RoundImage(bitmap);
+        imageView.setImageDrawable(roundedImage);
+    }*/
 
 }

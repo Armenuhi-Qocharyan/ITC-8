@@ -9,6 +9,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.instigatemobile.imessenger.controllers.LoginRegister;
+
 public class SplashActivity extends Activity {
     private static int SPLASH_TIME_OUT = 2500;
     private TextView textView;
@@ -31,7 +33,7 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                Intent i = new Intent(SplashActivity.this, LoginRegisterActivity.class);
                 startActivity(i);
                 finish();
             }
