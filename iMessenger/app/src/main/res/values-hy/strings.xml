@@ -37,4 +37,8 @@
 
     <!--Phone number to about us fragment-->
     <string name="contact">+374-98-89-87-95</string>
+    <string name="instigate_mobile">Ինստիգեյթ Մոբայլ</string>
+
+    <string name="forgote_password">Մոռացել եք գաղտնաբառը ՞</string>
+
 </resources>

@@ -37,6 +37,10 @@
 
     <!--Phone number to about us fragment-->
     <string name="contact">+374-98-89-87-95</string>
+    <string name="instigate_mobile">Instigate Mobile</string>
+
+    <string name="forgote_password">Forgot Password ?</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

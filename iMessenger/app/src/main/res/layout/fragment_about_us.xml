@@ -21,17 +21,17 @@
                 android:id="@+id/logof"
                 android:layout_gravity="center"
                 android:layout_centerVertical="true"
-                android:layout_width="100dp"
+                android:layout_width="300dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
-                android:src="@drawable/chat_icon"/>
+                android:src="@drawable/instigate_mobile_logo"/>
             <TextView
                 android:id="@+id/instigateNamef"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Instigate Mobile"
+                android:text="@string/instigate_mobile"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="24dp"
                 android:fontFamily="@string/font_family"
