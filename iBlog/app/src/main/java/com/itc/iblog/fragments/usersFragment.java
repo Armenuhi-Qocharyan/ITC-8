@@ -55,6 +55,5 @@ public class usersFragment extends Fragment {
         mMyAdapter = new UserAdapter(mQuery, mAdapterItems, mAdapterKeys);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(mMyAdapter);
-
     }
 }

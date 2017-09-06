@@ -11,15 +11,16 @@ public class UsersModel {
     public String userName;
     public String email;
     public String url;
-
+    public int imageId;
 
     //required default constructor
     public UsersModel() {
     }
 
-    public UsersModel(String userName, String url) {
+    public UsersModel(String userName, int imageId, String email) {
         this.userName = userName;
-        this.url = url;
+        this.imageId = imageId;
+        this.email = email;
     }
 
     public UsersModel(String userName, String email, int age, String image) {

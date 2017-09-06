@@ -18,11 +18,13 @@ public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ViewHold
     ArrayList<UsersModel> developers;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewName;
-        ImageView imageView;
+        private final TextView textViewEmail;
+        private final TextView textViewName;
+        private final ImageView imageView;
         public ViewHolder(View view) {
             super(view);
             textViewName = (TextView) view.findViewById(R.id.text_view_name);
+            textViewEmail = (TextView) view.findViewById(R.id.text_view_email);
             imageView = (ImageView) view.findViewById(R.id.user_image);
         }
     }
@@ -35,21 +37,18 @@ public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ViewHold
     public AboutUsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.about_us_row, parent, false);
-
         return new AboutUsAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textViewName.setText(developers.get(position).userName);
-        Context context = holder.imageView.getContext();
-        int id = context.getResources().getIdentifier(developers.get(position).url, "drawable", context.getPackageName());
-        holder.imageView.setImageResource(id);
+        holder.textViewEmail.setText(developers.get(position).email);
+        holder.imageView.setImageResource(developers.get(position).imageId);
     }
 
     @Override
     public int getItemCount() {
         return developers.size();
     }
-
 }
