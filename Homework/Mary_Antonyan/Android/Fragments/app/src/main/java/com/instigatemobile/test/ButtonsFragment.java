@@ -1,5 +1,6 @@
 package com.instigatemobile.test;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-/**
- * Created by student on 9/6/17.
- */
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 public class ButtonsFragment extends Fragment implements View.OnClickListener {
     private View view;
@@ -46,14 +45,22 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     private void goA() {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.placeholder, aFragment);
+        if (this.getResources().getConfiguration().orientation == ORIENTATION_PORTRAIT) {
+            fragmentTransaction.replace(R.id.placeholder, aFragment);
+        } else {
+            fragmentTransaction.replace(R.id.right_placeholder, aFragment);
+        }
         fragmentTransaction.addToBackStack("Buttons");
         fragmentTransaction.commit();
     }
 
     private void goB() {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.placeholder, bFragment);
+        if (this.getResources().getConfiguration().orientation == ORIENTATION_PORTRAIT) {
+            fragmentTransaction.replace(R.id.placeholder, bFragment);
+        } else {
+            fragmentTransaction.replace(R.id.right_placeholder, bFragment);
+        }
         fragmentTransaction.addToBackStack("Buttons");
         fragmentTransaction.commit();
     }

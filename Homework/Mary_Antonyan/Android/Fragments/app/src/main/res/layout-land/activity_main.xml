@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     tools:context="com.instigatemobile.test.MainActivity">
 
+
     <FrameLayout
         android:id="@+id/placeholder"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5" />
+    <FrameLayout
+        android:id="@+id/right_placeholder" />
 
 </android.support.constraint.ConstraintLayout>
