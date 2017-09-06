@@ -54,6 +54,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.itc.iblog.adapters.listAdapter;
+import com.itc.iblog.fragments.AboutUsFragment;
 import com.itc.iblog.fragments.loginFragment;
 import com.itc.iblog.fragments.postsFragment;
 import com.itc.iblog.fragments.usersFragment;
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Button dialogButtonOk = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                Button dialogButtonOk = dialog.findViewById(R.id.dialogButtonOK);
                 dialogButtonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity
                         dialog.dismiss();
                     }
                 });
-                Button dialogButtonCencel = (Button) dialog.findViewById(R.id.dialogButtonCencel);
+                Button dialogButtonCencel = dialog.findViewById(R.id.dialogButtonCencel);
                 dialogButtonCencel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
-                Button addPostImage = (Button) dialog.findViewById(R.id.add_post_image);
+                Button addPostImage = dialog.findViewById(R.id.add_post_image);
                 addPostImage.setOnClickListener(new View.OnClickListener() {
 
 
@@ -249,6 +250,11 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         } else if (id == R.id.About_us) {
+            Fragment fragment = new AboutUsFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.commit();
 
         } else if (id == R.id.Language) {
 

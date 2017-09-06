@@ -1,7 +1,5 @@
 package com.itc.iblog.adapters;
 
-
-import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,17 +15,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.itc.iblog.R;
-import com.itc.iblog.models.UserModel;
 import com.itc.iblog.models.UsersModel;
 
 import java.util.ArrayList;
-
-import static com.itc.iblog.R.id.image;
-import static com.itc.iblog.R.id.imageView;
-import static com.itc.iblog.R.id.parent;
 
 public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder, UsersModel> {
 

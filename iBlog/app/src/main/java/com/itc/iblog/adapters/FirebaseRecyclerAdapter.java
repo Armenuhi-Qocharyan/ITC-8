@@ -9,7 +9,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
-import com.itc.iblog.models.UsersModel;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
