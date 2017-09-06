@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">iBlog</string>
 
@@ -7,14 +8,15 @@
     <string name="userEmail">Email</string>
     <string name="action_settings">Settings</string>
 
-    <string name="my_profile">My Profile</string>
-    <string name="users">Users</string>
-    <string name="folowers">Followers</string>
-    <string name="posts">Posts</string>
-    <string name="favorite_posts">Favorite Posts</string>
-    <string name="About_us">About Us</string>
-    <string name="language">Language</string>
-    <string name="log_out">Log Out</string>
+    <string name="my_profile">Անձնական էջ
+    </string>
+    <string name="users">Օգտատերեր</string>
+    <string name="folowers">Հետևորդներ</string>
+    <string name="posts">Հրապարակումներ</string>
+    <string name="favorite_posts">Սիրելի գրառումներ</string>
+    <string name="About_us">Մեր մասին</string>
+    <string name="language">Լեզու</string>
+    <string name="log_out">Դուրս գալ</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

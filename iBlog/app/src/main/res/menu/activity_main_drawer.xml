@@ -5,35 +5,35 @@
         <item
             android:id="@+id/My_profile"
             android:icon="@drawable/my_profile"
-            android:title="My profile" />
+            android:title="@string/my_profile" />
         <item
             android:id="@+id/Folowers"
             android:icon="@drawable/users"
-            android:title="Folowers" />
+            android:title="@string/folowers" />
         <item
             android:id="@+id/Posts"
             android:icon="@drawable/posts"
-            android:title="Posts" />
+            android:title="@string/posts" />
         <item
             android:id="@+id/Favorite_post"
             android:icon="@drawable/favorite"
-            android:title="Favorite posts" />
+            android:title="@string/favorite_posts" />
         <item
             android:id="@+id/Users"
             android:icon="@drawable/users"
-            android:title="Users" />
+            android:title="@string/users" />
         <item
             android:id="@+id/About_us"
             android:icon="@drawable/about_us"
-            android:title="About us" />
+            android:title="@string/About_us" />
         <item
             android:id="@+id/Language"
             android:icon="@drawable/language"
-            android:title="Languge" />
+            android:title="@string/language" />
         <item
             android:id="@+id/Log_out"
             android:icon="@drawable/log_out"
-            android:title="Log out" />
+            android:title="@string/log_out" />
     </group>
 
 
