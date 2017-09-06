@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">iMessenger</string>
+    <string name="action_settings">Կարգավորումներ</string>
+    <string name="splash_title">iMessenger</string>
+    <string name="splash_slogan">We build smiles...</string>
+    <string name="font_family">monospace</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Էլ․ հասցե</string>
+    <string name="prompt_password">Գաղտնաբառ</string>
+    <string name="hint_email">Էլ․ հասցե</string>
+    <string name="hint_password">Գաղտնաբառ</string>
+    <string name="action_sign_in">Մուտք</string>
+    <string name="action_sign_up_question">Դեռ գրանցվա՞ծ չես։ </string>
+    <string name="action_sign_up_suggestion">Միացի՛ր մեզ։</string>
+
+    <!-- Strings related to validation -->
+    <string name="nameerror">Մուտքագրեք վավեր անուն</string>
+    <string name="emailerror">Մուտքագրեք վավեր էլ․ հասցե</string>
+    <string name="passworderror">Մուտքագրեք գաղտնաբառը</string>
+
+    <!-- Strings related to register -->
+    <string name="hint_name">Անուն</string>
+    <string name="action_sign_up">Գրանցվել</string>
+
+    <!-- Strings related to menu -->
+    <string name="action_language">Լեզու</string>
+    <string name="action_logout">Ելք</string>
+    <string name="action_about">Մեր մասին</string>
+    <string name="search_title">Որոնում</string>
+
+    <!-- Strings related to main -->
+    <string name="section_contacts">Կոնտակտներ</string>
+    <string name="section_profile">Իմ էջը</string>
+    <string name="section_favorites">Ֆավորիտներ</string>
+
+    <!--Phone number to about us fragment-->
+    <string name="contact">+374-98-89-87-95</string>
+</resources>

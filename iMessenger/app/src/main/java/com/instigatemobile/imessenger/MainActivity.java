@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     public void pressedLogout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to exit?")
