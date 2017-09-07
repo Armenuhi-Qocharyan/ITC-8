@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.adapters.ProfileContentAdapter;
@@ -47,6 +48,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     private ImageView imageView;
     private ImageButton changeBackground;
     private LinearLayout background;
+    private TextView name;
 
 
     @Override
@@ -65,6 +67,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
                 storage = Storage.initStorage();
                 storage.downloadImageFromStorage(profile.getBackground(), "background", callback);
                 storage.downloadImageFromStorage(profile.getAvatar(), "avatar", callback);
+                name.setText(profile.getName());
                 initProfileRecycleViewContent();
             }
 
@@ -114,7 +117,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
         imageView = (ImageView) rootView.findViewById(R.id.avatar);
         changeBackground = (ImageButton) rootView.findViewById(R.id.changeBackground);
         background = (LinearLayout) rootView.findViewById(R.id.linerBackground);
-
+        name = (TextView) rootView.findViewById(R.id.profile_name);
         setListeners();
     }
 

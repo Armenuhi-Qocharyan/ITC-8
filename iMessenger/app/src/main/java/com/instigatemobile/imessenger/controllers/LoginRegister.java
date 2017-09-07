@@ -31,8 +31,6 @@ public class LoginRegister {
     }
 
     public void createAccount(String email, String password, RegisterFragment registerFragment) {
-        // -> registrationActivity.validateForm();
-        // -> registrationActivity.showProgressDialog();
         mRegisterFragment = registerFragment;
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(mRegisterFragment.getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
@@ -43,7 +41,6 @@ public class LoginRegister {
                 } else {
                     showMessage(mRegisterFragment.getActivity(), "Authentication failed.");
                 }
-                // -> registrationActivity.hideProgressDialog();
             }
         });
     }
@@ -67,7 +64,6 @@ public class LoginRegister {
 
 
     public void signIn(String email, String password, LoginFragment loginFragment) {
-        // -> registrationActivity.validateForm();
         mLoginFragment = loginFragment;
         mLoginFragment.progressBarVisibility();
 

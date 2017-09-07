@@ -31,11 +31,11 @@
 
                 <!-- ProfileFragment name -->
                 <TextView
+                    android:id="@+id/profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@string/font_family"
-                    android:text="AAaaa AAaaaaaaa"
                     android:textColor="@color/greyDark"/>
 
                 <RelativeLayout

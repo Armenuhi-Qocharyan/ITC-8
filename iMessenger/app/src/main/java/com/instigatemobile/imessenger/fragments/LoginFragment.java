@@ -121,7 +121,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     public void redirect() {
         //if (awesomeValidation.validate()) {
-        Intent redirect = new Intent(getActivity(), MainActivity.class);
+        Intent redirect = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+        getActivity().finish();
         getActivity().startActivity(redirect);
         //}
     }
