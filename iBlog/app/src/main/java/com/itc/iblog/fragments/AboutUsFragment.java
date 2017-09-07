@@ -39,6 +39,7 @@ public class AboutUsFragment extends android.support.v4.app.Fragment {
 
     private void handleInstanceState(Bundle savedInstanceState) {
         mAdapterItems = new ArrayList<UsersModel>();
+        mAdapterItems.add(new UsersModel("Smbat Sargsyan", R.drawable.developer_smbat_s, "smbat_sargsyan_im@gmail.com"));
         mAdapterItems.add(new UsersModel("Nelli Melkonyan", R.drawable.developer_nelli, "nelli.melkonyan.im@gmail.com"));
         mAdapterItems.add(new UsersModel("Khachik Ghazaryan", R.drawable.user, "khachik.ghazaryan.im@gmail.com"));
         mAdapterItems.add(new UsersModel("Ruben Ghalayan", R.drawable.developer_ruben, "ruben.ghalayan.im@gmail.com"));
