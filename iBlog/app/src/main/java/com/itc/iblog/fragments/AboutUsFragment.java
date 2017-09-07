@@ -1,5 +1,7 @@
 package com.itc.iblog.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +14,6 @@ import com.itc.iblog.models.UsersModel;
 
 import java.util.ArrayList;
 
-/**
- * Created by student on 9/4/17.
- */
 
 public class AboutUsFragment extends android.support.v4.app.Fragment {
     private AboutUsAdapter mMyAdapter;
@@ -25,7 +24,16 @@ public class AboutUsFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about_us, container, false);
         handleInstanceState(savedInstanceState);
+        view.findViewById(R.id.itc_tel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:+37460445500"));
+                startActivity(intent);
+            }
+        });
         setupRecyclerview(view);
+
         return view;
     }
 
