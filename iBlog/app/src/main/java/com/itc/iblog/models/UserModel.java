@@ -13,7 +13,10 @@ public class UserModel {
     public String userName;
     public String email;
     public String url;
+    public HashMap<String, Boolean> followers;
+    public HashMap<String, Boolean> followings;
     private String UID;
+
     //required default constructor
 
     public UserModel() {
@@ -33,6 +36,15 @@ public class UserModel {
         this.url = url;
     }
 
+    public UserModel(String userName, String email, int age, String url, HashMap<String, Boolean> followers, HashMap<String, Boolean> followings) {
+        this.age = age;
+        this.userName = userName;
+        this.email = email;
+        this.url = url;
+        this.followers = followers;
+        this.followings = followings;
+    };
+
     public int getAge() {
         return age;
     }
@@ -50,4 +62,9 @@ public class UserModel {
     public void setUID (String UID) { this.UID = UID; }
 
     public String getUID() { return UID; }
+
+    public HashMap getFollowers() { return  followers; }
+
+    public HashMap getFollowings() { return followings; }
+
 }

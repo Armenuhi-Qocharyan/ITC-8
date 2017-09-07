@@ -44,6 +44,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         private ImageView follow;
 
 
+
         public ViewHolder(View view) {
             super(view);
             textViewName = view.findViewById(R.id.textview_name);
@@ -71,8 +72,15 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         final UserModel item = getItem(position);
         String key = getKeys().get(position);
         item.setUID(key);
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         holder.textViewAge.setText(String.valueOf(item.getAge()) + " years old");
-        holder.follow.setImageResource(R.drawable.heart);
+        if (item.followings == null) {
+            item.followings = new HashMap<>();
+        }
+        if (!item.getFollowings().containsKey(userId)) {
+            holder.follow.setImageResource(R.drawable.heart);
+        }
+
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         if (item.getUrl() != null) {
             firebaseStorage.getReference().child(item.getUrl()).getDownloadUrl().addOnSuccessListener
@@ -87,7 +95,6 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
                 public void onFailure(@NonNull Exception exception) {
                     // Handle any errors
                 }
-
             });
         } else {
             holder.imageView.setImageResource(R.drawable.user);
@@ -105,7 +112,6 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
 
     private void addFollower(final UserModel item, final ImageView follow) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -114,6 +120,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
                     ).setValue(true);
                     mDatabase.child("Users").child(item.getUID()).child("following").child
                             (userId).setValue(true);
+                    item.followings.put(userId,true);
                     follow.setImageResource(0);
             }
 
