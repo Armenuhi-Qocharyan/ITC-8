@@ -13,6 +13,7 @@ public class UserModel {
     public String userName;
     public String email;
     public String url;
+    public String bgUrl;
     public HashMap<String, Boolean> followers;
     public HashMap<String, Boolean> followings;
     private String UID;
@@ -27,6 +28,7 @@ public class UserModel {
         this.userName = userName;
         this.email = email;
         this.url = "images/avatar.png";
+        this.bgUrl = "null";
     }
 
     public UserModel(String userName, String email, int age, String url ) {
