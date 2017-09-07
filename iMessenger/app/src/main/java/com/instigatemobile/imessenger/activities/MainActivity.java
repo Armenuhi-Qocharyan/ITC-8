@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger;
+package com.instigatemobile.imessenger.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.controllers.LoginRegister;
 import com.instigatemobile.imessenger.fragments.ContactsFragment;
 import com.instigatemobile.imessenger.fragments.FavoritesFragment;

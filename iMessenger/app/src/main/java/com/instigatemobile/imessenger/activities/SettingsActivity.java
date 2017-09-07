@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger;
+package com.instigatemobile.imessenger.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.fragments.AboutUsFragment;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {

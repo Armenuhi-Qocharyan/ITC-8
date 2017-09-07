@@ -2,9 +2,11 @@ package com.instigatemobile.imessenger.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyCharacterMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.activities.MainActivity;
+import com.instigatemobile.imessenger.activities.MessangerActivity;
 import com.instigatemobile.imessenger.models.Contacts;
 
 import java.util.ArrayList;
@@ -26,25 +30,30 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
         this.ContactsArray = ContactsArray;
     }
 
-    public ContactsAdapter(ArrayList<Contacts> ContactsArray, Context mContext) {
+    public ContactsAdapter(ArrayList<Contacts> ContactsArray, Context context) {
         this.ContactsArray = ContactsArray;
-        this.mContext = mContext;
+        this.mContext = context;
+    }
+
+    public ContactsAdapter(Context context) {
+        initializePerson();
+        mContext = context;
     }
 
     public ContactsAdapter() {
-        initializePerson();
+        throw new UnknownError("Don't use me");
     }
 
     private void initializePerson() {
         ContactsArray = new ArrayList<>();
-        ContactsArray.add(new Contacts("name surname", "last message ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last message ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last message ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last message ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last message ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last message ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last message ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last message ...", R.drawable.avatar));
+        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
+        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
+        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
+        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
+        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
+        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
+        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
+        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
     }
 
     @Override
@@ -92,7 +101,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
                     //  Toast.makeText(itemView.getContext(), "You clicked on OK", Toast.LENGTH_SHORT).show();
                     AlertDialog alertDialog = new AlertDialog.Builder(itemView.getContext()).create();
                     alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("Alert message to be shown" + p);
+                    alertDialog.setMessage("Alert messanger to be shown" + p);
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -104,6 +113,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
                     return true;// returning true instead of false, works for me
                 }
             });
+            itemView.setOnClickListener( new ContactClickListener());
         }
 
         public PersonViewHolder(View itemView, ImageView personImageView, TextView personNameTextView, TextView ContactsurnameTextView, CardView cardView) {
@@ -112,6 +122,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
             this.personNameTextView = personNameTextView;
             this.ContactsurnameTextView = ContactsurnameTextView;
             this.cardView = cardView;
+        }
+    }
+
+    class ContactClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            Intent redirect = new Intent(mContext, MessangerActivity.class);
+            mContext.startActivity(redirect);
         }
     }
 }

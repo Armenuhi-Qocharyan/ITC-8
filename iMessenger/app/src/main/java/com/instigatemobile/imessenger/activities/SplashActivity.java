@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger;
+package com.instigatemobile.imessenger.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.instigatemobile.imessenger.controllers.LoginRegister;
+import com.instigatemobile.imessenger.R;
 
 public class SplashActivity extends Activity {
     private static int SPLASH_TIME_OUT = 2500;

@@ -1,4 +1,4 @@
-package com.instigatemobile.imessenger;
+package com.instigatemobile.imessenger.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ProgressBar;
 
+import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.fragments.LoginFragment;
 
 public class LoginRegisterActivity extends AppCompatActivity {
