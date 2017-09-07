@@ -51,7 +51,6 @@ import java.util.ArrayList;
             } else {
                 mItems = new ArrayList<T>();
                 mKeys = new ArrayList<String>();
-                Log.d("here","herrrrreeee");
             }
             query.addChildEventListener(mListener);
         }
@@ -60,7 +59,6 @@ import java.util.ArrayList;
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 String key = dataSnapshot.getKey();
-                Log.d("hellllloooooo", key);
 
                 if (!mKeys.contains(key)) {
                     T item = getConvertedObject(dataSnapshot);

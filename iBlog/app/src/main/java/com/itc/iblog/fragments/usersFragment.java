@@ -15,18 +15,15 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.DatabaseReference;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.UserAdapter;
-import com.itc.iblog.models.UsersModel;
+import com.itc.iblog.models.UserModel;
 
 import java.util.ArrayList;
 
 
 public class usersFragment extends Fragment {
-    private final static String SAVED_ADAPTER_ITEMS = "SAVED_ADAPTER_ITEMS";
-    private final static String SAVED_ADAPTER_KEYS = "SAVED_ADAPTER_KEYS";
-
     private Query mQuery;
     private UserAdapter mMyAdapter;
-    private ArrayList<UsersModel> mAdapterItems;
+    private ArrayList<UserModel> mAdapterItems;
     private ArrayList<String> mAdapterKeys;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,21 +36,21 @@ public class usersFragment extends Fragment {
     }
 
     private void handleInstanceState(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
             mAdapterItems = new ArrayList<>();
             mAdapterKeys = new ArrayList<>();
     }
 
     private void setupFirebase() {
-
         mQuery = FirebaseDatabase.getInstance().getReference().child("Users");
-        String msg = mQuery.toString();
-        Log.d("app",msg);
     }
 
     private void setupRecyclerview(View view) {
+        Log.d("here","message");
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
         mMyAdapter = new UserAdapter(mQuery, mAdapterItems, mAdapterKeys);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(mMyAdapter);
+
     }
 }

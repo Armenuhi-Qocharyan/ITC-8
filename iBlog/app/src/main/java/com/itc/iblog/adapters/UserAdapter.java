@@ -1,5 +1,6 @@
 package com.itc.iblog.adapters;
 
+
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,36 +11,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 import com.itc.iblog.R;
-import com.itc.iblog.models.UsersModel;
+import com.itc.iblog.models.UserModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder, UsersModel> {
+
+public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder, UserModel> {
+    private DatabaseReference mDatabase;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewName;
-        TextView textViewAge;
-        TextView textViewEmail;
-        ImageView imageView;
+        private TextView textViewName;
+        private TextView textViewAge;
+        private TextView textViewEmail;
+        private ImageView imageView;
+        private ImageView follow;
+
 
         public ViewHolder(View view) {
             super(view);
-            textViewName = (TextView) view.findViewById(R.id.textview_name);
-            textViewAge = (TextView) view.findViewById(R.id.textview_age);
-            imageView = (ImageView) view.findViewById(R.id.user_image);
-            textViewEmail = (TextView) view.findViewById(R.id.textview_email);
+            textViewName = view.findViewById(R.id.textview_name);
+            textViewAge =  view.findViewById(R.id.textview_age);
+            imageView =  view.findViewById(R.id.user_image);
+            follow = view.findViewById(R.id.follow);
+            textViewEmail =  view.findViewById(R.id.textview_email);
         }
     }
 
-    public UserAdapter(Query query, @Nullable ArrayList<UsersModel> items,
+    public UserAdapter(Query query, @Nullable ArrayList<UserModel> items,
                        @Nullable ArrayList<String> keys) {
         super(query, items, keys);
     }
@@ -52,10 +67,12 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
     }
 
 
-    @Override public void onBindViewHolder(final UserAdapter.ViewHolder holder, int position) {
-        UsersModel item = getItem(position);
-        holder.textViewName.setText(item.getUserName());
+    @Override public void onBindViewHolder(final UserAdapter.ViewHolder holder, final int position) {
+        final UserModel item = getItem(position);
+        String key = getKeys().get(position);
+        item.setUID(key);
         holder.textViewAge.setText(String.valueOf(item.getAge()) + " years old");
+        holder.follow.setImageResource(R.drawable.heart);
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         if (item.getUrl() != null) {
             firebaseStorage.getReference().child(item.getUrl()).getDownloadUrl().addOnSuccessListener
@@ -77,23 +94,51 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         }
 
         holder.textViewEmail.setText(item.getEmail());
+
+        holder.follow.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                addFollower(item, holder.follow);
+            }
+        });
     }
 
-    @Override protected void itemAdded(UsersModel item, String key, int position) {
+    private void addFollower(final UserModel item, final ImageView follow) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    mDatabase.child("Users").child(userId).child("followers").child(item.getUID()
+                    ).setValue(true);
+                    mDatabase.child("Users").child(item.getUID()).child("following").child
+                            (userId).setValue(true);
+                    follow.setImageResource(0);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override protected void itemAdded(UserModel item, String key, int position) {
 
         Log.d("UserAdapter", "added");
     }
 
-    @Override protected void itemChanged(UsersModel oldItem, UsersModel newItem, String key, int
+    @Override protected void itemChanged(UserModel oldItem, UserModel newItem, String key, int
             position) {
         Log.d("UserAdapter", "Changed an item.");
     }
 
-    @Override protected void itemRemoved(UsersModel item, String key, int position) {
+    @Override protected void itemRemoved(UserModel item, String key, int position) {
         Log.d("UserAdapter", "Removed an item from the adapter.");
     }
 
-    @Override protected void itemMoved(UsersModel item, String key, int oldPosition, int
+    @Override protected void itemMoved(UserModel item, String key, int oldPosition, int
             newPosition) {
         Log.d("UserAdapter", "Moved an item.");
     }
