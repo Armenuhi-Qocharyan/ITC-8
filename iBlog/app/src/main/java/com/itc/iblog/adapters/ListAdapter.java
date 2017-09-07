@@ -3,6 +3,7 @@ package com.itc.iblog.adapters;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.itc.iblog.models.DataModel;
 
 import java.util.List;
 
-public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
 
     private List<DataModel> cardList;
 
@@ -32,6 +33,7 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
         public TextView postTitle;
         public TextView postText;
         public TextView likeCount;
+        public CardView cardView;
         public TextView commentCount;
 
         public MyViewHolder(View view) {
@@ -45,11 +47,12 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
              postText =  (TextView) view.findViewById(R.id.post_text);
              likeCount =  (TextView) view.findViewById(R.id.like_count);
              commentCount =  (TextView) view.findViewById(R.id.comment_count);
+             cardView = (CardView) view.findViewById(R.id.card_view);
         }
     }
 
 
-    public listAdapter(List<DataModel> cardList) {
+    public ListAdapter(List<DataModel> cardList) {
         this.cardList = cardList;
     }
 
@@ -77,7 +80,7 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
         String path = post.getPostImagePath();
         if (path != null) {
             StorageReference pathReference = storageRef.child("Posts").child(post.getPostImagePath()).child("image");
-
+            System.out.println("bla " + post.getPostImagePath());
             final long ONE_MEGABYTE = 1024 * 1024;
             pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
@@ -87,7 +90,9 @@ public class listAdapter extends RecyclerView.Adapter<listAdapter.MyViewHolder> 
 
                     }
 
-                    holder.postImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, 500, 500, false));
+                    int width = holder.cardView.getWidth();
+
+                    holder.postImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, width, 300, false));
 
                     holder.postImage.setVisibility(View.VISIBLE);
                 }

@@ -1,4 +1,4 @@
-package com.itc.iblog;
+package com.itc.iblog.activities;
 
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.itc.iblog.R;
 
 
 /**

@@ -27,11 +27,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.itc.iblog.MainActivity;
+import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.models.UserModel;
 
-public class registerFragment extends Fragment{
+public class RegisterFragment extends Fragment{
 
     private Button buttonRegister;
     private EditText editTextEmailReg;
@@ -49,12 +49,12 @@ public class registerFragment extends Fragment{
     //private DatabaseReference mDatabase;
 
 
-    public registerFragment(Activity login) {
+    public RegisterFragment(Activity login) {
         super();
         this.login = login;
 
     }
-    public registerFragment() {
+    public RegisterFragment() {
         super();
     }
 

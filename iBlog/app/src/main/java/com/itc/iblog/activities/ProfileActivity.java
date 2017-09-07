@@ -1,4 +1,4 @@
-package com.itc.iblog;
+package com.itc.iblog.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -34,13 +33,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.itc.iblog.models.UserModel;
+import com.itc.iblog.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
-import static java.lang.Math.toIntExact;
 
 
 public class ProfileActivity extends AppCompatActivity {

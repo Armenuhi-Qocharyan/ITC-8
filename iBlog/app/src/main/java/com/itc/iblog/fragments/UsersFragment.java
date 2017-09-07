@@ -20,7 +20,7 @@ import com.itc.iblog.models.UserModel;
 import java.util.ArrayList;
 
 
-public class usersFragment extends Fragment {
+public class UsersFragment extends Fragment {
     private Query mQuery;
     private UserAdapter mMyAdapter;
     private ArrayList<UserModel> mAdapterItems;

@@ -3,7 +3,6 @@ package com.itc.iblog.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -21,20 +20,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.security.ProviderInstaller;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.itc.iblog.LoginRegisterActivity;
-import com.itc.iblog.MainActivity;
+import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 
-import java.util.concurrent.Executor;
-
-public class loginFragment extends Fragment {
+public class LoginFragment extends Fragment {
     private Activity login;
     private FirebaseAuth firebaseAuth;
     private EditText editTextEmail;
@@ -42,10 +36,10 @@ public class loginFragment extends Fragment {
     private static final String Tag = "EmailPassword";
     private ProgressBar progressBar;
 
-    public loginFragment() {
+    public LoginFragment() {
     }
 
-    public loginFragment(Activity login) {
+    public LoginFragment(Activity login) {
         this.login = login;
     }
 
@@ -60,7 +54,7 @@ public class loginFragment extends Fragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new registerFragment(login);
+                Fragment fragment = new RegisterFragment(login);
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.contentFragment, fragment);
