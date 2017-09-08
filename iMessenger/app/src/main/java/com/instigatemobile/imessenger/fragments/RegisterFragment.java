@@ -124,4 +124,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void  initProfile() {
+        profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), "", "", 0, 0);
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    interface MyCallbackInterface {
+        void onDownloadFinished(String result);
+    }
 }

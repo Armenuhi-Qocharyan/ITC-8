@@ -31,8 +31,6 @@ public class DataBase {
     }
 
     public boolean insertProfile(Profile profile) {
-        //String userId = database.push().getKey();
-        //database.child(userId).setValue(profile);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         database.child(user.getUid()).setValue(profile);
         Contacts contact = new Contacts(profile.getName(), profile.getEmail(), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq-k0_QiFEaZ2RUGq0fIv0_vUL7MefkpPQHxJjRy7CRjBcigZUrg");
@@ -59,19 +57,14 @@ public class DataBase {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get user value
-                        //Profile profile = dataSnapshot.getValue(Profile.class);
-                        //System.out.println(profile.getAvatar());
-                        //callback.responseProfile(profile);
+
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Profile profile = new Profile();
                         callback.responseProfile(profile);
-                        // [START_EXCLUDE]
-                        //setEditingEnabled(true);
-                        // [END_EXCLUDE]
+
                     }
                 });
     }

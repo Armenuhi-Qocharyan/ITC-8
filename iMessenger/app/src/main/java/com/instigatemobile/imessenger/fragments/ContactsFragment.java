@@ -1,9 +1,5 @@
 package com.instigatemobile.imessenger.fragments;
 
-/**
- * Created by vachagan on 8/31/17.
- */
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,7 +31,7 @@ public class ContactsFragment extends Fragment {
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //   database.child(user.getUid()).child("contactsList").
+        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
         database.child(user.getUid()).child("contactsList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -94,7 +94,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
                     imageView.setImageDrawable(roundedImage);
                 } else {
                     imageView.setImageResource(R.drawable.avatar1);
-
                 }
             }
         };
@@ -147,30 +146,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
 
                 if (clickAction == 1) {
                     storage.uploadImageToStorage(stream, path, "avatar", callback);
-
-               /* bitmap = quadraticImage(bitmap);
-                RoundImage roundedImage = new RoundImage(bitmap);
-                imageView.setImageDrawable(roundedImage);*/
                 } else if (clickAction == 0) {
                     storage.uploadImageToStorage(stream, path, "background", callback);
-
-               /* LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.linerBackground);
-                int sdk = android.os.Build.VERSION.SDK_INT;
-                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    layout.setBackgroundDrawable(new BitmapDrawable(bitmap));
-                } else {
-                    layout.setBackground(new BitmapDrawable(bitmap));
-                }*/
                 }
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-
-
             }
-
         }
-
     }
 
     private String getRealPathFromURI(Uri contentURI) {
@@ -200,13 +182,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
 
     private void initProfileRecycleViewContent() {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv);
-
         recyclerView.setHasFixedSize(true);
-
         LinearLayoutManager llm = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(llm);
-
-
         ProfileContentAdapter adapter = new ProfileContentAdapter(profile);
         recyclerView.setAdapter(adapter);
     }
@@ -232,22 +210,4 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
         }
         return bitmap;
     }
-/*
-    private void setBackgoundAvatar(int imageResourcesId) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageResourcesId);
-        int sdk = android.os.Build.VERSION.SDK_INT;
-        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            background.setBackgroundDrawable(new BitmapDrawable(bitmap));
-        } else {
-            background.setBackground(new BitmapDrawable(bitmap));
-        }
-    }
-
-    private void setAvatar(int imageResourcesId) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageResourcesId);
-        bitmap = quadraticImage(bitmap);
-        RoundImage roundedImage = new RoundImage(bitmap);
-        imageView.setImageDrawable(roundedImage);
-    }*/
-
 }
