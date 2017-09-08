@@ -5,6 +5,8 @@
     <color name="colorAccent">#00CDFF</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#dd656973</color>
+    <color name="greyLigth">#dde9e9e9</color>
+
     <color name="greyDark">#676767</color>
     <color name="transparent">#00000000</color>
     <color name="mainActivityBg">#1B2A3D</color>

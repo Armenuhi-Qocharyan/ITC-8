@@ -54,9 +54,9 @@ public class DataBase {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
-                        Profile profile = dataSnapshot.getValue(Profile.class);
-                        System.out.println(profile.getAvatar());
-                        callback.responseProfile(profile);
+                        //Profile profile = dataSnapshot.getValue(Profile.class);
+                        //System.out.println(profile.getAvatar());
+                        //callback.responseProfile(profile);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

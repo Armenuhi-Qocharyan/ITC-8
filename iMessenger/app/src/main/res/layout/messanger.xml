@@ -2,31 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="@color/greyLigth"
     android:weightSum="1" >
 
 <!-- NAVIGATIOON -->
-
-    <!--<include layout="@layout/navigation_bar"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="0.15"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--/>-->
-
     <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.05" />
+        android:layout_height="0dp" />
 
+    <include layout="@layout/navigation_bar"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom" />
+
+<!--CHAT -->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
+        android:layout_weight="0.7"
         android:id="@+id/messagesView"
         android:layout_gravity="center"
         android:layout_margin="3dp"/>
 
+<!--MESSAGE TOOLS -->
     <include layout="@layout/message_tools"
         android:layout_height="0dp"
         android:layout_weight="0.15"

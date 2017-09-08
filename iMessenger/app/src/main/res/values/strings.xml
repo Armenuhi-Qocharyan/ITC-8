@@ -47,5 +47,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-    <string name="typeText"> Type a message</string>
+    <string name="typeText"> Write a message</string>
 </resources>
