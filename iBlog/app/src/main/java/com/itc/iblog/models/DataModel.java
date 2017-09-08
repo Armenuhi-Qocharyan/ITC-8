@@ -1,5 +1,7 @@
 package com.itc.iblog.models;
 
+import java.util.ArrayList;
+
 public class DataModel {
 
     private String userName;
@@ -9,13 +11,13 @@ public class DataModel {
     private String postImagePath;
     private String postTitle;
     private String postText;
-    private int likeCount;
-    private int commentCount;
-
+    private Integer likeCount;
+    private Integer commentCount;
+    ArrayList<String> users;
     public DataModel() {
 
     }
-    public DataModel(String name, String userSurname, int userImage, String postImagePath,String postTime, String postTitle, String postText, int likeCount, int commentCount) {
+    public DataModel(String name, String userSurname, int userImage, String postImagePath,String postTime, String postTitle, String postText, int likeCount, int commentCount, ArrayList<String> users) {
         this.userName = name;
         this.userSurname = userSurname;
         this.userImage = userImage;
@@ -25,6 +27,7 @@ public class DataModel {
         this.likeCount = likeCount;
         this.commentCount = commentCount;
         this.postTime = postTime;
+        this.users = users;
     }
 
     public String getUserName() {
@@ -51,15 +54,19 @@ public class DataModel {
         return this.postText;
     }
 
-    public int getLikeCount() {
+    public Integer getLikeCount() {
         return this.likeCount;
     }
 
-    public int getCommentCount() {
+    public Integer getCommentCount() {
         return commentCount;
     }
 
     public String getPostTime() {
         return this.postTime;
+    }
+
+    public ArrayList<String> getUsers() {
+        return this.users;
     }
 }

@@ -86,7 +86,6 @@ public class PostsFragment extends Fragment {
                 myDataset = new ArrayList<>();
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     final DataModel post = messageSnapshot.getValue(DataModel.class);
-
                     myDataset.add(post);
                 }
                 mRecyclerView = view.findViewById(R.id.my_recycler_view);
@@ -188,10 +187,11 @@ public class PostsFragment extends Fragment {
                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference ref = database.getReference("Posts");
                         postId = ((MainActivity)getActivity()).getUserName().getText().toString() + new Date().toString();
-                        System.out.print(postId);
+                        ArrayList<String> users = new ArrayList<String>();
+                        users.add("");
                         ref.child(postId)
                                 .setValue(new DataModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
-                                        R.drawable.user,postId, new Date().toString().substring(0,19),title,text,0,0));
+                                        R.drawable.user,postId, new Date().toString().substring(0,19),title,text,0,0,users));
                         uploadImage();
 
                         Toast.makeText(getContext(), " Your post successfuly added. ", Toast.LENGTH_SHORT).show();

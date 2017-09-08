@@ -8,16 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
+import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.models.DataModel;
 
+import java.util.Date;
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
@@ -35,6 +40,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         public TextView likeCount;
         public CardView cardView;
         public TextView commentCount;
+        public ImageView likeButton;
 
         public MyViewHolder(View view) {
             super(view);
@@ -46,6 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
              postTitle = (TextView) view.findViewById(R.id.post_title);
              postText =  (TextView) view.findViewById(R.id.post_text);
              likeCount =  (TextView) view.findViewById(R.id.like_count);
+             likeButton = (ImageView) view.findViewById(R.id.like);
              commentCount =  (TextView) view.findViewById(R.id.comment_count);
              cardView = (CardView) view.findViewById(R.id.card_view);
         }
@@ -66,7 +73,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        DataModel post = cardList.get(position);
+        final DataModel post = cardList.get(position);
         holder.userName.setText(post.getUserName());
         holder.userSurname.setText(post.getUserSurname());
         holder.postTime.setText(post.getPostTime());
@@ -105,6 +112,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         }
 
         holder.likeCount.setText(post.getLikeCount() + "");
+
+
+        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (post.getUsers() == null || post.getUsers().indexOf(post.getUserName()) == -1) {
+                    Integer newLikeCount = Integer.parseInt(String.valueOf(post.getLikeCount())) + 1;
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference ref = database.getReference("Posts");
+                    ref.child(post.getPostImagePath()).child("likeCount").setValue(newLikeCount);
+                    ref.child(post.getPostImagePath()).child("users").setValue(post.getUsers().add(post.getUserName()));
+                } else {
+                    holder.likeButton.setEnabled(false);
+                }
+            }
+        });
         holder.commentCount.setText(post.getCommentCount() + "");
     }
 
