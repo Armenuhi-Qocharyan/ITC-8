@@ -119,7 +119,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     interface MyCallbackInterface {
-
         void onDownloadFinished(String result);
     }
 

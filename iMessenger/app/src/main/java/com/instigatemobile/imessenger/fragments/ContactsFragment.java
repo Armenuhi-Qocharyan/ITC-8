@@ -36,7 +36,6 @@ public class ContactsFragment extends Fragment {
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
         FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-        //   database.child(user.getUid()).child("contactsList").
         database.child(user.getUid()).child("contactsList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
