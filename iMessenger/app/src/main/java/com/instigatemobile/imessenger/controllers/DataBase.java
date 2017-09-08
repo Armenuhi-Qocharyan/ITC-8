@@ -7,7 +7,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.instigatemobile.imessenger.models.Contacts;
 import com.instigatemobile.imessenger.models.Profile;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class DataBase {
@@ -29,10 +38,12 @@ public class DataBase {
     public boolean insertProfile(Profile profile) {
         //String userId = database.push().getKey();
         //database.child(userId).setValue(profile);
-
         FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
         database.child(user.getUid()).setValue(profile);
-
+        Contacts contact = new Contacts(profile.getName(),profile.getEmail(),"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq-k0_QiFEaZ2RUGq0fIv0_vUL7MefkpPQHxJjRy7CRjBcigZUrg");
+        Map<String, Contacts> contactsList = new HashMap<String, Contacts>();
+        contactsList.put("contact1", contact);
+        database.child(user.getUid()).child("contactsList").setValue(contactsList);
         return true;
     }
 
@@ -67,7 +78,5 @@ public class DataBase {
                         // [END_EXCLUDE]
                     }
                 });
-
     }
-
 }

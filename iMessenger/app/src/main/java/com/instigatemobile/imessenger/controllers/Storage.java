@@ -23,7 +23,6 @@ public class Storage {
     private StorageReference storageRef;
     private DataBase DB;
 
-
     private Storage() {
         firebaseStorage = FirebaseStorage.getInstance();
         storageRef = firebaseStorage.getReference();
@@ -71,7 +70,6 @@ public class Storage {
             @Override
             public void onSuccess(byte[] bytes) {
                 // Use the bytes to display the image
-
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 if (imageName.equals("avatar")) {
                     profileCallback.setAvatar(bitmap);
@@ -82,8 +80,6 @@ public class Storage {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-
-
 
                 if (imageName.equals("avatar")) {
                     profileCallback.setAvatar(null);

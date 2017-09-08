@@ -3,13 +3,13 @@ package com.instigatemobile.imessenger.models;
 public class Contacts {
     private String User;
     private String lastMessage;
-    private int Image;
+    private String imageUrl;
 
 
-    public Contacts(String user, String lastMessage, int image) {
+    public Contacts(String user, String lastMessage, String image) {
         this.User = user;
         this.lastMessage = lastMessage;
-        this.Image = image;
+        this.imageUrl = image;
     }
 
     public String getUser() {
@@ -20,7 +20,7 @@ public class Contacts {
         return lastMessage;
     }
 
-    public int getImage() {
-        return Image;
+    public String getImage() {
+        return imageUrl;
     }
 }

@@ -27,10 +27,8 @@ import com.instigatemobile.imessenger.controllers.RoundImage;
 import com.instigatemobile.imessenger.controllers.Storage;
 import com.instigatemobile.imessenger.models.Profile;
 
-
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
 
 import static android.app.Activity.RESULT_OK;
 
@@ -38,18 +36,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     private final int RESULT_LOAD_IMAGE = 0;
     private int clickAction = 0;
     private Profile profile;
-
     private DataBase database;
     private Storage storage;
     private ProfileCallbackInterface callback;
-
-
     private View rootView;
     private ImageView imageView;
     private ImageButton changeBackground;
     private LinearLayout background;
     private TextView name;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,7 +107,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
         return rootView;
     }
 
-    private  void initView() {
+    private void initView() {
         imageView = (ImageView) rootView.findViewById(R.id.avatar);
         changeBackground = (ImageButton) rootView.findViewById(R.id.changeBackground);
         background = (LinearLayout) rootView.findViewById(R.id.linerBackground);
@@ -131,7 +125,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
 
     @Override
     public boolean onLongClick(View view) {
-        if (view ==  imageView) {
+        if (view == imageView) {
             clickAction = 1;// clicked avatar ImageView
             choseImageFromMedia(RESULT_LOAD_IMAGE);
         }
@@ -180,16 +174,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     }
 
     private String getRealPathFromURI(Uri contentURI) {
-
         String thePath = "no-path-found";
         String[] filePathColumn = {MediaStore.Images.Media.DISPLAY_NAME};
         Cursor cursor = this.getActivity().getContentResolver().query(contentURI, filePathColumn, null, null, null);
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             thePath = cursor.getString(columnIndex);
         }
         cursor.close();
-        return  thePath;
+        return thePath;
     }
 
     private void setListeners() {
@@ -202,7 +195,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
         Intent intent = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
         startActivityForResult(intent, loadImage);
     }
 
@@ -220,10 +212,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     }
 
     private Bitmap quadraticImage(Bitmap bitmap) {
-        if (bitmap.getWidth() >= bitmap.getHeight()){
+        if (bitmap.getWidth() >= bitmap.getHeight()) {
             bitmap = Bitmap.createBitmap(
                     bitmap,
-                    bitmap.getWidth()/2 - bitmap.getHeight()/2,
+                    bitmap.getWidth() / 2 - bitmap.getHeight() / 2,
                     0,
                     bitmap.getHeight(),
                     bitmap.getHeight()
@@ -233,7 +225,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
             bitmap = Bitmap.createBitmap(
                     bitmap,
                     0,
-                    bitmap.getHeight()/2 - bitmap.getWidth()/2,
+                    bitmap.getHeight() / 2 - bitmap.getWidth() / 2,
                     bitmap.getWidth(),
                     bitmap.getWidth()
             );

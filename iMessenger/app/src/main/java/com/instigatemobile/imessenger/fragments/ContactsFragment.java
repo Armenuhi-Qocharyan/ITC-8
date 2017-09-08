@@ -12,21 +12,53 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.instigatemobile.imessenger.adapters.ContactsAdapter;
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.models.Contacts;
+
+import java.util.ArrayList;
 
 public class ContactsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new ContactsAdapter(getActivity()));
+        final View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
+        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
+        //   database.child(user.getUid()).child("contactsList").
+        database.child(user.getUid()).child("contactsList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Contacts> list = new ArrayList<Contacts>();
+                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                    String name = (String) messageSnapshot.child("user").getValue();
+                    String message = (String) messageSnapshot.child("lastMessage").getValue();
+                    String image = (String) messageSnapshot.child("image").getValue();
+                    RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(new ContactsAdapter(list, getActivity()));
+                    list.add(new Contacts(name,message,image));
+                }
+            };
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         return rootView;
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

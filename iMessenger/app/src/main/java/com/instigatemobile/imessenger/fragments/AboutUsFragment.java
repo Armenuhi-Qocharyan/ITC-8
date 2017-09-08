@@ -29,8 +29,6 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
     private ImageView logo;
     private View view;
 
-
-
     private  LinearLayout aboutUsLayout;
     private FragmentManager fragmentManager;
 

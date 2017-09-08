@@ -13,6 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.activities.MainActivity;
 import com.instigatemobile.imessenger.activities.MessangerActivity;
@@ -46,14 +54,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
 
     private void initializePerson() {
         ContactsArray = new ArrayList<>();
-        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
-        ContactsArray.add(new Contacts("name surname", "last messanger ...", R.drawable.avatar));
     }
 
     @Override
@@ -67,8 +67,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
     public void onBindViewHolder(PersonViewHolder holder, int position) {
         holder.personNameTextView.setText(ContactsArray.get(position).getUser());
         holder.ContactsurnameTextView.setText(ContactsArray.get(position).getLastMessage());
-        holder.personImageView.setImageResource(ContactsArray.get(position).getImage());
-
+        holder.setIcon(ContactsArray.get(position).getImage(),mContext);
     }
 
     @Override
@@ -98,7 +97,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
                 public boolean onLongClick(View view) {
                     int p = getLayoutPosition();
                     System.out.println("LongClick: " + p);
-                    //  Toast.makeText(itemView.getContext(), "You clicked on OK", Toast.LENGTH_SHORT).show();
                     AlertDialog alertDialog = new AlertDialog.Builder(itemView.getContext()).create();
                     alertDialog.setTitle("Alert");
                     alertDialog.setMessage("Alert messanger to be shown" + p);
@@ -110,7 +108,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
                             });
                     alertDialog.show();
 
-                    return true;// returning true instead of false, works for me
+                    return true;
                 }
             });
             itemView.setOnClickListener( new ContactClickListener());
@@ -118,15 +116,19 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
 
         public PersonViewHolder(View itemView, ImageView personImageView, TextView personNameTextView, TextView ContactsurnameTextView, CardView cardView) {
             super(itemView);
-            this.personImageView = personImageView;
+          //  this.personImageView = personImageView;
             this.personNameTextView = personNameTextView;
             this.ContactsurnameTextView = ContactsurnameTextView;
             this.cardView = cardView;
         }
+
+        public void setIcon(String url, Context context) {
+           // GlideUtil.loadProfileIcon(url, personImageView);//
+            Glide.with(context).load(url).into(personImageView);
+        }
     }
 
     class ContactClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View view) {
             Intent redirect = new Intent(mContext, MessangerActivity.class);
