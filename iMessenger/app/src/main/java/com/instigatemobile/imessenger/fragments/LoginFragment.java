@@ -57,7 +57,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
-        bar = view.findViewById(R.id.progressBar);
+        bar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         login = (Button) view.findViewById(R.id.btn_login);
         initViews();

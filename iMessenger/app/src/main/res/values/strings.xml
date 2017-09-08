@@ -1,7 +1,6 @@
 <resources>
     <!-- Strings related to splash -->
     <string name="app_name">iMessenger</string>
-    <string name="action_settings">Settings</string>
     <string name="splash_title">iMessenger</string>
     <string name="splash_slogan">We build smiles...</string>
     <string name="font_family">monospace</string>
@@ -12,7 +11,7 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_up_question">No account yet? </string>
+    <string name="action_sign_up_question">No account yet?</string>
     <string name="action_sign_up_suggestion">Create one</string>
 
     <!-- Strings related to validation -->
@@ -25,6 +24,7 @@
     <string name="action_sign_up">Sign up</string>
 
     <!-- Strings related to menu -->
+    <string name="action_settings">Settings</string>
     <string name="action_language">Language</string>
     <string name="action_logout">Logout</string>
     <string name="action_about">About Us</string>
@@ -35,16 +35,21 @@
     <string name="section_profile">My Profile</string>
     <string name="section_favorites">Favorites</string>
 
-    <!--Phone number to about us fragment-->
+    <!-- Strings related to about us fragment -->
     <string name="contact">+374-98-89-87-95</string>
     <string name="instigate_mobile">Instigate Mobile</string>
 
-    <string name="forgote_password">Forgot Password ?</string>
+    <string name="forgote_password">Forgot Password?</string>
 
+    <!-- Strings related to messanger fragment -->
+    <string name="typeText">Write a message</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
-    <string name="typeText"> Write a message</string>
+    <!-- Strings related to language dialog-->
+    <string name="lang_dialog_title">Change Language</string>
+    <string name="lang_dialog_message">A</string>
+    <!-- Language select dialog -->
+    <string-array name="lang_select">
+        <item>English</item>
+        <item>Armenian</item>
+    </string-array>
 </resources>
