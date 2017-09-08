@@ -4,7 +4,8 @@
     android:layout_height="fill_parent"
     android:background="@drawable/background_img"
     android:id="@+id/lin_lay"
-    android:orientation="vertical" >
+    android:gravity="center_vertical|center_horizontal"
+    >
 
     <TextView
         android:id="@+id/splash_text"
@@ -12,12 +13,11 @@
         android:layout_height="wrap_content"
         android:text="iBLOG"
         android:textSize="40sp"
-        android:layout_marginTop="30dp"
         android:fontFamily="sans-serif-medium"
+        android:textAlignment="gravity"
         android:textColor="#fff"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_gravity="top"
         />
 
 </LinearLayout>

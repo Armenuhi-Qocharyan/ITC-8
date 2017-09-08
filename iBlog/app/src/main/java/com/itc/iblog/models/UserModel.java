@@ -15,7 +15,7 @@ public class UserModel {
     public String url;
     public String bgUrl;
     public HashMap<String, Boolean> followers;
-    public HashMap<String, Boolean> followings;
+    public HashMap<String, Boolean> following;
     private String UID;
 
     //required default constructor
@@ -38,13 +38,13 @@ public class UserModel {
         this.url = url;
     }
 
-    public UserModel(String userName, String email, int age, String url, HashMap<String, Boolean> followers, HashMap<String, Boolean> followings) {
+    public UserModel(String userName, String email, int age, String url, HashMap<String, Boolean> followers, HashMap<String, Boolean> following) {
         this.age = age;
         this.userName = userName;
         this.email = email;
         this.url = url;
         this.followers = followers;
-        this.followings = followings;
+        this.following = following;
     };
 
     public int getAge() {
@@ -67,6 +67,6 @@ public class UserModel {
 
     public HashMap getFollowers() { return  followers; }
 
-    public HashMap getFollowings() { return followings; }
+    public HashMap getFollowings() { return following; }
 
 }
