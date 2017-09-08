@@ -11,9 +11,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 
@@ -39,29 +36,29 @@ public class Storage {
     public void uploadImageToStorage(InputStream stream, final String path, final String imageName, final ProfileCallbackInterface profileCallback) {
         final String dbPath = "images/" + path;
 
-            StorageReference spaceRef = storageRef.child(dbPath);
-            UploadTask uploadTask = spaceRef.putStream(stream);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+        StorageReference spaceRef = storageRef.child(dbPath);
+        UploadTask uploadTask = spaceRef.putStream(stream);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                    if (imageName.equals("avatar")) {
-                        profileCallback.changeImage(dbPath, "avatar");
-                        downloadImageFromStorage(dbPath, "avatar", profileCallback);
-                    } else if (imageName.equals("background")){
-                        profileCallback.changeImage(dbPath, "background");
-                        downloadImageFromStorage(dbPath, "background", profileCallback);
-                    }
-
+                if (imageName.equals("avatar")) {
+                    profileCallback.changeImage(dbPath, "avatar");
+                    downloadImageFromStorage(dbPath, "avatar", profileCallback);
+                } else if (imageName.equals("background")) {
+                    profileCallback.changeImage(dbPath, "background");
+                    downloadImageFromStorage(dbPath, "background", profileCallback);
                 }
-            });
+
+            }
+        });
 
     }
 
@@ -73,7 +70,7 @@ public class Storage {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 if (imageName.equals("avatar")) {
                     profileCallback.setAvatar(bitmap);
-                } else if(imageName.equals("background")) {
+                } else if (imageName.equals("background")) {
                     profileCallback.setBackgroundAvatar(bitmap);
                 }
             }
@@ -83,7 +80,7 @@ public class Storage {
 
                 if (imageName.equals("avatar")) {
                     profileCallback.setAvatar(null);
-                } else if (imageName.equals("background")){
+                } else if (imageName.equals("background")) {
                     profileCallback.setBackgroundAvatar(null);
                 }
             }

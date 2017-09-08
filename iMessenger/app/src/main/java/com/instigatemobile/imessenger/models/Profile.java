@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class Profile {
     private String name;
@@ -15,7 +14,8 @@ public class Profile {
     private int favoritesCount;
     private int contactsCount;
 
-    public Profile(){ }
+    public Profile() {
+    }
 
     public Profile(String name, String email, String avatarURL, String backgroundURL, int favoritesCount, int contactsCount) {
         this.name = name;
@@ -30,16 +30,32 @@ public class Profile {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAvatar() {
         return avatarURL;
     }
 
+    public void setAvatar(String avatar) {
+        this.avatarURL = avatar;
+    }
+
     public String getBackground() {
         return backgroundURL;
+    }
+
+    public void setBackground(String backgrount) {
+        this.backgroundURL = backgrount;
     }
 
     public Bitmap getAvatarWithBitmap() {
@@ -66,33 +82,16 @@ public class Profile {
         return null;
     }
 
-
     public int getFavoritesCount() {
         return favoritesCount;
     }
 
-    public int getContactsCount() {
-        return contactsCount;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatarURL = avatar;
-    }
-
-    public void setBackground(String backgrount) {
-        this.backgroundURL = backgrount;
-    }
-
     public void setFavoritesCount(int favoritesCount) {
         this.favoritesCount = favoritesCount;
+    }
+
+    public int getContactsCount() {
+        return contactsCount;
     }
 
     public void setContactsCount(int contactsCount) {

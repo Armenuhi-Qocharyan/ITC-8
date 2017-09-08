@@ -16,9 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.models.Profile;
 import com.instigatemobile.imessenger.controllers.DataBase;
 import com.instigatemobile.imessenger.controllers.LoginRegister;
+import com.instigatemobile.imessenger.models.Profile;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
     private View view;
@@ -39,7 +39,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     //private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
     //private static final String NAME_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";
 
-    public RegisterFragment() {}
+    public RegisterFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,9 +89,22 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         new ProgressTask().execute();
         if (view == register) {
-            LoginRegister loginRegister =  LoginRegister.initLoginRegister();
+            LoginRegister loginRegister = LoginRegister.initLoginRegister();
             loginRegister.createAccount(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
         }
+    }
+
+    private void initProfile() {
+        profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), "", "", 0, 0);
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    interface MyCallbackInterface {
+
+        void onDownloadFinished(String result);
     }
 
     private class ProgressTask extends AsyncTask<Void, Void, Void> {
@@ -108,19 +122,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(Void result) {
             bar.setVisibility(View.GONE);
         }
-    }
-
-    private void  initProfile() {
-        profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), "", "", 0, 0);
-    }
-
-    private void showMessage(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    interface MyCallbackInterface {
-
-        void onDownloadFinished(String result);
     }
 
 }

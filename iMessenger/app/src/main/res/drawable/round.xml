@@ -5,8 +5,7 @@
     android:thicknessRatio="1"
     android:useLevel="false">
     <gradient
-        android:type="radial"
-        android:gradientRadius="8dp"
         android:endColor="@color/colorPrimary"
-        />
+        android:gradientRadius="8dp"
+        android:type="radial" />
 </shape>

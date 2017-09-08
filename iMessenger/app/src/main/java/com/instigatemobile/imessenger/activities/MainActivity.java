@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     ContactsFragment contact = new ContactsFragment();
                     return contact;
                 case 1:
-                    ProfileFragment profile = new ProfileFragment() ;
+                    ProfileFragment profile = new ProfileFragment();
                     return profile;
                 case 2:
                     FavoritesFragment favorite = new FavoritesFragment();

@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.instigatemobile.imessenger.models.Persons;
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.models.Persons;
 
 import java.util.ArrayList;
 
 
-public class PersonAdapter  extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
+public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
 
     ArrayList<Persons> personsArray;
     private Context mContext;
@@ -29,7 +29,11 @@ public class PersonAdapter  extends RecyclerView.Adapter<PersonAdapter.PersonVie
         this.mContext = mContext;
     }
 
-    private void initializePerson(){
+    public PersonAdapter() {
+        initializePerson();
+    }
+
+    private void initializePerson() {
         personsArray = new ArrayList<>();
         personsArray.add(new Persons("Aaa", "Aaaaa", R.drawable.avatar));
         personsArray.add(new Persons("Bbb", "Bbbbb", R.drawable.avatar));
@@ -39,10 +43,6 @@ public class PersonAdapter  extends RecyclerView.Adapter<PersonAdapter.PersonVie
         personsArray.add(new Persons("Bbb", "Bbbbb", R.drawable.avatar));
         personsArray.add(new Persons("Ccc", "Ccccc", R.drawable.avatar));
         personsArray.add(new Persons("Ddd", "Ddddd", R.drawable.avatar));
-    }
-
-    public PersonAdapter() {
-        initializePerson();
     }
 
     @Override

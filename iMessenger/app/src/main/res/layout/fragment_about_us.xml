@@ -4,63 +4,64 @@
     android:layout_height="match_parent"
     android:background="@color/mainActivityBg"
     android:fitsSystemWindows="true">
+
     <LinearLayout
         android:id="@+id/about_us_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="5dp"
-            android:background="@drawable/person_card_style">
+            android:background="@drawable/person_card_style"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/logof"
-                android:layout_gravity="center"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                android:layout_marginTop="24dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:layout_marginBottom="24dp"
-                android:src="@drawable/instigate_mobile_logo"/>
+                android:layout_marginTop="24dp"
+                android:src="@drawable/instigate_mobile_logo" />
+
             <TextView
                 android:id="@+id/instigateNamef"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/instigate_mobile"
-                android:layout_marginTop="6dp"
                 android:layout_marginBottom="24dp"
+                android:layout_marginTop="6dp"
                 android:fontFamily="@string/font_family"
+                android:text="@string/instigate_mobile"
                 android:textColor="@color/white"
-                android:textSize="32dp"/>
+                android:textSize="32dp" />
 
         </LinearLayout>
 
         <Button
-                android:id="@+id/phoneNumberf"
-                android:background="@drawable/person_card_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:drawableLeft="@drawable/call"
-                android:text="@string/contact"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:fontFamily="@string/font_family"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
+            android:id="@+id/phoneNumberf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/person_card_style"
+            android:drawableLeft="@drawable/call"
+            android:fontFamily="@string/font_family"
+            android:padding="10dp"
+            android:text="@string/contact"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleViewPerson"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recycleViewPerson"
-            android:layout_margin="3dp">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_margin="3dp" />
 
 
     </LinearLayout>

@@ -15,55 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProfileContentAdapter extends RecyclerView.Adapter <ProfileContentAdapter.ProfileViewHolder> {
+public class ProfileContentAdapter extends RecyclerView.Adapter<ProfileContentAdapter.ProfileViewHolder> {
     List<ProfileContent> profileContent;
 
-
-    public static class ProfileViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView profileElement;
-        TextView count;
-        ImageView elementimage;
-
-        ProfileViewHolder(View itemView) {
-            super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            profileElement = (TextView)itemView.findViewById(R.id.element);
-            count = (TextView)itemView.findViewById(R.id.count);
-            elementimage = (ImageView)itemView.findViewById(R.id.elementImage);
-        }
-    }
-
-    class ProfileContent {
-        private int count;
-        private String elementName;
-        private int imagePath;
-
-        public ProfileContent(String elementName, int count, int imagePath) {
-            this.elementName = elementName;
-            this.count = count;
-            this.imagePath = imagePath;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-        public String getElementName() {
-            return elementName;
-        }
-
-        public int getImagePath() {
-            return imagePath;
-        }
-    }
 
     public ProfileContentAdapter(Profile profile) {
         initProfileContent(profile);
     }
 
     private void initProfileContent(Profile profile) {
-        ArrayList<ProfileContent> contentList  = new ArrayList<>();
+        ArrayList<ProfileContent> contentList = new ArrayList<>();
         contentList.add(new ProfileContent("Favorits", profile.getFavoritesCount(), R.mipmap.favorites));
         contentList.add(new ProfileContent("ContactsFragment", profile.getFavoritesCount(), R.mipmap.contacts));
         profileContent = contentList;
@@ -91,6 +52,45 @@ public class ProfileContentAdapter extends RecyclerView.Adapter <ProfileContentA
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public static class ProfileViewHolder extends RecyclerView.ViewHolder {
+        CardView cv;
+        TextView profileElement;
+        TextView count;
+        ImageView elementimage;
+
+        ProfileViewHolder(View itemView) {
+            super(itemView);
+            cv = (CardView) itemView.findViewById(R.id.cv);
+            profileElement = (TextView) itemView.findViewById(R.id.element);
+            count = (TextView) itemView.findViewById(R.id.count);
+            elementimage = (ImageView) itemView.findViewById(R.id.elementImage);
+        }
+    }
+
+    class ProfileContent {
+        private int count;
+        private String elementName;
+        private int imagePath;
+
+        public ProfileContent(String elementName, int count, int imagePath) {
+            this.elementName = elementName;
+            this.count = count;
+            this.imagePath = imagePath;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public String getElementName() {
+            return elementName;
+        }
+
+        public int getImagePath() {
+            return imagePath;
+        }
     }
 
 }

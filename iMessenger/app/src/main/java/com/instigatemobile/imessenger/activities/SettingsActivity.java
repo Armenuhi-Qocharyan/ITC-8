@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         } else if (intValue == R.id.action_about) {
             setContentView(R.layout.activity_settings);
             initAboutUsFragment();
-        } else if(intValue == R.id.action_settings) {
+        } else if (intValue == R.id.action_settings) {
             //initSettingsFragment();
         } else if (intValue == R.id.action_logout) {
 
@@ -35,15 +35,17 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     private void initAboutUsFragment() {
         aboutUsFragment = new AboutUsFragment();
-        FragmentManager fragmentManager =getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgmContainer, aboutUsFragment);
         //fragmentTransaction.addToBackStack("AboutUs");
         fragmentTransaction.commit();
     }
+
     private void initSettingsFragment() {
 
     }
+
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -1,24 +1,17 @@
 package com.instigatemobile.imessenger.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.fragments.RegisterFragment;
 
-import org.w3c.dom.Text;
-
-public class MessangerActivity extends AppCompatActivity  implements View.OnClickListener {
+public class MessangerActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView back_btn;
     private TextView contact_data;
@@ -51,10 +44,11 @@ public class MessangerActivity extends AppCompatActivity  implements View.OnClic
         send_img.setOnClickListener(this);
         send_msg.setOnClickListener(this);
     }
+
     @Override
     public void onClick(final View view) {
         int id = view.getId();
-        switch(id) {
+        switch (id) {
             case R.id.back_btn:
                 sayText("back");
                 Intent intent = new Intent(this, MainActivity.class);

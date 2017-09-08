@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyCharacterMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.activities.MainActivity;
 import com.instigatemobile.imessenger.activities.MessangerActivity;
 import com.instigatemobile.imessenger.models.Contacts;
 
@@ -67,7 +58,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
     public void onBindViewHolder(PersonViewHolder holder, int position) {
         holder.personNameTextView.setText(ContactsArray.get(position).getUser());
         holder.ContactsurnameTextView.setText(ContactsArray.get(position).getLastMessage());
-        holder.setIcon(ContactsArray.get(position).getImage(),mContext);
+        holder.setIcon(ContactsArray.get(position).getImage(), mContext);
     }
 
     @Override
@@ -111,19 +102,19 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
                     return true;
                 }
             });
-            itemView.setOnClickListener( new ContactClickListener());
+            itemView.setOnClickListener(new ContactClickListener());
         }
 
         public PersonViewHolder(View itemView, ImageView personImageView, TextView personNameTextView, TextView ContactsurnameTextView, CardView cardView) {
             super(itemView);
-          //  this.personImageView = personImageView;
+            //  this.personImageView = personImageView;
             this.personNameTextView = personNameTextView;
             this.ContactsurnameTextView = ContactsurnameTextView;
             this.cardView = cardView;
         }
 
         public void setIcon(String url, Context context) {
-           // GlideUtil.loadProfileIcon(url, personImageView);//
+            // GlideUtil.loadProfileIcon(url, personImageView);//
             Glide.with(context).load(url).into(personImageView);
         }
     }

@@ -1,11 +1,16 @@
 package com.instigatemobile.imessenger.models;
 
-import android.net.Uri;
-
 public class Persons {
     private String personName;
     private String personSurname;
     private int personImageId;
+
+    public Persons(String personName, String personSurname, int personImageId) {
+
+        this.personName = personName;
+        this.personSurname = personSurname;
+        this.personImageId = personImageId;
+    }
 
     public String getPersonName() {
         return personName;
@@ -28,13 +33,6 @@ public class Persons {
     }
 
     public void setPersonImage(int personImageId) {
-        this.personImageId = personImageId;
-    }
-
-    public Persons(String personName, String personSurname, int personImageId) {
-
-        this.personName = personName;
-        this.personSurname = personSurname;
         this.personImageId = personImageId;
     }
 }

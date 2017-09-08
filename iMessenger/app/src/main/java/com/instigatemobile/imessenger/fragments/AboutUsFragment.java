@@ -20,8 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.instigatemobile.imessenger.adapters.PersonAdapter;
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.adapters.PersonAdapter;
 
 public class AboutUsFragment extends Fragment implements View.OnClickListener {
     private TextView name;
@@ -29,7 +29,7 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
     private ImageView logo;
     private View view;
 
-    private  LinearLayout aboutUsLayout;
+    private LinearLayout aboutUsLayout;
     private FragmentManager fragmentManager;
 
     public AboutUsFragment() {
@@ -52,7 +52,6 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-
         return view;
     }
 
@@ -67,6 +66,7 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
     private void setListeners() {
         phoneNumber.setOnClickListener(this);
     }
+
     private void callNumber() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:+37498898795"));
@@ -76,11 +76,12 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
         } else {
             try {
                 startActivity(callIntent);  //call activity and make phone call
-            } catch (android.content.ActivityNotFoundException ex){
-                Toast.makeText(getActivity().getApplicationContext(),"Your activity is not founded...",Toast.LENGTH_SHORT).show();
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(getActivity().getApplicationContext(), "Your activity is not founded...", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
     @Override
     public void onClick(View view) {
         if (view == phoneNumber) {

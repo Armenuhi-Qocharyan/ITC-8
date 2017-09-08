@@ -10,19 +10,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.instigatemobile.imessenger.models.Contacts;
 import com.instigatemobile.imessenger.models.Profile;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class DataBase {
-    private DatabaseReference database;
     private static DataBase DB;
     ProfileCallbackInterface callback;
+    private DatabaseReference database;
 
     private DataBase() {
         database = FirebaseDatabase.getInstance().getReference("users");
@@ -32,15 +27,15 @@ public class DataBase {
         if (DB == null) {
             DB = new DataBase();
         }
-        return  DB;
+        return DB;
     }
 
     public boolean insertProfile(Profile profile) {
         //String userId = database.push().getKey();
         //database.child(userId).setValue(profile);
-        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         database.child(user.getUid()).setValue(profile);
-        Contacts contact = new Contacts(profile.getName(),profile.getEmail(),"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq-k0_QiFEaZ2RUGq0fIv0_vUL7MefkpPQHxJjRy7CRjBcigZUrg");
+        Contacts contact = new Contacts(profile.getName(), profile.getEmail(), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq-k0_QiFEaZ2RUGq0fIv0_vUL7MefkpPQHxJjRy7CRjBcigZUrg");
         Map<String, Contacts> contactsList = new HashMap<String, Contacts>();
         contactsList.put("contact1", contact);
         database.child(user.getUid()).child("contactsList").setValue(contactsList);
@@ -48,18 +43,18 @@ public class DataBase {
     }
 
     public void changeProfileAvatar(String url) {
-        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         database.child(user.getUid()).child("avatar").setValue(url);
     }
 
     public void changeProfileBackground(String url) {
-        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         database.child(user.getUid()).child("background").setValue(url);
     }
 
     public void getCurrentProfile(ProfileCallbackInterface profileCallback) {
         this.callback = profileCallback;
-        FirebaseUser auth =  FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
         database.child(auth.getUid()).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -69,6 +64,7 @@ public class DataBase {
                         //System.out.println(profile.getAvatar());
                         //callback.responseProfile(profile);
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Profile profile = new Profile();

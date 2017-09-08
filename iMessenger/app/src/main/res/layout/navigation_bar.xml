@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/screanPad"
     android:paddingRight="@dimen/screanPad"
-    android:background="@color/colorPrimary"
     android:weightSum="1">
 
     <ImageView
         android:id="@+id/back_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.19"
         android:layout_gravity="center_vertical"
+        android:layout_weight="0.19"
         android:src="@drawable/back1_48" />
 
     <View
@@ -25,10 +25,10 @@
         android:id="@+id/contact_data"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
         android:layout_gravity="center_vertical"
+        android:layout_weight="0.8"
         android:text="Name"
-        android:textColor="@color/white"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textColor="@color/white" />
 
 </LinearLayout>
