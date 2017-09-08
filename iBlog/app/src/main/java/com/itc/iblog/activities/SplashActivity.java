@@ -1,8 +1,11 @@
 package com.itc.iblog.activities;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -11,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.itc.iblog.R;
+
+import java.util.Locale;
 
 
 /**
@@ -30,6 +35,16 @@ import com.itc.iblog.R;
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_splashscreen);
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+            Configuration config = getBaseContext().getResources().getConfiguration();
+
+            String lang = settings.getString("LANG", "");
+            if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang)) {
+                Locale locale = new Locale(lang);
+                Locale.setDefault(locale);
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+            }
             StartAnimations();
         }
 
