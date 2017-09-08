@@ -74,12 +74,13 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         item.setUID(key);
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         holder.textViewAge.setText(String.valueOf(item.getAge()) + " years old");
-        if (item.followings == null) {
-            item.followings = new HashMap<>();
+        if (item.following == null) {
+            item.following = new HashMap<>();
         }
-        if (!item.getFollowings().containsKey(userId)) {
+        if (!item.getFollowings().containsKey(userId) && !item.getUID().equals(userId)) {
             holder.follow.setImageResource(R.drawable.heart);
         }
+
 
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         if (item.getUrl() != null) {
@@ -101,6 +102,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         }
 
         holder.textViewEmail.setText(item.getEmail());
+        holder.textViewName.setText(item.getUserName());
 
         holder.follow.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -120,7 +122,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
                     ).setValue(true);
                     mDatabase.child("Users").child(item.getUID()).child("following").child
                             (userId).setValue(true);
-                    item.followings.put(userId,true);
+                    item.following.put(userId,true);
                     follow.setImageResource(0);
             }
 

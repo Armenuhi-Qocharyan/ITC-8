@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -43,6 +45,8 @@ import java.io.InputStream;
 public class ProfileActivity extends AppCompatActivity {
 
     private FloatingActionButton avatar;
+    private ImageView editIcon;
+    private ImageView bgImage;
     private DatabaseReference mDatabase;
     private TextView userName;
     private TextView email;
@@ -53,6 +57,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseDatabase database;
     private Bitmap imageFromGallery;
+    private String whatImage;
+    private String url;
 
 
     @Override
@@ -62,20 +68,35 @@ public class ProfileActivity extends AppCompatActivity {
         database =  FirebaseDatabase.getInstance();
         user =  FirebaseAuth.getInstance().getCurrentUser();
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_avatar);
+        editIcon = (ImageView) findViewById(R.id.edit_icon);
+        bgImage = (ImageView) findViewById(R.id.bg_image);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        setImage("bg");
         setImage("avatar");
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                whatImage = "avatar";
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, 1);
+                return false;
+            }
+        });
+
+        editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                whatImage = "bg";
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, 1);
             }
         });
+
     }
 
     private void setImage(final String img) {
@@ -85,42 +106,47 @@ public class ProfileActivity extends AppCompatActivity {
         dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                userName = (TextView) findViewById(R.id.profile_username);
-                email = (TextView) findViewById(R.id.profile_email);
-                userAge = (TextView) findViewById(R.id.profile_age);
-                String user = (String) dataSnapshot.child("userName").getValue();
-                String userEmail = (String) dataSnapshot.child("email").getValue();
-                Long age = (Long) dataSnapshot.child("age").getValue();
-                String url = "";
+                url = "";
                 if (img.equals("avatar")) {
+                    userName = (TextView) findViewById(R.id.profile_username);
+                    email = (TextView) findViewById(R.id.profile_email);
+                    userAge = (TextView) findViewById(R.id.profile_age);
+                    String user = (String) dataSnapshot.child("userName").getValue();
+                    String userEmail = (String) dataSnapshot.child("email").getValue();
+                    userName.setText(user);
+                    email.setText(userEmail);
+                    Long age = (Long) dataSnapshot.child("age").getValue();
+                    userAge.append(age.toString());
                     url = (String) dataSnapshot.child("url").getValue();
                 } else if(img.equals("bg")) {
-                    url = (String) dataSnapshot.child("bg_url").getValue();
+                    url = (String) dataSnapshot.child("bgUrl").getValue();
                 }
-                userName.setText(user);
-                email.setText(userEmail);
                 avatarUrl = url;
-                userAge.append(age.toString());
                 // Get avatar image
                 if (avatarUrl != null) {
                     StorageReference pathReference = storageRef.child(avatarUrl);
-
+                    if(url.equals("null") && img.equals("bg")) {
+                        bgImage.setImageResource(R.drawable.background_img);
+                        return;
+                    }
                     final long ONE_MEGABYTE = 1024 * 1024;
                     pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                         @Override
                         public void onSuccess(byte[] bytes) {
                             Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             if (bmp.equals(null)) {
-                                Toast.makeText(ProfileActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "Image not found.", Toast.LENGTH_SHORT).show();
+                                return;
                             }
-                            Bitmap bitmap = Bitmap.createScaledBitmap(bmp, 260, 260, false);
-                            Bitmap result = getCroppedBitmap(bitmap);
                             if (img.equals("avatar")) {
+                                Bitmap bitmap = Bitmap.createScaledBitmap(bmp, 200, 200, false);
+                                Bitmap result = getCroppedBitmap(bitmap);
                                 ProfileActivity.this.avatar = (FloatingActionButton) findViewById(R.id.floating_avatar);
                                 avatar.setImageBitmap(result);
                             } else if(img.equals("bg")) {
-                                ImageView bgImage = (ImageView) findViewById(R.id.bg_image);
+                                ProfileActivity.this.bgImage = (ImageView) findViewById(R.id.bg_image);
                                 bgImage.setImageBitmap(bmp);
+
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -167,15 +193,19 @@ public class ProfileActivity extends AppCompatActivity {
 
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
-                putImageToStorage(selectedImage, filename);
-                changeUserInfo("images/" + filename);
-
-
-                this.avatar = (FloatingActionButton) findViewById(R.id.floating_avatar);
-                Bitmap bitmap = Bitmap.createScaledBitmap(selectedImage, 200, 200, false);
-                Bitmap result = getCroppedBitmap(bitmap);
-                avatar.setImageBitmap(result);
+                if(whatImage.equals("avatar")) {
+                    putImageToStorage(selectedImage, filename);
+                    changeUserInfo("images/" + filename);
+                    this.avatar = (FloatingActionButton) findViewById(R.id.floating_avatar);
+                    Bitmap bitmap = Bitmap.createScaledBitmap(selectedImage, 200, 200, false);
+                    Bitmap result = getCroppedBitmap(bitmap);
+                    avatar.setImageBitmap(result);
+                } else if (whatImage.equals("bg")) {
+                    putImageToStorage(selectedImage, filename);
+                    changeUserInfo("bgImages/" + filename);
+                    this.bgImage = (ImageView) findViewById(R.id.bg_image);
+                    bgImage.setImageBitmap(selectedImage);
+                }
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -187,8 +217,19 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void putImageToStorage(Bitmap selectedImage, String filename) {
-        StorageReference ImageRef = storageRef.child("images/" + filename);
+    public void putImageToStorage(Bitmap btm, String filename) {
+        Bitmap selectedImage = null;
+        if(whatImage.equals("avatar")) {
+            selectedImage = scaleDown(btm, 300, true);
+        } else if (whatImage.equals("bg")) {
+            selectedImage = scaleDown(btm, 600, true);
+        }
+        StorageReference ImageRef = null;
+        if (whatImage.equals("avatar")) {
+            ImageRef = storageRef.child("images/" + filename);
+        } else if (whatImage.equals("bg")) {
+            ImageRef = storageRef.child("bgImages/" + filename);
+        }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] buteData = baos.toByteArray();
@@ -227,8 +268,27 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void changeUserInfo(String path) {
         String userId = user.getUid();
-        DatabaseReference mRef =  database.getReference().child("Users").child(userId).child("url");
+        DatabaseReference mRef = null;
+        if (whatImage.equals("avatar")) {
+            mRef = database.getReference().child("Users").child(userId).child("url");
+        } else if(whatImage.equals("bg")) {
+            mRef = database.getReference().child("Users").child(userId).child("bgUrl");
+        }
         mRef.setValue(path);
+    }
+
+
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
     }
 
 }
