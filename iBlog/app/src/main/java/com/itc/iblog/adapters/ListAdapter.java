@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,10 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
-import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.models.DataModel;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
@@ -117,12 +115,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (post.getUsers() == null || post.getUsers().indexOf(post.getUserName()) == -1) {
+                if (post.getUsers().indexOf(post.getUserSurname()) == -1) {
                     Integer newLikeCount = Integer.parseInt(String.valueOf(post.getLikeCount())) + 1;
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference ref = database.getReference("Posts");
                     ref.child(post.getPostImagePath()).child("likeCount").setValue(newLikeCount);
-                    ref.child(post.getPostImagePath()).child("users").setValue(post.getUsers().add(post.getUserName()));
+                    ArrayList<String> users = post.getUsers();
+                    users.add(post.getUserSurname());
+
+                    ref.child(post.getPostImagePath()).child("users").setValue(users);
                 } else {
                     holder.likeButton.setEnabled(false);
                 }
