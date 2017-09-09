@@ -68,6 +68,7 @@ public class PostsFragment extends Fragment {
     private Uri file;
     private String avatarUrl;
     private StorageReference storageRef;
+    private int IMAGE;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -132,7 +133,7 @@ public class PostsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == IMAGE && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
             file = data.getData();
 
             try {
@@ -163,6 +164,8 @@ public class PostsFragment extends Fragment {
         } else {
             // Toast.makeText(getActivity(), "file is null", Toast.LENGTH_SHORT).show();
         }
+        file = null;
+        IMAGE = IMAGE + 1;
     }
 
     private void fabClickListener(FloatingActionButton fab) {
@@ -223,7 +226,7 @@ public class PostsFragment extends Fragment {
                         Intent intent = new Intent();
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE);
                     }
                 });
 

@@ -2,6 +2,7 @@ package com.itc.iblog.adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -83,22 +84,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         StorageReference storageRef = storage.getReference();
 
         String path = post.getPostImagePath();
+
         if (path != null) {
             StorageReference pathReference = storageRef.child("Posts").child(post.getPostImagePath()).child("image");
-            System.out.println("bla " + post.getPostImagePath());
             final long ONE_MEGABYTE = 1024 * 1024;
             pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    if (bmp.equals(null)) {
-
-                    }
-
                     int width = holder.cardView.getWidth();
-
                     holder.postImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, width, 300, false));
-
                     holder.postImage.setVisibility(View.VISIBLE);
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -111,24 +106,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
         holder.likeCount.setText(post.getLikeCount() + "");
 
-
-        holder.likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (post.getUsers().indexOf(post.getUserSurname()) == -1) {
-                    Integer newLikeCount = Integer.parseInt(String.valueOf(post.getLikeCount())) + 1;
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference ref = database.getReference("Posts");
-                    ref.child(post.getPostImagePath()).child("likeCount").setValue(newLikeCount);
-                    ArrayList<String> users = post.getUsers();
-                    users.add(post.getUserSurname());
-
-                    ref.child(post.getPostImagePath()).child("users").setValue(users);
-                } else {
-                    holder.likeButton.setEnabled(false);
+        if (post.getUsers().indexOf(post.getUserSurname()) == -1) {
+            holder.likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        Integer newLikeCount = Integer.parseInt(String.valueOf(post.getLikeCount())) + 1;
+                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference ref = database.getReference("Posts");
+                        ref.child(post.getPostImagePath()).child("likeCount").setValue(newLikeCount);
+                        ArrayList<String> users = post.getUsers();
+                        users.add(post.getUserSurname());
+                        ref.child(post.getPostImagePath()).child("users").setValue(users);
                 }
-            }
-        });
+            });
+        } else {
+            holder.likeButton.setEnabled(false);
+        }
         holder.commentCount.setText(post.getCommentCount() + "");
     }
 
