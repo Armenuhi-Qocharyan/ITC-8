@@ -35,10 +35,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private Profile profile;
     //private RegisterFragment registerFragment;
 
-    //private AwesomeValidation awesomeValidation;
-    //private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
-    //private static final String NAME_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";
-
     public RegisterFragment() {
     }
 
@@ -49,10 +45,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         register = (Button) view.findViewById(R.id.btnRegister);
         initViews();
 
-        //awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextName, NAME_PATTERN, R.string.nameerror);
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.emailerror);
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextPassword, PASSWORD_PATTERN, R.string.passworderror);
         setListeners();
         return view;
     }
@@ -73,7 +65,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     public void registerForm() {
-        //if (this.awesomeValidation.validate()) {
         initProfile();
         DataBase dataBase = DataBase.initDataBase();
         dataBase.insertProfile(profile);
@@ -82,18 +73,62 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         fragmentTransaction.replace(R.id.fragmentContainer, loginFragment);
         fragmentTransaction.addToBackStack("Login");
         fragmentTransaction.commit();
-        //}
     }
 
     @Override
     public void onClick(View view) {
         new ProgressTask().execute();
         if (view == register) {
-            LoginRegister loginRegister = LoginRegister.initLoginRegister();
-            loginRegister.createAccount(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
+            if (validateName() && validateEmail() && validatePassword()) {
+                LoginRegister loginRegister = LoginRegister.initLoginRegister();
+                loginRegister.createAccount(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
+            }
         }
     }
 
+
+    private boolean validateName() {
+        String name = editTextName.getText().toString().trim();
+        final String NAME_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";
+        if (editTextName.getText().toString().equals("")) {
+            editTextName.setError("You should specify the name");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateEmail() {
+        String email = editTextEmail.getText().toString().trim();
+        final String EMAIL_PATERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";;
+
+        if (editTextEmail.getText().toString().equals("")) {
+            editTextEmail.setError("You should specify the email");
+            return false;
+        }
+        if (!email.matches(EMAIL_PATERN)) {
+            editTextEmail.setError("The specified email is not correctly formated");
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean validatePassword() {
+        String password = editTextPassword.getText().toString().trim();
+        final String PASSWORD_PATERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
+
+        if ((editTextPassword.getText().toString().equals(""))  || (editTextPassword.getText().length() < 6)) {
+            editTextPassword.setError("You should specify the password");
+            return false;
+        }
+        /*
+        if (!password.matches(PASSWORD_PATERN)) {
+            editTextPassword.setError("The specified password is not correctly formated (min lenght 6 symbole, at least one symbole and on capital latter and one number)");
+            return false;
+        }*/
+        return true;
+
+    }
     private void initProfile() {
         profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), "", "", 0, 0);
     }
@@ -124,15 +159,4 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-//    private void  initProfile() {
-//        profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), "", "", 0, 0);
-//    }
-//
-//    private void showMessage(String message) {
-//        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
-//    }
-//
-//    interface MyCallbackInterface {
-//        void onDownloadFinished(String result);
-//    }
 }

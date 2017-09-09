@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.instigatemobile.imessenger.R;
 
 public class SplashActivity extends Activity {
-    private static int SPLASH_TIME_OUT = 2500;
+    private static int SPLASH_TIME_OUT = 1700;
     private TextView textView;
     private ImageView imageView;
 
@@ -25,6 +25,7 @@ public class SplashActivity extends Activity {
         Animation performAnimationImage = AnimationUtils.loadAnimation(this, R.anim.splash_anim_image);
         performAnimationImage.setRepeatCount(1);
         performAnimationText.setRepeatCount(1);
+        performAnimationImage.setDuration(1600);
 
         imageView = (ImageView) findViewById(R.id.splashImageView);
         textView = (TextView) findViewById(R.id.splashImageText);

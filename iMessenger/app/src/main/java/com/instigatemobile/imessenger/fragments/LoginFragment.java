@@ -46,10 +46,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private Matcher matcher;
     private ProgressBar bar;
 
-    //private AwesomeValidation awesomeValidation;
-    //private static final String EMAIL_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-    //private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
-
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -58,16 +54,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
         bar = (ProgressBar) view.findViewById(R.id.progressBar);
-
         login = (Button) view.findViewById(R.id.btn_login);
         initViews();
-
-        //awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.emailerror);
-        //awesomeValidation.addValidation(this.getActivity(), R.id.editTextPassword, PASSWORD_PATTERN, R.string.passworderror);
-
         setListeners();
-        //PasswordValidator();
         return view;
     }
 
@@ -101,8 +90,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (view == register) {
             goRegisterPage();
         } else if (view == login) {
-            LoginRegister loginRegister = LoginRegister.initLoginRegister();
-            loginRegister.signIn(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
+            if (validateEmail() &&  validatePassword()) {
+                    LoginRegister loginRegister = LoginRegister.initLoginRegister();
+                    loginRegister.signIn(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
+            }
         } else if (view == forgot) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseAuth.getInstance().sendPasswordResetEmail(user.getEmail())
@@ -119,12 +110,43 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private boolean validateEmail() {
+        String email = editTextEmail.getText().toString().trim();
+        final String EMAIL_PATERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";;
+
+        if (editTextEmail.getText().toString().equals("")) {
+            editTextEmail.setError("You should specify the email");
+            return false;
+        }
+        if (!email.matches(EMAIL_PATERN)) {
+            editTextEmail.setError("The specified email is not correctly formated");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validatePassword() {
+        String password = editTextPassword.getText().toString().trim();
+        final String PASSWORD_PATERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
+
+        if ((editTextPassword.getText().toString().equals(""))  || (editTextPassword.getText().length() < 6)) {
+            editTextPassword.setError("You should specify the password");
+            return false;
+        }
+        /*
+        if (!password.matches(PASSWORD_PATERN)) {
+            editTextPassword.setError("The specified password is not correctly formated (min lenght 6 symbole, at least one symbole and on capital latter and one number)");
+            return false;
+        }*/
+        return true;
+    }
+
+
+
     public void redirect() {
-        //if (awesomeValidation.validate()) {
         Intent redirect = new Intent(getActivity().getApplicationContext(), MainActivity.class);
         getActivity().finish();
         getActivity().startActivity(redirect);
-        //}
     }
 
     public void progressBarVisibility() {
