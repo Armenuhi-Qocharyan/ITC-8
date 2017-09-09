@@ -168,27 +168,26 @@ public class MainActivity extends AppCompatActivity {
         final Spinner spinner1 = (Spinner) dialogView.findViewById(R.id.spinner1);
 
         dialogBuilder.setTitle(getResources().getString(R.string.lang_dialog_title));
-        dialogBuilder.setMessage(getResources().getString(R.string.lang_dialog_message));
+//        dialogBuilder.setMessage(getResources().getString(R.string.lang_dialog_message));
         dialogBuilder.setPositiveButton("Select", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 int langpos = spinner1.getSelectedItemPosition();
-                switch(langpos) {
+                switch (langpos) {
                     case 0: //English
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").commit();
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").apply();
                         setLangRecreate("en");
                         return;
                     case 1: //Armenian
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "hi").commit();
-                        setLangRecreate("hi");
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "hy").apply();
+                        setLangRecreate("hy");
                         return;
                     default: //By default set to english
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").commit();
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").apply();
                         setLangRecreate("en");
                         return;
                 }
             }
-        });
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //pass
             }

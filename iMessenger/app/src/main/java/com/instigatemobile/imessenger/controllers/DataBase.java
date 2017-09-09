@@ -64,7 +64,6 @@ public class DataBase {
                     public void onCancelled(DatabaseError databaseError) {
                         Profile profile = new Profile();
                         callback.responseProfile(profile);
-
                     }
                 });
     }

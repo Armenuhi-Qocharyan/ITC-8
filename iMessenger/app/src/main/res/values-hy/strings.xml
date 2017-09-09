@@ -39,7 +39,7 @@
     <string name="contact">+374-98-89-87-95</string>
     <string name="instigate_mobile">Ինստիգեյթ Մոբայլ</string>
 
-    <string name="forgote_password">Մոռացե՞լ եք գաղտնաբառը</string>
+    <string name="forgot_password">Մոռացե՞լ եք գաղտնաբառը</string>
 
     <!-- Strings related to messanger fragment -->
     <string name="typeText">Մուտքագրել տեքստը</string>
@@ -49,7 +49,7 @@
     <string name="lang_dialog_message">A</string>
     <!-- Language select dialog -->
     <string-array name="lang_select">
-        <item>English>Անգլերեն</item>
-        <item>Armenian>Հայերեն</item>
+        <item>English</item>
+        <item>Հայերեն</item>
     </string-array>
 </resources>

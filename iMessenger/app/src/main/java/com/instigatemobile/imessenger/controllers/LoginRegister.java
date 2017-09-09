@@ -21,7 +21,6 @@ public class LoginRegister {
 
     private LoginRegister() {
         mAuth = FirebaseAuth.getInstance();
-        ;
     }
 
     public static LoginRegister initLoginRegister() {

@@ -85,6 +85,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         fragmentTransaction.commit();
     }
 
+    private void goForgotPasswordPage() {
+        ForgotPasswordFragment forgotFragment = new ForgotPasswordFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainer, forgotFragment);
+        fragmentTransaction.addToBackStack("Login");
+        fragmentTransaction.commit();
+    }
+
     public void onClick(final View view) {
         new ProgressTask().execute();
         if (view == register) {

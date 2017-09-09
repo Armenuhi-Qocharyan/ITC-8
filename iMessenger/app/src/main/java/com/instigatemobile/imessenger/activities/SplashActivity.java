@@ -9,17 +9,20 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.instigatemobile.imessenger.R;
 
 public class SplashActivity extends Activity {
-    private static int SPLASH_TIME_OUT = 1700;
+    private static int SPLASH_TIME_OUT = 2500;
     private TextView textView;
     private ImageView imageView;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        mAuth = FirebaseAuth.getInstance();
 
         Animation performAnimationText = AnimationUtils.loadAnimation(this, R.anim.splash_anim_text);
         Animation performAnimationImage = AnimationUtils.loadAnimation(this, R.anim.splash_anim_image);
@@ -34,10 +37,17 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashActivity.this, LoginRegisterActivity.class);
-                startActivity(i);
-                finish();
+                if (mAuth.getCurrentUser() == null) {
+                    goToNextPage(new Intent(SplashActivity.this, LoginRegisterActivity.class));
+                } else {
+                    goToNextPage(new Intent(SplashActivity.this, MainActivity.class));
+                }
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    private void goToNextPage(Intent intent) {
+        startActivity(intent);
+        finish();
     }
 }
