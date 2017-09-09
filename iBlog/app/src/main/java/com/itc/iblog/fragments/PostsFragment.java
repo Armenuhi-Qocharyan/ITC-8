@@ -22,9 +22,7 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,7 +40,7 @@ import com.google.firebase.storage.UploadTask;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.ListAdapter;
-import com.itc.iblog.models.DataModel;
+import com.itc.iblog.models.PostModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,16 +56,10 @@ public class PostsFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Activity main;
-    private List<DataModel> myDataset;
-    private TextView userName;
-    private TextView email;
-
+    private List<PostModel> myDataset;
     private String postId;
     private Bitmap bitmap;
-    private ImageView imageView;
     private Uri file;
-    private String avatarUrl;
-    private StorageReference storageRef;
     private int IMAGE;
 
     @Override
@@ -80,16 +72,15 @@ public class PostsFragment extends Fragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("Posts");
-
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myDataset = new ArrayList<>();
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                    final DataModel post = messageSnapshot.getValue(DataModel.class);
+                    final PostModel post = messageSnapshot.getValue(PostModel.class);
                     myDataset.add(post);
                 }
-                mRecyclerView = view.findViewById(R.id.my_recycler_view);
+                mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
@@ -177,7 +168,7 @@ public class PostsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Button dialogButtonOk = dialog.findViewById(R.id.dialogButtonOK);
+                Button dialogButtonOk = (Button) dialog.findViewById(R.id.dialogButtonOK);
                 dialogButtonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -192,9 +183,15 @@ public class PostsFragment extends Fragment {
                         postId = ((MainActivity)getActivity()).getUserName().getText().toString() + new Date().toString();
                         ArrayList<String> users = new ArrayList<String>();
                         users.add("");
+                        String postImagePath;
+                        if (file != null) {
+                            postImagePath = file.toString();
+                        } else {
+                            postImagePath = null;
+                        }
                         ref.child(postId)
-                                .setValue(new DataModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
-                                        R.drawable.user,postId, new Date().toString().substring(0,19),title,text,0,0,users));
+                                .setValue(new PostModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
+                                        R.drawable.user,postImagePath,new Date(),postId,title,text,0,0,0,users));
                         uploadImage();
 
                         Toast.makeText(getContext(), " Your post successfuly added. ", Toast.LENGTH_SHORT).show();
@@ -205,8 +202,8 @@ public class PostsFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
-                Button dialogButtonCencel = dialog.findViewById(R.id.dialogButtonCencel);
-                dialogButtonCencel.setOnClickListener(new View.OnClickListener() {
+                Button dialogButtonCancel = (Button) dialog.findViewById(R.id.dialogButtonCencel);
+                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         EditText postTitle = dialog.findViewById(R.id.add_post_title);
@@ -217,7 +214,7 @@ public class PostsFragment extends Fragment {
                     }
                 });
 
-                Button addPostImage = dialog.findViewById(R.id.add_post_image);
+                Button addPostImage = (Button) dialog.findViewById(R.id.add_post_image);
                 addPostImage.setOnClickListener(new View.OnClickListener() {
 
 

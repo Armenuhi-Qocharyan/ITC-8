@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.itc.iblog.activities.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/app_bar_main"
+    android:backgroundTint="#877492b7">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp" />
+        tools:layout_editor_absoluteX="8dp"/>
 
     <android.support.design.widget.FloatingActionButton
 
@@ -26,6 +27,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:background="@drawable/post"
         android:src="@drawable/post"
-        app:backgroundTint="#fff"/>
+        app:backgroundTint="#d5d4d6"/>
 
 </android.support.design.widget.CoordinatorLayout>
