@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.instigatemobile.imessenger.R;
 
-
 public class ForgotPasswordFragment extends Fragment {
     private View view;
     private EditText editTextEmail;
@@ -40,7 +39,6 @@ public class ForgotPasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString().trim();
-                System.out.println("======Email====== " + email);
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getActivity(), "Enter your registered email", Toast.LENGTH_SHORT).show();
                     return;
@@ -52,11 +50,10 @@ public class ForgotPasswordFragment extends Fragment {
                             public void onComplete(@NonNull Task task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getActivity(), "We have sent you instructions to reset your password", Toast.LENGTH_SHORT).show();
-                                    goResetPage();
+                                    goLoginPage();
                                 } else {
                                     Toast.makeText(getActivity(), "Failed to send reset email", Toast.LENGTH_SHORT).show();
                                 }
-
                                 bar.setVisibility(View.GONE);
                             }
                         });
@@ -71,36 +68,11 @@ public class ForgotPasswordFragment extends Fragment {
         submit = view.findViewById(R.id.btn_submit);
     }
 
-    private void goResetPage() {
-        ResetPasswordFragment resetFragment = new ResetPasswordFragment();
+    private void goLoginPage() {
+        LoginFragment loginFragment = new LoginFragment();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainer, resetFragment);
+        fragmentTransaction.replace(R.id.fragmentContainer, loginFragment);
         fragmentTransaction.addToBackStack("Forgot");
         fragmentTransaction.commit();
-    }
-
-    public void progressBarVisibility() {
-        bar.setVisibility(ProgressBar.VISIBLE);
-    }
-
-    public void progressBarInvisibility() {
-        bar.setVisibility(ProgressBar.INVISIBLE);
-    }
-
-    private class ProgressTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            bar.setVisibility(View.VISIBLE);
-        }
-
-        protected void onPostExecute(Void result) {
-            bar.setVisibility(View.GONE);
-        }
     }
 }

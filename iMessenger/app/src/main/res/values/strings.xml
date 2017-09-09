@@ -46,11 +46,14 @@
 
     <!-- Strings related to language dialog-->
     <string name="lang_dialog_title">Change Language</string>
-    <string name="action_submit">Submit</string>
-    <string name="hint_comfirm_password">Comfirm password</string>
+
     <!-- Language select dialog -->
     <string-array name="lang_select">
         <item>English</item>
         <item>Հայերեն</item>
     </string-array>
+
+    <!-- Strings related to forgot / reset password fragmnet-->
+    <string name="action_submit">Submit</string>
+    <string name="hint_confirm_password">Confirm password</string>
 </resources>

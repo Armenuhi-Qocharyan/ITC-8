@@ -29,14 +29,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private ImageView chat_icon;
     private LinearLayout registerLayout;
     private FragmentManager fragmentManager;
-
     private LoginFragment loginFragment;
     private ProgressBar bar;
     private Profile profile;
-    //private RegisterFragment registerFragment;
 
-    public RegisterFragment() {
-    }
+    public RegisterFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +41,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         bar = view.findViewById(R.id.progressBar);
         register = (Button) view.findViewById(R.id.btnRegister);
         initViews();
-
         setListeners();
         return view;
     }
@@ -86,7 +82,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     private boolean validateName() {
         String name = editTextName.getText().toString().trim();
         final String NAME_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";
@@ -112,7 +107,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         return true;
     }
 
-
     private boolean validatePassword() {
         String password = editTextPassword.getText().toString().trim();
         final String PASSWORD_PATERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
@@ -127,8 +121,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             return false;
         }*/
         return true;
-
     }
+
     private void initProfile() {
         profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), "", "", 0, 0);
     }
@@ -138,7 +132,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     interface MyCallbackInterface {
-
         void onDownloadFinished(String result);
     }
 
@@ -158,5 +151,4 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             bar.setVisibility(View.GONE);
         }
     }
-
 }

@@ -28,7 +28,6 @@ public class ContactsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
-
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         database.child(user.getUid()).child("contactsList").addValueEventListener(new ValueEventListener() {
@@ -46,14 +45,9 @@ public class ContactsFragment extends Fragment {
                 }
             }
 
-            ;
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
-
         return rootView;
     }
 

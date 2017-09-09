@@ -103,18 +103,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     loginRegister.signIn(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
             }
         } else if (view == forgot) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            FirebaseAuth.getInstance().sendPasswordResetEmail(user.getEmail())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Snackbar snackbar = Snackbar
-                                        .make(view, "Email sent", Snackbar.LENGTH_LONG);
-                                snackbar.show();
-                            }
-                        }
-                    });
+            goForgotPasswordPage();
         }
     }
 
@@ -149,8 +138,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         return true;
     }
 
-
-
     public void redirect() {
         Intent redirect = new Intent(getActivity().getApplicationContext(), MainActivity.class);
         getActivity().finish();
@@ -181,5 +168,4 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             bar.setVisibility(View.GONE);
         }
     }
-
 }

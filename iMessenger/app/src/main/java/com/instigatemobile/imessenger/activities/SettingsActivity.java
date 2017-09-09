@@ -42,9 +42,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         fragmentTransaction.commit();
     }
 
-    private void initSettingsFragment() {
-
-    }
+    private void initSettingsFragment() {}
 
     @Override
     public void onBackPressed() {
@@ -53,11 +51,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         super.onBackPressed();
     }
 
-
     @Override
     public void onClick(View view) {
         onBackPressed();
     }
-
-
 }

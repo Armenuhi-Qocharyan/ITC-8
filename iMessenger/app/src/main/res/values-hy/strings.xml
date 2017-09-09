@@ -39,17 +39,21 @@
     <string name="contact">+374-98-89-87-95</string>
     <string name="instigate_mobile">Ինստիգեյթ Մոբայլ</string>
 
-    <string name="forgot_password">Մոռացե՞լ եք գաղտնաբառը</string>
+    <string name="forgot_password">Մոռացե՞լ ես գաղտնաբառը</string>
 
     <!-- Strings related to messanger fragment -->
     <string name="typeText">Մուտքագրել տեքստը</string>
 
     <!-- Strings related to language dialog-->
     <string name="lang_dialog_title">Փոխել լեզուն</string>
-    <string name="lang_dialog_message">A</string>
+
     <!-- Language select dialog -->
     <string-array name="lang_select">
         <item>English</item>
         <item>Հայերեն</item>
     </string-array>
+
+    <!-- Strings related to forgot / reset password fragmnet-->
+    <string name="action_submit">Հաստատել</string>
+    <string name="hint_confirm_password">Հաստատել գաղտնաբառը</string>
 </resources>
