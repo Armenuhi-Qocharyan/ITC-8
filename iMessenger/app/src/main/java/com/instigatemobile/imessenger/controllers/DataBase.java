@@ -13,10 +13,9 @@ import com.instigatemobile.imessenger.models.Profile;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class DataBase {
     private static DataBase DB;
-    ProfileCallbackInterface callback;
+    private ProfileCallbackInterface callback;
     private DatabaseReference database;
 
     private DataBase() {
@@ -57,7 +56,6 @@ public class DataBase {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                     }
 
                     @Override

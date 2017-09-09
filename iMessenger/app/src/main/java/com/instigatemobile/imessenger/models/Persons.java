@@ -6,7 +6,6 @@ public class Persons {
     private int personImageId;
 
     public Persons(String personName, String personSurname, int personImageId) {
-
         this.personName = personName;
         this.personSurname = personSurname;
         this.personImageId = personImageId;

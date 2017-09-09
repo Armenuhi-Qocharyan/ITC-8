@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,6 +76,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
                 }
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void setBackgroundAvatar(Bitmap imageBitmap) {
                 if (imageBitmap != null) {
@@ -117,7 +120,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     @Override
     public void onClick(View view) {
         if (view == changeBackground) {
-            clickAction = 0;// clicked change background button
+            clickAction = 0;
             choseImageFromMedia(RESULT_LOAD_IMAGE);
         }
     }
@@ -138,9 +141,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
 
-            Bitmap bitmap = null;
+
             try {
-                bitmap = BitmapFactory.decodeStream(this.getActivity().getContentResolver().openInputStream(selectedImage));
+                Bitmap bitmap = BitmapFactory.decodeStream(this.getActivity().getContentResolver().openInputStream(selectedImage));
                 String path = getRealPathFromURI(selectedImage);
                 InputStream stream = this.getActivity().getContentResolver().openInputStream(selectedImage);
 
@@ -172,7 +175,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
         changeBackground.setOnClickListener(this);
     }
 
-
     private void choseImageFromMedia(final int loadImage) {
         Intent intent = new Intent(
                 Intent.ACTION_PICK,
@@ -196,17 +198,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
                     bitmap.getWidth() / 2 - bitmap.getHeight() / 2,
                     0,
                     bitmap.getHeight(),
-                    bitmap.getHeight()
-            );
-
+                    bitmap.getHeight());
         } else {
             bitmap = Bitmap.createBitmap(
                     bitmap,
                     0,
                     bitmap.getHeight() / 2 - bitmap.getWidth() / 2,
                     bitmap.getWidth(),
-                    bitmap.getWidth()
-            );
+                    bitmap.getWidth());
         }
         return bitmap;
     }

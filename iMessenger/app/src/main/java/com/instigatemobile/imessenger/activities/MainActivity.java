@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,21 +31,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.container);
+
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -95,10 +80,11 @@ public class MainActivity extends AppCompatActivity {
                 LoginRegister loginRegister = LoginRegister.initLoginRegister();
                 intent = new Intent(MainActivity.this, LoginRegisterActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 loginRegister.signOut();
                 startActivity(intent);
-                pressedLogout();
+                //pressedLogout();
                 return true;
             case R.id.action_about:
                 intent = new Intent(MainActivity.this, SettingsActivity.class);
@@ -112,14 +98,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void pressedLogout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to exit?")
+        builder.setMessage(R.string.logout_dialog_question)
                 .setCancelable(true)
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 })
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(MainActivity.this, LoginRegisterActivity.class);
                         startActivity(intent);
@@ -150,15 +136,14 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").apply();
                         setLangRecreate("en");
-                        return;
+                        break;
                     case 1:
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "hy").apply();
                         setLangRecreate("hy");
-                        return;
+                        break;
                     default:
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").apply();
                         setLangRecreate(Locale.getDefault().getDisplayLanguage());
-                        return;
                 }
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -170,22 +155,17 @@ public class MainActivity extends AppCompatActivity {
         b.show();
     }
 
-    public void setLangRecreate(String langval) {
+    public void setLangRecreate(String language) {
         Configuration config = getBaseContext().getResources().getConfiguration();
-        Locale locale = new Locale(langval);
+        Locale locale = new Locale(language);
         Locale.setDefault(locale);
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         recreate();
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
+    private class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -193,14 +173,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    ContactsFragment contact = new ContactsFragment();
-                    return contact;
+                    return new ContactsFragment();
                 case 1:
-                    ProfileFragment profile = new ProfileFragment();
-                    return profile;
+                    return new ProfileFragment();
                 case 2:
-                    FavoritesFragment favorite = new FavoritesFragment();
-                    return favorite;
+                    return new FavoritesFragment();
                 default:
                     return null;
             }

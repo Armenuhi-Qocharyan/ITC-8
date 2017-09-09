@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.instigatemobile.imessenger.R;
 
-public class MessangerActivity extends AppCompatActivity implements View.OnClickListener {
+public class MessengerActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView back_btn;
     private TextView contact_data;
@@ -23,7 +23,7 @@ public class MessangerActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.messanger);
+        setContentView(R.layout.messenger);
         init();
         setListeners();
     }
@@ -35,7 +35,6 @@ public class MessangerActivity extends AppCompatActivity implements View.OnClick
         send_smile = (ImageView) findViewById(R.id.send_smile);
         send_img = (ImageView) findViewById(R.id.send_img);
         send_msg = (ImageView) findViewById(R.id.send_msg);
-
     }
 
     private void setListeners() {
@@ -50,7 +49,6 @@ public class MessangerActivity extends AppCompatActivity implements View.OnClick
         int id = view.getId();
         switch (id) {
             case R.id.back_btn:
-                sayText("back");
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return;

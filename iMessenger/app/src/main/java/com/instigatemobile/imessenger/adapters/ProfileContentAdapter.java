@@ -14,10 +14,8 @@ import com.instigatemobile.imessenger.models.Profile;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ProfileContentAdapter extends RecyclerView.Adapter<ProfileContentAdapter.ProfileViewHolder> {
     List<ProfileContent> profileContent;
-
 
     public ProfileContentAdapter(Profile profile) {
         initProfileContent(profile);
@@ -25,7 +23,7 @@ public class ProfileContentAdapter extends RecyclerView.Adapter<ProfileContentAd
 
     private void initProfileContent(Profile profile) {
         ArrayList<ProfileContent> contentList = new ArrayList<>();
-        contentList.add(new ProfileContent("Favorits", profile.getFavoritesCount(), R.mipmap.favorites));
+        contentList.add(new ProfileContent("Favourites", profile.getFavoritesCount(), R.mipmap.favourites));
         contentList.add(new ProfileContent("ContactsFragment", profile.getFavoritesCount(), R.mipmap.contacts));
         profileContent = contentList;
     }
@@ -41,7 +39,7 @@ public class ProfileContentAdapter extends RecyclerView.Adapter<ProfileContentAd
     public void onBindViewHolder(ProfileViewHolder personViewHolder, int i) {
         personViewHolder.profileElement.setText(profileContent.get(i).getElementName());
         personViewHolder.count.setText(profileContent.get(i).getCount() + "");
-        personViewHolder.elementimage.setImageResource(profileContent.get(i).getImagePath());
+        personViewHolder.elementImage.setImageResource(profileContent.get(i).getImagePath());
     }
 
     @Override
@@ -58,18 +56,18 @@ public class ProfileContentAdapter extends RecyclerView.Adapter<ProfileContentAd
         CardView cv;
         TextView profileElement;
         TextView count;
-        ImageView elementimage;
+        ImageView elementImage;
 
         ProfileViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             profileElement = (TextView) itemView.findViewById(R.id.element);
             count = (TextView) itemView.findViewById(R.id.count);
-            elementimage = (ImageView) itemView.findViewById(R.id.elementImage);
+            elementImage = (ImageView) itemView.findViewById(R.id.elementImage);
         }
     }
 
-    class ProfileContent {
+    private class ProfileContent {
         private int count;
         private String elementName;
         private int imagePath;
@@ -92,6 +90,4 @@ public class ProfileContentAdapter extends RecyclerView.Adapter<ProfileContentAd
             return imagePath;
         }
     }
-
 }
-

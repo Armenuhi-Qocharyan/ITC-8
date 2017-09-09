@@ -13,17 +13,14 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.InputStream;
 
-
 public class Storage {
     private static Storage storage;
-    private FirebaseStorage firebaseStorage;
     private StorageReference storageRef;
-    private DataBase DB;
 
     private Storage() {
-        firebaseStorage = FirebaseStorage.getInstance();
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         storageRef = firebaseStorage.getReference();
-        DB = DataBase.initDataBase();
+        DataBase db = DataBase.initDataBase();
     }
 
     public static Storage initStorage() {
@@ -56,17 +53,14 @@ public class Storage {
                     profileCallback.changeImage(dbPath, "background");
                     downloadImageFromStorage(dbPath, "background", profileCallback);
                 }
-
             }
         });
-
     }
 
     public void downloadImageFromStorage(String path, final String imageName, final ProfileCallbackInterface profileCallback) {
         storageRef.child(path).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                // Use the bytes to display the image
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 if (imageName.equals("avatar")) {
                     profileCallback.setAvatar(bitmap);
@@ -77,7 +71,6 @@ public class Storage {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-
                 if (imageName.equals("avatar")) {
                     profileCallback.setAvatar(null);
                 } else if (imageName.equals("background")) {

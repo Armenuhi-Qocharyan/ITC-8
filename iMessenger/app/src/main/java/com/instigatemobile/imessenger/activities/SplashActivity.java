@@ -13,9 +13,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.instigatemobile.imessenger.R;
 
 public class SplashActivity extends Activity {
-    private static int SPLASH_TIME_OUT = 2500;
-    private TextView textView;
-    private ImageView imageView;
     private FirebaseAuth mAuth;
 
     @Override
@@ -30,10 +27,11 @@ public class SplashActivity extends Activity {
         performAnimationText.setRepeatCount(1);
         performAnimationImage.setDuration(1600);
 
-        imageView = (ImageView) findViewById(R.id.splashImageView);
-        textView = (TextView) findViewById(R.id.splashImageText);
+        ImageView imageView = (ImageView) findViewById(R.id.splashImageView);
+        TextView textView = (TextView) findViewById(R.id.splashImageText);
         imageView.startAnimation(performAnimationImage);
         textView.startAnimation(performAnimationText);
+        int SPLASH_TIME_OUT = 2500;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

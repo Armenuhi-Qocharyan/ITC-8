@@ -5,7 +5,6 @@ public class Contacts {
     private String lastMessage;
     private String imageUrl;
 
-
     public Contacts(String user, String lastMessage, String image) {
         this.User = user;
         this.lastMessage = lastMessage;

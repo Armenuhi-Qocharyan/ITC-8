@@ -10,10 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.controllers.DataBase;
@@ -26,20 +24,18 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private EditText editTextName;
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private ImageView chat_icon;
-    private LinearLayout registerLayout;
     private FragmentManager fragmentManager;
     private LoginFragment loginFragment;
     private ProgressBar bar;
     private Profile profile;
 
-    public RegisterFragment() {}
+    public RegisterFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_register, container, false);
         bar = view.findViewById(R.id.progressBar);
-        register = (Button) view.findViewById(R.id.btnRegister);
         initViews();
         setListeners();
         return view;
@@ -47,13 +43,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void initViews() {
         loginFragment = new LoginFragment();
-        //registerFragment = new RegisterFragment();
         fragmentManager = getActivity().getSupportFragmentManager();
         editTextEmail = (EditText) view.findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         editTextName = (EditText) view.findViewById(R.id.editTextName);
         register = (Button) view.findViewById(R.id.btnRegister);
-        registerLayout = (LinearLayout) view.findViewById(R.id.register_layout);
+        LinearLayout registerLayout = (LinearLayout) view.findViewById(R.id.register_layout);
     }
 
     private void setListeners() {
@@ -94,7 +89,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private boolean validateEmail() {
         String email = editTextEmail.getText().toString().trim();
-        final String EMAIL_PATERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";;
+        final String EMAIL_PATERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        ;
 
         if (editTextEmail.getText().toString().equals("")) {
             editTextEmail.setError("You should specify the email");
@@ -111,7 +107,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         String password = editTextPassword.getText().toString().trim();
         final String PASSWORD_PATERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
 
-        if ((editTextPassword.getText().toString().equals(""))  || (editTextPassword.getText().length() < 6)) {
+        if ((editTextPassword.getText().toString().equals("")) || (editTextPassword.getText().length() < 6)) {
             editTextPassword.setError("You should specify the password");
             return false;
         }
@@ -127,16 +123,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         profile = new Profile(editTextName.getText().toString(), editTextEmail.getText().toString(), "", "", 0, 0);
     }
 
-    private void showMessage(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
     interface MyCallbackInterface {
         void onDownloadFinished(String result);
     }
 
     private class ProgressTask extends AsyncTask<Void, Void, Void> {
-
         @Override
         protected Void doInBackground(Void... voids) {
             return null;

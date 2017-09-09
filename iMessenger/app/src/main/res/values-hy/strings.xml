@@ -26,7 +26,7 @@
     <!-- Strings related to menu -->
     <string name="action_settings">Կարգավորումներ</string>
     <string name="action_language">Լեզու</string>
-    <string name="action_logout">Ելք</string>
+    <string name="action_logout">Դուրս գալ</string>
     <string name="action_about">Մեր մասին</string>
     <string name="search_title">Որոնում</string>
 
@@ -41,7 +41,7 @@
 
     <string name="forgot_password">Մոռացե՞լ ես գաղտնաբառը</string>
 
-    <!-- Strings related to messanger fragment -->
+    <!-- Strings related to messenger fragment -->
     <string name="typeText">Մուտքագրել տեքստը</string>
 
     <!-- Strings related to language dialog-->
@@ -56,4 +56,9 @@
     <!-- Strings related to forgot / reset password fragmnet-->
     <string name="action_submit">Հաստատել</string>
     <string name="hint_confirm_password">Հաստատել գաղտնաբառը</string>
+
+    <!-- Strings related to logout dialog -->
+    <string name="logout_dialog_question">Վստա՞հ եք, որ ուզում եք դուրս գալ</string>
+    <string name="yes">Այո</string>
+    <string name="no">Ոչ</string>
 </resources>

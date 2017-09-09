@@ -10,17 +10,12 @@ import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.fragments.LoginFragment;
 
 public class LoginRegisterActivity extends AppCompatActivity {
-    private ProgressBar bar;
-    //private RegisterFragment registerFragment;
     private LoginFragment loginFragment;
-    private FragmentTransaction fragmentTransaction;
-    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
-        //registerFragment = new RegisterFragment();
         loginFragment = new LoginFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

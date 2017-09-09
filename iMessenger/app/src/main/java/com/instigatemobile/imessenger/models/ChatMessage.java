@@ -9,15 +9,14 @@ public class ChatMessage {
     private String message;
     private long messageTime;
 
-    public ChatMessage() {
-    }
+    public ChatMessage() {}
 
     public ChatMessage(String id, String sender, String receiver, String message) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
-        this.messageTime = new Date().getTime();;
+        this.messageTime = new Date().getTime();
     }
 
     public String getId() {

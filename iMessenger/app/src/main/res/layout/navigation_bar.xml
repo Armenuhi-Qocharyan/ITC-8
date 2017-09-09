@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/screanPad"
-    android:paddingRight="@dimen/screanPad"
+    android:paddingLeft="@dimen/screenPad"
+    android:paddingRight="@dimen/screenPad"
     android:weightSum="1">
 
     <ImageView
@@ -30,5 +30,4 @@
         android:text="Name"
         android:textAlignment="center"
         android:textColor="@color/white" />
-
 </LinearLayout>

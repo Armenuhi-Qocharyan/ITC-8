@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 
 import com.instigatemobile.imessenger.models.Profile;
 
-
 public interface ProfileCallbackInterface {
     void responseProfile(Profile profile);
 
@@ -13,5 +12,4 @@ public interface ProfileCallbackInterface {
     void setBackgroundAvatar(Bitmap bitmap);
 
     void setAvatar(Bitmap bitmap);
-
 }

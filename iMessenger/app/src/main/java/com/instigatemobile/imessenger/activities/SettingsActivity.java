@@ -11,9 +11,6 @@ import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.fragments.AboutUsFragment;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
-    //private RegisterFragment registerFragment;
-    private AboutUsFragment aboutUsFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,23 +19,27 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         Intent mIntent = getIntent();
         int intValue = mIntent.getIntExtra("ButtonID", 0);
 
-        if (intValue == 0) {
-        } else if (intValue == R.id.action_about) {
-            setContentView(R.layout.activity_settings);
-            initAboutUsFragment();
-        } else if (intValue == R.id.action_settings) {
-            //initSettingsFragment();
-        } else if (intValue == R.id.action_logout) {
-
+        switch (intValue) {
+            case 0:
+                break;
+            case R.id.action_about:
+                setContentView(R.layout.activity_settings);
+                initAboutUsFragment();
+                break;
+            case R.id.action_settings:
+                //initSettingsFragment();
+                break;
+            case R.id.action_logout:
+                break;
         }
     }
 
     private void initAboutUsFragment() {
-        aboutUsFragment = new AboutUsFragment();
+        AboutUsFragment aboutUsFragment = new AboutUsFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgmContainer, aboutUsFragment);
-        //fragmentTransaction.addToBackStack("AboutUs");
+        fragmentTransaction.addToBackStack("AboutUs");
         fragmentTransaction.commit();
     }
 
@@ -46,8 +47,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        System.out.println(fragmentManager.getBackStackEntryCount());
         super.onBackPressed();
     }
 

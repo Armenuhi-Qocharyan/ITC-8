@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/screanPad"
-    android:paddingRight="@dimen/screanPad"
+    android:paddingLeft="@dimen/screenPad"
+    android:paddingRight="@dimen/screenPad"
     android:weightSum="1">
 
     <EditText

@@ -14,7 +14,6 @@ import com.instigatemobile.imessenger.models.Persons;
 
 import java.util.ArrayList;
 
-
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
 
     ArrayList<Persons> personsArray;
@@ -80,7 +79,6 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
             this.personNameTextView = (TextView) itemView.findViewById(R.id.person_name_text_view);
             this.personSurnameTextView = (TextView) itemView.findViewById(R.id.person_surname_text_view);
             this.personImageView = (ImageView) itemView.findViewById(R.id.person_image_view);
-            this.cardView = cardView;
         }
 
         public PersonViewHolder(View itemView, ImageView personImageView, TextView personNameTextView, TextView personSurnameTextView, CardView cardView) {

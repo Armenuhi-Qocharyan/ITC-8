@@ -90,5 +90,4 @@ public class RoundImage extends Drawable {
     public Bitmap getBitmap() {
         return mBitmap;
     }
-
 }

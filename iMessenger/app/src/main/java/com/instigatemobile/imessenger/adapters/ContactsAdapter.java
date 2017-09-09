@@ -14,11 +14,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.activities.MessangerActivity;
+import com.instigatemobile.imessenger.activities.MessengerActivity;
 import com.instigatemobile.imessenger.models.Contacts;
 
 import java.util.ArrayList;
-
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.PersonViewHolder> {
 
@@ -90,7 +89,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
                     System.out.println("LongClick: " + p);
                     AlertDialog alertDialog = new AlertDialog.Builder(itemView.getContext()).create();
                     alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("Alert messanger to be shown" + p);
+                    alertDialog.setMessage("Alert messenger to be shown" + p);
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -122,7 +121,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
     class ContactClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            Intent redirect = new Intent(mContext, MessangerActivity.class);
+            Intent redirect = new Intent(mContext, MessengerActivity.class);
             mContext.startActivity(redirect);
         }
     }
