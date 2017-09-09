@@ -13,10 +13,11 @@ import com.instigatemobile.imessenger.fragments.LoginFragment;
 import com.instigatemobile.imessenger.fragments.RegisterFragment;
 
 public class LoginRegister {
-    private static LoginRegister mLoginRegister;
+    static LoginRegister mLoginRegister;
     private FirebaseAuth mAuth;
     private RegisterFragment mRegisterFragment;
     private LoginFragment mLoginFragment;
+
 
     private LoginRegister() {
         mAuth = FirebaseAuth.getInstance();
@@ -44,18 +45,21 @@ public class LoginRegister {
         });
     }
 
+
     private void sendEmailVerification(Activity activity) {
-        final FirebaseUser user = mAuth.getCurrentUser();
-        user.sendEmailVerification().addOnCompleteListener(activity, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    mRegisterFragment.registerForm();
-                } else {
-                    showMessage(mRegisterFragment.getActivity(), "Authentication failed.");
-                }
-            }
-        });
+//TODO
+//        final FirebaseUser user = mAuth.getCurrentUser();
+//        user.sendEmailVerification().addOnCompleteListener(activity, new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()) {
+//                    mRegisterFragment.registerForm();
+//                } else {
+//                    showMessage(mRegisterFragment.getActivity(), "Authentication failed.");
+//                }
+//
+//            }
+//        });
     }
 
     public void signIn(String email, String password, LoginFragment loginFragment) {

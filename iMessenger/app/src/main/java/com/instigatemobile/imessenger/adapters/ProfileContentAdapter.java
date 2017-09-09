@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.models.Profile;
+import com.instigatemobile.imessenger.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +17,16 @@ import java.util.List;
 public class ProfileContentAdapter extends RecyclerView.Adapter<ProfileContentAdapter.ProfileViewHolder> {
     List<ProfileContent> profileContent;
 
-    public ProfileContentAdapter(Profile profile) {
+    public ProfileContentAdapter(User profile) {
         initProfileContent(profile);
     }
 
-    private void initProfileContent(Profile profile) {
+    private void initProfileContent(User profile) {
         ArrayList<ProfileContent> contentList = new ArrayList<>();
-        contentList.add(new ProfileContent("Favourites", profile.getFavoritesCount(), R.mipmap.favourites));
-        contentList.add(new ProfileContent("ContactsFragment", profile.getFavoritesCount(), R.mipmap.contacts));
-        profileContent = contentList;
+//TODO:
+//        contentList.add(new ProfileContent("Favorits", profile.getFavoritesCount(), R.mipmap.favorites));
+//        contentList.add(new ProfileContent("ContactsFragment", profile.getFavoritesCount(), R.mipmap.contacts));
+//        profileContent = contentList;
     }
 
     @Override
@@ -67,7 +68,7 @@ public class ProfileContentAdapter extends RecyclerView.Adapter<ProfileContentAd
         }
     }
 
-    private class ProfileContent {
+    class ProfileContent {
         private int count;
         private String elementName;
         private int imagePath;

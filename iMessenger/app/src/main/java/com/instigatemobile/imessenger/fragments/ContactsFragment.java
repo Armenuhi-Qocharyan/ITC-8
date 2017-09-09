@@ -3,8 +3,6 @@ package com.instigatemobile.imessenger.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.adapters.ContactsAdapter;
-import com.instigatemobile.imessenger.models.Contacts;
-
-import java.util.ArrayList;
 
 public class ContactsFragment extends Fragment {
 
@@ -32,16 +26,17 @@ public class ContactsFragment extends Fragment {
         database.child(user.getUid()).child("contactsList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Contacts> list = new ArrayList<Contacts>();
-                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                    String name = (String) messageSnapshot.child("user").getValue();
-                    String message = (String) messageSnapshot.child("lastMessage").getValue();
-                    String image = (String) messageSnapshot.child("image").getValue();
-                    RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setAdapter(new ContactsAdapter(list, getActivity()));
-                    list.add(new Contacts(name, message, image));
-                }
+//TODO
+//                ArrayList<Contacts> list = new ArrayList<Contacts>();
+//                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+//                    String name = (String) messageSnapshot.child("user").getValue();
+//                    String message = (String) messageSnapshot.child("lastMessage").getValue();
+//                    String image = (String) messageSnapshot.child("image").getValue();
+//                    RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                    recyclerView.setAdapter(new ContactsAdapter(list, getActivity()));
+//                    list.add(new Contacts(name, message, image));
+//                }
             }
 
             @Override

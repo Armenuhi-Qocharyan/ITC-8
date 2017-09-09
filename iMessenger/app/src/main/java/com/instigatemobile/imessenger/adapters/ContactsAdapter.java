@@ -15,20 +15,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.activities.MessengerActivity;
-import com.instigatemobile.imessenger.models.Contacts;
+import com.instigatemobile.imessenger.models.User;
 
 import java.util.ArrayList;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.PersonViewHolder> {
 
-    ArrayList<Contacts> ContactsArray;
+    ArrayList<User> ContactsArray;
     private Context mContext;
+//TODO
+//    public ContactsAdapter(ArrayList<User> ContactsArray) {
+//        this.ContactsArray = ContactsArray;
+//    }
 
-    public ContactsAdapter(ArrayList<Contacts> ContactsArray) {
-        this.ContactsArray = ContactsArray;
-    }
-
-    public ContactsAdapter(ArrayList<Contacts> ContactsArray, Context context) {
+    public ContactsAdapter(ArrayList<User> ContactsArray, Context context) {
         this.ContactsArray = ContactsArray;
         this.mContext = context;
     }
@@ -55,9 +55,10 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Person
 
     @Override
     public void onBindViewHolder(PersonViewHolder holder, int position) {
-        holder.personNameTextView.setText(ContactsArray.get(position).getUser());
-        holder.ContactsurnameTextView.setText(ContactsArray.get(position).getLastMessage());
-        holder.setIcon(ContactsArray.get(position).getImage(), mContext);
+//TODO
+//        holder.personNameTextView.setText(ContactsArray.get(position).getUser());
+//        holder.ContactsurnameTextView.setText(ContactsArray.get(position).getLastMessage());
+//        holder.setIcon(ContactsArray.get(position).getImage(), mContext);
     }
 
     @Override

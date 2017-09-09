@@ -64,7 +64,7 @@ public class ForgotPasswordFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         editTextEmail = (EditText) view.findViewById(R.id.input_email);
         bar = (ProgressBar) view.findViewById(R.id.progressBar);
-        submit = view.findViewById(R.id.btn_submit);
+        submit = (Button) view.findViewById(R.id.btn_submit);
     }
 
     private void goLoginPage() {

@@ -77,14 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 showChangeLangDialog();
                 return true;
             case R.id.action_logout:
-                LoginRegister loginRegister = LoginRegister.initLoginRegister();
-                intent = new Intent(MainActivity.this, LoginRegisterActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                loginRegister.signOut();
-                startActivity(intent);
-                //pressedLogout();
+                pressedLogout();
                 return true;
             case R.id.action_about:
                 intent = new Intent(MainActivity.this, SettingsActivity.class);

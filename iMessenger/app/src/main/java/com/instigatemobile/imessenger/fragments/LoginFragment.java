@@ -3,6 +3,8 @@ package com.instigatemobile.imessenger.fragments;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,114 +13,133 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.activities.MainActivity;
-import com.instigatemobile.imessenger.controllers.LoginRegister;
+import com.instigatemobile.imessenger.data.SharedPreferenceHelper;
+import com.instigatemobile.imessenger.data.StaticConfig;
+import com.instigatemobile.imessenger.models.User;
 
-public class LoginFragment extends Fragment implements View.OnClickListener {
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+public class LoginFragment extends Fragment {
+
+
+    private AuthUtils mAuthUtils;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser user;
+    private boolean firstTimeAccess;
 
     private View view;
-    private Button login;
-    private TextView register;
-    private TextView forgot;
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private FragmentManager fragmentManager;
-    private RegisterFragment registerFragment;
     private ProgressBar bar;
 
+    //private AwesomeValidation awesomeValidation;
+    //private static final String EMAIL_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+    //private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
+
     public LoginFragment() {
+        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
         bar = (ProgressBar) view.findViewById(R.id.progressBar);
-        initViews();
-        setListeners();
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthUtils = new AuthUtils();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    StaticConfig.UID = user.getUid();
+                    if (firstTimeAccess) {
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        getActivity().finish();
+                    }
+                }
+                firstTimeAccess = false;
+            }
+        };
+        mAuth.addAuthStateListener(mAuthListener);
+
+        editTextEmail = (EditText) view.findViewById(R.id.input_email);
+        editTextPassword = (EditText) view.findViewById(R.id.input_password);
+        Button login = (Button) view.findViewById(R.id.btn_login);
+        TextView register = (TextView) view.findViewById(R.id.link_signup);
+        TextView forgot = (TextView) view.findViewById(R.id.link_forgot_pass);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickLogin(view);
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goRegisterPage();
+            }
+        });
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickForgotPass(v);
+            }
+        });
         return view;
     }
 
-    private void initViews() {
-        registerFragment = new RegisterFragment();
-        fragmentManager = getActivity().getSupportFragmentManager();
-        editTextEmail = (EditText) view.findViewById(R.id.input_email);
-        editTextPassword = (EditText) view.findViewById(R.id.input_password);
-        login = (Button) view.findViewById(R.id.btn_login);
-        register = (TextView) view.findViewById(R.id.link_signup);
-        forgot = (TextView) view.findViewById(R.id.link_forgot_pass);
-        LinearLayout loginLayout = (LinearLayout) view.findViewById(R.id.login_layout);
+    public void clickLogin(View view) {
+        String username = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+        if (validate(username, password)) {
+            mAuthUtils.signIn(username, password);
+        } else {
+            Toast.makeText(getActivity(), "Invalid email or empty password", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void setListeners() {
-        login.setOnClickListener(this);
-        register.setOnClickListener(this);
-        forgot.setOnClickListener(this);
+    public void clickForgotPass(View view) {
+        String username = editTextEmail.getText().toString();
+        if (validate(username, ";")) {
+            mAuthUtils.resetPassword(username);
+        } else {
+            Toast.makeText(getActivity(), "Invalid email", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void goRegisterPage() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        RegisterFragment registerFragment = new RegisterFragment();
+        registerFragment.setAuthUtils(mAuthUtils);
         fragmentTransaction.replace(R.id.fragmentContainer, registerFragment);
         fragmentTransaction.addToBackStack("Register");
         fragmentTransaction.commit();
-    }
-
-    private void goForgotPasswordPage() {
-        ForgotPasswordFragment forgotFragment = new ForgotPasswordFragment();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainer, forgotFragment);
-        fragmentTransaction.addToBackStack("Login");
-        fragmentTransaction.commit();
-    }
-
-    public void onClick(final View view) {
-        new ProgressTask().execute();
-        if (view == register) {
-            goRegisterPage();
-        } else if (view == login) {
-            if (validateEmail() && validatePassword()) {
-                LoginRegister loginRegister = LoginRegister.initLoginRegister();
-                loginRegister.signIn(editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
-            }
-        } else if (view == forgot) {
-            goForgotPasswordPage();
-        }
-    }
-
-    private boolean validateEmail() {
-        String email = editTextEmail.getText().toString().trim();
-        final String EMAIL_PATERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-        if (editTextEmail.getText().toString().equals("")) {
-            editTextEmail.setError("You should specify the email");
-            return false;
-        }
-
-        if (!email.matches(EMAIL_PATERN)) {
-            editTextEmail.setError("The specified email is not correctly formatted");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validatePassword() {
-        String password = editTextPassword.getText().toString().trim();
-        final String PASSWORD_PATERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
-
-        if ((editTextPassword.getText().toString().equals("")) || (editTextPassword.getText().length() < 6)) {
-            editTextPassword.setError("You should specify the password");
-            return false;
-        }
-        /*
-        if (!password.matches(PASSWORD_PATERN)) {
-            editTextPassword.setError("The specified password is not correctly formated (min lenght 6 symbole, at least one symbole and on capital latter and one number)");
-            return false;
-        }*/
-        return true;
     }
 
     public void redirect() {
@@ -151,4 +172,114 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             bar.setVisibility(View.GONE);
         }
     }
+
+
+    class AuthUtils {
+
+        void createUser(final String username, final String email, String password) {
+            progressBarVisibility();
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBarInvisibility();
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(getActivity(), "Register an account failed", Toast.LENGTH_SHORT).show();
+                            } else {
+                                initNewUserInfo(username,email);
+                                Toast.makeText(getActivity(), "Register and Login success", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                getActivity().finish();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressBarInvisibility();
+                        }
+                    })
+            ;
+        }
+
+
+        void signIn(String email, String password) {
+            progressBarVisibility();
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBarInvisibility();
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(getActivity(), "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                            } else {
+                                saveUserInfo();
+                                redirect();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressBarInvisibility();
+                        }
+                    });
+        }
+
+
+        void resetPassword(final String email) {
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Snackbar snackbar = Snackbar
+                                    .make(view, "Email with reset password link sent", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
+                    });
+        }
+
+
+        void saveUserInfo() {
+            FirebaseDatabase.getInstance().getReference().child("user/" + StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    progressBarInvisibility();
+                    HashMap hashUser = (HashMap) dataSnapshot.getValue();
+                    if (hashUser == null) {
+                        return;
+                    }
+                    User userInfo = new User();
+                    userInfo.name = (String) hashUser.get("name");
+                    userInfo.email = (String) hashUser.get("email");
+                    userInfo.avata = (String) hashUser.get("avata");
+                    SharedPreferenceHelper.getInstance(getActivity()).saveUserInfo(userInfo);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        /**
+         * Khoi tao thong tin mac dinh cho tai khoan moi
+         */
+        void initNewUserInfo(String username, String email) {
+            User newUser = new User();
+            newUser.email = email;
+            newUser.name = username;
+            newUser.avata = StaticConfig.STR_DEFAULT_BASE64;
+            FirebaseDatabase.getInstance().getReference().child("user/" + user.getUid()).setValue(newUser);
+        }
+    }
+
+    private boolean validate(String emailStr, String password) {
+        final Pattern VALID_EMAIL_ADDRESS_REGEX =
+                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+        return (password.length() > 0 || password.equals(";")) && matcher.find();
+    }
+
 }

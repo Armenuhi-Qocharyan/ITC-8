@@ -10,20 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.models.Persons;
+import com.instigatemobile.imessenger.models.User;
 
 import java.util.ArrayList;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
 
-    ArrayList<Persons> personsArray;
+    ArrayList<User> personsArray;
     private Context mContext;
 
-    public PersonAdapter(ArrayList<Persons> personsArray) {
+    public PersonAdapter(ArrayList<User> personsArray) {
         this.personsArray = personsArray;
     }
 
-    public PersonAdapter(ArrayList<Persons> personsArray, Context mContext) {
+    public PersonAdapter(ArrayList<User> personsArray, Context mContext) {
         this.personsArray = personsArray;
         this.mContext = mContext;
     }
@@ -34,14 +34,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     private void initializePerson() {
         personsArray = new ArrayList<>();
-        personsArray.add(new Persons("Aaa", "Aaaaa", R.drawable.avatar));
-        personsArray.add(new Persons("Bbb", "Bbbbb", R.drawable.avatar));
-        personsArray.add(new Persons("Ccc", "Ccccc", R.drawable.avatar));
-        personsArray.add(new Persons("Ddd", "Ddddd", R.drawable.avatar));
-        personsArray.add(new Persons("Aaa", "Aaaaa", R.drawable.avatar));
-        personsArray.add(new Persons("Bbb", "Bbbbb", R.drawable.avatar));
-        personsArray.add(new Persons("Ccc", "Ccccc", R.drawable.avatar));
-        personsArray.add(new Persons("Ddd", "Ddddd", R.drawable.avatar));
+        personsArray.add(new User("Aaa Aaaaa", R.drawable.avatar));
+        personsArray.add(new User("Bbb Bbbbb", R.drawable.avatar));
+        personsArray.add(new User("Ccc Ccccc", R.drawable.avatar));
+        personsArray.add(new User("Ddd Ddddd", R.drawable.avatar));
+        personsArray.add(new User("Aaa Aaaaa", R.drawable.avatar));
+        personsArray.add(new User("Bbb Bbbbb", R.drawable.avatar));
+        personsArray.add(new User("Ccc Ccccc", R.drawable.avatar));
+        personsArray.add(new User("Ddd Ddddd", R.drawable.avatar));
     }
 
     @Override
@@ -53,9 +53,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     @Override
     public void onBindViewHolder(PersonViewHolder holder, int position) {
-        holder.personNameTextView.setText(personsArray.get(position).getPersonName());
-        holder.personSurnameTextView.setText(personsArray.get(position).getPersonSurname());
-        holder.personImageView.setImageResource(personsArray.get(position).getPersonImage());
+        String arr[] = personsArray.get(position).name.split(" ");
+        holder.personNameTextView.setText(arr[0]);
+        holder.personSurnameTextView.setText(arr[1]);
+        holder.personImageView.setImageResource(personsArray.get(position).resource);
     }
 
     @Override

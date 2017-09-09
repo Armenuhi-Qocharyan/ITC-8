@@ -6,10 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +25,7 @@ import com.instigatemobile.imessenger.controllers.DataBase;
 import com.instigatemobile.imessenger.controllers.ProfileCallbackInterface;
 import com.instigatemobile.imessenger.controllers.RoundImage;
 import com.instigatemobile.imessenger.controllers.Storage;
-import com.instigatemobile.imessenger.models.Profile;
+import com.instigatemobile.imessenger.models.User;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -37,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
 public class ProfileFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
     private final int RESULT_LOAD_IMAGE = 0;
     private int clickAction = 0;
-    private Profile profile;
+    private User profile;
     private DataBase database;
     private Storage storage;
     private ProfileCallbackInterface callback;
@@ -47,60 +45,60 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     private LinearLayout background;
     private TextView name;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initProfileCallbackMethods();
-        database = DataBase.initDataBase();
-        database.getCurrentProfile(callback);
-    }
-
-    private void initProfileCallbackMethods() {
-        callback = new ProfileCallbackInterface() {
-            @Override
-            public void responseProfile(Profile prf) {
-                profile = prf;
-                storage = Storage.initStorage();
-                storage.downloadImageFromStorage(profile.getBackground(), "background", callback);
-                storage.downloadImageFromStorage(profile.getAvatar(), "avatar", callback);
-                name.setText(profile.getName());
-                initProfileRecycleViewContent();
-            }
-
-            @Override
-            public void changeImage(String path, String imageName) {
-                if (imageName == "avatar") {
-                    database.changeProfileAvatar(path);
-                } else if (imageName == "background") {
-                    database.changeProfileBackground(path);
-                }
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void setBackgroundAvatar(Bitmap imageBitmap) {
-                if (imageBitmap != null) {
-                    int sdk = android.os.Build.VERSION.SDK_INT;
-                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        background.setBackgroundDrawable(new BitmapDrawable(imageBitmap));
-                    } else {
-                        background.setBackground(new BitmapDrawable(imageBitmap));
-                    }
-                }
-            }
-
-            @Override
-            public void setAvatar(Bitmap imageBitmap) {
-                if (imageBitmap != null) {
-                    imageBitmap = quadraticImage(imageBitmap);
-                    RoundImage roundedImage = new RoundImage(imageBitmap);
-                    imageView.setImageDrawable(roundedImage);
-                } else {
-                    imageView.setImageResource(R.drawable.avatar1);
-                }
-            }
-        };
-    }
+//TODO
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        initProfileCallbackMethods();
+//        database = DataBase.initDataBase();
+//        database.getCurrentProfile(callback);
+//    }
+//
+//    private void initProfileCallbackMethods() {
+//        callback = new ProfileCallbackInterface() {
+//            @Override
+//            public void responseProfile(Profile prf) {
+//                profile = prf;
+//                storage = Storage.initStorage();
+//                storage.downloadImageFromStorage(profile.getBackground(), "background", callback);
+//                storage.downloadImageFromStorage(profile.getAvatar(), "avatar", callback);
+//                name.setText(profile.getName());
+//                initProfileRecycleViewContent();
+//            }
+//
+//            @Override
+//            public void changeImage(String path, String imageName) {
+//                if (imageName == "avatar") {
+//                    database.changeProfileAvatar(path);
+//                } else if (imageName == "background") {
+//                    database.changeProfileBackground(path);
+//                }
+//            }
+//
+//            @Override
+//            public void setBackgroundAvatar(Bitmap imageBitmap) {
+//                if (imageBitmap != null) {
+//                    int sdk = android.os.Build.VERSION.SDK_INT;
+//                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//                        background.setBackgroundDrawable(new BitmapDrawable(imageBitmap));
+//                    } else {
+//                        background.setBackground(new BitmapDrawable(imageBitmap));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void setAvatar(Bitmap imageBitmap) {
+//                if (imageBitmap != null) {
+//                    imageBitmap = quadraticImage(imageBitmap);
+//                    RoundImage roundedImage = new RoundImage(imageBitmap);
+//                    imageView.setImageDrawable(roundedImage);
+//                } else {
+//                    imageView.setImageResource(R.drawable.avatar1);
+//                }
+//            }
+//        };
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
