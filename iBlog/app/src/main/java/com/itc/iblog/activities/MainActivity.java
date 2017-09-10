@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity
         userName = (TextView) findViewById(R.id.header_user_name);
         email = (TextView) findViewById(R.id.header_user_email);
         setAvatar();
-
         return true;
     }
 
