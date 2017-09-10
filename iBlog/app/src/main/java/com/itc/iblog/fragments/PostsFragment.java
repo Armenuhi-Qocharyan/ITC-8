@@ -61,6 +61,8 @@ public class PostsFragment extends Fragment {
     private Bitmap bitmap;
     private Uri file;
     private int IMAGE;
+    private DatabaseReference ref;
+    private ValueEventListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,8 +73,8 @@ public class PostsFragment extends Fragment {
         myDataset = new ArrayList<>();
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("Posts");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref = database.getReference("Posts");
+        listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myDataset = new ArrayList<>();
@@ -113,11 +115,8 @@ public class PostsFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
-
-
-
-
+        };
+        ref.addValueEventListener(listener);
         return view;
     }
     @Override
@@ -230,5 +229,17 @@ public class PostsFragment extends Fragment {
                 dialog.show();
             }
         });
+//        ref.removeEventListener(listener);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        //ref.removeEventListener(listener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //ref.removeEventListener(listener);
     }
 }

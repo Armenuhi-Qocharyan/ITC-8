@@ -58,7 +58,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 
-@RuntimePermissions
+//@RuntimePermissions
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -78,37 +78,6 @@ public class MainActivity extends AppCompatActivity
     private String avatarUrl;
     private StorageReference storageRef;
 
-
-    @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void callPhone() {
-        // Trigger the calling of a number here
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // NOTE: delegate the permission handling to generated method
-        //ActivityRequestPermPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
-    }
-
-    @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void showRationaleForPhoneCall(PermissionRequest request) {
-        new AlertDialog.Builder(this)
-                .setMessage("Hello")
-                .show();
-    }
-
-    // Annotate a method which is invoked if the user doesn't grant the permissions
-    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void showDeniedForPhoneCall() {
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-    }
-
-    // Annotates a method which is invoked if the user
-    // chose to have the device "never ask again" about a permission
-    @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void showNeverAskForPhoneCall() {
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
