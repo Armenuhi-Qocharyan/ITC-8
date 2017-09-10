@@ -4,11 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.instigatemobile.imessenger.models.Contacts;
 import com.instigatemobile.imessenger.models.User;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class DataBase {
     private static DataBase DB;

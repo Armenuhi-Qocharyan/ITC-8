@@ -1,7 +1,6 @@
 package com.instigatemobile.imessenger.data;
 
 
-
 public class StaticConfig {
     public static int REQUEST_CODE_REGISTER = 2000;
     public static String STR_EXTRA_ACTION_LOGIN = "login";

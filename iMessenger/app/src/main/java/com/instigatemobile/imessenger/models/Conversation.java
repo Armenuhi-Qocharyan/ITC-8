@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 public class Conversation {
     private ArrayList<Message> listMessageData;
-    public Conversation(){
+
+    public Conversation() {
         listMessageData = new ArrayList<>();
     }
 

@@ -2,7 +2,6 @@ package com.instigatemobile.imessenger.models;
 
 import java.util.ArrayList;
 
-
 public class ListFriend {
     private ArrayList<Friend> listFriend;
 

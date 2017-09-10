@@ -17,7 +17,8 @@ public class SharedPreferenceHelper {
     private static String SHARE_KEY_UID = "uid";
 
 
-    private SharedPreferenceHelper() {}
+    private SharedPreferenceHelper() {
+    }
 
     public static SharedPreferenceHelper getInstance(Context context) {
         if (instance == null) {
@@ -36,7 +37,7 @@ public class SharedPreferenceHelper {
         editor.apply();
     }
 
-    public User getUserInfo(){
+    public User getUserInfo() {
         String userName = preferences.getString(SHARE_KEY_NAME, "");
         String email = preferences.getString(SHARE_KEY_EMAIL, "");
         String avatar = preferences.getString(SHARE_KEY_AVATA, "default");
@@ -49,7 +50,7 @@ public class SharedPreferenceHelper {
         return user;
     }
 
-    public String getUID(){
+    public String getUID() {
         return preferences.getString(SHARE_KEY_UID, "");
     }
 

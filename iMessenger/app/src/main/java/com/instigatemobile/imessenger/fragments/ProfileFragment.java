@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,7 +22,6 @@ import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.adapters.ProfileContentAdapter;
 import com.instigatemobile.imessenger.controllers.DataBase;
 import com.instigatemobile.imessenger.controllers.ProfileCallbackInterface;
-import com.instigatemobile.imessenger.controllers.RoundImage;
 import com.instigatemobile.imessenger.controllers.Storage;
 import com.instigatemobile.imessenger.models.User;
 

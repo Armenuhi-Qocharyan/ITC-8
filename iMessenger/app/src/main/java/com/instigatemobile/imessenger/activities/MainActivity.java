@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,25 +23,55 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.controllers.LoginRegister;
+import com.instigatemobile.imessenger.data.LocalDB;
+import com.instigatemobile.imessenger.data.StaticConfig;
 import com.instigatemobile.imessenger.fragments.ContactsFragment;
 import com.instigatemobile.imessenger.fragments.FavoritesFragment;
 import com.instigatemobile.imessenger.fragments.ProfileFragment;
+import com.instigatemobile.imessenger.service.ServiceUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    private FloatingActionButton floatButton;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    StaticConfig.UID = user.getUid();
+                } else {
+                    MainActivity.this.finish();
+                    startActivity(new Intent(MainActivity.this, LoginRegisterActivity.class));
+                }
+            }
+        };
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter.addFrag(new ContactsFragment());
+        mSectionsPagerAdapter.addFrag(new ProfileFragment());
+        mSectionsPagerAdapter.addFrag(new FavoritesFragment());
+
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -56,7 +88,33 @@ public class MainActivity extends AppCompatActivity {
             config.locale = locale;
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         }
+
+        floatButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatButton.setOnClickListener(((ContactsFragment) mSectionsPagerAdapter.getItem(0)).onFABClick.getInstance(this));
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+        ServiceUtils.stopServiceFriendChat(getApplicationContext(), false);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        ServiceUtils.startServiceFriendChat(getApplicationContext());
+        super.onDestroy();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,16 +151,17 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.logout_dialog_question)
                 .setCancelable(true)
-                .setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 })
-                .setPositiveButton(R.string.no, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(MainActivity.this, LoginRegisterActivity.class);
-                        startActivity(intent);
-                        finish();
+                        FirebaseAuth.getInstance().signOut();
+                        LocalDB.getInstance(MainActivity.this).dropDB();
+                        ServiceUtils.stopServiceFriendChat(MainActivity.this.getApplicationContext(), true);
+                        MainActivity.this.finish();
                     }
                 });
         AlertDialog alert = builder.create();
@@ -158,27 +217,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+
         private SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+        public void addFrag(Fragment fragment) {
+            mFragmentList.add(fragment);
+        }
+
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new ContactsFragment();
-                case 1:
-                    return new ProfileFragment();
-                case 2:
-                    return new FavoritesFragment();
-                default:
-                    return null;
-            }
+            return mFragmentList.get(position);
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return mFragmentList.size();
         }
 
         @Override

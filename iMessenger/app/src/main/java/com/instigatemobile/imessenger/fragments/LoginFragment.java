@@ -186,7 +186,7 @@ public class LoginFragment extends Fragment {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "Register an account failed", Toast.LENGTH_SHORT).show();
                             } else {
-                                initNewUserInfo(username,email);
+                                initNewUserInfo(username, email);
                                 Toast.makeText(getActivity(), "Register and Login success", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                                 getActivity().finish();
@@ -263,9 +263,6 @@ public class LoginFragment extends Fragment {
             });
         }
 
-        /**
-         * Khoi tao thong tin mac dinh cho tai khoan moi
-         */
         void initNewUserInfo(String username, String email) {
             User newUser = new User();
             newUser.email = email;
@@ -282,4 +279,12 @@ public class LoginFragment extends Fragment {
         return (password.length() > 0 || password.equals(";")) && matcher.find();
     }
 
+    //TODO: comment in case of issue or remove after test
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
 }

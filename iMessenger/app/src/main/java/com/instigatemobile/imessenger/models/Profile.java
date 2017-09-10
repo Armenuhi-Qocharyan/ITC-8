@@ -14,7 +14,8 @@ public class Profile {
     private int favoritesCount;
     private int contactsCount;
 
-    public Profile() {}
+    public Profile() {
+    }
 
     public Profile(String name, String email, String avatarURL, String backgroundURL, int favoritesCount, int contactsCount) {
         this.name = name;
