@@ -2,12 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.itc.iblog">
 
-    <permission android:name="WRITE_EXTERNAL_STORAGE">
+
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    </permission>
-    <permission android:name="READ_EXTERNAL_STORAGE">
+
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    </permission>
+
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -49,7 +48,9 @@
             android:name=".activities.ProfileActivity"
             android:parentActivityName=".activities.MainActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>
