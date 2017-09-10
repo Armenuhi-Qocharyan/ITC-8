@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setAvatar();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -142,6 +141,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        userName = (TextView) findViewById(R.id.header_user_name);
+        email = (TextView) findViewById(R.id.header_user_email);
+        setAvatar();
+
         return true;
     }
 
@@ -286,8 +289,7 @@ public class MainActivity extends AppCompatActivity
         dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                userName = (TextView) findViewById(R.id.header_user_name);
-                email = (TextView) findViewById(R.id.header_user_email);
+
                 String user = (String) dataSnapshot.child("userName").getValue();
                 String userEmail = (String) dataSnapshot.child("email").getValue();
                 String url = (String) dataSnapshot.child("url").getValue();

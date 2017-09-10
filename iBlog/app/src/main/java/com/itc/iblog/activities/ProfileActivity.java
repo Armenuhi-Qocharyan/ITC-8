@@ -43,30 +43,24 @@ import java.io.InputStream;
 
 
 public class ProfileActivity extends AppCompatActivity {
-
+    private String whatImage;
     private FloatingActionButton avatar;
     private ImageView editIcon;
     private ImageView bgImage;
-    private DatabaseReference mDatabase;
     private TextView userName;
     private TextView email;
-    private String avatarUrl;
     private TextView userAge;
-    private StorageReference storageRef;
     private FloatingActionButton floatingActionButton;
-    private FirebaseUser user;
     private FirebaseDatabase database;
-    private Bitmap imageFromGallery;
-    private String whatImage;
-    private String url;
-
+    private StorageReference storageRef;
+    private String userKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
         database =  FirebaseDatabase.getInstance();
-        user =  FirebaseAuth.getInstance().getCurrentUser();
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_avatar);
         editIcon = (ImageView) findViewById(R.id.edit_icon);
         bgImage = (ImageView) findViewById(R.id.bg_image);
@@ -76,37 +70,52 @@ public class ProfileActivity extends AppCompatActivity {
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        boolean owner = true;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            } else {
+                owner = false;
+                editIcon.setVisibility(View.INVISIBLE);
+                findViewById(R.id.profile_follow).setVisibility(View.VISIBLE);
+                userKey= extras.getString("key");
+            }
+        } else {
+                userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
         setImage("bg");
         setImage("avatar");
-        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                whatImage = "avatar";
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, 1);
-                return false;
-            }
-        });
+        if ( owner ) {
+            floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    whatImage = "avatar";
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, 1);
+                    return false;
+                }
+            });
 
-        editIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                whatImage = "bg";
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, 1);
-            }
-        });
+            editIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    whatImage = "bg";
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, 1);
+                }
+            });
+        }
 
     }
 
     private void setImage(final String img) {
         this.storageRef = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference dbRef = mDatabase.child("Users");
-        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent (new ValueEventListener() {
+        DatabaseReference dbRef = database.getReference().child("Users");
+        dbRef.child(userKey).addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                url = "";
+                String url = "";
                 if (img.equals("avatar")) {
                     userName = (TextView) findViewById(R.id.profile_username);
                     email = (TextView) findViewById(R.id.profile_email);
@@ -121,10 +130,9 @@ public class ProfileActivity extends AppCompatActivity {
                 } else if(img.equals("bg")) {
                     url = (String) dataSnapshot.child("bgUrl").getValue();
                 }
-                avatarUrl = url;
                 // Get avatar image
-                if (avatarUrl != null) {
-                    StorageReference pathReference = storageRef.child(avatarUrl);
+                if (url != null) {
+                    StorageReference pathReference = storageRef.child(url);
                     if(url.equals("null") && img.equals("bg")) {
                         bgImage.setImageResource(R.drawable.background_img);
                         return;
@@ -146,7 +154,6 @@ public class ProfileActivity extends AppCompatActivity {
                             } else if(img.equals("bg")) {
                                 ProfileActivity.this.bgImage = (ImageView) findViewById(R.id.bg_image);
                                 bgImage.setImageBitmap(bmp);
-
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -159,7 +166,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-
         });
     }
 
@@ -239,15 +245,14 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
-                Toast.makeText(ProfileActivity.this, "Can not download image to the storage.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Can not upload image to the storage.", Toast.LENGTH_SHORT).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                Toast.makeText(ProfileActivity.this, "Downloaded successfully.", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(ProfileActivity.this, "Uploaded successfully.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -267,19 +272,18 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void changeUserInfo(String path) {
-        String userId = user.getUid();
+        //String userId = user.getUid();
         DatabaseReference mRef = null;
         if (whatImage.equals("avatar")) {
-            mRef = database.getReference().child("Users").child(userId).child("url");
+            mRef = database.getReference().child("Users").child(userKey).child("url");
         } else if(whatImage.equals("bg")) {
-            mRef = database.getReference().child("Users").child(userId).child("bgUrl");
+            mRef = database.getReference().child("Users").child(userKey).child("bgUrl");
         }
         mRef.setValue(path);
     }
 
 
-    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
-                                   boolean filter) {
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter) {
         float ratio = Math.min(
                 (float) maxImageSize / realImage.getWidth(),
                 (float) maxImageSize / realImage.getHeight());

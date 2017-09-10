@@ -1,9 +1,12 @@
 package com.itc.iblog.adapters;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.itc.iblog.activities.MainActivity;
+import com.itc.iblog.activities.ProfileActivity;
 import com.squareup.picasso.Picasso;
 import com.itc.iblog.R;
 import com.itc.iblog.models.UserModel;
@@ -34,6 +39,7 @@ import java.util.List;
 
 public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder, UserModel> {
     private DatabaseReference mDatabase;
+    private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -42,6 +48,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         private TextView textViewEmail;
         private ImageView imageView;
         private ImageView follow;
+        private CardView cardView;
 
 
 
@@ -52,12 +59,14 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
             imageView =  view.findViewById(R.id.user_image);
             follow = view.findViewById(R.id.follow);
             textViewEmail =  view.findViewById(R.id.textview_email);
+            cardView = (CardView) view.findViewById(R.id.card_view);
         }
     }
 
-    public UserAdapter(Query query, @Nullable ArrayList<UserModel> items,
+    public UserAdapter(Context context, Query query, @Nullable ArrayList<UserModel> items,
                        @Nullable ArrayList<String> keys) {
         super(query, items, keys);
+        this.context = context;
     }
 
     @Override public UserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -108,6 +117,17 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
             @Override
             public void onClick(View v) {
                 addFollower(item, holder.follow);
+            }
+        });
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String carrentKey = getKeys().get(position);
+                System.out.println(carrentKey);
+                Intent intent = new Intent(context, ProfileActivity.class);
+                intent.putExtra("key",carrentKey);
+                context.startActivity(intent);
             }
         });
     }

@@ -69,7 +69,7 @@ public class UsersFragment extends Fragment {
 
     private void setupRecyclerview(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
-        mMyAdapter = new UserAdapter(mQuery, mAdapterItems, mAdapterKeys);
+        mMyAdapter = new UserAdapter(getContext(), mQuery, mAdapterItems, mAdapterKeys);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(mMyAdapter);
 
