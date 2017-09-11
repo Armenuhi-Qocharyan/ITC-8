@@ -78,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            if(extras == null || extras.getString("key") == userId) {
+            if(extras == null || extras.getString("key").equals(userId)) {
                 userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 follow.setVisibility(View.INVISIBLE);
             } else {
@@ -86,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
                 editIcon.setVisibility(View.INVISIBLE);
                 findViewById(R.id.profile_follow).setVisibility(View.VISIBLE);
                 userKey= extras.getString("key");
-                if (database.getReference().child(userKey).child("followers").child(userId).equals(true)) {
+                if (extras.getBoolean("followed")) {
                     follow.setText("Unfollow");
                 } else {
                     follow.setText("Follow");
@@ -126,18 +126,15 @@ public class ProfileActivity extends AppCompatActivity {
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
-                            if(snapshot.child(userId).child
-                                    ("followers").child(userKey) != null) {
-                                Log.d("jhf","fjk");
+                            if(snapshot.child(userId).child("followers").hasChild(userKey)) {
                                 snapshot.child(userId).child
                                         ("followers").child(userKey).getRef()
                                         .removeValue();
                                 snapshot.child(userKey).child("following").child(userId).getRef().removeValue();
                                 follow.setText("Follow");
                             } else {
-                                reference.child(userId).child("followers").child(userKey).setValue(true);
-                                reference.child(userKey).child("following").child(userId)
-                                        .setValue(true);
+                                reference.child(userId).child("followers").child(userKey).getRef().setValue(true);
+                                reference.child(userKey).child("following").child(userId).getRef().setValue(true);
                                 follow.setText("Unfollow");
                             }
 

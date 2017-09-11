@@ -58,12 +58,6 @@ import java.io.IOException;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.OnNeverAskAgain;
-import permissions.dispatcher.OnPermissionDenied;
-import permissions.dispatcher.OnShowRationale;
-import permissions.dispatcher.PermissionRequest;
-import permissions.dispatcher.RuntimePermissions;
 
 
 //@RuntimePermissions
@@ -287,8 +281,6 @@ public class MainActivity extends AppCompatActivity
                 String user = (String) dataSnapshot.child("userName").getValue();
                 String userEmail = (String) dataSnapshot.child("email").getValue();
                 String url = (String) dataSnapshot.child("url").getValue();
-                MainActivity.this.userName.setText(user);
-                MainActivity.this.email.setText(userEmail);
                 avatarUrl = url;
                 // Get avatar image
                 if (avatarUrl != null) {
