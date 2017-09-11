@@ -78,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            if(extras == null || extras.getString("key") == userId) {
+            if(extras == null || extras.getString("key").equals(userId)) {
                 userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 follow.setVisibility(View.INVISIBLE);
             } else {
@@ -86,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
                 editIcon.setVisibility(View.INVISIBLE);
                 findViewById(R.id.profile_follow).setVisibility(View.VISIBLE);
                 userKey= extras.getString("key");
-                if (database.getReference().child(userKey).child("followers").child(userId).equals(true)) {
+                if (extras.getBoolean("followed")) {
                     follow.setText("Unfollow");
                 } else {
                     follow.setText("Follow");

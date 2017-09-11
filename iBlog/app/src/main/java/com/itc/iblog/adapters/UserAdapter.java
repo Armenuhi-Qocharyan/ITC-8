@@ -126,11 +126,12 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
             @Override
             public void onClick(View view) {
                 Context context = holder.cardView.getContext();
-                if (item.getUID() != userId) {
+                if (!item.getUID().equals(userId)) {
                     String carrentKey = getKeys().get(position);
                     System.out.println(carrentKey);
                     Intent intent = new Intent(context, ProfileActivity.class);
                     intent.putExtra("key", carrentKey);
+                    intent.putExtra("followed", item.getFollowings().containsKey(userId));
                     context.startActivity(intent);
                 } else {
                     Intent intent = new Intent(context, ProfileActivity.class);
