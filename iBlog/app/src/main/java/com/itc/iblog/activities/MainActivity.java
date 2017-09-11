@@ -1,5 +1,6 @@
 package com.itc.iblog.activities;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -7,6 +8,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -40,14 +42,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import com.itc.iblog.Manifest;
 import com.itc.iblog.R;
 import com.itc.iblog.fragments.AboutUsFragment;
 import com.itc.iblog.fragments.PostsFragment;
 import com.itc.iblog.fragments.UsersFragment;
 import com.itc.iblog.fragments.FollowersFragment;
+import com.itc.iblog.interfaces.ImageLoaderInterface;
+import com.itc.iblog.models.PostModel;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -61,7 +68,10 @@ import permissions.dispatcher.RuntimePermissions;
 
 //@RuntimePermissions
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ImageLoaderInterface {
+
+    private final int WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST = 1;
+    private final int READ_EXTERNAL_STORAGE_PERMISSIONS_REQUEST = 2;
 
     private CircleImageView avatar;
     private DatabaseReference mDatabase;
@@ -96,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        if(null == savedInstanceState) {
+        if (null == savedInstanceState) {
             Fragment fragment = new PostsFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
@@ -104,6 +114,17 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
         }
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    READ_EXTERNAL_STORAGE_PERMISSIONS_REQUEST);
+        }
     }
 
 
@@ -180,8 +201,7 @@ public class MainActivity extends AppCompatActivity
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("Log out")
                     .setMessage("Are you sure you want to log out?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                    {
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             FirebaseAuth.getInstance().signOut();
@@ -218,7 +238,7 @@ public class MainActivity extends AppCompatActivity
         dialogBuilder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 int langpos = spinner1.getSelectedItemPosition();
-                switch(langpos) {
+                switch (langpos) {
                     case 0: //English
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").commit();
                         setLangRecreate("en");
@@ -260,7 +280,7 @@ public class MainActivity extends AppCompatActivity
         this.storageRef = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = mDatabase.child("Users");
-        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent (new ValueEventListener() {
+        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -293,18 +313,116 @@ public class MainActivity extends AppCompatActivity
                     });
                 }
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
 
         });
     }
+
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        // Make sure it's our original READ_CONTACTS request
+        if (requestCode == WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST) {
+            if (grantResults.length == 1 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Read Contacts permission granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Read Contacts permission denied", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == READ_EXTERNAL_STORAGE_PERMISSIONS_REQUEST) {
+            if (grantResults.length == 1 &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Read Contacts permission granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Read Contacts permission denied", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public Bitmap loadImage(PostModel post) {
+        final Bitmap[] bitmap = new Bitmap[1];
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST);
+        } else {
+            String root = Environment.getExternalStorageDirectory().toString();
+            File dir = new File(root + "/iBlog_posts_images");
+
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            final File file = new File(dir, "post" + post.getPostId() + ".png");
+
+            if (!file.exists()) {
+                final Bitmap[] bmp = new Bitmap[1];
+                StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
+                final long ONE_MEGABYTE = 1024 * 1024;
+                pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//                    holder.postImage.setImageBitmap(bmp);
+//                    holder.postImage.setVisibility(View.VISIBLE);
+                        FileOutputStream fOut = null;
+
+                        try {
+                            fOut = new FileOutputStream(file);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        bmp[0].compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                        try {
+                            fOut.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            fOut.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        System.out.println("Image not found.");
+                    }
+                });
+                return bmp[0];
+            } else {
+                System.out.println("bla read");
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                bitmap[0] = BitmapFactory.decodeFile(String.valueOf(file), options);
+                return bitmap[0];
+//            holder.postImage.setImageBitmap(bitmap);
+//            holder.postImage.setVisibility(View.VISIBLE);
+            }
+
+        }
+        return  null;
+    }
 }

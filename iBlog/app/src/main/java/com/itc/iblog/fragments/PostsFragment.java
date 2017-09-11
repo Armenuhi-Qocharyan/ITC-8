@@ -74,6 +74,8 @@ public class PostsFragment extends Fragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Posts");
+
+
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -107,7 +109,7 @@ public class PostsFragment extends Fragment {
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-                mAdapter = new ListAdapter(myDataset);
+                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity());
                 mRecyclerView.setAdapter(mAdapter);
             }
 
