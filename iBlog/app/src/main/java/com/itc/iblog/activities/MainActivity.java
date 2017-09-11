@@ -73,10 +73,15 @@ public class MainActivity extends AppCompatActivity
     private TextView email;
 
     public TextView getEmail() {
+
+        System.out.println(userName.getText().toString());
+
         return email;
     }
 
     public TextView getUserName() {
+
+        System.out.println(userName.getText().toString());
         return userName;
     }
 
@@ -280,6 +285,8 @@ public class MainActivity extends AppCompatActivity
 
                 String user = (String) dataSnapshot.child("userName").getValue();
                 String userEmail = (String) dataSnapshot.child("email").getValue();
+                userName.setText(user);
+                email.setText(userEmail);
                 String url = (String) dataSnapshot.child("url").getValue();
                 avatarUrl = url;
                 // Get avatar image
@@ -365,6 +372,7 @@ public class MainActivity extends AppCompatActivity
             final File file = new File(dir, "post" + post.getPostId() + ".png");
 
             if (!file.exists()) {
+                System.out.println("bla load");
                 final Bitmap[] bmp = new Bitmap[1];
                 StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
                 final long ONE_MEGABYTE = 1024 * 1024;
@@ -372,10 +380,9 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onSuccess(byte[] bytes) {
                         bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                    holder.postImage.setImageBitmap(bmp);
-//                    holder.postImage.setVisibility(View.VISIBLE);
                         FileOutputStream fOut = null;
-
+                        bmp[0] = Bitmap.createScaledBitmap(bmp[0], 500,
+                                500, true);
                         try {
                             fOut = new FileOutputStream(file);
                         } catch (FileNotFoundException e) {
@@ -394,7 +401,6 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
 
-
                     }
 
                 }).addOnFailureListener(new OnFailureListener() {
@@ -404,14 +410,13 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
                 return bmp[0];
+
             } else {
                 System.out.println("bla read");
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmap[0] = BitmapFactory.decodeFile(String.valueOf(file), options);
-                return bitmap[0];
-//            holder.postImage.setImageBitmap(bitmap);
-//            holder.postImage.setVisibility(View.VISIBLE);
+                return BitmapFactory.decodeFile(String.valueOf(file), options);
             }
 
         }

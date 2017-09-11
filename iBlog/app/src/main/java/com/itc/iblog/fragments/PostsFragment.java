@@ -74,9 +74,7 @@ public class PostsFragment extends Fragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Posts");
-
-
-        listener = new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myDataset = new ArrayList<>();
@@ -109,7 +107,7 @@ public class PostsFragment extends Fragment {
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity());
+                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity(),((MainActivity) getActivity()).getEmail().getText().toString());
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -117,8 +115,7 @@ public class PostsFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        };
-        ref.addValueEventListener(listener);
+        });
         return view;
     }
     @Override
@@ -190,6 +187,8 @@ public class PostsFragment extends Fragment {
                         } else {
                             postImagePath = null;
                         }
+
+                        System.out.println("bla  " + ((MainActivity)getActivity()).getUserName().getText().toString());
                         ref.child(postId)
                                 .setValue(new PostModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
                                         R.drawable.user,postImagePath,new Date(),postId,title,text,0,0,0,users));
