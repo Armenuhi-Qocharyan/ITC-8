@@ -126,18 +126,15 @@ public class ProfileActivity extends AppCompatActivity {
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
-                            if(snapshot.child(userId).child
-                                    ("followers").child(userKey) != null) {
-                                Log.d("jhf","fjk");
+                            if(snapshot.child(userId).child("followers").hasChild(userKey)) {
                                 snapshot.child(userId).child
                                         ("followers").child(userKey).getRef()
                                         .removeValue();
                                 snapshot.child(userKey).child("following").child(userId).getRef().removeValue();
                                 follow.setText("Follow");
                             } else {
-                                reference.child(userId).child("followers").child(userKey).setValue(true);
-                                reference.child(userKey).child("following").child(userId)
-                                        .setValue(true);
+                                reference.child(userId).child("followers").child(userKey).getRef().setValue(true);
+                                reference.child(userKey).child("following").child(userId).getRef().setValue(true);
                                 follow.setText("Unfollow");
                             }
 

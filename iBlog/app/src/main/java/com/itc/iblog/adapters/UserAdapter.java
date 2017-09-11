@@ -153,7 +153,8 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
                     mDatabase.child("Users").child(item.getUID()).child("following").child
                             (userId).setValue(true);
                     item.following.put(userId,true);
-                    follow.setImageResource(R.drawable.heart_unfollow);
+                   // follow.setImageResource(R.drawable.heart_unfollow);
+                    notifyItemChanged(getItems().indexOf(item));
             }
 
             @Override
@@ -171,7 +172,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
             public void onDataChange(DataSnapshot snapshot) {
                 snapshot.child(userId).child("followers").child(item.getUID()).getRef().removeValue();
                 snapshot.child(item.getUID()).child("following").child(userId).getRef().removeValue();
-                follow.setImageResource(R.drawable.heart);
+               // follow.setImageResource(R.drawable.heart);
             }
 
             @Override
