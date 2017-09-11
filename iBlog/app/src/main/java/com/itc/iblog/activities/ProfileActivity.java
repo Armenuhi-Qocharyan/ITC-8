@@ -18,7 +18,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView email;
     private TextView userAge;
     private FloatingActionButton floatingActionButton;
+    private Button follow;
     private FirebaseDatabase database;
     private StorageReference storageRef;
     private String userKey;
@@ -64,6 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_avatar);
         editIcon = (ImageView) findViewById(R.id.edit_icon);
         bgImage = (ImageView) findViewById(R.id.bg_image);
+        follow = (Button) findViewById(R.id.profile_follow);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -73,16 +77,24 @@ public class ProfileActivity extends AppCompatActivity {
         boolean owner = true;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null) {
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            if(extras == null || extras.getString("key") == userId) {
                 userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                follow.setVisibility(View.INVISIBLE);
             } else {
                 owner = false;
                 editIcon.setVisibility(View.INVISIBLE);
                 findViewById(R.id.profile_follow).setVisibility(View.VISIBLE);
                 userKey= extras.getString("key");
+                if (database.getReference().child(userKey).child("followers").child(userId).equals(true)) {
+                    follow.setText("Unfollow");
+                } else {
+                    follow.setText("Follow");
+                }
             }
         } else {
-                userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            follow.setVisibility(View.INVISIBLE);
         }
         setImage("bg");
         setImage("avatar");
@@ -105,7 +117,45 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivityForResult(galleryIntent, 1);
                 }
             });
+        } else {
+            follow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final DatabaseReference reference = database.getReference("Users");
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if(snapshot.child(userId).child
+                                    ("followers").child(userKey) != null) {
+                                Log.d("jhf","fjk");
+                                snapshot.child(userId).child
+                                        ("followers").child(userKey).getRef()
+                                        .removeValue();
+                                snapshot.child(userKey).child("following").child(userId).getRef().removeValue();
+                                follow.setText("Follow");
+                            } else {
+                                reference.child(userId).child("followers").child(userKey).setValue(true);
+                                reference.child(userKey).child("following").child(userId)
+                                        .setValue(true);
+                                follow.setText("Unfollow");
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            });
+
         }
+
+
+
 
     }
 

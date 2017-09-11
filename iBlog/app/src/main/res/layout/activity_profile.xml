@@ -126,7 +126,6 @@
                     android:id = "@+id/profile_follow"
                     android:layout_gravity="center"
                     android:visibility="gone"
-                    android:text="Follow"
                     android:textColor="#fff"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"

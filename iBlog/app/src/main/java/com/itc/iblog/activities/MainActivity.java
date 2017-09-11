@@ -45,6 +45,7 @@ import com.itc.iblog.R;
 import com.itc.iblog.fragments.AboutUsFragment;
 import com.itc.iblog.fragments.PostsFragment;
 import com.itc.iblog.fragments.UsersFragment;
+import com.itc.iblog.fragments.FollowersFragment;
 
 
 import java.util.Locale;
@@ -150,6 +151,11 @@ public class MainActivity extends AppCompatActivity
             transaction.replace(R.id.contentFragment, fragment);
             transaction.commit();
         } else if (id == R.id.Folowers) {
+            Fragment fragment = new FollowersFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.commit();
 
         } else if (id == R.id.Favorite_post) {
 

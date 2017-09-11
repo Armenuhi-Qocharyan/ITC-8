@@ -39,7 +39,6 @@ import java.util.List;
 
 public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder, UserModel> {
     private DatabaseReference mDatabase;
-    private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -51,14 +50,13 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         private CardView cardView;
 
 
-
         public ViewHolder(View view) {
             super(view);
-            textViewName = view.findViewById(R.id.textview_name);
-            textViewAge =  view.findViewById(R.id.textview_age);
-            imageView =  view.findViewById(R.id.user_image);
-            follow = view.findViewById(R.id.follow);
-            textViewEmail =  view.findViewById(R.id.textview_email);
+            textViewName = (TextView) view.findViewById(R.id.textview_name);
+            textViewAge =  (TextView) view.findViewById(R.id.textview_age);
+            imageView =  (ImageView) view.findViewById(R.id.user_image);
+            follow = (ImageView)view.findViewById(R.id.follow);
+            textViewEmail =  (TextView) view.findViewById(R.id.textview_email);
             cardView = (CardView) view.findViewById(R.id.card_view);
         }
     }
@@ -66,7 +64,6 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
     public UserAdapter(Context context, Query query, @Nullable ArrayList<UserModel> items,
                        @Nullable ArrayList<String> keys) {
         super(query, items, keys);
-        this.context = context;
     }
 
     @Override public UserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -81,15 +78,16 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         final UserModel item = getItem(position);
         String key = getKeys().get(position);
         item.setUID(key);
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         holder.textViewAge.setText(String.valueOf(item.getAge()) + " years old");
         if (item.following == null) {
             item.following = new HashMap<>();
         }
         if (!item.getFollowings().containsKey(userId) && !item.getUID().equals(userId)) {
             holder.follow.setImageResource(R.drawable.heart);
+        } else if (!item.getUID().equals(userId)) {
+            holder.follow.setImageResource(R.drawable.heart_unfollow);
         }
-
 
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         if (item.getUrl() != null) {
@@ -116,18 +114,29 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         holder.follow.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                addFollower(item, holder.follow);
+                if (item.getFollowings().containsKey(userId)) {
+                    removeFollower(item, holder.follow);
+                } else {
+                    addFollower(item, holder.follow);
+                }
             }
         });
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String carrentKey = getKeys().get(position);
-                System.out.println(carrentKey);
-                Intent intent = new Intent(context, ProfileActivity.class);
-                intent.putExtra("key",carrentKey);
-                context.startActivity(intent);
+                Context context = holder.cardView.getContext();
+                if (item.getUID() != userId) {
+                    String carrentKey = getKeys().get(position);
+                    System.out.println(carrentKey);
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("key", carrentKey);
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             }
         });
     }
@@ -143,7 +152,25 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
                     mDatabase.child("Users").child(item.getUID()).child("following").child
                             (userId).setValue(true);
                     item.following.put(userId,true);
-                    follow.setImageResource(0);
+                    follow.setImageResource(R.drawable.heart_unfollow);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void removeFollower(final UserModel item, final ImageView follow) {
+        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                snapshot.child(userId).child("followers").child(item.getUID()).getRef().removeValue();
+                snapshot.child(item.getUID()).child("following").child(userId).getRef().removeValue();
+                follow.setImageResource(R.drawable.heart);
             }
 
             @Override

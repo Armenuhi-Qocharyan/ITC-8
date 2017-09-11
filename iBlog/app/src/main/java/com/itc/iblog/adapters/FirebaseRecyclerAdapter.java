@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,6 +59,8 @@ import java.util.ArrayList;
         private ChildEventListener mListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
                 String key = dataSnapshot.getKey();
 
                 if (!mKeys.contains(key)) {
