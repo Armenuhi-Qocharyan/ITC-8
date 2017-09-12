@@ -72,14 +72,13 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mDatabase;
     private TextView userName;
     private TextView email;
+    private Bitmap bitmap;
 
     public TextView getEmail() {
-        setAvatar();
         return email;
     }
 
     public TextView getUserName() {
-        setAvatar();
         return userName;
     }
 
@@ -360,12 +359,27 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public Bitmap loadImage(PostModel post) {
-        final Bitmap[] bitmap = new Bitmap[1];
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST);
+            StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
+            final long ONE_MEGABYTE = 1024 * 1024;
+            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    FileOutputStream fOut = null;
+                    bitmap = Bitmap.createScaledBitmap(bitmap, 500,
+                            500, true);
+
+                }
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    System.out.println("Image not found.");
+                }
+            });
+            return bitmap;
         } else {
             String root = Environment.getExternalStorageDirectory().toString();
             File dir = new File(root + "/iBlog_posts_images");
@@ -375,15 +389,14 @@ public class MainActivity extends AppCompatActivity
             }
             final File file = new File(dir, "post" + post.getPostId() + ".png");
             if (!file.exists()) {
-                final Bitmap[] bmp = new Bitmap[1];
                 StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
                 final long ONE_MEGABYTE = 1024 * 1024;
                 pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
-                        bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         FileOutputStream fOut = null;
-                        bmp[0] = Bitmap.createScaledBitmap(bmp[0], 500,
+                        bitmap = Bitmap.createScaledBitmap(bitmap, 500,
                                 500, true);
                         try {
                             fOut = new FileOutputStream(file);
@@ -391,7 +404,7 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
 
-                        bmp[0].compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
                         try {
                             fOut.flush();
                         } catch (IOException e) {
@@ -411,16 +424,16 @@ public class MainActivity extends AppCompatActivity
                         System.out.println("Image not found.");
                     }
                 });
-                return bmp[0];
+                System.out.println("bla " + bitmap);
+                return bitmap;
 
             } else {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                bitmap[0] = BitmapFactory.decodeFile(String.valueOf(file), options);
+                bitmap = BitmapFactory.decodeFile(String.valueOf(file), options);
                 return BitmapFactory.decodeFile(String.valueOf(file), options);
             }
 
         }
-        return  null;
     }
 }
