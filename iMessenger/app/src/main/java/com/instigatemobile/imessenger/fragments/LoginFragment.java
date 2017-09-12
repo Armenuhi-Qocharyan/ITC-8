@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 
 public class LoginFragment extends Fragment {
 
-
     private AuthUtils mAuthUtils;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -51,10 +50,6 @@ public class LoginFragment extends Fragment {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private ProgressBar bar;
-
-    //private AwesomeValidation awesomeValidation;
-    //private static final String EMAIL_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-    //private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -116,13 +111,41 @@ public class LoginFragment extends Fragment {
     public void clickLogin(View view) {
         String username = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
-        if (validate(username, password)) {
+        if (validateEmail() && validatePassword()) {
             mAuthUtils.signIn(username, password);
-        } else {
-            Toast.makeText(getActivity(), "Invalid email or empty password", Toast.LENGTH_SHORT).show();
         }
     }
 
+    public boolean validateEmail() {
+        String email = editTextEmail.getText().toString().trim();
+        final String EMAIL_PATERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if (editTextEmail.getText().toString().equals("")) {
+            editTextEmail.setError("You should specify the email");
+            return false;
+        }
+        if (!email.matches(EMAIL_PATERN)) {
+            editTextEmail.setError("The specified email is not correctly formated");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validatePassword() {
+        String password = editTextPassword.getText().toString().trim();
+        final String PASSWORD_PATERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
+
+        if ((editTextPassword.getText().toString().equals("")) || (editTextPassword.getText().length() < 6)) {
+            editTextPassword.setError("You should specify the password");
+            return false;
+        }
+        /*
+        if (!password.matches(PASSWORD_PATERN)) {
+            editTextPassword.setError("The specified password is not correctly formated (min lenght 6 symbole, at least one symbole and on capital latter and one number)");
+            return false;
+        }*/
+        return true;
+    }
     public void clickForgotPass(View view) {
         String username = editTextEmail.getText().toString();
         if (validate(username, ";")) {
@@ -131,6 +154,14 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getActivity(), "Invalid email", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private boolean validate(String emailStr, String password) {
+        final Pattern VALID_EMAIL_ADDRESS_REGEX =
+                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+        return (password.length() > 0 || password.equals(";")) && matcher.find();
+    }
+
 
     private void goRegisterPage() {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -172,8 +203,7 @@ public class LoginFragment extends Fragment {
             bar.setVisibility(View.GONE);
         }
     }
-
-
+    
     class AuthUtils {
 
         void createUser(final String username, final String email, String password) {
@@ -202,7 +232,6 @@ public class LoginFragment extends Fragment {
             ;
         }
 
-
         void signIn(String email, String password) {
             progressBarVisibility();
             mAuth.signInWithEmailAndPassword(email, password)
@@ -211,7 +240,7 @@ public class LoginFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressBarInvisibility();
                             if (!task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Incorrect email or password", Toast.LENGTH_LONG).show();
                             } else {
                                 saveUserInfo();
                                 redirect();
@@ -226,7 +255,6 @@ public class LoginFragment extends Fragment {
                     });
         }
 
-
         void resetPassword(final String email) {
             mAuth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -238,7 +266,6 @@ public class LoginFragment extends Fragment {
                         }
                     });
         }
-
 
         void saveUserInfo() {
             FirebaseDatabase.getInstance().getReference().child("user/" + StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -268,17 +295,11 @@ public class LoginFragment extends Fragment {
             newUser.email = email;
             newUser.name = username;
             newUser.avata = StaticConfig.STR_DEFAULT_BASE64;
-            if (user == null)
+            if (user == null) {
                 user = mAuth.getCurrentUser();
+            }
             FirebaseDatabase.getInstance().getReference().child("user/" + user.getUid()).setValue(newUser);
         }
-    }
-
-    private boolean validate(String emailStr, String password) {
-        final Pattern VALID_EMAIL_ADDRESS_REGEX =
-                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        return (password.length() > 0 || password.equals(";")) && matcher.find();
     }
 
     //TODO: comment in case of issue or remove after test

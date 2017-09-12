@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.instigatemobile.imessenger.R;
 
@@ -18,6 +19,8 @@ public class RegisterFragment extends Fragment {
     private EditText editTextPassword;
 
     private LoginFragment.AuthUtils mAuthUtils;
+    private LoginFragment loginValidate;
+
 
     public RegisterFragment() {
 
@@ -32,11 +35,6 @@ public class RegisterFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_register, container, false);
         register = (Button) view.findViewById(R.id.btnRegister);
         initViews();
-
-        //awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextName, NAME_PATTERN, R.string.nameerror);
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.emailerror);
-        //awesomeValidation.addValidation(getActivity(), R.id.editTextPassword, PASSWORD_PATTERN, R.string.passworderror);
         setListeners();
         return view;
     }
@@ -52,9 +50,53 @@ public class RegisterFragment extends Fragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuthUtils.createUser(editTextName.getText().toString(), editTextEmail.getText().toString(), editTextPassword.getText().toString());
+                if (validateName() && validateEmail() && validatePassword()) {
+                    mAuthUtils.createUser(editTextName.getText().toString(), editTextEmail.getText().toString(), editTextPassword.getText().toString());
+                }
             }
         });
+    }
+
+    private boolean validateName() {
+        String name = editTextName.getText().toString().trim();
+        final String NAME_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";
+        if (editTextName.getText().toString().equals("")) {
+            editTextName.setError("You should specify the name");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateEmail() {
+        String email = editTextEmail.getText().toString().trim();
+        final String EMAIL_PATERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        ;
+
+        if (editTextEmail.getText().toString().equals("")) {
+            editTextEmail.setError("You should specify the email");
+            return false;
+        }
+        if (!email.matches(EMAIL_PATERN)) {
+            editTextEmail.setError("The specified email is not correctly formated");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validatePassword() {
+        String password = editTextPassword.getText().toString().trim();
+        final String PASSWORD_PATERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
+
+        if ((editTextPassword.getText().toString().equals("")) || (editTextPassword.getText().length() < 6)) {
+            editTextPassword.setError("You should specify the password");
+            return false;
+        }
+        /*
+        if (!password.matches(PASSWORD_PATERN)) {
+            editTextPassword.setError("The specified password is not correctly formated (min lenght 6 symbole, at least one symbole and on capital latter and one number)");
+            return false;
+        }*/
+        return true;
     }
 
 }
