@@ -1,5 +1,6 @@
 package com.instigatemobile.imessenger.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,7 +29,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.activities.LoginRegisterActivity;
 import com.instigatemobile.imessenger.activities.MainActivity;
+import com.instigatemobile.imessenger.controllers.DataBase;
 import com.instigatemobile.imessenger.data.SharedPreferenceHelper;
 import com.instigatemobile.imessenger.data.StaticConfig;
 import com.instigatemobile.imessenger.models.User;
@@ -205,11 +208,13 @@ public class LoginFragment extends Fragment {
     }
     
     class AuthUtils {
+        private RegisterFragment mRegisterFragment;
 
-        void createUser(final String username, final String email, String password) {
+        void createUser(final String username, final String email, String password, RegisterFragment registerFragment) {
+            mRegisterFragment = registerFragment;
             progressBarVisibility();
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(mRegisterFragment.getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressBarInvisibility();
@@ -218,8 +223,10 @@ public class LoginFragment extends Fragment {
                             } else {
                                 initNewUserInfo(username, email);
                                 Toast.makeText(getActivity(), "Register and Login success", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getActivity(), MainActivity.class));
-                                getActivity().finish();
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                sendEmailVerification(mRegisterFragment.getActivity());
+                                //startActivity(new Intent(getActivity(), LoginRegisterActivity.class));
+                                //getActivity().finish();
                             }
                         }
                     })
@@ -232,6 +239,34 @@ public class LoginFragment extends Fragment {
             ;
         }
 
+        private void sendEmailVerification(Activity activity) {
+            final FirebaseUser user = mAuth.getCurrentUser();
+            user.getDisplayName();
+            user.sendEmailVerification().addOnCompleteListener(activity, new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        gotToLoginPage();
+                    } else {
+                        showMessage(mRegisterFragment.getActivity(), "Authentication failed.");
+                    }
+
+                }
+            });
+        }
+        private void showMessage(Activity activity, String message) {
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+        }
+
+        public void gotToLoginPage() {
+            LoginFragment loginFragment = new LoginFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainer, loginFragment);
+            fragmentTransaction.addToBackStack("Login");
+            fragmentTransaction.commit();
+        }
+
         void signIn(String email, String password) {
             progressBarVisibility();
             mAuth.signInWithEmailAndPassword(email, password)
@@ -240,10 +275,14 @@ public class LoginFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressBarInvisibility();
                             if (!task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "Incorrect email or password", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Incorrect email or password. Authentication failed", Toast.LENGTH_LONG).show();
                             } else {
-                                saveUserInfo();
-                                redirect();
+                                if (user.isEmailVerified()) {
+                                    saveUserInfo();
+                                    redirect();
+                                }else {
+                                    Toast.makeText(getActivity(), "Email verification failed", Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
                     })

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.instigatemobile.imessenger.R;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment implements View.OnClickListener {
     private View view;
     private Button register;
     private EditText editTextName;
@@ -47,14 +47,13 @@ public class RegisterFragment extends Fragment {
     }
 
     private void setListeners() {
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validateName() && validateEmail() && validatePassword()) {
-                    mAuthUtils.createUser(editTextName.getText().toString(), editTextEmail.getText().toString(), editTextPassword.getText().toString());
-                }
-            }
-        });
+        register.setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View v) {
+        if (validateName() && validateEmail() && validatePassword()) {
+            mAuthUtils.createUser(editTextName.getText().toString(), editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
+        }
     }
 
     private boolean validateName() {
