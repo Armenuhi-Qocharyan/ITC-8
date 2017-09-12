@@ -42,15 +42,15 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText"
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dp"
+                    android:layout_width = "fill_parent"
+                    android:layout_height = "50dp"
+                    android:id = "@+id/editText"
+                    android:hint = "@string/email_address"
+                    android:height="60dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:height="60dp"
                     android:background="@drawable/edit_text"
                     android:focusable="true"
-                    android:hint="Email Address"
                     android:padding="10dp"
                     android:textColor="#fff"
                     android:textColorHighlight="#fff"
@@ -58,37 +58,37 @@
 
 
                 <EditText
-                    android:id="@+id/editText2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dp"
+                    android:layout_width = "fill_parent"
+                    android:layout_height = "50dp"
+                    android:id = "@+id/editText2"
+                    android:hint = "@string/password"
+                    android:padding="10dp"
+                    android:inputType = "textPassword"
+                    android:height="60dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="40dp"
-                    android:height="60dp"
                     android:background="@drawable/edit_text"
                     android:focusable="true"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:padding="10dp"
                     android:textColor="#fff"
                     android:textColorHighlight="#fff"
                     android:textColorHint="#fff" />
 
 
                 <Button
-                    android:id="@+id/buttonLogin"
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dp"
+                    android:layout_width = "fill_parent"
+                    android:layout_height = "50dp"
+                    android:id = "@+id/buttonLogin"
+                    android:text="@string/log_in"
+                    android:textColor="#000"
+                    android:padding="10dp"
+                    android:height="40dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="50dp"
-                    android:height="40dp"
                     android:background="@drawable/edit_text"
                     android:backgroundTint="#fff"
                     android:focusable="true"
-                    android:padding="10dp"
-                    android:text="Log In"
-                    android:textColor="#000"
                     android:textSize="20sp" />
 
                 <Button
@@ -103,7 +103,7 @@
                     android:gravity="center"
                     android:state_focused="true"
                     android:state_pressed="true"
-                    android:text="Create a new account ?"
+                    android:text="@string/create_accaunt"
                     android:textAlignment="gravity"
                     android:textColor="#fff"
                     android:textSize="13sp" />

@@ -3,6 +3,7 @@ package com.itc.iblog.activities;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -94,6 +95,17 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+
+        String lang = settings.getString("LANG", "");
+        if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang)) {
+            Locale locale = new Locale(lang);
+            Locale.setDefault(locale);
+            config.setLocale(locale);
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -202,9 +214,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Log_out) {
             new AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle("Log out")
-                    .setMessage("Are you sure you want to log out?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.log_out)
+                    .setMessage(R.string.log_out_message)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             FirebaseAuth.getInstance().signOut();
@@ -213,7 +225,7 @@ public class MainActivity extends AppCompatActivity
                         }
 
                     })
-                    .setNegativeButton("No", null)
+                    .setNegativeButton(R.string.no, null)
                     .show();
 
         }
@@ -238,7 +250,7 @@ public class MainActivity extends AppCompatActivity
 
         dialogBuilder.setTitle(getResources().getString(R.string.lang_dialog_title));
         //dialogBuilder.setMessage(getResources().getString(R.string.lang_dialog_message));
-        dialogBuilder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 int langpos = spinner1.getSelectedItemPosition();
                 switch (langpos) {
@@ -261,7 +273,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //pass
             }
@@ -274,7 +286,7 @@ public class MainActivity extends AppCompatActivity
         Configuration config = getBaseContext().getResources().getConfiguration();
         Locale locale = new Locale(langval);
         Locale.setDefault(locale);
-        config.locale = locale;
+        config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         recreate();
     }
@@ -303,7 +315,7 @@ public class MainActivity extends AppCompatActivity
                         public void onSuccess(byte[] bytes) {
                             Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             if (bmp.equals(null)) {
-                                Toast.makeText(MainActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, R.string.avatar_image_not_found, Toast.LENGTH_SHORT).show();
                             }
                             MainActivity.this.avatar = (CircleImageView) findViewById(R.id.profile_avatar);
                             avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
@@ -311,7 +323,7 @@ public class MainActivity extends AppCompatActivity
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            System.out.println("Image not found.");
+                            System.out.println(R.string.image_not_found);
                         }
                     });
                 }
@@ -422,7 +434,7 @@ public class MainActivity extends AppCompatActivity
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        System.out.println("Image not found.");
+                        System.out.println(R.string.image_not_found);
                     }
                 });
                 System.out.println("bla " + bitmap);

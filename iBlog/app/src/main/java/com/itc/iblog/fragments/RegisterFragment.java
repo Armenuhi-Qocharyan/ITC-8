@@ -259,7 +259,7 @@ public class RegisterFragment extends Fragment{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
-                            Toast.makeText(getActivity(),"Registered successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),R.string.register_successfully, Toast.LENGTH_SHORT).show();
                             user = firebaseAuth.getCurrentUser();
                             registerUserInfo();
                             Intent intent = new Intent(login,
@@ -268,7 +268,7 @@ public class RegisterFragment extends Fragment{
                             startActivity(intent);
                             login.finish();
                         } else {
-                            Toast.makeText(getActivity(),"Could not register. Please try again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),R.string.not_register, Toast.LENGTH_SHORT).show();
                         }
                         progressBar.setVisibility(View.INVISIBLE);
 

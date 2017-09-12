@@ -124,12 +124,12 @@ public class LoginFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(Tag, "SignInWithEmail:success");
-                            Toast.makeText(getActivity(),"Login successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),R.string.login_successfully, Toast.LENGTH_SHORT).show();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             updateUI(user);
                         } else {
                             Log.w(Tag, "SignInWithEmail:failure", task.getException());
-                            Toast.makeText(getActivity(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.faild, Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                         progressBar.setVisibility(View.INVISIBLE);

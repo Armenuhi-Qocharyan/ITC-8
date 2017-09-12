@@ -148,7 +148,7 @@ public class PostsFragment extends Fragment {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getActivity(), "Uploading Done!!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.upload_done, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -163,11 +163,11 @@ public class PostsFragment extends Fragment {
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog);
+        dialog.setTitle(R.string.add_your_post);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        dialog.setTitle(" Add your post ");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -198,7 +198,7 @@ public class PostsFragment extends Fragment {
                                 .setValue(new PostModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
                                         ((MainActivity) getActivity()).getAvatarUrl(),postImagePath,new Date(),postId,title,text,0,0,0,users));
                         uploadImage();
-                        Toast.makeText(getContext(), " Your post successfuly added. Please refresh to see your post", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.post_successfuly_added, Toast.LENGTH_SHORT).show();
                         EditText postTitle = dialog.findViewById(R.id.add_post_title);
                         postTitle.setText("");
                         EditText postText = dialog.findViewById(R.id.add_post_text);
