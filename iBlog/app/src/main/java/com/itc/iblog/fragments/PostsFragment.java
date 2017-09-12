@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -107,7 +108,7 @@ public class PostsFragment extends Fragment {
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity(),((MainActivity) getActivity()).getEmail().getText().toString());
+                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity());
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -162,6 +163,10 @@ public class PostsFragment extends Fragment {
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         dialog.setTitle(" Add your post ");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

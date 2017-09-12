@@ -74,15 +74,12 @@ public class MainActivity extends AppCompatActivity
     private TextView email;
 
     public TextView getEmail() {
-
-        System.out.println(userName.getText().toString());
-
+        setAvatar();
         return email;
     }
 
     public TextView getUserName() {
-
-        System.out.println(userName.getText().toString());
+        setAvatar();
         return userName;
     }
 
@@ -132,9 +129,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        setAvatar();
         userName = (TextView) findViewById(R.id.header_user_name);
         email = (TextView) findViewById(R.id.header_user_email);
-        setAvatar();
+
         return true;
     }
 

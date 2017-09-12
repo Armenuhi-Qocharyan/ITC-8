@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
+import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
 
@@ -39,6 +41,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
@@ -91,6 +95,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener) {
         this.cardList = cardList;
         this.listener = listener;
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference dbRef = mDatabase.child("Users");
+        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                email = (String) dataSnapshot.child("email").getValue();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
