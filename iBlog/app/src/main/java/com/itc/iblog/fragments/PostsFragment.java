@@ -75,7 +75,7 @@ public class PostsFragment extends Fragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Posts");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myDataset = new ArrayList<>();
@@ -196,10 +196,9 @@ public class PostsFragment extends Fragment {
                         System.out.println("bla  " + ((MainActivity)getActivity()).getUserName().getText().toString());
                         ref.child(postId)
                                 .setValue(new PostModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
-                                        R.drawable.user,postImagePath,new Date(),postId,title,text,0,0,0,users));
+                                        ((MainActivity) getActivity()).getAvatarUrl(),postImagePath,new Date(),postId,title,text,0,0,0,users));
                         uploadImage();
-
-                        Toast.makeText(getContext(), " Your post successfuly added. ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), " Your post successfuly added. Please refresh to see your post", Toast.LENGTH_SHORT).show();
                         EditText postTitle = dialog.findViewById(R.id.add_post_title);
                         postTitle.setText("");
                         EditText postText = dialog.findViewById(R.id.add_post_text);

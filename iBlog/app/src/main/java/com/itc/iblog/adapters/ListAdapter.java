@@ -119,12 +119,30 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.userName.setText(post.getUserName());
         holder.userSurname.setText(post.getUserEmail());
         holder.postTime.setText(post.getPostTime().toString().substring(0,19));
-        holder.userImage.setImageResource(post.getUserImage());
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference = storageRef.child(post.getUserImage());
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                if (bmp.equals(null)) {
+
+                }
+                holder.userImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                System.out.println("Image not found.");
+            }
+        });
         holder.postTitle.setText(post.getPostTitle());
         holder.postText.setText(post.getPostText());
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
+
 
         if (post.getPostImagePath() != null) {
             Bitmap bitmap = listener.loadImage(post);
@@ -152,7 +170,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                         ref.child(post.getPostId()).child("likeCount").setValue(newLikeCount);
                         ArrayList<String> users = post.getUsers();
                         users.add(email);
-
+                        holder.likeCount.setText(newLikeCount.toString());
                         ref.child(post.getPostId()).child("users").setValue(users);
                     }
                 }
@@ -186,6 +204,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference ref = database.getReference("Posts");
                                     ref.child(post.getPostId()).child("favCount").setValue(newFavCount);
+                                    holder.favCount.setText(newFavCount.toString());
                                 }
                             }
 

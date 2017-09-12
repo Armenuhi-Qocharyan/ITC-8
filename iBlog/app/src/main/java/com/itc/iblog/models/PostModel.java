@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class PostModel {
-    private int userImage;
+    private String userImage;
     private String userName;
     private String userEmail;
     private String postImagePath;
@@ -20,7 +20,7 @@ public class PostModel {
 
     public PostModel() {}
 
-    public PostModel(String userName, String userEmail,int userImage, String postImagePath,
+    public PostModel(String userName, String userEmail,String userImage, String postImagePath,
                      Date postTime,  String postId, String postTitle, String postText,
                      Integer likeCount, Integer favCount,Integer commentCount,
                      ArrayList<String> users) {
@@ -46,7 +46,7 @@ public class PostModel {
         return this.userEmail;
     }
 
-    public int getUserImage() {
+    public String getUserImage() {
         return this.userImage;
     }
 

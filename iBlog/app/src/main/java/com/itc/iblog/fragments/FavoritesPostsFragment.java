@@ -82,31 +82,30 @@ public class FavoritesPostsFragment extends Fragment {
                     for (DataSnapshot messageSnapshot : dataSnapshot.child("favoritesPosts").getChildren()) {
                         final String postId = messageSnapshot.getValue(new GenericTypeIndicator<String>() {});
                         DatabaseReference postRef = database.getReference("Posts").child(postId);
-                                postRef.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        PostModel post = (PostModel) dataSnapshot.getValue(PostModel.class);
-                                        if (post.getPostId() != null) {
-                                            System.out.println("bla post " + myDataset.size());
-                                            myDataset.add(post);
-                                        }
-                                        mRecyclerView = (RecyclerView)view.findViewById(R.id.fv_recycler_view);
-                                        mRecyclerView.setHasFixedSize(true);
-                                        mLayoutManager = new LinearLayoutManager(getActivity());
-                                        mRecyclerView.setLayoutManager(mLayoutManager);
-                                        System.out.println("bla lll " + myDataset.size());
-                                        mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity());
-                                        mRecyclerView.setAdapter(mAdapter);
-                                    }
+                        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
+                                PostModel post = (PostModel) dataSnapshot.getValue(PostModel.class);
+                                if (post != null) {
+                                    if (post.getPostId() != null && myDataset.indexOf(post) < 0) {
+                                        myDataset.add(post);
                                     }
-                                });
+                                    mRecyclerView = (RecyclerView) view.findViewById(R.id.fv_recycler_view);
+                                    mRecyclerView.setHasFixedSize(true);
+                                    mLayoutManager = new LinearLayoutManager(getActivity());
+                                    mRecyclerView.setLayoutManager(mLayoutManager);
+                                    mAdapter = new ListAdapter(myDataset, (MainActivity) getActivity());
+                                    mRecyclerView.setAdapter(mAdapter);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
-
-
                 }
             }
 

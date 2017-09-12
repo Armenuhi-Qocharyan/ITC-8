@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity
     public TextView getUserName() {
         return userName;
     }
+    public String getAvatarUrl() {return avatarUrl;}
 
     private String avatarUrl;
     private StorageReference storageRef;
