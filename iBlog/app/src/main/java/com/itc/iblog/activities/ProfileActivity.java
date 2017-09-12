@@ -1,6 +1,8 @@
 package com.itc.iblog.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -42,6 +45,7 @@ import com.itc.iblog.R;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Locale;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -62,6 +66,17 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+
+        String lang = settings.getString("LANG", "");
+        if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang)) {
+            Locale locale = new Locale(lang);
+            Locale.setDefault(locale);
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
 
         database =  FirebaseDatabase.getInstance();
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_avatar);
@@ -190,7 +205,7 @@ public class ProfileActivity extends AppCompatActivity {
                         public void onSuccess(byte[] bytes) {
                             Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             if (bmp.equals(null)) {
-                                Toast.makeText(ProfileActivity.this, "Image not found.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.image_not_found, Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             if (img.equals("avatar")) {
@@ -206,7 +221,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            System.out.println("Image not found.");
+                            System.out.println(R.string.image_not_found);
                         }
                     });
                 }
@@ -262,11 +277,11 @@ public class ProfileActivity extends AppCompatActivity {
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
 
         }else {
-            Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.not_picked_image,Toast.LENGTH_LONG).show();
         }
     }
 
@@ -292,14 +307,14 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
-                Toast.makeText(ProfileActivity.this, "Can not upload image to the storage.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, R.string.not_upload_image, Toast.LENGTH_SHORT).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                Toast.makeText(ProfileActivity.this, "Uploaded successfully.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, R.string.upload_successfully, Toast.LENGTH_SHORT).show();
             }
         });
     }
