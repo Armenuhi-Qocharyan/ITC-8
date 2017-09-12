@@ -85,16 +85,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         }
     }
 
-
-    public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener,String email) {
-        this.cardList = cardList;
-        this.listener = listener;
-        this.email = email;
-    }
-
     public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener) {
         this.cardList = cardList;
         this.listener = listener;
+        System.out.println("bla " + cardList.size());
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = mDatabase.child("Users");
@@ -116,7 +110,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.single_card, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
