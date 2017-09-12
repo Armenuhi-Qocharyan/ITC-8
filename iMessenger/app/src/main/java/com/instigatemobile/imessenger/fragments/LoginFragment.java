@@ -268,6 +268,8 @@ public class LoginFragment extends Fragment {
             newUser.email = email;
             newUser.name = username;
             newUser.avata = StaticConfig.STR_DEFAULT_BASE64;
+            if (user == null)
+                user = mAuth.getCurrentUser();
             FirebaseDatabase.getInstance().getReference().child("user/" + user.getUid()).setValue(newUser);
         }
     }
