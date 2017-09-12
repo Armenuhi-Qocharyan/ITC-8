@@ -25,7 +25,7 @@
         <EditText
             android:id="@+id/add_post_text"
             android:padding="10dp"
-            android:hint="@string/post_title"
+            android:hint="@string/post_text"
             android:inputType="textMultiLine"
             android:lines="8"
             android:minLines="6"

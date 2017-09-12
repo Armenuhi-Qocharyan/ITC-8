@@ -30,13 +30,13 @@
 
     <string name="email_address">Էլեկտրոնային հասցե</string>
     <string name="password">Գաղտնաբառ</string>
-    <string name="log_in">Մուտք գործեք</string>
+    <string name="log_in">Մուտք</string>
     <string name="create_accaunt">Ստեղծել նոր էջ</string>
     <string name="name">Անուն</string>
     <string name="confirm_password">Հաստատել գաղտնաբառը</string>
     <string name="register">Գրանցվել</string>
 
-    <string name="age">Տարիք - </string>
+    <string name="age">Տարիք   </string>
     <string name="cancel"> Չեղարկել </string>
     <string name="ok"> Լավ </string>
     <string name="not_picked_image"> Դուք նկար չեք վերցրել </string>
@@ -47,7 +47,8 @@
     <string name="post_successfuly_added"> Ձեր գրառումը հաջողությամբ ավելացվել է: </string>
     <string name="select_picture"> Ընտրեք նկարը </string>
     <string name="upload_done"> Վերբեռնումը կատարված է !!! </string>
-    <string name="post_title"> Հաղորդագրության տեքստը </string>
+    <string name="post_text"> Հաղորդագրության տեքստը </string>
+    <string name="post_title"> Հաղորդագրության վերնագիր </string>
     <string name="login_successfully"> Մուտքy հաջողված է </string>
     <string name="invalid_email"> Էլփոստի անվավեր հասցե </string>
     <string name="register_successfully"> Գրանցումը հաջողված է </string>

@@ -45,6 +45,7 @@ import com.google.firebase.storage.StorageReference;
 
 import com.itc.iblog.R;
 import com.itc.iblog.fragments.AboutUsFragment;
+import com.itc.iblog.fragments.FavoritesPostsFragment;
 import com.itc.iblog.fragments.PostsFragment;
 import com.itc.iblog.fragments.UsersFragment;
 import com.itc.iblog.fragments.FollowersFragment;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mDatabase;
     private TextView userName;
     private TextView email;
+    private Bitmap bitmap;
 
     public TextView getEmail() {
         return email;
@@ -138,9 +140,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        setAvatar();
         userName = (TextView) findViewById(R.id.header_user_name);
         email = (TextView) findViewById(R.id.header_user_email);
-        setAvatar();
+
         return true;
     }
 
@@ -185,6 +188,11 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         } else if (id == R.id.Favorite_post) {
+            Fragment fragment = new FavoritesPostsFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.commit();
 
         } else if (id == R.id.Users) {
             Fragment fragment = new UsersFragment();
@@ -292,6 +300,8 @@ public class MainActivity extends AppCompatActivity
 
                 String user = (String) dataSnapshot.child("userName").getValue();
                 String userEmail = (String) dataSnapshot.child("email").getValue();
+                userName.setText(user);
+                email.setText(userEmail);
                 String url = (String) dataSnapshot.child("url").getValue();
                 avatarUrl = url;
                 // Get avatar image
@@ -361,12 +371,27 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public Bitmap loadImage(PostModel post) {
-        final Bitmap[] bitmap = new Bitmap[1];
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST);
+            StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
+            final long ONE_MEGABYTE = 1024 * 1024;
+            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    FileOutputStream fOut = null;
+                    bitmap = Bitmap.createScaledBitmap(bitmap, 500,
+                            500, true);
+
+                }
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    System.out.println("Image not found.");
+                }
+            });
+            return bitmap;
         } else {
             String root = Environment.getExternalStorageDirectory().toString();
             File dir = new File(root + "/iBlog_posts_images");
@@ -375,26 +400,23 @@ public class MainActivity extends AppCompatActivity
                 dir.mkdir();
             }
             final File file = new File(dir, "post" + post.getPostId() + ".png");
-
             if (!file.exists()) {
-                final Bitmap[] bmp = new Bitmap[1];
                 StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
                 final long ONE_MEGABYTE = 1024 * 1024;
                 pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
-                        bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                    holder.postImage.setImageBitmap(bmp);
-//                    holder.postImage.setVisibility(View.VISIBLE);
+                        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         FileOutputStream fOut = null;
-
+                        bitmap = Bitmap.createScaledBitmap(bitmap, 500,
+                                500, true);
                         try {
                             fOut = new FileOutputStream(file);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
 
-                        bmp[0].compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
                         try {
                             fOut.flush();
                         } catch (IOException e) {
@@ -406,7 +428,6 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
 
-
                     }
 
                 }).addOnFailureListener(new OnFailureListener() {
@@ -415,18 +436,16 @@ public class MainActivity extends AppCompatActivity
                         System.out.println(R.string.image_not_found);
                     }
                 });
-                return bmp[0];
+                System.out.println("bla " + bitmap);
+                return bitmap;
+
             } else {
-                System.out.println("bla read");
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                bitmap[0] = BitmapFactory.decodeFile(String.valueOf(file), options);
-                return bitmap[0];
-//            holder.postImage.setImageBitmap(bitmap);
-//            holder.postImage.setVisibility(View.VISIBLE);
+                bitmap = BitmapFactory.decodeFile(String.valueOf(file), options);
+                return BitmapFactory.decodeFile(String.valueOf(file), options);
             }
 
         }
-        return  null;
     }
 }

@@ -39,7 +39,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="register">Register</string>
 
-    <string name="age">Age - </string>
+    <string name="age">Age   </string>
     <string name="cancel"> Cancel </string>
     <string name="ok"> OK </string>
     <string name="not_picked_image"> You haven not picked Image </string>
@@ -50,13 +50,13 @@
     <string name="post_successfuly_added"> Your post successfuly added. </string>
     <string name="select_picture"> Select Picture </string>
     <string name="upload_done"> Uploading Done!!! </string>
-    <string name="post_title"> Post Text </string>
+    <string name="post_text"> Post Text </string>
+    <string name="post_title"> Post Title </string>
     <string name="login_successfully"> Login successfully </string>
     <string name="email_required"> Email is required </string>
     <string name="invalid_email"> Invalid Email address </string>
     <string name="register_successfully"> Registered successfully </string>
     <string name="not_register"> Could not register. Please try again. </string>
     <string name="faild"> Authentication faild</string>
-
 
 </resources>

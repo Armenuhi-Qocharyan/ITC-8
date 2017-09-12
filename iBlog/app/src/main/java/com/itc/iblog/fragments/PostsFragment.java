@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -74,9 +75,7 @@ public class PostsFragment extends Fragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Posts");
-
-
-        listener = new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myDataset = new ArrayList<>();
@@ -117,8 +116,7 @@ public class PostsFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        };
-        ref.addValueEventListener(listener);
+        });
         return view;
     }
     @Override
@@ -166,6 +164,10 @@ public class PostsFragment extends Fragment {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog);
         dialog.setTitle(R.string.add_your_post);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -190,6 +192,8 @@ public class PostsFragment extends Fragment {
                         } else {
                             postImagePath = null;
                         }
+
+                        System.out.println("bla  " + ((MainActivity)getActivity()).getUserName().getText().toString());
                         ref.child(postId)
                                 .setValue(new PostModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
                                         R.drawable.user,postImagePath,new Date(),postId,title,text,0,0,0,users));

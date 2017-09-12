@@ -13,15 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
+import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
 
@@ -30,8 +36,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
@@ -39,6 +50,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     private final ImageLoaderInterface listener;
     private List<PostModel> cardList;
+    private String email;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView userName;
@@ -74,9 +86,30 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     }
 
 
+    public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener,String email) {
+        this.cardList = cardList;
+        this.listener = listener;
+        this.email = email;
+    }
+
     public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener) {
         this.cardList = cardList;
         this.listener = listener;
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference dbRef = mDatabase.child("Users");
+        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                email = (String) dataSnapshot.child("email").getValue();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -100,71 +133,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 
-//        String path = post.getPostImagePath();
-//        System.out.println("bla " + post.getPostId() + " " + path);
-//
-//        if (path != null) {
-//
-//            String root = Environment.getExternalStorageDirectory().toString();
-//            File dir = new File(root + "/iBlog_posts_images");
-//
-//            if (!dir.exists()) {
-//                dir.mkdir();
-//            }
-//            final File file = new File(dir, "post" + post.getPostId() + ".png");
-//
-//
-//            if (!file.exists()) {
-//                    StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
-//                    final long ONE_MEGABYTE = 1024 * 1024;
-//                    pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//                        @Override
-//                        public void onSuccess(byte[] bytes) {
-//                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                            holder.postImage.setImageBitmap(bmp);
-//                            holder.postImage.setVisibility(View.VISIBLE);
-//                            FileOutputStream fOut = null;
-//
-//                            try {
-//                                fOut = new FileOutputStream(file);
-//                            } catch (FileNotFoundException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                            bmp.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-//                            try {
-//                                fOut.flush();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                            try {
-//                                fOut.close();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//
-//                        }
-//
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception exception) {
-//                            System.out.println("Image not found.");
-//                        }
-//                    });
-//
-//            }else {
-//                System.out.println("bla read");
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//                Bitmap bitmap = BitmapFactory.decodeFile(String.valueOf(file), options);
-//                holder.postImage.setImageBitmap(bitmap);
-//                holder.postImage.setVisibility(View.VISIBLE);
-//            }
-        Bitmap bytes = listener.loadImage(post);
-        if (bytes != null) {
-           // Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            holder.postImage.setImageBitmap(bytes);
+        if (post.getPostImagePath() != null) {
+            Bitmap bitmap = listener.loadImage(post);
+            if (bitmap != null) {
+                holder.postImage.setImageBitmap(bitmap);
+                holder.postImage.setVisibility(View.VISIBLE);
+
+            } else {
+                holder.postImage.setVisibility(View.GONE);
+            }
         } else {
             holder.postImage.setVisibility(View.GONE);
         }
@@ -175,16 +152,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             holder.likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    System.out.println( "bla " + post.getUsers());
-                    System.out.println( "bla " + post.getUserEmail());
-                    if (post.getUsers().indexOf(post.getUserEmail()) < 0 ) {
+                    if (post.getUsers().indexOf(email) < 0 ) {
                         Integer newLikeCount = Integer.parseInt(String.valueOf(post.getLikeCount())) + 1;
                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
                         final DatabaseReference ref = database.getReference("Posts");
                         ref.child(post.getPostId()).child("likeCount").setValue(newLikeCount);
                         ArrayList<String> users = post.getUsers();
-                        users.add(post.getUserEmail());
+                        users.add(email);
 
                         ref.child(post.getPostId()).child("users").setValue(users);
                     }
@@ -197,10 +171,36 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer newFavCount = Integer.parseInt(String.valueOf(post.getFavCount())) + 1;
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ref = database.getReference("Posts");
-                ref.child(post.getPostId()).child("favCount").setValue(newFavCount);
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                final DatabaseReference dbRef = mDatabase.child("Users");
+
+                 dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                List<String> favPosts;
+                                if (dataSnapshot.hasChild("favoritesPosts")) {
+                                    favPosts = dataSnapshot.child("favoritesPosts").getValue(new GenericTypeIndicator<ArrayList<String>>() {});
+                                } else {
+                                    favPosts = new ArrayList<String>();
+                                    favPosts.add("");
+                                }
+                                
+                                if (favPosts.indexOf(post.getPostId()) == -1) {
+                                    favPosts.add(post.getPostId());
+                                    dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("favoritesPosts").setValue(favPosts);
+                                    Integer newFavCount = Integer.parseInt(String.valueOf(post.getFavCount())) + 1;
+                                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference ref = database.getReference("Posts");
+                                    ref.child(post.getPostId()).child("favCount").setValue(newFavCount);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
             }
         });
     }
