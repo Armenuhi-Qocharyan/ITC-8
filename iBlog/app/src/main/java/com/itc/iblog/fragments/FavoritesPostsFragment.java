@@ -68,9 +68,8 @@ public class FavoritesPostsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_posts, container, false);
-        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myDataset = new ArrayList<>();
+        final View view = inflater.inflate(R.layout.fragment_favorites_posts, container, false);
+
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -78,18 +77,26 @@ public class FavoritesPostsFragment extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                myDataset = new ArrayList<>();
                 if (dataSnapshot.hasChild("favoritesPosts")) {
+                    myDataset = new ArrayList<PostModel>();
                     for (DataSnapshot messageSnapshot : dataSnapshot.child("favoritesPosts").getChildren()) {
                         final String postId = messageSnapshot.getValue(new GenericTypeIndicator<String>() {});
-                        System.out.println("bla " + postId);
                         DatabaseReference postRef = database.getReference("Posts").child(postId);
                                 postRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        PostModel post = dataSnapshot.getValue(PostModel.class);
-                                        System.out.println("bla " + dataSnapshot.getValue());
-                                       // myDataset.add(post);
+                                        PostModel post = (PostModel) dataSnapshot.getValue(PostModel.class);
+                                        if (post.getPostId() != null) {
+                                            System.out.println("bla post " + myDataset.size());
+                                            myDataset.add(post);
+                                        }
+                                        mRecyclerView = (RecyclerView)view.findViewById(R.id.fv_recycler_view);
+                                        mRecyclerView.setHasFixedSize(true);
+                                        mLayoutManager = new LinearLayoutManager(getActivity());
+                                        mRecyclerView.setLayoutManager(mLayoutManager);
+                                        System.out.println("bla lll " + myDataset.size());
+                                        mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity());
+                                        mRecyclerView.setAdapter(mAdapter);
                                     }
 
                                     @Override
@@ -97,36 +104,10 @@ public class FavoritesPostsFragment extends Fragment {
 
                                     }
                                 });
-
                     }
+
+
                 }
-                mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-                mRecyclerView.setHasFixedSize(true);
-                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrolled(RecyclerView mRecyclerView, int dx, int dy) {
-                        if (dy > 0 || dy<0 && fab != null && fab.isShown()) {
-                            fab.hide();
-                        }
-                    }
-
-                    @Override
-                    public void onScrollStateChanged(RecyclerView mRecyclerView, int newState) {
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            fab.show();
-                        }
-                        super.onScrollStateChanged(mRecyclerView, newState);
-                    }
-                });
-
-
-                // use a linear layout manager
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mRecyclerView.setLayoutManager(mLayoutManager);
-
-                // specify an adapter (see also next example)
-                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity());
-                mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
