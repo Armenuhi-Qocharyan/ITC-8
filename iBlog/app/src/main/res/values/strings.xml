@@ -21,6 +21,10 @@
     <string name="change">Change</string>
     <string name="avatar_image_not_found">Avatar image not found.</string>
     <string name="image_not_found">Image not found.</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
+    <string name="reset_password">RESET PASSWORD</string>
+    <string name="iblog">iBLOG</string>
 
     <string name="lang_dialog_title">Change language</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

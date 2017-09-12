@@ -10,33 +10,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_img"
-        android:paddingBottom = "2dp">
-        <RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
-            xmlns:tools = "http://schemas.android.com/tools"
+        android:paddingBottom="2dp">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="fill_parent"
-            android:layout_height = "match_parent"
-            android:paddingLeft= "15dp"
-            android:paddingRight = "15dp"
-            android:paddingTop = "50dp"
-            tools:context = ".activities.MainActivity">
+            android:layout_height="match_parent"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="50dp"
+            tools:context=".activities.MainActivity">
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <TextView
-                    android:id = "@+id/title"
+                    android:id="@+id/title"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="iBLOG"
-                    android:textSize="40sp"
-                    android:layout_marginTop="-10dp"
                     android:layout_marginBottom="40dp"
-                    android:textAlignment="gravity"
+                    android:layout_marginTop="-10dp"
                     android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:text="iBLOG"
+                    android:textAlignment="gravity"
                     android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:gravity="center"/>
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
                 <EditText
                     android:layout_width = "fill_parent"
                     android:layout_height = "50dp"
@@ -45,12 +49,12 @@
                     android:height="60dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:focusable = "true"
+                    android:background="@drawable/edit_text"
+                    android:focusable="true"
                     android:padding="10dp"
-                    android:textColorHighlight = "#fff"
-                    android:textColorHint = "#fff"
                     android:textColor="#fff"
-                    android:background="@drawable/edit_text"/>
+                    android:textColorHighlight="#fff"
+                    android:textColorHint="#fff" />
 
 
                 <EditText
@@ -64,12 +68,11 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="40dp"
-                    android:focusable = "true"
-                    android:textColorHighlight = "#fff"
-                    android:textColorHint = "#fff"
+                    android:background="@drawable/edit_text"
+                    android:focusable="true"
                     android:textColor="#fff"
-                    android:background="@drawable/edit_text"/>
-
+                    android:textColorHighlight="#fff"
+                    android:textColorHint="#fff" />
 
 
                 <Button
@@ -82,38 +85,56 @@
                     android:height="40dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:focusable = "true"
-                    android:layout_marginTop = "50dp"
+                    android:layout_marginTop="50dp"
                     android:background="@drawable/edit_text"
                     android:backgroundTint="#fff"
-                    android:textSize="20sp"/>
+                    android:focusable="true"
+                    android:textSize="20sp" />
 
                 <Button
-                    android:layout_marginTop="27dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:state_focused="true"
-                    android:state_pressed="true"
-                    android:id = "@+id/register"
+                    android:id="@+id/register"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/create_accaunt"
-                    android:textSize="13sp"
-                    android:textAlignment="gravity"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="27dp"
+                    android:background="@android:color/transparent"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="#fff"
                     android:gravity="center"
-                    android:background="@android:color/transparent"/>
+                    android:state_focused="true"
+                    android:state_pressed="true"
+                    android:text="@string/create_accaunt"
+                    android:textAlignment="gravity"
+                    android:textColor="#fff"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/forgot"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="2dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:state_focused="true"
+                    android:state_pressed="true"
+                    android:text="Forgot your password ?"
+                    android:textAlignment="gravity"
+                    android:textColor="#fff"
+                    android:textSize="11sp" />
             </LinearLayout>
+
             <ProgressBar
-                   android:id="@+id/progressBar_cyclic_login"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:minHeight="50dp"
-                   android:minWidth="50dp"
-                   android:theme = "@style/ProgressBar"
-                   android:layout_alignParentRight="true"
-                   android:layout_alignParentTop="true" />
+                android:id="@+id/progressBar_cyclic_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:minHeight="50dp"
+                android:minWidth="50dp"
+                android:theme="@style/ProgressBar" />
         </RelativeLayout>
     </ScrollView>
 

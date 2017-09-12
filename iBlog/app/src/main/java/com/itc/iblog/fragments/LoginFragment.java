@@ -72,6 +72,18 @@ public class LoginFragment extends Fragment {
                 signIn(email, password);
             }
         });
+        Button forgot = view.findViewById(R.id.forgot);
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ForgotPasswordFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.contentFragment, fragment);
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
         return view;
     }
 
