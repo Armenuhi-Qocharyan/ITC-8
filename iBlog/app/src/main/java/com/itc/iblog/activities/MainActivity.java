@@ -44,6 +44,7 @@ import com.google.firebase.storage.StorageReference;
 
 import com.itc.iblog.R;
 import com.itc.iblog.fragments.AboutUsFragment;
+import com.itc.iblog.fragments.FavoritesPostsFragment;
 import com.itc.iblog.fragments.PostsFragment;
 import com.itc.iblog.fragments.UsersFragment;
 import com.itc.iblog.fragments.FollowersFragment;
@@ -178,6 +179,11 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         } else if (id == R.id.Favorite_post) {
+            Fragment fragment = new FavoritesPostsFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.commit();
 
         } else if (id == R.id.Users) {
             Fragment fragment = new UsersFragment();
@@ -370,9 +376,7 @@ public class MainActivity extends AppCompatActivity
                 dir.mkdir();
             }
             final File file = new File(dir, "post" + post.getPostId() + ".png");
-
             if (!file.exists()) {
-                System.out.println("bla load");
                 final Bitmap[] bmp = new Bitmap[1];
                 StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
                 final long ONE_MEGABYTE = 1024 * 1024;
@@ -412,7 +416,6 @@ public class MainActivity extends AppCompatActivity
                 return bmp[0];
 
             } else {
-                System.out.println("bla read");
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmap[0] = BitmapFactory.decodeFile(String.valueOf(file), options);

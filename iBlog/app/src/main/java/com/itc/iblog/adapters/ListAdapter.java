@@ -88,6 +88,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         this.email = email;
     }
 
+    public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener) {
+        this.cardList = cardList;
+        this.listener = listener;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -109,12 +114,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 
-        Bitmap bitmap = listener.loadImage(post);
-        if (bitmap != null) {
-           // Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            holder.postImage.setImageBitmap(bitmap);
-            holder.postImage.setVisibility(View.VISIBLE);
+        if (post.getPostImagePath() != null) {
+            Bitmap bitmap = listener.loadImage(post);
+            if (bitmap != null) {
+                holder.postImage.setImageBitmap(bitmap);
+                holder.postImage.setVisibility(View.VISIBLE);
 
+            } else {
+                holder.postImage.setVisibility(View.GONE);
+            }
         } else {
             holder.postImage.setVisibility(View.GONE);
         }
