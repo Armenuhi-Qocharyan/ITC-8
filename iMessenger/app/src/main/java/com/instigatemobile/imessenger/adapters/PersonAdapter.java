@@ -34,14 +34,11 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     private void initializePerson() {
         personsArray = new ArrayList<>();
-        personsArray.add(new User("Aaa Aaaaa", R.drawable.avatar));
-        personsArray.add(new User("Bbb Bbbbb", R.drawable.avatar));
-        personsArray.add(new User("Ccc Ccccc", R.drawable.avatar));
-        personsArray.add(new User("Ddd Ddddd", R.drawable.avatar));
-        personsArray.add(new User("Aaa Aaaaa", R.drawable.avatar));
-        personsArray.add(new User("Bbb Bbbbb", R.drawable.avatar));
-        personsArray.add(new User("Ccc Ccccc", R.drawable.avatar));
-        personsArray.add(new User("Ddd Ddddd", R.drawable.avatar));
+        personsArray.add(new User("Mary Antonyan", R.drawable.ic_tab_person));
+        personsArray.add(new User("Vachagan Hovhannisyan", R.drawable.ic_tab_person));
+        personsArray.add(new User("Vrej Unanyan", R.drawable.ic_tab_person));
+        personsArray.add(new User("Albert Aghajanyan", R.drawable.ic_tab_person));
+
     }
 
     @Override

@@ -39,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgmContainer, aboutUsFragment);
-        fragmentTransaction.addToBackStack("AboutUs");
+        //fragmentTransaction.addToBackStack("AboutUs");
         fragmentTransaction.commit();
     }
 

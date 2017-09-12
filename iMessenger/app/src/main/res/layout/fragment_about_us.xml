@@ -19,7 +19,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="0.22"
-        app:srcCompat="@drawable/instigate_mobile_black" />
+        app:srcCompat="@drawable/instigate_logo_white" />
 
     <View
         android:layout_width="wrap_content"
@@ -34,13 +34,13 @@
         android:layout_weight="0.13"
         android:fontFamily="@string/font_family"
         android:text="@string/instigate_mobile"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/white"
         android:textSize="24dp" />
 
-    <View
+    <!--View
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.005" />
+        android:layout_weight="0.005" /-->
 
     <Button
         android:id="@+id/phoneNumber"
@@ -51,14 +51,16 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/contact"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimary"
         android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.005" />
+        android:layout_weight="0.01" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleViewPerson"

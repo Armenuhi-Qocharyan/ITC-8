@@ -50,7 +50,7 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
 
     private void callNumber() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:+37498898795"));
+        callIntent.setData(Uri.parse("tel:+37460445500"));
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 10);
             return;
