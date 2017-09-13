@@ -1,10 +1,14 @@
 package com.itc.iblog.adapters;
 
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,6 +32,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
 import com.itc.iblog.activities.MainActivity;
+import com.itc.iblog.fragments.FollowersFragment;
+import com.itc.iblog.fragments.PostCommentsFragment;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
 
@@ -51,6 +57,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     private final ImageLoaderInterface listener;
     private List<PostModel> cardList;
     private String email;
+    private String userName;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView userName;
@@ -66,6 +73,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         public TextView commentCount;
         public ImageView likeButton;
         public ImageView favButton;
+        public ImageView comButton;
 
         public MyViewHolder(View view) {
             super(view);
@@ -82,6 +90,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
              cardView = (CardView) view.findViewById(R.id.card_view);
              favButton = (ImageView) view.findViewById(R.id.favorite);
              favCount = (TextView) view.findViewById(R.id.favorite_count);
+             comButton = (ImageView) view.findViewById(R.id.comment);
         }
     }
 
@@ -96,7 +105,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 email = (String) dataSnapshot.child("email").getValue();
-
+                userName = (String) dataSnapshot.child("userName").getValue();
             }
 
             @Override
@@ -176,7 +185,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                 }
             });
 
-        holder.commentCount.setText(post.getCommentCount().toString());
+        Integer comCount = 0;
+        if (post.getComments() != null) {
+            comCount = post.getComments().size();
+        }
+        holder.commentCount.setText(comCount.toString());
+        holder.comButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                android.support.v4.app.Fragment fragment = new PostCommentsFragment(post,userName,email);
+                FragmentManager fm = ((FragmentActivity)view.getContext()).getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.contentFragment, fragment);
+                transaction.commit();
+
+            }
+        });
         holder.favCount.setText(post.getFavCount().toString());
 
         holder.favButton.setOnClickListener(new View.OnClickListener() {

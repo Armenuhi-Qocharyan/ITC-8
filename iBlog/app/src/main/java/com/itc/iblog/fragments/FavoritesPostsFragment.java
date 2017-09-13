@@ -57,12 +57,7 @@ public class FavoritesPostsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Activity main;
     private List<PostModel> myDataset;
-    private String postId;
-    private Bitmap bitmap;
-    private Uri file;
-    private int IMAGE;
     private DatabaseReference ref;
 
     @Override

@@ -41,6 +41,7 @@ import com.google.firebase.storage.UploadTask;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.ListAdapter;
+import com.itc.iblog.models.CommentModel;
 import com.itc.iblog.models.PostModel;
 
 import java.io.IOException;
@@ -186,6 +187,8 @@ public class PostsFragment extends Fragment {
                         postId = ((MainActivity)getActivity()).getUserName().getText().toString() + new Date().toString();
                         ArrayList<String> users = new ArrayList<String>();
                         users.add("");
+                        ArrayList<CommentModel> comments = new ArrayList<CommentModel>();
+                        comments.add(null);
                         String postImagePath;
                         if (file != null) {
                             postImagePath = file.toString();
@@ -196,7 +199,7 @@ public class PostsFragment extends Fragment {
                         System.out.println("bla  " + ((MainActivity)getActivity()).getUserName().getText().toString());
                         ref.child(postId)
                                 .setValue(new PostModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
-                                        ((MainActivity) getActivity()).getAvatarUrl(),postImagePath,new Date(),postId,title,text,0,0,0,users));
+                                        ((MainActivity) getActivity()).getAvatarUrl(),postImagePath,new Date(),postId,title,text,0,0,0,users,comments));
                         uploadImage();
                         Toast.makeText(getContext(), R.string.post_successfuly_added, Toast.LENGTH_SHORT).show();
                         EditText postTitle = dialog.findViewById(R.id.add_post_title);

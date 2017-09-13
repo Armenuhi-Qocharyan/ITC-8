@@ -12,18 +12,20 @@ public class PostModel {
     private String postId;
     private String postTitle;
     private String postText;
-    ArrayList<String> users;
+
     private Date postTime;
     private Integer likeCount;
     private Integer commentCount;
     private Integer favCount;
+    ArrayList<String> users;
+    ArrayList<CommentModel> comments;
 
     public PostModel() {}
 
     public PostModel(String userName, String userEmail,String userImage, String postImagePath,
                      Date postTime,  String postId, String postTitle, String postText,
                      Integer likeCount, Integer favCount,Integer commentCount,
-                     ArrayList<String> users) {
+                     ArrayList<String> users,ArrayList<CommentModel> comments) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.postImagePath = postImagePath;
@@ -36,6 +38,7 @@ public class PostModel {
         this.commentCount = commentCount;
         this.users = users;
         this.favCount = favCount;
+        this.comments = comments;
     }
 
     public String getUserName() {
@@ -78,12 +81,15 @@ public class PostModel {
         return this.users;
     }
 
-
     public String getPostImagePath() {
         return postImagePath;
     }
 
     public Integer getFavCount() {
         return favCount;
+    }
+
+    public ArrayList<CommentModel> getComments() {
+        return comments;
     }
 }
