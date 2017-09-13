@@ -35,16 +35,7 @@ import java.util.Locale;
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_splashscreen);
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-            Configuration config = getBaseContext().getResources().getConfiguration();
 
-            String lang = settings.getString("LANG", "");
-            if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang)) {
-                Locale locale = new Locale(lang);
-                Locale.setDefault(locale);
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-            }
             StartAnimations();
         }
 

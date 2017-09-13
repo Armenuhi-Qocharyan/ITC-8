@@ -73,6 +73,18 @@ public class LoginFragment extends Fragment {
                 signIn(email, password);
             }
         });
+        Button forgot = view.findViewById(R.id.forgot);
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ForgotPasswordFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.contentFragment, fragment);
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
         return view;
     }
 
@@ -113,13 +125,13 @@ public class LoginFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(Tag, "SignInWithEmail:success");
-                            Toast.makeText(getActivity(),"Login successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),R.string.login_successfully, Toast.LENGTH_SHORT).show();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             FirebaseMessaging.getInstance().subscribeToTopic(email);
                             updateUI(user);
                         } else {
                             Log.w(Tag, "SignInWithEmail:failure", task.getException());
-                            Toast.makeText(getActivity(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.faild, Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                         progressBar.setVisibility(View.INVISIBLE);

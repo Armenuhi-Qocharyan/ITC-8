@@ -3,6 +3,7 @@ package com.itc.iblog.activities;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -47,6 +48,7 @@ import com.google.firebase.storage.StorageReference;
 
 import com.itc.iblog.R;
 import com.itc.iblog.fragments.AboutUsFragment;
+import com.itc.iblog.fragments.FavoritesFragment;
 import com.itc.iblog.fragments.FavoritesPostsFragment;
 import com.itc.iblog.fragments.PostsFragment;
 import com.itc.iblog.fragments.UsersFragment;
@@ -75,20 +77,17 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mDatabase;
     private TextView userName;
     private TextView email;
+    private Bitmap bitmap;
 
     public TextView getEmail() {
-
-        System.out.println(userName.getText().toString());
-
         return email;
     }
 
 
     public TextView getUserName() {
-
-        System.out.println(userName.getText().toString());
         return userName;
     }
+    public String getAvatarUrl() {return avatarUrl;}
 
     private String avatarUrl;
     private StorageReference storageRef;
@@ -102,6 +101,17 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+
+        String lang = settings.getString("LANG", "");
+        if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang)) {
+            Locale locale = new Locale(lang);
+            Locale.setDefault(locale);
+            config.setLocale(locale);
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -137,26 +147,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        setAvatar();
         userName = (TextView) findViewById(R.id.header_user_name);
         email = (TextView) findViewById(R.id.header_user_email);
-        setAvatar();
+
         return true;
-    }
-
-    @Override
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -175,12 +170,21 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
         } else if (id == R.id.Folowers) {
             Fragment fragment = new FollowersFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else if (id == R.id.Favorites) {
+            Fragment fragment = new FavoritesFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
 
         } else if (id == R.id.Favorite_post) {
@@ -188,6 +192,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
 
         } else if (id == R.id.Users) {
@@ -209,9 +214,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Log_out) {
             new AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle("Log out")
-                    .setMessage("Are you sure you want to log out?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.log_out)
+                    .setMessage(R.string.log_out_message)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             FirebaseMessaging.getInstance().unsubscribeFromTopic(String.valueOf(email));
@@ -221,7 +226,7 @@ public class MainActivity extends AppCompatActivity
                         }
 
                     })
-                    .setNegativeButton("No", null)
+                    .setNegativeButton(R.string.no, null)
                     .show();
 
         }
@@ -246,7 +251,7 @@ public class MainActivity extends AppCompatActivity
 
         dialogBuilder.setTitle(getResources().getString(R.string.lang_dialog_title));
         //dialogBuilder.setMessage(getResources().getString(R.string.lang_dialog_message));
-        dialogBuilder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 int langpos = spinner1.getSelectedItemPosition();
                 switch (langpos) {
@@ -269,7 +274,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //pass
             }
@@ -282,7 +287,7 @@ public class MainActivity extends AppCompatActivity
         Configuration config = getBaseContext().getResources().getConfiguration();
         Locale locale = new Locale(langval);
         Locale.setDefault(locale);
-        config.locale = locale;
+        config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         recreate();
     }
@@ -311,7 +316,7 @@ public class MainActivity extends AppCompatActivity
                         public void onSuccess(byte[] bytes) {
                             Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             if (bmp.equals(null)) {
-                                Toast.makeText(MainActivity.this, "Avatar image not found.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, R.string.avatar_image_not_found, Toast.LENGTH_SHORT).show();
                             }
                             MainActivity.this.avatar = (CircleImageView) findViewById(R.id.profile_avatar);
                             avatar.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
@@ -319,7 +324,7 @@ public class MainActivity extends AppCompatActivity
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            System.out.println("Image not found.");
+                            System.out.println(R.string.image_not_found);
                         }
                     });
                 }
@@ -340,6 +345,20 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     @Override
@@ -369,12 +388,27 @@ public class MainActivity extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public Bitmap loadImage(PostModel post) {
-        final Bitmap[] bitmap = new Bitmap[1];
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST);
+            StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
+            final long ONE_MEGABYTE = 1024 * 1024;
+            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    FileOutputStream fOut = null;
+                    bitmap = Bitmap.createScaledBitmap(bitmap, 500,
+                            500, true);
+
+                }
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    System.out.println("Image not found.");
+                }
+            });
+            return bitmap;
         } else {
             String root = Environment.getExternalStorageDirectory().toString();
             File dir = new File(root + "/iBlog_posts_images");
@@ -384,15 +418,14 @@ public class MainActivity extends AppCompatActivity
             }
             final File file = new File(dir, "post" + post.getPostId() + ".png");
             if (!file.exists()) {
-                final Bitmap[] bmp = new Bitmap[1];
                 StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
                 final long ONE_MEGABYTE = 1024 * 1024;
                 pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
-                        bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         FileOutputStream fOut = null;
-                        bmp[0] = Bitmap.createScaledBitmap(bmp[0], 500,
+                        bitmap = Bitmap.createScaledBitmap(bitmap, 500,
                                 500, true);
                         try {
                             fOut = new FileOutputStream(file);
@@ -400,7 +433,7 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
 
-                        bmp[0].compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
                         try {
                             fOut.flush();
                         } catch (IOException e) {
@@ -417,19 +450,19 @@ public class MainActivity extends AppCompatActivity
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        System.out.println("Image not found.");
+                        System.out.println(R.string.image_not_found);
                     }
                 });
-                return bmp[0];
+                System.out.println("bla " + bitmap);
+                return bitmap;
 
             } else {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                bitmap[0] = BitmapFactory.decodeFile(String.valueOf(file), options);
+                bitmap = BitmapFactory.decodeFile(String.valueOf(file), options);
                 return BitmapFactory.decodeFile(String.valueOf(file), options);
             }
 
         }
-        return  null;
     }
 }

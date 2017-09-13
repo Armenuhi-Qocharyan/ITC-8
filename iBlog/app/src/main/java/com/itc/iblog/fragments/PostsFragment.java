@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -74,7 +75,7 @@ public class PostsFragment extends Fragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Posts");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myDataset = new ArrayList<>();
@@ -107,7 +108,7 @@ public class PostsFragment extends Fragment {
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity(),((MainActivity) getActivity()).getEmail().getText().toString());
+                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity());
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -147,7 +148,7 @@ public class PostsFragment extends Fragment {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getActivity(), "Uploading Done!!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.upload_done, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -162,7 +163,11 @@ public class PostsFragment extends Fragment {
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog);
-        dialog.setTitle(" Add your post ");
+        dialog.setTitle(R.string.add_your_post);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -191,10 +196,9 @@ public class PostsFragment extends Fragment {
                         System.out.println("bla  " + ((MainActivity)getActivity()).getUserName().getText().toString());
                         ref.child(postId)
                                 .setValue(new PostModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
-                                        R.drawable.user,postImagePath,new Date(),postId,title,text,0,0,0,users));
+                                        ((MainActivity) getActivity()).getAvatarUrl(),postImagePath,new Date(),postId,title,text,0,0,0,users));
                         uploadImage();
-
-                        Toast.makeText(getContext(), " Your post successfuly added. ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.post_successfuly_added, Toast.LENGTH_SHORT).show();
                         EditText postTitle = dialog.findViewById(R.id.add_post_title);
                         postTitle.setText("");
                         EditText postText = dialog.findViewById(R.id.add_post_text);

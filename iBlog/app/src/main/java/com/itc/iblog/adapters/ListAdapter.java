@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
 import com.itc.iblog.Services.RequestService;
+import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.NotificationData;
 import com.itc.iblog.models.PostModel;
@@ -43,6 +45,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
@@ -85,23 +89,31 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         }
     }
 
-
-    public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener,String email) {
-        this.cardList = cardList;
-        this.listener = listener;
-        this.email = email;
-    }
-
     public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener) {
         this.cardList = cardList;
         this.listener = listener;
+        System.out.println("bla " + cardList.size());
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference dbRef = mDatabase.child("Users");
+        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                email = (String) dataSnapshot.child("email").getValue();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.single_card, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
@@ -111,12 +123,30 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.userName.setText(post.getUserName());
         holder.userSurname.setText(post.getUserEmail());
         holder.postTime.setText(post.getPostTime().toString().substring(0,19));
-        holder.userImage.setImageResource(post.getUserImage());
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference = storageRef.child(post.getUserImage());
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                if (bmp.equals(null)) {
+
+                }
+                holder.userImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, 120, 120, false));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                System.out.println("Image not found.");
+            }
+        });
         holder.postTitle.setText(post.getPostTitle());
         holder.postText.setText(post.getPostText());
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
+
 
         if (post.getPostImagePath() != null) {
             Bitmap bitmap = listener.loadImage(post);
@@ -150,6 +180,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                     //    postRequestData.setTo("/topics/" + email);
                       //  postRequestData.setData(data);
                   //      view.getContext().startService(new Intent(view.getContext(), RequestService.class));
+                        holder.likeCount.setText(newLikeCount.toString());
                         ref.child(post.getPostId()).child("users").setValue(users);
                     }
                 }
@@ -183,6 +214,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference ref = database.getReference("Posts");
                                     ref.child(post.getPostId()).child("favCount").setValue(newFavCount);
+                                    holder.favCount.setText(newFavCount.toString());
                                 }
                             }
 
