@@ -174,12 +174,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                         ref.child(post.getPostId()).child("likeCount").setValue(newLikeCount);
                         ArrayList<String> users = post.getUsers();
                         users.add(email);
-                  //      NotificationData data = new NotificationData();
-                    //    data.setTitle("Hello");
-                  //      PostRequestData postRequestData = new PostRequestData();
-                    //    postRequestData.setTo("/topics/" + email);
-                      //  postRequestData.setData(data);
-                  //      view.getContext().startService(new Intent(view.getContext(), RequestService.class));
+                        Intent serviceIntent = new Intent(view.getContext(), RequestService.class);
+                        serviceIntent.putExtra("title", "Notification");
+                        serviceIntent.putExtra("email", email);
+                        view.getContext().startService(serviceIntent);
                         holder.likeCount.setText(newLikeCount.toString());
                         ref.child(post.getPostId()).child("users").setValue(users);
                     }
