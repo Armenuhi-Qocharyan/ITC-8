@@ -66,9 +66,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     public static String friendid;
 
     //private static final String SERVER_KEY = "AAAA4RXWeiI:APA91bEiawUeTrWSOB8VJUHAfNpUl2GtXlmwmp9VVf6IJOC0nGU6ihINOerQIiuoGhmpXeyyDcHNDRy6ZFX7X3rPIWWp20YlBkyz185ichGcL8T_bLfpseT5TeJYLdQfwlQ9icR64qcx";
-    private static final String SERVER_KEY = "AIzaSyAMfbVEXd3PCk5dELZjmK4b1eQMriCSOSU";
+    //private static final String SERVER_KEY = "AIzaSyAMfbVEXd3PCk5dELZjmK4b1eQMriCSOSU"; //Server key
+    private static final String SERVER_KEY = "AIzaSyA9qxD33RN68_jycAwGTJVpsN4cH4Ztg9A"; //Web api key
 
-    //private static final String ID_TOKEN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,8 +186,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         Gson gson = new Gson();
         NotificationData data = new NotificationData();
         data.setTitle("You have a new message!!!");
+        String messageText = editWriteMessage.getText().toString().trim();
+        data.setText(messageText);
         PostRequestData postRequestData = new PostRequestData();
-//        postRequestData.setTo(ID_TOKEN);
         postRequestData.setTo("/topics/" + idFriend.get(0));
         postRequestData.setData(data);
         String json = gson.toJson(postRequestData);
