@@ -295,6 +295,7 @@ public class LoginFragment extends Fragment {
                     userInfo.name = (String) hashUser.get("name");
                     userInfo.email = (String) hashUser.get("email");
                     userInfo.avata = (String) hashUser.get("avata");
+                    userInfo.background = (String) hashUser.get("background");
                     SharedPreferenceHelper.getInstance(getActivity()).saveUserInfo(userInfo);
                 }
 

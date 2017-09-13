@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,7 @@ import com.instigatemobile.imessenger.fragments.FavoritesFragment;
 import com.instigatemobile.imessenger.fragments.ProfileFragment;
 import com.instigatemobile.imessenger.service.ServiceUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -163,6 +165,16 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseMessaging.getInstance().unsubscribeFromTopic(mAuth.getCurrentUser().getUid());
 
                         FirebaseAuth.getInstance().signOut();
+                        File avatarImage = new File(Environment.getExternalStorageDirectory().getPath() + "/avatar");
+                        if (avatarImage.exists()) {
+                            avatarImage.delete();
+                        }
+
+                        File backgroundImage = new File(Environment.getExternalStorageDirectory().getPath() + "/background");
+                        if (backgroundImage.exists()) {
+                            backgroundImage.delete();
+                        }
+
                         LocalDB.getInstance(MainActivity.this).dropDB();
                         ServiceUtils.stopServiceFriendChat(MainActivity.this.getApplicationContext(), true);
                         MainActivity.this.finish();

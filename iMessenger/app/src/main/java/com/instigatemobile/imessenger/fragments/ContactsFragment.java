@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -446,7 +447,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         intent.putExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID, idRoom);
                         ChatActivity.bitmapAvataFriend = new HashMap<>();
                         if (!avata.equals(StaticConfig.STR_DEFAULT_BASE64)) {
-                            byte[] decodedString = Base64.decode(avata, Base64.DEFAULT);
+                            byte[] decodedString = Base64.decode(Environment.getExternalStorageDirectory().getPath() + "/avatar", Base64.DEFAULT);
                             ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
                         } else {
                             ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeResource(context.getResources(), R.drawable.default_avata));
@@ -564,7 +565,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (listFriend.getListFriend().get(position).avata.equals(StaticConfig.STR_DEFAULT_BASE64)) {
             ((ItemFriendViewHolder) holder).avata.setImageResource(R.drawable.default_avata);
         } else {
-            byte[] decodedString = Base64.decode(listFriend.getListFriend().get(position).avata, Base64.DEFAULT);
+            byte[] decodedString = Base64.decode(Environment.getExternalStorageDirectory().getPath() + "/avatar", Base64.DEFAULT);
             Bitmap src = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             ((ItemFriendViewHolder) holder).avata.setImageBitmap(src);
         }

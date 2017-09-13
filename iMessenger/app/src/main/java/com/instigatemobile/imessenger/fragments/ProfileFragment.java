@@ -26,6 +26,7 @@ import com.instigatemobile.imessenger.controllers.DataBase;
 import com.instigatemobile.imessenger.controllers.ProfileCallbackInterface;
 import com.instigatemobile.imessenger.controllers.RoundImage;
 import com.instigatemobile.imessenger.controllers.Storage;
+import com.instigatemobile.imessenger.data.SharedPreferenceHelper;
 import com.instigatemobile.imessenger.models.User;
 
 import java.io.File;

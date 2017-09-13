@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -88,8 +89,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
         String base64AvataUser = SharedPreferenceHelper.getInstance(this).getUserInfo().avata;
         if (!base64AvataUser.equals(StaticConfig.STR_DEFAULT_BASE64)) {
-            byte[] decodedString = Base64.decode(base64AvataUser, Base64.DEFAULT);
-            bitmapAvataUser = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            //byte[] decodedString = Base64.decode(base64AvataUser, Base64.DEFAULT);
+            //bitmapAvataUser = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         } else {
             bitmapAvataUser = null;
         }
@@ -262,7 +263,7 @@ class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             if (dataSnapshot.getValue() != null) {
                                 String avataStr = (String) dataSnapshot.getValue();
                                 if (!avataStr.equals(StaticConfig.STR_DEFAULT_BASE64)) {
-                                    byte[] decodedString = Base64.decode(avataStr, Base64.DEFAULT);
+                                    byte[] decodedString = Base64.decode(Environment.getExternalStorageDirectory().getPath() + "/avatar", Base64.DEFAULT);
                                     ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
                                 } else {
                                     ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeResource(context.getResources(), R.drawable.default_avata));
