@@ -23,6 +23,7 @@ public class ForgotPasswordFragment extends Fragment {
     private View view;
     private EditText editTextEmail;
     private FragmentManager fragmentManager;
+    private LoginFragment.AuthUtils mAuthUtils;
     private ProgressBar bar;
     private Button submit;
 
@@ -31,6 +32,10 @@ public class ForgotPasswordFragment extends Fragment {
         initViews();
         setListeners();
         return view;
+    }
+
+    public void setAuthUtils(LoginFragment.AuthUtils authUtils) {
+        mAuthUtils = authUtils;
     }
 
     private void setListeners() {
@@ -56,6 +61,7 @@ public class ForgotPasswordFragment extends Fragment {
                                 bar.setVisibility(View.GONE);
                             }
                         });
+                goLoginPage();
             }
         });
     }

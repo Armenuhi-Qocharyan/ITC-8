@@ -105,7 +105,7 @@ public class LoginFragment extends Fragment {
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickForgotPass(v);
+                goForgotPage();
             }
         });
         return view;
@@ -149,14 +149,14 @@ public class LoginFragment extends Fragment {
         }*/
         return true;
     }
-    public void clickForgotPass(View view) {
-        String username = editTextEmail.getText().toString();
-        if (validate(username, ";")) {
-            mAuthUtils.resetPassword(username);
-        } else {
-            Toast.makeText(getActivity(), "Invalid email", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    public void clickForgotPass(View view) {
+//        String username = editTextEmail.getText().toString();
+//        if (validate(username, ";")) {
+//            mAuthUtils.resetPassword(username);
+//        } else {
+//            Toast.makeText(getActivity(), "Invalid email", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     private boolean validate(String emailStr, String password) {
         final Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -165,6 +165,15 @@ public class LoginFragment extends Fragment {
         return (password.length() > 0 || password.equals(";")) && matcher.find();
     }
 
+    private void goForgotPage() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        ForgotPasswordFragment forgotFragment = new ForgotPasswordFragment();
+        forgotFragment.setAuthUtils(mAuthUtils);
+        fragmentTransaction.replace(R.id.fragmentContainer, forgotFragment);
+        fragmentTransaction.addToBackStack("Forgot");
+        fragmentTransaction.commit();
+    }
 
     private void goRegisterPage() {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -178,8 +187,8 @@ public class LoginFragment extends Fragment {
 
     public void redirect() {
         Intent redirect = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-        getActivity().finish();
         getActivity().startActivity(redirect);
+        getActivity().finish();
     }
 
     public void progressBarVisibility() {
@@ -268,12 +277,12 @@ public class LoginFragment extends Fragment {
         }
 
         void signIn(String email, String password) {
-            progressBarVisibility();
+            //progressBarVisibility();
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            progressBarInvisibility();
+                            //progressBarInvisibility();
                             if (!task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "Incorrect email or password. Authentication failed", Toast.LENGTH_LONG).show();
                             } else {
@@ -289,7 +298,8 @@ public class LoginFragment extends Fragment {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressBarInvisibility();
+                            Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
+                            //progressBarInvisibility();
                         }
                     });
         }

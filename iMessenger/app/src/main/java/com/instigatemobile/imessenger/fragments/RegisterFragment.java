@@ -2,13 +2,13 @@ package com.instigatemobile.imessenger.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.instigatemobile.imessenger.R;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
@@ -53,6 +53,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (validateName() && validateEmail() && validatePassword()) {
             mAuthUtils.createUser(editTextName.getText().toString(), editTextEmail.getText().toString(), editTextPassword.getText().toString(), this);
+            goLoginPage();
         }
     }
 
@@ -98,4 +99,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         return true;
     }
 
+    private void goLoginPage() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        LoginFragment loginFragment = new LoginFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainer, loginFragment);
+        fragmentTransaction.addToBackStack("Forgot");
+        fragmentTransaction.commit();
+    }
 }
