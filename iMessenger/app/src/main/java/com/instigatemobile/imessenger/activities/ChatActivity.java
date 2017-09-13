@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,22 +18,34 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.data.NotificationData;
+import com.instigatemobile.imessenger.data.PostRequestData;
 import com.instigatemobile.imessenger.data.SharedPreferenceHelper;
 import com.instigatemobile.imessenger.data.StaticConfig;
 import com.instigatemobile.imessenger.models.Conversation;
 import com.instigatemobile.imessenger.models.Message;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
@@ -49,6 +62,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     public static HashMap<String, Bitmap> bitmapAvataFriend;
     public Bitmap bitmapAvataUser;
 
+    public static String friendid;
+
+    //private static final String SERVER_KEY = "AAAA4RXWeiI:APA91bEiawUeTrWSOB8VJUHAfNpUl2GtXlmwmp9VVf6IJOC0nGU6ihINOerQIiuoGhmpXeyyDcHNDRy6ZFX7X3rPIWWp20YlBkyz185ichGcL8T_bLfpseT5TeJYLdQfwlQ9icR64qcx";
+    private static final String SERVER_KEY = "AIzaSyAMfbVEXd3PCk5dELZjmK4b1eQMriCSOSU";
+
+    //private static final String ID_TOKEN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +76,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         Intent intentData = getIntent();
         idFriend = intentData.getCharSequenceArrayListExtra(StaticConfig.INTENT_KEY_CHAT_ID);
         roomId = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID);
+
+        System.out.println(idFriend);
+        System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
 
         consersation = new Conversation();
@@ -153,11 +176,47 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 newMessage.text = content;
                 newMessage.timestamp = System.currentTimeMillis();
                 FirebaseDatabase.getInstance().getReference().child("message/" + roomId).push().setValue(newMessage);
+                sendHttpRequest();
             }
         }
     }
-}
 
+    private void sendHttpRequest() {
+        Gson gson = new Gson();
+        NotificationData data = new NotificationData();
+        data.setTitle("You have a new message!!!");
+        PostRequestData postRequestData = new PostRequestData();
+//        postRequestData.setTo(ID_TOKEN);
+        postRequestData.setTo("/topics/" + idFriend.get(0));
+        postRequestData.setData(data);
+        String json = gson.toJson(postRequestData);
+        String url = "https://fcm.googleapis.com/fcm/send";
+
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", "key=" + SERVER_KEY)
+                .post(body)
+                .build();
+
+        Callback responseCallBack = new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.v("Fail Message", "fail");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.v("response", response.toString());
+            }
+
+        };
+        OkHttpClient client = new OkHttpClient();
+        Call call = client.newCall(request);
+        call.enqueue(responseCallBack);
+    }
+}
 class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
