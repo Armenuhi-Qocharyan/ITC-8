@@ -144,8 +144,8 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_avatar"
         android:scaleType="center"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="205px"
+        android:layout_height="205px"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         app:backgroundTint="@color/colorWhite"

@@ -14,11 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,15 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.itc.iblog.activities.MainActivity;
-import com.itc.iblog.activities.ProfileActivity;
-import com.squareup.picasso.Picasso;
 import com.itc.iblog.R;
+import com.itc.iblog.activities.ProfileActivity;
 import com.itc.iblog.models.UserModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder, UserModel> {
@@ -83,7 +79,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         if (item.getUID().equals(userId)) {
             getItems().remove(position);
             getKeys().remove(position);
-            notifyItemRemoved(position);
+            //notifyItemRemoved(position);
         }
 
         if (!item.getFollowings().containsKey(userId) && !item.getUID().equals(userId)) {
