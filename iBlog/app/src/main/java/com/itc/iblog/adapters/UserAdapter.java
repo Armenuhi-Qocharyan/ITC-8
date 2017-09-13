@@ -80,9 +80,12 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         item.setUID(key);
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         holder.textViewAge.setText(String.valueOf(item.getAge()) + " years old");
-        if (item.following == null) {
-            item.following = new HashMap<>();
+        if (item.getUID().equals(userId)) {
+            getItems().remove(position);
+            getKeys().remove(position);
+            notifyItemRemoved(position);
         }
+
         if (!item.getFollowings().containsKey(userId) && !item.getUID().equals(userId)) {
             holder.follow.setImageResource(R.drawable.heart);
         } else if (!item.getUID().equals(userId)) {

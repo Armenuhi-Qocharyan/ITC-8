@@ -8,6 +8,7 @@
     <string name="users">Пользователи</string>
     <string name="folowers">Подписчики</string>
     <string name="posts">Лента</string>
+    <string name="favorites">Избранные</string>
     <string name="favorite_posts">Избранные посты</string>
     <string name="About_us">О нас</string>
     <string name="language">Язык</string>
@@ -35,6 +36,8 @@
     <string name="not_picked_image"> Вы не выбрали изображение </string>
     <string name="something_went_wrong"> Что-то пошло не так </string>
     <string name="not_upload_image">Невозможно загрузить изображение в хранилище.</string>
+    <string name="follow">Следовать</string>
+    <string name="unfollow">Неследовать</string>
     <string name="upload_successfully"> Загружено успешно. </string>
     <string name="add_your_post"> Добавить сообщение  </string>
     <string name="post_successfuly_added"> Ваш пост успешно добавлен. </string>

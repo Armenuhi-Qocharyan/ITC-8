@@ -45,6 +45,7 @@ import com.google.firebase.storage.StorageReference;
 
 import com.itc.iblog.R;
 import com.itc.iblog.fragments.AboutUsFragment;
+import com.itc.iblog.fragments.FavoritesFragment;
 import com.itc.iblog.fragments.FavoritesPostsFragment;
 import com.itc.iblog.fragments.PostsFragment;
 import com.itc.iblog.fragments.UsersFragment;
@@ -148,22 +149,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -180,12 +165,21 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
         } else if (id == R.id.Folowers) {
             Fragment fragment = new FollowersFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else if (id == R.id.Favorites) {
+            Fragment fragment = new FavoritesFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
 
         } else if (id == R.id.Favorite_post) {
@@ -193,6 +187,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
 
         } else if (id == R.id.Users) {
@@ -344,6 +339,20 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     @Override

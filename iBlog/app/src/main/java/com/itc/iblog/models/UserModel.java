@@ -14,8 +14,8 @@ public class UserModel {
     public String email;
     public String url;
     public String bgUrl;
-    public HashMap<String, Boolean> followers;
-    public HashMap<String, Boolean> following;
+    public HashMap<String, Boolean> followers = new HashMap<>();
+    public HashMap<String, Boolean> following = new HashMap<>();
     private String UID;
 
     //required default constructor
