@@ -184,7 +184,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void sendHttpRequest() {
         Gson gson = new Gson();
         NotificationData data = new NotificationData();
-        data.setTitle("You have a new order!!!");
+        data.setTitle("You have a new message!!!");
         PostRequestData postRequestData = new PostRequestData();
 //        postRequestData.setTo(ID_TOKEN);
         postRequestData.setTo("/topics/" + idFriend.get(0));
