@@ -2,7 +2,6 @@ package com.instigatemobile.imessenger.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -29,9 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.activities.LoginRegisterActivity;
 import com.instigatemobile.imessenger.activities.MainActivity;
-import com.instigatemobile.imessenger.controllers.DataBase;
 import com.instigatemobile.imessenger.data.SharedPreferenceHelper;
 import com.instigatemobile.imessenger.data.StaticConfig;
 import com.instigatemobile.imessenger.models.User;
@@ -121,13 +118,13 @@ public class LoginFragment extends Fragment {
 
     public boolean validateEmail() {
         String email = editTextEmail.getText().toString().trim();
-        final String EMAIL_PATERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        final String EMAIL_PATTERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if (editTextEmail.getText().toString().equals("")) {
             editTextEmail.setError("You should specify the email");
             return false;
         }
-        if (!email.matches(EMAIL_PATERN)) {
+        if (!email.matches(EMAIL_PATTERN)) {
             editTextEmail.setError("The specified email is not correctly formated");
             return false;
         }
@@ -136,27 +133,19 @@ public class LoginFragment extends Fragment {
 
     public boolean validatePassword() {
         String password = editTextPassword.getText().toString().trim();
-        final String PASSWORD_PATERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,20}$";
 
         if ((editTextPassword.getText().toString().equals("")) || (editTextPassword.getText().length() < 6)) {
             editTextPassword.setError("You should specify the password");
             return false;
         }
         /*
-        if (!password.matches(PASSWORD_PATERN)) {
+        if (!password.matches(PASSWORD_PATTERN)) {
             editTextPassword.setError("The specified password is not correctly formated (min lenght 6 symbole, at least one symbole and on capital latter and one number)");
             return false;
         }*/
         return true;
     }
-//    public void clickForgotPass(View view) {
-//        String username = editTextEmail.getText().toString();
-//        if (validate(username, ";")) {
-//            mAuthUtils.resetPassword(username);
-//        } else {
-//            Toast.makeText(getActivity(), "Invalid email", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     private boolean validate(String emailStr, String password) {
         final Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -185,6 +174,15 @@ public class LoginFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
+    public void goLoginPage() {
+        LoginFragment loginFragment = new LoginFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainer, loginFragment);
+        fragmentTransaction.addToBackStack("Login");
+        fragmentTransaction.commit();
+    }
+
     public void redirect() {
         Intent redirect = new Intent(getActivity().getApplicationContext(), MainActivity.class);
         getActivity().startActivity(redirect);
@@ -199,23 +197,6 @@ public class LoginFragment extends Fragment {
         bar.setVisibility(ProgressBar.INVISIBLE);
     }
 
-    private class ProgressTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            bar.setVisibility(View.VISIBLE);
-        }
-
-        protected void onPostExecute(Void result) {
-            bar.setVisibility(View.GONE);
-        }
-    }
-    
     class AuthUtils {
         private RegisterFragment mRegisterFragment;
 
@@ -255,7 +236,7 @@ public class LoginFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        gotToLoginPage();
+                        goLoginPage();
                     } else {
                         showMessage(mRegisterFragment.getActivity(), "Authentication failed.");
                     }
@@ -263,17 +244,9 @@ public class LoginFragment extends Fragment {
                 }
             });
         }
+
         private void showMessage(Activity activity, String message) {
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-        }
-
-        public void gotToLoginPage() {
-            LoginFragment loginFragment = new LoginFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragmentContainer, loginFragment);
-            fragmentTransaction.addToBackStack("Login");
-            fragmentTransaction.commit();
         }
 
         void signIn(String email, String password) {
@@ -300,18 +273,6 @@ public class LoginFragment extends Fragment {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
                             //progressBarInvisibility();
-                        }
-                    });
-        }
-
-        void resetPassword(final String email) {
-            mAuth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Snackbar snackbar = Snackbar
-                                    .make(view, "Email with reset password link sent", Snackbar.LENGTH_LONG);
-                            snackbar.show();
                         }
                     });
         }

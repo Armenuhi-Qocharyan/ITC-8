@@ -28,6 +28,5 @@
         android:layout_marginRight="20dp"
         android:text="A"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#000" />
-
+        android:textColor="@color/black" />
 </RelativeLayout>

@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:textColorHint="#ffffff">
+            android:textColorHint="@color/white">
 
             <EditText
                 android:id="@+id/input_email"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:textColorHint="#ffffff">
+            android:textColorHint="@color/white">
 
             <EditText
                 android:id="@+id/input_password"

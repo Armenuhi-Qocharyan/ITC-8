@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#1C2D49</color>
     <color name="colorPrimaryDark">#03497E</color>
-    <color name="colorAccent">#00CDFF</color>
+    <color name="colorAccent">#00AFF0</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#dd656973</color>
     <color name="greyLight">#dde9e9e9</color>
@@ -12,9 +12,9 @@
     <color name="mainActivityBg">#1B2A3D</color>
     <color name="mainColor">#1C2D49</color>
     <color name="colorCardView">#f7f7f7</color>
-    <color name="colorIndivateTab">#FFFFFF</color>
     <color name="grey_200">#EEEEEE</color>
     <color name="grey_500">#a4a4a4</color>
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_800">#212121</color>
+    <color name="black">#000000</color>
 </resources>
