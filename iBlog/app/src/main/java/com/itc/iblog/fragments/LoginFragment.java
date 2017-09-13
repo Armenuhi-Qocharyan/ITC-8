@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 
@@ -94,7 +95,7 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    private void signIn(String email, String password) {
+    private void signIn(final String email, String password) {
         if (TextUtils.isEmpty(password)) {
             editTextPass.setError("Password is required");
             return;
@@ -114,6 +115,7 @@ public class LoginFragment extends Fragment {
                             Log.d(Tag, "SignInWithEmail:success");
                             Toast.makeText(getActivity(),"Login successfully", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+                            FirebaseMessaging.getInstance().subscribeToTopic(email);
                             updateUI(user);
                         } else {
                             Log.w(Tag, "SignInWithEmail:failure", task.getException());

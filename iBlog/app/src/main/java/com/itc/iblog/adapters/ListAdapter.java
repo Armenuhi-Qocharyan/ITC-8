@@ -1,5 +1,6 @@
 package com.itc.iblog.adapters;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -26,8 +27,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
+import com.itc.iblog.Services.RequestService;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
+import com.itc.iblog.models.NotificationData;
 import com.itc.iblog.models.PostModel;
+import com.itc.iblog.models.PostRequestData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -140,7 +144,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                         ref.child(post.getPostId()).child("likeCount").setValue(newLikeCount);
                         ArrayList<String> users = post.getUsers();
                         users.add(email);
-
+                  //      NotificationData data = new NotificationData();
+                    //    data.setTitle("Hello");
+                  //      PostRequestData postRequestData = new PostRequestData();
+                    //    postRequestData.setTo("/topics/" + email);
+                      //  postRequestData.setData(data);
+                  //      view.getContext().startService(new Intent(view.getContext(), RequestService.class));
                         ref.child(post.getPostId()).child("users").setValue(users);
                     }
                 }

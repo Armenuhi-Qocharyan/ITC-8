@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.models.UserModel;
@@ -207,7 +208,7 @@ public class RegisterFragment extends Fragment{
     }
 
     private void registerUser(View view) {
-        String email = editTextEmailReg.getText().toString().trim();
+        final String email = editTextEmailReg.getText().toString().trim();
         String pass = editTextPassReg.getText().toString().trim();
         String passConf = editTextConfPassReg.getText().toString().trim();
         String age = editTextSelectedAge.getText().toString().trim();
@@ -265,6 +266,7 @@ public class RegisterFragment extends Fragment{
                             Intent intent = new Intent(login,
                                     MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            FirebaseMessaging.getInstance().subscribeToTopic(email);
                             startActivity(intent);
                             login.finish();
                         } else {

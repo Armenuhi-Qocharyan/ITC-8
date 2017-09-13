@@ -51,6 +51,14 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <service
+            android:name=".Services.RequestService"
+            android:exported="false"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.itc.iblog.Services" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

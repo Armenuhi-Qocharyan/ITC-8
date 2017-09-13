@@ -7,10 +7,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +41,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         return email;
     }
 
+
     public TextView getUserName() {
 
         System.out.println(userName.getText().toString());
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity
     private StorageReference storageRef;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -209,6 +214,7 @@ public class MainActivity extends AppCompatActivity
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic(String.valueOf(email));
                             FirebaseAuth.getInstance().signOut();
                             startActivity(new Intent(MainActivity.this, LoginRegisterActivity.class)); //Go back to home page
                             finish();
@@ -360,6 +366,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public Bitmap loadImage(PostModel post) {
         final Bitmap[] bitmap = new Bitmap[1];
