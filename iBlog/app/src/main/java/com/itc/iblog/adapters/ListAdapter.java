@@ -1,6 +1,8 @@
 package com.itc.iblog.adapters;
 
+
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -31,11 +33,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
+import com.itc.iblog.Services.RequestService;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.fragments.FollowersFragment;
 import com.itc.iblog.fragments.PostCommentsFragment;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
+import com.itc.iblog.models.NotificationData;
 import com.itc.iblog.models.PostModel;
+import com.itc.iblog.models.PostRequestData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -179,6 +184,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                         ref.child(post.getPostId()).child("likeCount").setValue(newLikeCount);
                         ArrayList<String> users = post.getUsers();
                         users.add(email);
+                        Intent serviceIntent = new Intent(view.getContext(), RequestService.class);
+                        serviceIntent.putExtra("title", "Notification");
+                        serviceIntent.putExtra("email", email);
+                        view.getContext().startService(serviceIntent);
                         holder.likeCount.setText(newLikeCount.toString());
                         ref.child(post.getPostId()).child("users").setValue(users);
                     }
@@ -197,8 +206,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                 FragmentManager fm = ((FragmentActivity)view.getContext()).getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.contentFragment, fragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
-
+                
             }
         });
         holder.favCount.setText(post.getFavCount().toString());

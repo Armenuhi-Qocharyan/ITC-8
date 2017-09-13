@@ -11,11 +11,14 @@
     <string name="users">Users</string>
     <string name="folowers">Followers</string>
     <string name="posts">Posts</string>
+    <string name="favorites">Favorites</string>
     <string name="favorite_posts">Favorite Posts</string>
     <string name="About_us">About Us</string>
     <string name="language">Language</string>
     <string name="log_out">Log Out</string>
     <string name="log_out_message">Are you sure you want to log out?</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="change">Change</string>

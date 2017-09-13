@@ -1,5 +1,6 @@
 package com.itc.iblog.activities;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -22,6 +23,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -102,9 +104,9 @@ public class ProfileActivity extends AppCompatActivity {
                 findViewById(R.id.profile_follow).setVisibility(View.VISIBLE);
                 userKey= extras.getString("key");
                 if (extras.getBoolean("followed")) {
-                    follow.setText("Unfollow");
+                    follow.setText(R.string.unfollow);
                 } else {
-                    follow.setText("Follow");
+                    follow.setText(R.string.follow);
                 }
             }
         } else {
@@ -146,11 +148,11 @@ public class ProfileActivity extends AppCompatActivity {
                                         ("followers").child(userKey).getRef()
                                         .removeValue();
                                 snapshot.child(userKey).child("following").child(userId).getRef().removeValue();
-                                follow.setText("Follow");
+                                follow.setText(R.string.follow);
                             } else {
                                 reference.child(userId).child("followers").child(userKey).getRef().setValue(true);
                                 reference.child(userKey).child("following").child(userId).getRef().setValue(true);
-                                follow.setText("Unfollow");
+                                follow.setText(R.string.unfollow);
                             }
 
                         }
@@ -169,6 +171,20 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+         }
+         return super.onOptionsItemSelected(item);
     }
 
     private void setImage(final String img) {
@@ -230,6 +246,18 @@ public class ProfileActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("Profile", "popping backstack");
+            fm.popBackStack();
+        } else {
+            Log.i("Profile", "nothing on backstack, calling super");
+            super.onBackPressed();
+         }
+     }
 
     public Bitmap getCroppedBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),

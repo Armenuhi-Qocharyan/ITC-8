@@ -13,10 +13,13 @@
     <string name="folowers">Հետևորդներ</string>
     <string name="posts">Հրապարակումներ</string>
     <string name="favorite_posts">Սիրելի գրառումներ</string>
+    <string name="favorites">Սիրելի օգտատերեր</string>
     <string name="About_us">Մեր մասին</string>
     <string name="language">Լեզու</string>
     <string name="log_out">Դուրս գալ</string>
     <string name="log_out_message">Վստահ եք, որ ցանկանում եք դուրս գալ:</string>
+    <string name="follow">Հետևել</string>
+    <string name="unfollow">Չհետևել</string>
     <string name="yes">Այո</string>
     <string name="no">Ոչ</string>
     <string name="change">Փոխել</string>
