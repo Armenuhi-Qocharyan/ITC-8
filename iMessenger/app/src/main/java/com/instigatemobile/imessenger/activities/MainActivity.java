@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.data.LocalDB;
 import com.instigatemobile.imessenger.data.StaticConfig;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     StaticConfig.UID = user.getUid();
+                    FirebaseMessaging.getInstance().subscribeToTopic(mAuth.getCurrentUser().getUid());
                 } else {
                     MainActivity.this.finish();
                     startActivity(new Intent(MainActivity.this, LoginRegisterActivity.class));
@@ -158,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(mAuth.getCurrentUser().getUid());
+
                         FirebaseAuth.getInstance().signOut();
                         LocalDB.getInstance(MainActivity.this).dropDB();
                         ServiceUtils.stopServiceFriendChat(MainActivity.this.getApplicationContext(), true);

@@ -28,10 +28,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.instigatemobile.imessenger.R;
-import com.instigatemobile.imessenger.activities.LoginRegisterActivity;
 import com.instigatemobile.imessenger.activities.MainActivity;
-import com.instigatemobile.imessenger.controllers.DataBase;
 import com.instigatemobile.imessenger.data.SharedPreferenceHelper;
 import com.instigatemobile.imessenger.data.StaticConfig;
 import com.instigatemobile.imessenger.models.User;
@@ -277,16 +276,20 @@ public class LoginFragment extends Fragment {
         }
 
         void signIn(String email, String password) {
-            //progressBarVisibility();
+            progressBarVisibility();
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            //progressBarInvisibility();
+                            progressBarInvisibility();
                             if (!task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "Incorrect email or password. Authentication failed", Toast.LENGTH_LONG).show();
                             } else {
                                 if (user.isEmailVerified()) {
+
+                                    FirebaseMessaging.getInstance().subscribeToTopic(mAuth.getCurrentUser().getUid());
+                                    System.out.println(mAuth.getCurrentUser().getUid());
+
                                     saveUserInfo();
                                     redirect();
                                 }else {
@@ -299,7 +302,7 @@ public class LoginFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
-                            //progressBarInvisibility();
+                            progressBarInvisibility();
                         }
                     });
         }
