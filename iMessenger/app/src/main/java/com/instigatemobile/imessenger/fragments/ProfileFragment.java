@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,9 +24,11 @@ import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.adapters.ProfileContentAdapter;
 import com.instigatemobile.imessenger.controllers.DataBase;
 import com.instigatemobile.imessenger.controllers.ProfileCallbackInterface;
+import com.instigatemobile.imessenger.controllers.RoundImage;
 import com.instigatemobile.imessenger.controllers.Storage;
 import com.instigatemobile.imessenger.models.User;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -43,60 +47,74 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     private LinearLayout background;
     private TextView name;
 
-//TODO
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        initProfileCallbackMethods();
-//        database = DataBase.initDataBase();
-//        database.getCurrentProfile(callback);
-//    }
-//
-//    private void initProfileCallbackMethods() {
-//        callback = new ProfileCallbackInterface() {
-//            @Override
-//            public void responseProfile(Profile prf) {
-//                profile = prf;
-//                storage = Storage.initStorage();
-//                storage.downloadImageFromStorage(profile.getBackground(), "background", callback);
-//                storage.downloadImageFromStorage(profile.getAvatar(), "avatar", callback);
-//                name.setText(profile.getName());
-//                initProfileRecycleViewContent();
-//            }
-//
-//            @Override
-//            public void changeImage(String path, String imageName) {
-//                if (imageName == "avatar") {
-//                    database.changeProfileAvatar(path);
-//                } else if (imageName == "background") {
-//                    database.changeProfileBackground(path);
-//                }
-//            }
-//
-//            @Override
-//            public void setBackgroundAvatar(Bitmap imageBitmap) {
-//                if (imageBitmap != null) {
-//                    int sdk = android.os.Build.VERSION.SDK_INT;
-//                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//                        background.setBackgroundDrawable(new BitmapDrawable(imageBitmap));
-//                    } else {
-//                        background.setBackground(new BitmapDrawable(imageBitmap));
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void setAvatar(Bitmap imageBitmap) {
-//                if (imageBitmap != null) {
-//                    imageBitmap = quadraticImage(imageBitmap);
-//                    RoundImage roundedImage = new RoundImage(imageBitmap);
-//                    imageView.setImageDrawable(roundedImage);
-//                } else {
-//                    imageView.setImageResource(R.drawable.avatar1);
-//                }
-//            }
-//        };
-//    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initProfileCallbackMethods();
+        database = DataBase.initDataBase();
+        database.getCurrentProfile(callback);
+    }
+
+    private void initProfileCallbackMethods() {
+        callback = new ProfileCallbackInterface() {
+            @Override
+            public void responseProfile(User prf) {
+                profile = prf;
+                storage = Storage.initStorage();
+
+                File avatarImage = new File(Environment.getExternalStorageDirectory().getPath() + "/avatar");
+                if (avatarImage.exists()) {
+                    Bitmap myBitmap = BitmapFactory.decodeFile(avatarImage.getAbsolutePath());
+                    setAvatar(myBitmap);
+                } else {
+                    storage.downloadImageFromStorage(profile.avata, "avatar", callback);
+                }
+
+                File backgroundImage = new File(Environment.getExternalStorageDirectory().getPath() + "/background");
+                if (backgroundImage.exists()) {
+                    Bitmap myBitmap = BitmapFactory.decodeFile(backgroundImage.getAbsolutePath());
+                    setBackgroundAvatar(myBitmap);
+                } else {
+                    storage.downloadImageFromStorage(profile.background, "background", callback);
+                }
+
+                name.setText(profile.name);
+                //initProfileRecycleViewContent();
+            }
+
+            @Override
+            public void changeImage(String path, String imageName) {
+                if (imageName == "avatar") {
+                    database.changeProfileAvatar(path);
+                } else if (imageName == "background") {
+                    database.changeProfileBackground(path);
+                }
+            }
+
+            @Override
+            public void setBackgroundAvatar(Bitmap imageBitmap) {
+                if (imageBitmap != null) {
+                    int sdk = android.os.Build.VERSION.SDK_INT;
+                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        background.setBackgroundDrawable(new BitmapDrawable(imageBitmap));
+                    } else {
+                        background.setBackground(new BitmapDrawable(imageBitmap));
+                    }
+                }
+            }
+
+            @Override
+            public void setAvatar(Bitmap imageBitmap) {
+                if (imageBitmap != null) {
+                    imageBitmap = quadraticImage(imageBitmap);
+                    RoundImage roundedImage = new RoundImage(imageBitmap);
+                    imageView.setImageDrawable(roundedImage);
+                } else {
+                    imageView.setImageResource(R.drawable.avatar1);
+                }
+           }
+        };
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -136,8 +154,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-
-
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(this.getActivity().getContentResolver().openInputStream(selectedImage));
                 String path = getRealPathFromURI(selectedImage);

@@ -3,6 +3,7 @@ package com.instigatemobile.imessenger.controllers;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -11,6 +12,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 
 
@@ -18,12 +21,10 @@ public class Storage {
     private static Storage storage;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageRef;
-    private DataBase DB;
 
     private Storage() {
         firebaseStorage = FirebaseStorage.getInstance();
         storageRef = firebaseStorage.getReference();
-//TODO        DB = DataBase.initDataBase();
     }
 
     public static Storage initStorage() {
@@ -46,15 +47,14 @@ public class Storage {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                 if (imageName.equals("avatar")) {
-                    profileCallback.changeImage(dbPath, "avatar");
-                    downloadImageFromStorage(dbPath, "avatar", profileCallback);
+                    profileCallback.changeImage(downloadUrl.getLastPathSegment(), "avatar");
+                    downloadImageFromStorage(downloadUrl.getLastPathSegment(), "avatar", profileCallback);
                 } else if (imageName.equals("background")) {
-                    profileCallback.changeImage(dbPath, "background");
-                    downloadImageFromStorage(dbPath, "background", profileCallback);
+                    profileCallback.changeImage(downloadUrl.getLastPathSegment(), "background");
+                    downloadImageFromStorage(downloadUrl.getLastPathSegment(), "background", profileCallback);
                 }
 
             }
@@ -66,18 +66,29 @@ public class Storage {
         storageRef.child(path).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                // Use the bytes to display the image
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                if (imageName.equals("avatar")) {
-                    profileCallback.setAvatar(bitmap);
-                } else if (imageName.equals("background")) {
-                    profileCallback.setBackgroundAvatar(bitmap);
+                File file = new File(Environment.getExternalStorageDirectory().getPath() + '/' + imageName);
+                if (file.exists()) {
+                    file.delete();
                 }
-            }
+                 try {
+                     file.createNewFile();
+                     FileOutputStream ostream = new FileOutputStream(file);
+                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
+                     ostream.close();
+                 } catch (Exception e) {
+                     e.printStackTrace();
+                 }
+                     if (imageName.equals("avatar")) {
+                     profileCallback.setAvatar(bitmap);
+                 } else if (imageName.equals("background")) {
+                     profileCallback.setBackgroundAvatar(bitmap);
+                 }
+             }
+
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-
                 if (imageName.equals("avatar")) {
                     profileCallback.setAvatar(null);
                 } else if (imageName.equals("background")) {

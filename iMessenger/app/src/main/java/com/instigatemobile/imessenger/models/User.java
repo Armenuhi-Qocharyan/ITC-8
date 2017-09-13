@@ -4,8 +4,12 @@ package com.instigatemobile.imessenger.models;
 public class User {
     public String name;
     public String email;
-    public String avata;
+    public String avata = "images/";
+    public String background = "images/";
     public Status status;
+
+    public int friendsCount;
+    public int contactsCount;
     public Message message;
     public int resource = 0;
 
