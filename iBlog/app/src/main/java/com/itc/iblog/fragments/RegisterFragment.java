@@ -266,7 +266,7 @@ public class RegisterFragment extends Fragment{
                             Intent intent = new Intent(login,
                                     MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            FirebaseMessaging.getInstance().subscribeToTopic(email);
+                            FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             startActivity(intent);
                             login.finish();
                         } else {
