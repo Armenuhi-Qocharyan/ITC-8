@@ -31,6 +31,7 @@ import com.itc.iblog.adapters.ListAdapter;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.CommentModel;
 import com.itc.iblog.models.PostModel;
+import com.itc.iblog.utils.HelperClass;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -90,7 +91,7 @@ public class PostCommentsFragment extends Fragment {
                     mRecyclerView.setLayoutManager(mLayoutManager);
 
                     // specify an adapter (see also next example)
-                    mAdapter = new CommentAdapter(myDataset, (ImageLoaderInterface) getActivity().getApplication());
+                    mAdapter = new CommentAdapter(myDataset);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }

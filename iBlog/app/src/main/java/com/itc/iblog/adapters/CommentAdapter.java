@@ -49,7 +49,6 @@ import static com.google.android.gms.internal.zzs.TAG;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHolder> {
 
-    private final ImageLoaderInterface listener;
     private List<CommentModel> cardList;
     private String email;
 
@@ -70,9 +69,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         }
     }
 
-    public CommentAdapter(List<CommentModel> cardList, ImageLoaderInterface listener) {
+    public CommentAdapter(List<CommentModel> cardList) {
         this.cardList = cardList;
-        this.listener = listener;
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = mDatabase.child("Users");
