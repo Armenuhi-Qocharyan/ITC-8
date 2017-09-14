@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.adapters.ProfileContentAdapter;
 import com.instigatemobile.imessenger.controllers.DataBase;
@@ -31,6 +33,7 @@ import com.instigatemobile.imessenger.models.User;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
@@ -42,18 +45,32 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
     private DataBase database;
     private Storage storage;
     private ProfileCallbackInterface callback;
+
     private View rootView;
     private ImageView imageView;
     private ImageButton changeBackground;
     private LinearLayout background;
+    private TextView email;
     private TextView name;
+
+    private boolean isMyProfile = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initProfileCallbackMethods();
         database = DataBase.initDataBase();
-        database.getCurrentProfile(callback);
+        if (null != getArguments() && getArguments().containsKey("contactID")) {
+            isMyProfile = false;
+            String idUser  = getArguments().getString("contactID").toString();
+            database.getCurrentProfile(callback, idUser);
+
+        } else {
+            isMyProfile = true;
+            FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
+            database.getCurrentProfile(callback, auth.getUid());
+        }
+
     }
 
     private void initProfileCallbackMethods() {
@@ -62,24 +79,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
             public void responseProfile(User prf) {
                 profile = prf;
                 storage = Storage.initStorage();
-
                 File avatarImage = new File(Environment.getExternalStorageDirectory().getPath() + "/avatar");
-                if (avatarImage.exists()) {
-                    Bitmap myBitmap = BitmapFactory.decodeFile(avatarImage.getAbsolutePath());
-                    setAvatar(myBitmap);
-                } else {
-                    storage.downloadImageFromStorage(profile.avata, "avatar", callback);
-                }
-
                 File backgroundImage = new File(Environment.getExternalStorageDirectory().getPath() + "/background");
-                if (backgroundImage.exists()) {
-                    Bitmap myBitmap = BitmapFactory.decodeFile(backgroundImage.getAbsolutePath());
-                    setBackgroundAvatar(myBitmap);
-                } else {
+
+                if (!isMyProfile || !(avatarImage.exists() && backgroundImage.exists())) {
+                    storage.downloadImageFromStorage(profile.avata, "avatar", callback);
                     storage.downloadImageFromStorage(profile.background, "background", callback);
+                } else {
+                    Bitmap avatarBitmap = BitmapFactory.decodeFile(avatarImage.getAbsolutePath());
+                    callback.setAvatar(avatarBitmap);
+                    Bitmap backgroundBitmap = BitmapFactory.decodeFile(backgroundImage.getAbsolutePath());
+                    callback.setBackgroundAvatar(backgroundBitmap);
                 }
 
                 name.setText(profile.name);
+                email.setText(profile.email);
+
                 //initProfileRecycleViewContent();
             }
 
@@ -95,6 +110,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
             @Override
             public void setBackgroundAvatar(Bitmap imageBitmap) {
                 if (imageBitmap != null) {
+                    if (isMyProfile) {
+                        File file = new File(Environment.getExternalStorageDirectory().getPath() + "background");
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                        try {
+                            file.createNewFile();
+                            FileOutputStream ostream = new FileOutputStream(file);
+                            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
+                            ostream.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     int sdk = android.os.Build.VERSION.SDK_INT;
                     if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         background.setBackgroundDrawable(new BitmapDrawable(imageBitmap));
@@ -107,6 +136,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
             @Override
             public void setAvatar(Bitmap imageBitmap) {
                 if (imageBitmap != null) {
+                    if (isMyProfile) {
+                        File file = new File(Environment.getExternalStorageDirectory().getPath() + "avatar");
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                        try {
+                            file.createNewFile();
+                            FileOutputStream ostream = new FileOutputStream(file);
+                            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
+                            ostream.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     imageBitmap = quadraticImage(imageBitmap);
                     RoundImage roundedImage = new RoundImage(imageBitmap);
                     imageView.setImageDrawable(roundedImage);
@@ -126,10 +169,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
 
     private void initView() {
         imageView = (ImageView) rootView.findViewById(R.id.avatar);
-        changeBackground = (ImageButton) rootView.findViewById(R.id.changeBackground);
         background = (LinearLayout) rootView.findViewById(R.id.linerBackground);
         name = (TextView) rootView.findViewById(R.id.profile_name);
-        setListeners();
+        email = (TextView) rootView.findViewById(R.id.email);
+        changeBackground = (ImageButton) rootView.findViewById(R.id.changeBackground);
+
+        if (isMyProfile) {
+            changeBackground.setVisibility(View.VISIBLE);
+            setListeners();
+        } else {
+            changeBackground.setVisibility(View.GONE);
+        }
     }
 
     @Override

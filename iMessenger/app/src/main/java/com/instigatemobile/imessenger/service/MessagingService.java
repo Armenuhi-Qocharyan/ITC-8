@@ -12,7 +12,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.activities.MainActivity;
 
-
 public class MessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

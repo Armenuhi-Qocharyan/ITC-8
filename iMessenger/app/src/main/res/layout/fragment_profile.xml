@@ -29,13 +29,7 @@
                     android:layout_marginTop="20dp" />
 
                 <!-- ProfileFragment name -->
-                <TextView
-                    android:id="@+id/profile_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@string/font_family"
-                    android:textColor="@color/greyDark" />
+
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -58,6 +52,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv"

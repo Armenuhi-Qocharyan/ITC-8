@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -67,23 +69,12 @@ public class Storage {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                File file = new File(Environment.getExternalStorageDirectory().getPath() + '/' + imageName);
-                if (file.exists()) {
-                    file.delete();
+
+                if (imageName.equals("avatar")) {
+                    profileCallback.setAvatar(bitmap);
+                } else if (imageName.equals("background")) {
+                    profileCallback.setBackgroundAvatar(bitmap);
                 }
-                 try {
-                     file.createNewFile();
-                     FileOutputStream ostream = new FileOutputStream(file);
-                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
-                     ostream.close();
-                 } catch (Exception e) {
-                     e.printStackTrace();
-                 }
-                     if (imageName.equals("avatar")) {
-                     profileCallback.setAvatar(bitmap);
-                 } else if (imageName.equals("background")) {
-                     profileCallback.setBackgroundAvatar(bitmap);
-                 }
              }
 
         }).addOnFailureListener(new OnFailureListener() {
