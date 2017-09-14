@@ -47,6 +47,7 @@
     <string name="register">Register</string>
 
     <string name="age">Age   </string>
+    <string name="age_">Age -   </string>
     <string name="cancel"> Cancel </string>
     <string name="ok"> OK </string>
     <string name="not_picked_image"> You haven not picked Image </string>

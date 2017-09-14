@@ -31,6 +31,7 @@
     <string name="register">Зарегистрировать</string>
 
     <string name="age">Возраст   </string>
+    <string name="age_">Возраст -  </string>
     <string name="cancel"> Отменить </string>
     <string name="ok"> OK </string>
     <string name="not_picked_image"> Вы не выбрали изображение </string>

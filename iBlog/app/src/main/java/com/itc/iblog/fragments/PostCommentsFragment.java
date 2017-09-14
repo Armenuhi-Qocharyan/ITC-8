@@ -1,9 +1,6 @@
 package com.itc.iblog.fragments;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,19 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.itc.iblog.R;
+import com.itc.iblog.Services.RequestService;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.adapters.CommentAdapter;
 import com.itc.iblog.adapters.ListAdapter;
@@ -119,6 +113,14 @@ public class PostCommentsFragment extends Fragment {
                     myDataset.add(comment);
                     ref.child("comments").setValue(myDataset);
                     Toast.makeText((MainActivity) getActivity(), "your comment added", Toast.LENGTH_SHORT).show();
+
+                    Intent serviceIntent = new Intent(view.getContext(), RequestService.class);
+                    serviceIntent.putExtra("title", "commented your post");
+                    serviceIntent.putExtra("name", userName);
+                    serviceIntent.putExtra("image", post.getUserImage());
+                    serviceIntent.putExtra("icon", "ic_action_like.png");
+                    serviceIntent.putExtra("id", post.getUuid());
+                    view.getContext().startService(serviceIntent);
                 }
             }
         });

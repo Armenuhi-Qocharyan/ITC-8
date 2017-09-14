@@ -40,6 +40,7 @@
     <string name="register">Գրանցվել</string>
 
     <string name="age">Տարիք   </string>
+    <string name="age_">Տարիք -  </string>
     <string name="cancel"> Չեղարկել </string>
     <string name="ok"> Լավ </string>
     <string name="not_picked_image"> Դուք նկար չեք վերցրել </string>
