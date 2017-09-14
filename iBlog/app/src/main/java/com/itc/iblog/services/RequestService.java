@@ -25,10 +25,14 @@ import okhttp3.Response;
 
 
 public class RequestService extends Service {
-    private static final String SERVER_KEY = "AAAA9zVO14U:APA91bGsY0Y8m6GvY4bc1eJ243OtS5stHMcgjw7lcv927MW9ZyGYyfKSwRyo3xrNthLx0LMO4Boi6Kq-bU4oztnUhyJ0vqpW6eTi7eqcNnwrkLB4LvYQdwb6PfiVaxBP2uB-ZFY15g6u";
+    public static final String SERVER_KEY = "AAAA9zVO14U:APA91bGsY0Y8m6GvY4bc1eJ243OtS5stHMcgjw7lcv927MW9ZyGYyfKSwRyo3xrNthLx0LMO4Boi6Kq-bU4oztnUhyJ0vqpW6eTi7eqcNnwrkLB4LvYQdwb6PfiVaxBP2uB-ZFY15g6u";
     private PostRequestData postRequestData;
     private String title;
-    private String email;
+    private String id;
+    private String name;
+    private String image;
+    private String icon;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -47,13 +51,18 @@ public class RequestService extends Service {
         Bundle extras = intent.getExtras();
         if(extras == null) {
             this.title = null;
-            this.email = null;
+            this.id = null;
+            this.name = null;
+            this.image = null;
+            this.icon = null;
         } else {
             this.title = extras.getString("title");
-            this.email = extras.getString("email");
+            this.id = extras.getString("id");
+            this.name = extras.getString("name");
+            this.image = extras.getString("image");
+            this.icon = extras.getString("icon");
         }
 
-        Toast.makeText(this, this.title, Toast.LENGTH_SHORT).show();
         sendNotification();
         return super.onStartCommand(intent, flags, startId);
 
@@ -62,24 +71,26 @@ public class RequestService extends Service {
    private void sendNotification() {
        NotificationData data = new NotificationData();
        data.setTitle(this.title);
+       data.setName(this.name);
+       data.setImage(this.image);
+       data.setIcon(this.icon);
        this.postRequestData = new PostRequestData();
-       postRequestData.setTo("/topics/" + this.email);
+       postRequestData.setTo("/topics/" + id);
        postRequestData.setData(data);
-
        Gson gson = new Gson();
-        String json = gson.toJson(postRequestData);
-        String url = "https://fcm.googleapis.com/fcm/send";
-        final MediaType JSON = MediaType.parse("aplication/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
+       String json = gson.toJson(postRequestData);
+       String url = "https://fcm.googleapis.com/fcm/send";
+       final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+       RequestBody body = RequestBody.create(JSON, json);
+       Request request = new Request.Builder()
                 .url(url)
                 .header("Authorization", "key=" + SERVER_KEY)
                 .post(body)
                 .build();
-        Callback responseCallBack = new Callback() {
+       Callback responseCallBack = new Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
-                //Toast.makeText(RequestService.this, "Fail", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -87,6 +98,7 @@ public class RequestService extends Service {
                 if (!response.isSuccessful()) {
                     throw new IOException("Unexpected code " + response);
                 }
+
             }
         };
         OkHttpClient client = new OkHttpClient();

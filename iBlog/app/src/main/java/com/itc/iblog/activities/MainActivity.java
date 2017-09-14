@@ -78,6 +78,14 @@ public class MainActivity extends AppCompatActivity
     private TextView userName;
     private TextView email;
 
+    private Bitmap bitmap;
+    private String uuid;
+
+    public String getUuid() {
+        this.uuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        return uuid;
+    }
+
     public TextView getEmail() {
         return email;
     }
@@ -86,7 +94,10 @@ public class MainActivity extends AppCompatActivity
     public TextView getUserName() {
         return userName;
     }
-    public String getAvatarUrl() {return avatarUrl;}
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
 
     private String avatarUrl;
     private StorageReference storageRef;
@@ -100,12 +111,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        FirebaseMessaging.getInstance().subscribeToTopic("email");
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         Configuration config = getBaseContext().getResources().getConfiguration();
 
         String lang = settings.getString("LANG", "");
-        if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang)) {
+        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
             Locale locale = new Locale(lang);
             Locale.setDefault(locale);
             config.setLocale(locale);
@@ -145,7 +157,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+
         setAvatar();
         userName = (TextView) findViewById(R.id.header_user_name);
         email = (TextView) findViewById(R.id.header_user_email);
@@ -218,7 +230,7 @@ public class MainActivity extends AppCompatActivity
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            FirebaseMessaging.getInstance().unsubscribeFromTopic(String.valueOf(email));
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             FirebaseAuth.getInstance().signOut();
                             startActivity(new Intent(MainActivity.this, LoginRegisterActivity.class)); //Go back to home page
                             finish();
@@ -255,19 +267,19 @@ public class MainActivity extends AppCompatActivity
                 int langpos = spinner1.getSelectedItemPosition();
                 switch (langpos) {
                     case 0: //English
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").commit();
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").apply();
                         setLangRecreate("en");
                         return;
                     case 1:
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "hy").commit();
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "hy").apply();
                         setLangRecreate("hy");
                         return;
                     case 2:
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "ru").commit();
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "ru").apply();
                         setLangRecreate("ru");
                         return;
                     default: //By default set to english
-                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").commit();
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("LANG", "en").apply();
                         setLangRecreate("en");
                         return;
                 }
@@ -348,16 +360,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         if (id == android.R.id.home) {
             onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override

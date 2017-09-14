@@ -1,11 +1,16 @@
 package com.itc.iblog.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by student on 9/13/17.
  */
 
 public class PostRequestData {
+
+    @SerializedName("data")
     private NotificationData data;
+    @SerializedName("to")
     private String to;
 
     public NotificationData getData() {

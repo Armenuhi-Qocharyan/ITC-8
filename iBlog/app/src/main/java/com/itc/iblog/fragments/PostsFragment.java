@@ -83,7 +83,7 @@ public class PostsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myDataset = new ArrayList<>();
-                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
                     final PostModel post = messageSnapshot.getValue(PostModel.class);
                     myDataset.add(post);
                 }
@@ -92,7 +92,7 @@ public class PostsFragment extends Fragment {
                 mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrolled(RecyclerView mRecyclerView, int dx, int dy) {
-                        if (dy > 0 || dy<0 && fab != null && fab.isShown()) {
+                        if (dy > 0 || dy < 0 && fab != null && fab.isShown()) {
                             fab.hide();
                         }
                     }
@@ -112,8 +112,10 @@ public class PostsFragment extends Fragment {
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
+
                 System.out.println("bla " + help.getInstance(getActivity()));
                 mAdapter = new ListAdapter(myDataset);
+
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -124,6 +126,7 @@ public class PostsFragment extends Fragment {
         });
         return view;
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,17 +141,17 @@ public class PostsFragment extends Fragment {
             }
         }
     }
+
     private void uploadImage() {
-        if(file != null)
-        {
-            FirebaseStorage storage=FirebaseStorage.getInstance();
+        if (file != null) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference reference = storage.getReference();
             StorageReference imagesRef = reference.child("Posts").child(postId).child("image");
             UploadTask uploadTask = imagesRef.putFile(file);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Error : "+e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error : " + e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -188,7 +191,7 @@ public class PostsFragment extends Fragment {
 
                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference ref = database.getReference("Posts");
-                        postId = ((MainActivity)getActivity()).getUserName().getText().toString() + new Date().toString();
+                        postId = ((MainActivity) getActivity()).getUserName().getText().toString() + new Date().toString();
                         ArrayList<String> users = new ArrayList<String>();
                         users.add("");
                         ArrayList<CommentModel> comments = new ArrayList<CommentModel>();
@@ -200,10 +203,10 @@ public class PostsFragment extends Fragment {
                             postImagePath = null;
                         }
 
-                        System.out.println("bla  " + ((MainActivity)getActivity()).getUserName().getText().toString());
+                        System.out.println("bla  " + ((MainActivity) getActivity()).getUserName().getText().toString());
                         ref.child(postId)
-                                .setValue(new PostModel(((MainActivity)getActivity()).getUserName().getText().toString(),((MainActivity)getActivity()).getEmail().getText().toString(),
-                                        ((MainActivity) getActivity()).getAvatarUrl(),postImagePath,new Date(),postId,title,text,0,0,0,users,comments));
+                                .setValue(new PostModel(((MainActivity) getActivity()).getUserName().getText().toString(), ((MainActivity) getActivity()).getEmail().getText().toString(),
+                                        ((MainActivity) getActivity()).getAvatarUrl(), postImagePath, new Date(), postId, title, text, 0, 0, 0, users, comments, ((MainActivity) getActivity()).getUuid()));
                         uploadImage();
                         Toast.makeText(getContext(), R.string.post_successfuly_added, Toast.LENGTH_SHORT).show();
                         EditText postTitle = dialog.findViewById(R.id.add_post_title);
@@ -243,6 +246,7 @@ public class PostsFragment extends Fragment {
         });
 //        ref.removeEventListener(listener);
     }
+
     @Override
     public void onPause() {
         super.onPause();
