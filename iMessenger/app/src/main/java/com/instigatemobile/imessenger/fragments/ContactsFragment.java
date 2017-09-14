@@ -353,7 +353,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 public void onFailure(@NonNull Exception e) {
                                     dialogWait.dismiss();
                                     new LovelyInfoDialog(context)
-                                            .setTopColorRes(R.color.colorAccent)
+                                            .setTopColorRes(R.color.colorPrimary)
                                             .setIcon(R.drawable.ic_add_friend)
                                             .setTitle(R.string.fail)
                                             .setMessage(R.string.failed_add_friend)
@@ -374,7 +374,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 public void onFailure(@NonNull Exception e) {
                                     dialogWait.dismiss();
                                     new LovelyInfoDialog(context)
-                                            .setTopColorRes(R.color.colorAccent)
+                                            .setTopColorRes(R.color.colorPrimary)
                                             .setIcon(R.drawable.ic_add_friend)
                                             .setTitle(R.string.fail)
                                             .setMessage(R.string.failed_add_friend)
@@ -392,8 +392,6 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         .show();
             }
         }
-
-
     }
 }
 
@@ -658,7 +656,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     if (dataSnapshot.getValue() == null) {
                         dialogWaitDeleting.dismiss();
                         new LovelyInfoDialog(context)
-                                .setTopColorRes(R.color.colorAccent)
+                                .setTopColorRes(R.color.colorPrimary)
                                 .setTitle(R.string.error)
                                 .setMessage(R.string.error_occurred)
                                 .show();
@@ -672,7 +670,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                         dialogWaitDeleting.dismiss();
 
                                         new LovelyInfoDialog(context)
-                                                .setTopColorRes(R.color.colorAccent)
+                                                .setTopColorRes(R.color.colorPrimary)
                                                 .setTitle(R.string.success)
                                                 .setMessage(R.string.delete_success)
                                                 .show();
@@ -687,7 +685,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                     public void onFailure(@NonNull Exception e) {
                                         dialogWaitDeleting.dismiss();
                                         new LovelyInfoDialog(context)
-                                                .setTopColorRes(R.color.colorAccent)
+                                                .setTopColorRes(R.color.colorPrimary)
                                                 .setTitle(R.string.error)
                                                 .setMessage(R.string.error_occurred)
                                                 .show();

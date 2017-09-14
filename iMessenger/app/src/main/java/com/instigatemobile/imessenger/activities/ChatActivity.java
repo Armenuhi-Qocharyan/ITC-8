@@ -158,8 +158,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             bitmapAvataUser = null;
         }
-
-
     }
 
     @Override
