@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.data.NotificationData;
@@ -65,9 +70,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     public static String friendid;
 
-    //private static final String SERVER_KEY = "AAAA4RXWeiI:APA91bEiawUeTrWSOB8VJUHAfNpUl2GtXlmwmp9VVf6IJOC0nGU6ihINOerQIiuoGhmpXeyyDcHNDRy6ZFX7X3rPIWWp20YlBkyz185ichGcL8T_bLfpseT5TeJYLdQfwlQ9icR64qcx";
-    //private static final String SERVER_KEY = "AIzaSyAMfbVEXd3PCk5dELZjmK4b1eQMriCSOSU"; //Server key
-    private static final String SERVER_KEY = "AIzaSyA9qxD33RN68_jycAwGTJVpsN4cH4Ztg9A"; //Web api key
+    private static final String SERVER_KEY = "AAAA4RXWeiI:APA91bEiawUeTrWSOB8VJUHAfNpUl2GtXlmwmp9VVf6IJOC0nGU6ihINOerQIiuoGhmpXeyyDcHNDRy6ZFX7X3rPIWWp20YlBkyz185ichGcL8T_bLfpseT5TeJYLdQfwlQ9icR64qcx";
 
 
     @Override
@@ -81,7 +84,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         System.out.println(idFriend);
         System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
+        final String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
 
         consersation = new Conversation();
         btnSend = (ImageButton) findViewById(R.id.btnSend);
@@ -89,61 +92,74 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
         String base64AvataUser = SharedPreferenceHelper.getInstance(this).getUserInfo().avata;
         if (!base64AvataUser.equals(StaticConfig.STR_DEFAULT_BASE64)) {
-            //byte[] decodedString = Base64.decode(base64AvataUser, Base64.DEFAULT);
-            //bitmapAvataUser = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference ref = storage.getReference();
+            ref.child(base64AvataUser).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    bitmapAvataUser = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    editWriteMessage = (EditText) findViewById(R.id.editWriteMessage);
+                    if (idFriend != null && nameFriend != null) {
+                        getSupportActionBar().setTitle(nameFriend);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                        getSupportActionBar().setHomeButtonEnabled(true);
+                        getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_white);
+                        linearLayoutManager = new LinearLayoutManager(ChatActivity.this, LinearLayoutManager.VERTICAL, false);
+                        recyclerChat = (RecyclerView) findViewById(R.id.recyclerChat);
+                        recyclerChat.setLayoutManager(linearLayoutManager);
+                        adapter = new ListMessageAdapter(ChatActivity.this, consersation, bitmapAvataFriend, bitmapAvataUser);
+                        FirebaseDatabase.getInstance().getReference().child("message/" + roomId).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                if (dataSnapshot.getValue() != null) {
+                                    HashMap mapMessage = (HashMap) dataSnapshot.getValue();
+                                    Message newMessage = new Message();
+                                    newMessage.idSender = (String) mapMessage.get("idSender");
+                                    newMessage.idReceiver = (String) mapMessage.get("idReceiver");
+                                    newMessage.text = (String) mapMessage.get("text");
+                                    newMessage.timestamp = (long) mapMessage.get("timestamp");
+                                    consersation.getListMessageData().add(newMessage);
+                                    adapter.notifyDataSetChanged();
+                                    linearLayoutManager.scrollToPosition(consersation.getListMessageData().size() - 1);
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        recyclerChat.setAdapter(adapter);
+                    }
+                }
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+
+                }
+            });
         } else {
             bitmapAvataUser = null;
         }
 
-        editWriteMessage = (EditText) findViewById(R.id.editWriteMessage);
-        if (idFriend != null && nameFriend != null) {
-            getSupportActionBar().setTitle(nameFriend);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_white);
-            linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-            recyclerChat = (RecyclerView) findViewById(R.id.recyclerChat);
-            recyclerChat.setLayoutManager(linearLayoutManager);
-            adapter = new ListMessageAdapter(this, consersation, bitmapAvataFriend, bitmapAvataUser);
-            FirebaseDatabase.getInstance().getReference().child("message/" + roomId).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    if (dataSnapshot.getValue() != null) {
-                        HashMap mapMessage = (HashMap) dataSnapshot.getValue();
-                        Message newMessage = new Message();
-                        newMessage.idSender = (String) mapMessage.get("idSender");
-                        newMessage.idReceiver = (String) mapMessage.get("idReceiver");
-                        newMessage.text = (String) mapMessage.get("text");
-                        newMessage.timestamp = (long) mapMessage.get("timestamp");
-                        consersation.getListMessageData().add(newMessage);
-                        adapter.notifyDataSetChanged();
-                        linearLayoutManager.scrollToPosition(consersation.getListMessageData().size() - 1);
-                    }
-                }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-            recyclerChat.setAdapter(adapter);
-        }
     }
 
     @Override
@@ -264,8 +280,19 @@ class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             if (dataSnapshot.getValue() != null) {
                                 String avataStr = (String) dataSnapshot.getValue();
                                 if (!avataStr.equals(StaticConfig.STR_DEFAULT_BASE64)) {
-                                    byte[] decodedString = Base64.decode(Environment.getExternalStorageDirectory().getPath() + "/avatar", Base64.DEFAULT);
-                                    ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
+                                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                                    StorageReference ref = storage.getReference();
+                                    ref.child(avataStr).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                        @Override
+                                        public void onSuccess(byte[] bytes) {
+                                            ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                                        }
+
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                        }
+                                    });
                                 } else {
                                     ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeResource(context.getResources(), R.drawable.default_avata));
                                 }

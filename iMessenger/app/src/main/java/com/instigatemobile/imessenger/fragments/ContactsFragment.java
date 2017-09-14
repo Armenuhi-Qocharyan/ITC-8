@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.activities.ChatActivity;
 import com.instigatemobile.imessenger.data.LocalDB;
@@ -447,8 +450,19 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         intent.putExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID, idRoom);
                         ChatActivity.bitmapAvataFriend = new HashMap<>();
                         if (!avata.equals(StaticConfig.STR_DEFAULT_BASE64)) {
-                            byte[] decodedString = Base64.decode(Environment.getExternalStorageDirectory().getPath() + "/avatar", Base64.DEFAULT);
-                            ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
+                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                            StorageReference ref = storage.getReference();
+                            ref.child(avata).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                                }
+
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                }
+                            });
                         } else {
                             ChatActivity.bitmapAvataFriend.put(id, BitmapFactory.decodeResource(context.getResources(), R.drawable.default_avata));
                         }
@@ -565,9 +579,20 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (listFriend.getListFriend().get(position).avata.equals(StaticConfig.STR_DEFAULT_BASE64)) {
             ((ItemFriendViewHolder) holder).avata.setImageResource(R.drawable.default_avata);
         } else {
-            byte[] decodedString = Base64.decode(Environment.getExternalStorageDirectory().getPath() + "/avatar", Base64.DEFAULT);
-            Bitmap src = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            ((ItemFriendViewHolder) holder).avata.setImageBitmap(src);
+            FirebaseStorage storage= FirebaseStorage.getInstance();
+            StorageReference ref = storage.getReference();
+            ref.child(avata).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap src = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    ((ItemFriendViewHolder) holder).avata.setImageBitmap(src);
+                }
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                }
+            });
         }
 
 
