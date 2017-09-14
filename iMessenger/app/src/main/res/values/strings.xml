@@ -83,4 +83,7 @@
     <string name="delete_success">Friend successfully deleted</string>
 
     <string name="new_message">You have a new message!!!</string>
+
+    <string name="delete_msg">Delete</string>
+    <string name="delete_msg_quastion">Delete this entire conversation ?</string>
 </resources>
