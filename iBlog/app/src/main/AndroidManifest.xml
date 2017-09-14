@@ -2,16 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.itc.iblog">
 
-
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-
 
     <application
         android:allowBackup="true"
@@ -53,8 +47,8 @@
             android:label="@string/title_activity_profile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
+
         <service
             android:name=".Services.RequestService"
             android:exported="false"
@@ -63,6 +57,21 @@
                 <action android:name="com.itc.iblog.Services" />
             </intent-filter>
         </service>
+
+        <service
+            android:name=".Services.IBlogFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_action_name" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
     </application>
 
 </manifest>

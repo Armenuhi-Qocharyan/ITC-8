@@ -63,13 +63,13 @@ public class LoginFragment extends Fragment {
             }
         });
         editTextEmail = (EditText) view.findViewById(R.id.editText);
-        editTextPass =  (EditText) view.findViewById(R.id.editText2);
+        editTextPass = (EditText) view.findViewById(R.id.editText2);
         Button login = (Button) view.findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString().trim();
-                String password =  editTextPass.getText().toString().trim();
+                String password = editTextPass.getText().toString().trim();
                 signIn(email, password);
             }
         });
@@ -91,7 +91,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        progressBar =  getActivity().findViewById(R.id.progressBar_cyclic_login);
+        progressBar = getActivity().findViewById(R.id.progressBar_cyclic_login);
         progressBar.setVisibility(View.INVISIBLE);
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         updateUI(currentUser);
@@ -125,9 +125,9 @@ public class LoginFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(Tag, "SignInWithEmail:success");
-                            Toast.makeText(getActivity(),R.string.login_successfully, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.login_successfully, Toast.LENGTH_SHORT).show();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            FirebaseMessaging.getInstance().subscribeToTopic(email);
+                            FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             updateUI(user);
                         } else {
                             Log.w(Tag, "SignInWithEmail:failure", task.getException());

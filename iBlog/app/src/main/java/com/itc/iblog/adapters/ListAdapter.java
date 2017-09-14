@@ -1,25 +1,20 @@
 package com.itc.iblog.adapters;
 
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,28 +29,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
 import com.itc.iblog.Services.RequestService;
-import com.itc.iblog.activities.MainActivity;
-import com.itc.iblog.fragments.FollowersFragment;
 import com.itc.iblog.fragments.PostCommentsFragment;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
-import com.itc.iblog.models.NotificationData;
 import com.itc.iblog.models.PostModel;
-import com.itc.iblog.models.PostRequestData;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Random;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.google.android.gms.internal.zzs.TAG;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
 
@@ -82,20 +61,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
         public MyViewHolder(View view) {
             super(view);
-             userName = (TextView) view.findViewById(R.id.user_name);
-             userSurname = (TextView) view.findViewById(R.id.user_surname);
-             userImage = (ImageView) view.findViewById(R.id.user_image);
-             postTime = (TextView) view.findViewById(R.id.post_time);
-             postImage = (ImageView) view.findViewById(R.id.post_image);
-             postTitle = (TextView) view.findViewById(R.id.post_title);
-             postText =  (TextView) view.findViewById(R.id.post_text);
-             likeCount =  (TextView) view.findViewById(R.id.like_count);
-             likeButton = (ImageView) view.findViewById(R.id.like);
-             commentCount =  (TextView) view.findViewById(R.id.comment_count);
-             cardView = (CardView) view.findViewById(R.id.card_view);
-             favButton = (ImageView) view.findViewById(R.id.favorite);
-             favCount = (TextView) view.findViewById(R.id.favorite_count);
-             comButton = (ImageView) view.findViewById(R.id.comment);
+            userName = (TextView) view.findViewById(R.id.user_name);
+            userSurname = (TextView) view.findViewById(R.id.user_surname);
+            userImage = (ImageView) view.findViewById(R.id.user_image);
+            postTime = (TextView) view.findViewById(R.id.post_time);
+            postImage = (ImageView) view.findViewById(R.id.post_image);
+            postTitle = (TextView) view.findViewById(R.id.post_title);
+            postText = (TextView) view.findViewById(R.id.post_text);
+            likeCount = (TextView) view.findViewById(R.id.like_count);
+            likeButton = (ImageView) view.findViewById(R.id.like);
+            commentCount = (TextView) view.findViewById(R.id.comment_count);
+            cardView = (CardView) view.findViewById(R.id.card_view);
+            favButton = (ImageView) view.findViewById(R.id.favorite);
+            favCount = (TextView) view.findViewById(R.id.favorite_count);
+            comButton = (ImageView) view.findViewById(R.id.comment);
         }
     }
 
@@ -132,7 +111,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         final PostModel post = cardList.get(position);
         holder.userName.setText(post.getUserName());
         holder.userSurname.setText(post.getUserEmail());
-        holder.postTime.setText(post.getPostTime().toString().substring(0,19));
+        holder.postTime.setText(post.getPostTime().toString().substring(0, 19));
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         StorageReference pathReference = storageRef.child(post.getUserImage());
@@ -157,7 +136,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.postText.setText(post.getPostText());
 
 
-
         if (post.getPostImagePath() != null) {
             Bitmap bitmap = listener.loadImage(post);
             if (bitmap != null) {
@@ -173,26 +151,28 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.likeCount.setText(post.getLikeCount().toString());
 
 
-
-            holder.likeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (post.getUsers().indexOf(email) < 0 ) {
-                        Integer newLikeCount = Integer.parseInt(String.valueOf(post.getLikeCount())) + 1;
-                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        final DatabaseReference ref = database.getReference("Posts");
-                        ref.child(post.getPostId()).child("likeCount").setValue(newLikeCount);
-                        ArrayList<String> users = post.getUsers();
-                        users.add(email);
-                        Intent serviceIntent = new Intent(view.getContext(), RequestService.class);
-                        serviceIntent.putExtra("title", "Notification");
-                        serviceIntent.putExtra("email", email);
-                        view.getContext().startService(serviceIntent);
-                        holder.likeCount.setText(newLikeCount.toString());
-                        ref.child(post.getPostId()).child("users").setValue(users);
-                    }
+        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (post.getUsers().indexOf(email) < 0) {
+                    Integer newLikeCount = Integer.parseInt(String.valueOf(post.getLikeCount())) + 1;
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference ref = database.getReference("Posts");
+                    ref.child(post.getPostId()).child("likeCount").setValue(newLikeCount);
+                    ArrayList<String> users = post.getUsers();
+                    users.add(email);
+                    Intent serviceIntent = new Intent(view.getContext(), RequestService.class);
+                    serviceIntent.putExtra("title", "liked your post");
+                    serviceIntent.putExtra("name", userName);
+                    serviceIntent.putExtra("image", post.getUserImage());
+                    serviceIntent.putExtra("icon", "ic_action_like.png");
+                    serviceIntent.putExtra("id", post.getUuid());
+                    view.getContext().startService(serviceIntent);
+                    holder.likeCount.setText(newLikeCount.toString());
+                    ref.child(post.getPostId()).child("users").setValue(users);
                 }
-            });
+            }
+        });
 
         Integer comCount = 0;
         if (post.getComments() != null) {
@@ -202,13 +182,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.comButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                android.support.v4.app.Fragment fragment = new PostCommentsFragment(post,userName,email);
-                FragmentManager fm = ((FragmentActivity)view.getContext()).getSupportFragmentManager();
+                android.support.v4.app.Fragment fragment = new PostCommentsFragment(post, userName, email);
+                FragmentManager fm = ((FragmentActivity) view.getContext()).getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.contentFragment, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                
+
             }
         });
         holder.favCount.setText(post.getFavCount().toString());
@@ -219,18 +199,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 final DatabaseReference dbRef = mDatabase.child("Users");
 
-                 dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 List<String> favPosts;
                                 if (dataSnapshot.hasChild("favoritesPosts")) {
-                                    favPosts = dataSnapshot.child("favoritesPosts").getValue(new GenericTypeIndicator<ArrayList<String>>() {});
+                                    favPosts = dataSnapshot.child("favoritesPosts").getValue(new GenericTypeIndicator<ArrayList<String>>() {
+                                    });
                                 } else {
                                     favPosts = new ArrayList<String>();
                                     favPosts.add("");
                                 }
-                                
+
                                 if (favPosts.indexOf(post.getPostId()) == -1) {
                                     favPosts.add(post.getPostId());
                                     dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("favoritesPosts").setValue(favPosts);
@@ -255,7 +236,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public int getItemCount() {
         return cardList.size();
     }
-
 
 
 }
