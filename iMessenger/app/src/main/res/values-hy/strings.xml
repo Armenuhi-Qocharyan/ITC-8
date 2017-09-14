@@ -83,4 +83,7 @@
     <string name="delete_success">Ընկերը հաջողությամբ ջնջված է</string>
 
     <string name="new_message">Նոր նամակ ունեք!!!</string>
+
+    <string name="delete_msg">Ջնջել</string>
+    <string name="delete_msg_quastion">Ջնջե՞լ ամբողջ նամակագրությունը ?</string>
 </resources>
