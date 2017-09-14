@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +45,7 @@ import com.itc.iblog.adapters.ListAdapter;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.CommentModel;
 import com.itc.iblog.models.PostModel;
+import com.itc.iblog.services.RequestService;
 import com.itc.iblog.utils.HelperClass;
 
 import java.io.IOException;
@@ -52,6 +54,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
+
+import static com.itc.iblog.R.string.userName;
 
 
 public class PostsFragment extends Fragment {
@@ -68,6 +72,9 @@ public class PostsFragment extends Fragment {
     private DatabaseReference ref;
     private ValueEventListener listener;
     private HelperClass help = new HelperClass();
+    private Intent serviceIntent;
+    private Context context;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +83,8 @@ public class PostsFragment extends Fragment {
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fabClickListener(fab);
         myDataset = new ArrayList<>();
+        serviceIntent = new Intent(view.getContext(), RequestService.class);
+        context = view.getContext();
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Posts");
@@ -202,7 +211,7 @@ public class PostsFragment extends Fragment {
                         } else {
                             postImagePath = null;
                         }
-
+                        sendNotification();
                         System.out.println("bla  " + ((MainActivity) getActivity()).getUserName().getText().toString());
                         ref.child(postId)
                                 .setValue(new PostModel(((MainActivity) getActivity()).getUserName().getText().toString(), ((MainActivity) getActivity()).getEmail().getText().toString(),
@@ -258,4 +267,42 @@ public class PostsFragment extends Fragment {
         super.onResume();
         //ref.removeEventListener(listener);
     }
+
+    private void sendNotification() {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final DatabaseReference reference = database.getReference("Users").child(userId).child("following");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    String post = (String) postSnapshot.getKey();
+                    serviceIntent.putExtra("title", "added new post");
+                    serviceIntent.putExtra("name", ((MainActivity) getActivity()).getUserName().getText().toString());
+                    serviceIntent.putExtra("image", ((MainActivity) getActivity()).getAvatarUrl());
+                    serviceIntent.putExtra("icon", "ic_action_like.png");
+                    serviceIntent.putExtra("id", post);
+                    context.startService(serviceIntent);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        for (String uuid: followingList) {
+//            serviceIntent.putExtra("title", "added your post");
+//            serviceIntent.putExtra("name", userName);
+//            serviceIntent.putExtra("image", "");
+//            serviceIntent.putExtra("icon", "ic_action_like.png");
+//            serviceIntent.putExtra("id", uuid);
+//            System.out.println("uuid  --------  " + uuid);
+//            context.startService(serviceIntent);
+//        }
+    }
 }
+
+
