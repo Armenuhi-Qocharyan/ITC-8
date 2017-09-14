@@ -201,7 +201,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void sendHttpRequest() {
         Gson gson = new Gson();
         NotificationData data = new NotificationData();
-        data.setTitle("You have a new message!!!");
+        data.setTitle(getString(R.string.new_message));
         String messageText = editWriteMessage.getText().toString().trim();
         data.setText(messageText);
         PostRequestData postRequestData = new PostRequestData();

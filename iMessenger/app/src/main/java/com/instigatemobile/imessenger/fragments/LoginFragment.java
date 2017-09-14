@@ -273,7 +273,6 @@ public class LoginFragment extends Fragment {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
                             progressBarInvisibility();
                         }
                     });
