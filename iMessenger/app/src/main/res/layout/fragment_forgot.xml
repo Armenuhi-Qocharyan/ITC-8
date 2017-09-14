@@ -31,7 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:textColorHint="@color/white">
 
             <EditText
                 android:id="@+id/input_email"
@@ -40,9 +41,9 @@
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
-                android:textColorHighlight="@color/colorAccent"
-                android:textColorHint="@color/white" />
+                android:textColorHighlight="@color/colorAccent" />
         </android.support.design.widget.TextInputLayout>
+
 
         <!-- Sign in Button-->
         <Button
