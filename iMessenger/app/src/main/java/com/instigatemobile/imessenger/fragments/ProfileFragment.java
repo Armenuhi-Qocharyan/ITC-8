@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +77,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
 
     private void initProfileCallbackMethods() {
         callback = new ProfileCallbackInterface() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void responseProfile(User prf) {
                 profile = prf;
@@ -107,6 +110,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
                 }
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void setBackgroundAvatar(Bitmap imageBitmap) {
                 if (imageBitmap != null) {
@@ -130,6 +134,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
                     } else {
                         background.setBackground(new BitmapDrawable(imageBitmap));
                     }
+                } else {
+                    background.setBackgroundResource(R.drawable.background_placeholder);
                 }
             }
 
@@ -154,7 +160,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, V
                     RoundImage roundedImage = new RoundImage(imageBitmap);
                     imageView.setImageDrawable(roundedImage);
                 } else {
-                    imageView.setImageResource(R.drawable.avatar1);
+                    imageView.setImageResource(R.drawable.avatar6);
                 }
            }
         };

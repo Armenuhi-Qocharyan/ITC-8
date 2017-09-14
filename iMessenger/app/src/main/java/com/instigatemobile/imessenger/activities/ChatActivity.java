@@ -57,10 +57,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     public static final int VIEW_TYPE_USER_MESSAGE = 0;
     public static final int VIEW_TYPE_FRIEND_MESSAGE = 1;
     private ListMessageAdapter adapter;
-    private String roomId;
-    private ArrayList<CharSequence> idFriend;
+    public String roomId;
+    public ArrayList<CharSequence> idFriend;
     private Conversation consersation;
-    private ImageButton btnSend;
+    public ImageButton btnSend;
+    public  String nameFriend;
     private EditText editWriteMessage;
     private LinearLayoutManager linearLayoutManager;
     public static HashMap<String, Bitmap> bitmapAvataFriend;
@@ -81,7 +82,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         System.out.println(idFriend);
         System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        final String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
+        nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
 
         consersation = new Conversation();
         btnSend = (ImageButton) findViewById(R.id.btnSend);
@@ -105,7 +106,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         linearLayoutManager = new LinearLayoutManager(ChatActivity.this, LinearLayoutManager.VERTICAL, false);
                         recyclerChat = (RecyclerView) findViewById(R.id.recyclerChat);
                         recyclerChat.setLayoutManager(linearLayoutManager);
-                        adapter = new ListMessageAdapter(ChatActivity.this, consersation, idFriend.get(0).toString(), bitmapAvataFriend, bitmapAvataUser);
+                        adapter = new ListMessageAdapter(ChatActivity.this, consersation, bitmapAvataFriend, bitmapAvataUser);
                         FirebaseDatabase.getInstance().getReference().child("message/" + roomId).addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -155,8 +156,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             bitmapAvataUser = null;
         }
-
-
     }
 
     @Override
@@ -239,14 +238,12 @@ class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private HashMap<String, Bitmap> bitmapAvata;
     private HashMap<String, DatabaseReference> bitmapAvataDB;
     private Bitmap bitmapAvataUser;
-    private String id;
 
-    public ListMessageAdapter(Context context, Conversation con, String id, HashMap<String, Bitmap> bitmapAvata, Bitmap bitmapAvataUser) {
+    public ListMessageAdapter(Context context, Conversation con, HashMap<String, Bitmap> bitmapAvata, Bitmap bitmapAvataUser) {
         this.context = context;
         this.consersation = con;
         this.bitmapAvata = bitmapAvata;
         this.bitmapAvataUser = bitmapAvataUser;
-        this.id = id;
         bitmapAvataDB = new HashMap<>();
     }
 
@@ -259,8 +256,13 @@ class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ListMessageAdapter.this.context, ContactProfileActivity.class);
-                    intent.putExtra("cotactID", id);
+                    ChatActivity chatActivity = (ChatActivity)(ListMessageAdapter.this.context);
+                    intent.putCharSequenceArrayListExtra(StaticConfig.INTENT_KEY_CHAT_ID, chatActivity.idFriend);
+                    intent.putExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID, chatActivity.roomId);
+                    intent.putExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND, chatActivity.nameFriend);
                     ListMessageAdapter.this.context.startActivity(intent);
+                    chatActivity.finish();
+
                 }
             });
             return friendHolder;
