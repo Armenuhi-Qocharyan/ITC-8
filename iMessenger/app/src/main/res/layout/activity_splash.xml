@@ -22,6 +22,7 @@
         android:layout_marginTop="41dp"
         android:text="@string/splash_slogan"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="32dp"
+        android:letterSpacing="0.01"
         android:textStyle="italic|bold" />
 </RelativeLayout>

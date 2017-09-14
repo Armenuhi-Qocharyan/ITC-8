@@ -26,9 +26,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 setContentView(R.layout.activity_settings);
                 initAboutUsFragment();
                 break;
-            case R.id.action_settings:
-                //initSettingsFragment();
-                break;
             case R.id.action_logout:
                 break;
         }

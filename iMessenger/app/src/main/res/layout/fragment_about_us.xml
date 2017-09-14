@@ -4,7 +4,7 @@
     android:id="@+id/about_us_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/person_card_style"
+    android:background="@drawable/background"
     android:orientation="vertical"
     android:weightSum="1">
 
