@@ -18,14 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.itc.iblog.R;
-import com.itc.iblog.Services.RequestService;
+import com.itc.iblog.services.RequestService;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.adapters.CommentAdapter;
-import com.itc.iblog.adapters.ListAdapter;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.CommentModel;
 import com.itc.iblog.models.PostModel;
-import com.itc.iblog.utils.HelperClass;
 
 import java.util.ArrayList;
 import java.util.Date;
