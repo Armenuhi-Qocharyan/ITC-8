@@ -50,6 +50,7 @@ public class PostCommentsFragment extends Fragment {
     private String email;
     private EditText text;
 
+
     public PostCommentsFragment(PostModel post, String userName, String email) {
         this.post = post;
         this.userName = userName;

@@ -19,6 +19,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -40,11 +42,18 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.itc.iblog.R;
+import com.itc.iblog.adapters.ListAdapter;
+import com.itc.iblog.models.PostModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+
+import static com.itc.iblog.R.id.fab;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -60,11 +69,20 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private StorageReference storageRef;
     private String userKey;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private List<PostModel> myDataset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        database = FirebaseDatabase.getInstance();
+        myDataset = new ArrayList<>();
+
+
+
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         Configuration config = getBaseContext().getResources().getConfiguration();
@@ -76,8 +94,6 @@ public class ProfileActivity extends AppCompatActivity {
             config.locale = locale;
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         }
-
-        database =  FirebaseDatabase.getInstance();
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_avatar);
         editIcon = (ImageView) findViewById(R.id.edit_icon);
         bgImage = (ImageView) findViewById(R.id.bg_image);
@@ -165,7 +181,34 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
 
+        DatabaseReference ref = database.getReference("Posts");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myDataset = new ArrayList<>();
+                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                    final PostModel post = messageSnapshot.getValue(PostModel.class);
+                    if (Objects.equals(post.getUserEmail(), email.getText().toString())) {
+                        myDataset.add(post);
+                    }
+                }
+                mRecyclerView = (RecyclerView) findViewById(R.id.profile_recycler_view);
+                mRecyclerView.setHasFixedSize(true);
 
+                // use a linear layout manager
+                mLayoutManager = new LinearLayoutManager(getBaseContext());
+                mRecyclerView.setLayoutManager(mLayoutManager);
+
+                // specify an adapter (see also next example)
+                mAdapter = new ListAdapter(myDataset);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
 
 
     }
