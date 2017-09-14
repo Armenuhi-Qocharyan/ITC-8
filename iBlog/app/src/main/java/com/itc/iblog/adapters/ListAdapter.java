@@ -4,7 +4,9 @@ package com.itc.iblog.adapters;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,17 +30,22 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
-import com.itc.iblog.Services.RequestService;
+
+import com.itc.iblog.services.RequestService;
 import com.itc.iblog.fragments.PostCommentsFragment;
 import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
+import com.itc.iblog.utils.HelperClass;
+import com.itc.iblog.fragments.PostCommentsFragment;
+import com.itc.iblog.interfaces.ImageLoaderInterface;
+import com.itc.iblog.models.PostModel;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
 
-    private final ImageLoaderInterface listener;
     private List<PostModel> cardList;
     private String email;
     private String userName;
@@ -78,9 +85,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         }
     }
 
-    public ListAdapter(List<PostModel> cardList, ImageLoaderInterface listener) {
+    public ListAdapter(List<PostModel> cardList) {
         this.cardList = cardList;
-        this.listener = listener;
         System.out.println("bla " + cardList.size());
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -106,6 +112,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         return new MyViewHolder(itemView);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final PostModel post = cardList.get(position);
@@ -137,7 +144,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
 
         if (post.getPostImagePath() != null) {
-            Bitmap bitmap = listener.loadImage(post);
+            Bitmap bitmap = HelperClass.loadImage(post);
             if (bitmap != null) {
                 holder.postImage.setImageBitmap(bitmap);
                 holder.postImage.setVisibility(View.VISIBLE);

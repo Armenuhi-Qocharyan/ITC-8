@@ -68,7 +68,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 //@RuntimePermissions
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ImageLoaderInterface {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private final int WRITE_EXTERNAL_STORAGE_PERMISSIONS_REQUEST = 1;
     private final int READ_EXTERNAL_STORAGE_PERMISSIONS_REQUEST = 2;
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mDatabase;
     private TextView userName;
     private TextView email;
+
     private Bitmap bitmap;
     private String uuid;
 
@@ -392,84 +393,4 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public Bitmap loadImage(PostModel post) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
-            final long ONE_MEGABYTE = 1024 * 1024;
-            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    FileOutputStream fOut = null;
-                    bitmap = Bitmap.createScaledBitmap(bitmap, 500,
-                            500, true);
-
-                }
-
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    System.out.println("Image not found.");
-                }
-            });
-            return bitmap;
-        } else {
-            String root = Environment.getExternalStorageDirectory().toString();
-            File dir = new File(root + "/iBlog_posts_images");
-
-            if (!dir.exists()) {
-                dir.mkdir();
-            }
-            final File file = new File(dir, "post" + post.getPostId() + ".png");
-            if (!file.exists()) {
-                StorageReference pathReference = storageRef.child("Posts").child(post.getPostId()).child("image");
-                final long ONE_MEGABYTE = 1024 * 1024;
-                pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        FileOutputStream fOut = null;
-                        bitmap = Bitmap.createScaledBitmap(bitmap, 500,
-                                500, true);
-                        try {
-                            fOut = new FileOutputStream(file);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-                        try {
-                            fOut.flush();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            fOut.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        System.out.println(R.string.image_not_found);
-                    }
-                });
-                System.out.println("bla " + bitmap);
-                return bitmap;
-
-            } else {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                bitmap = BitmapFactory.decodeFile(String.valueOf(file), options);
-                return BitmapFactory.decodeFile(String.valueOf(file), options);
-            }
-
-        }
-    }
 }

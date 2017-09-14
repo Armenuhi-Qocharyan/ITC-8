@@ -42,6 +42,7 @@ import com.google.firebase.storage.UploadTask;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.ListAdapter;
+import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
 
 import java.io.IOException;
@@ -90,7 +91,7 @@ public class FavoritesPostsFragment extends Fragment {
                                     mRecyclerView.setHasFixedSize(true);
                                     mLayoutManager = new LinearLayoutManager(getActivity());
                                     mRecyclerView.setLayoutManager(mLayoutManager);
-                                    mAdapter = new ListAdapter(myDataset, (MainActivity) getActivity());
+                                    mAdapter = new ListAdapter(myDataset);
                                     mRecyclerView.setAdapter(mAdapter);
                                 }
                             }
