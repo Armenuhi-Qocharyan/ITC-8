@@ -1,4 +1,4 @@
-package com.itc.iblog.Services;
+package com.itc.iblog.services;
 
 import android.app.Service;
 import android.content.Intent;

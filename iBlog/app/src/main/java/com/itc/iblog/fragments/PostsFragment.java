@@ -41,8 +41,10 @@ import com.google.firebase.storage.UploadTask;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.ListAdapter;
+import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.CommentModel;
 import com.itc.iblog.models.PostModel;
+import com.itc.iblog.utils.HelperClass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,6 +67,7 @@ public class PostsFragment extends Fragment {
     private int IMAGE;
     private DatabaseReference ref;
     private ValueEventListener listener;
+    private HelperClass help = new HelperClass();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,7 +112,8 @@ public class PostsFragment extends Fragment {
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-                mAdapter = new ListAdapter(myDataset, (MainActivity)getActivity());
+                System.out.println("bla " + help.getInstance(getActivity()));
+                mAdapter = new ListAdapter(myDataset);
                 mRecyclerView.setAdapter(mAdapter);
             }
 

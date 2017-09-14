@@ -56,7 +56,7 @@
 
         </activity>
         <service
-            android:name=".Services.RequestService"
+            android:name=".services.RequestService"
             android:exported="false"
             android:process=":remote" >
             <intent-filter>
