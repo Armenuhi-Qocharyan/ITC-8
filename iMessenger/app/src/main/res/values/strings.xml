@@ -57,8 +57,30 @@
     <string name="action_submit">Submit</string>
     <string name="hint_confirm_password">Confirm password</string>
 
-    <!-- Strings related to logout dialog -->
+    <!-- Strings related to dialogs -->
     <string name="logout_dialog_question">Are you sure you want to exit?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="select">Select</string>
+    <string name="cancel">Cancel</string>
+    <string name="get_friends">Get all friends...</string>
+    <string name="add_friend">Add friend</string>
+    <string name="friend_email">Enter friend email</string>
+    <string name="email_not_found">Email not found</string>
+    <string name="finding_friend">Finding friend....</string>
+    <string name="fail">Fail</string>
+    <string name="email_not_valid">Email not valid</string>
+    <string name="friend">Friend</string>
+    <string name="failed_add_friend">Failed to add friend</string>
+    <string name="success">Success</string>
+    <string name="add_friend_success">Friend successfully added</string>
+    <string name="delete_friend">Delete Friend</string>
+    <string name="delete_confirmation">Are you sure want to delete </string>
+    <string name="question">\?</string>
+    <string name="deleting">Deleting...</string>
+    <string name="error">Error</string>
+    <string name="error_occurred">Error occurred while deleting friend</string>
+    <string name="delete_success">Friend successfully deleted</string>
+
+    <string name="new_message">You have a new message!!!</string>
 </resources>

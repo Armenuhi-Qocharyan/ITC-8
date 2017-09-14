@@ -116,7 +116,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
             listFriendID = new ArrayList<>();
             dialogFindAllFriend.setCancelable(false)
                     .setIcon(R.drawable.ic_add_friend)
-                    .setTitle("Get all friend....")
+                    .setTitle(R.string.get_friends)
                     .setTopColorRes(R.color.colorPrimary)
                     .show();
             getListFriendUId();
@@ -241,11 +241,11 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
         public void onClick(final View view) {
             new LovelyTextInputDialog(view.getContext(), R.style.DialogTheme)
                     .setTopColorRes(R.color.colorPrimary)
-                    .setTitle("Add friend")
-                    .setMessage("Enter friend email")
+                    .setTitle(R.string.add_friend)
+                    .setMessage(R.string.friend_email)
                     .setIcon(R.drawable.ic_add_friend)
                     .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                    .setInputFilter("Email not found", new LovelyTextInputDialog.TextFilter() {
+                    .setInputFilter(R.string.email_not_found, new LovelyTextInputDialog.TextFilter() {
                         @Override
                         public boolean check(String text) {
                             Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -266,7 +266,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
         private void findIDEmail(String email) {
             dialogWait.setCancelable(false)
                     .setIcon(R.drawable.ic_add_friend)
-                    .setTitle("Finding friend....")
+                    .setTitle(R.string.finding_friend)
                     .setTopColorRes(R.color.colorPrimary)
                     .show();
             FirebaseDatabase.getInstance().getReference().child("user").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -277,8 +277,8 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         new LovelyInfoDialog(context)
                                 .setTopColorRes(R.color.colorAccent)
                                 .setIcon(R.drawable.ic_add_friend)
-                                .setTitle("Fail")
-                                .setMessage("Email not found")
+                                .setTitle(R.string.fail)
+                                .setMessage(R.string.email_not_found)
                                 .show();
                     } else {
                         String id = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
@@ -286,8 +286,8 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                             new LovelyInfoDialog(context)
                                     .setTopColorRes(R.color.colorAccent)
                                     .setIcon(R.drawable.ic_add_friend)
-                                    .setTitle("Fail")
-                                    .setMessage("Email not valid")
+                                    .setTitle(R.string.fail)
+                                    .setMessage(R.string.email_not_valid)
                                     .show();
                         } else {
                             HashMap userMap = (HashMap) ((HashMap) dataSnapshot.getValue()).get(id);
@@ -312,7 +312,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
         private void checkBeforAddFriend(final String idFriend, Friend userInfo) {
             dialogWait.setCancelable(false)
                     .setIcon(R.drawable.ic_add_friend)
-                    .setTitle("Add friend....")
+                    .setTitle(R.string.add_friend)
                     .setTopColorRes(R.color.colorPrimary)
                     .show();
 
@@ -321,7 +321,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 new LovelyInfoDialog(context)
                         .setTopColorRes(R.color.colorPrimary)
                         .setIcon(R.drawable.ic_add_friend)
-                        .setTitle("Friend")
+                        .setTitle(R.string.friend)
                         .setMessage("User " + userInfo.email + " has been friend")
                         .show();
             } else {
@@ -352,8 +352,8 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     new LovelyInfoDialog(context)
                                             .setTopColorRes(R.color.colorAccent)
                                             .setIcon(R.drawable.ic_add_friend)
-                                            .setTitle("False")
-                                            .setMessage("False to add friend success")
+                                            .setTitle(R.string.fail)
+                                            .setMessage(R.string.failed_add_friend)
                                             .show();
                                 }
                             });
@@ -373,8 +373,8 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     new LovelyInfoDialog(context)
                                             .setTopColorRes(R.color.colorAccent)
                                             .setIcon(R.drawable.ic_add_friend)
-                                            .setTitle("False")
-                                            .setMessage("False to add friend success")
+                                            .setTitle(R.string.fail)
+                                            .setMessage(R.string.failed_add_friend)
                                             .show();
                                 }
                             });
@@ -384,8 +384,8 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 new LovelyInfoDialog(context)
                         .setTopColorRes(R.color.colorPrimary)
                         .setIcon(R.drawable.ic_add_friend)
-                        .setTitle("Success")
-                        .setMessage("Add friend success")
+                        .setTitle(R.string.success)
+                        .setMessage(R.string.add_friend_success)
                         .show();
             }
         }
@@ -465,14 +465,14 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         String friendName = (String) ((ItemFriendViewHolder) holder).txtName.getText();
 
                         new AlertDialog.Builder(context)
-                                .setTitle("Delete Friend")
-                                .setMessage("Are you sure want to delete " + friendName + "?")
+                                .setTitle(R.string.delete_friend)
+                                .setMessage(R.string.delete_confirmation + friendName + R.string.question)
                                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         dialogInterface.dismiss();
                                         final String idFriendRemoval = listFriend.getListFriend().get(position).id;
-                                        dialogWaitDeleting.setTitle("Deleting...")
+                                        dialogWaitDeleting.setTitle(R.string.deleting)
                                                 .setCancelable(false)
                                                 .setTopColorRes(R.color.colorAccent)
                                                 .show();
@@ -634,8 +634,8 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         dialogWaitDeleting.dismiss();
                         new LovelyInfoDialog(context)
                                 .setTopColorRes(R.color.colorAccent)
-                                .setTitle("Error")
-                                .setMessage("Error occurred during deleting friend")
+                                .setTitle(R.string.error)
+                                .setMessage(R.string.error_occurred)
                                 .show();
                     } else {
                         String idRemoval = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
@@ -648,8 +648,8 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                                         new LovelyInfoDialog(context)
                                                 .setTopColorRes(R.color.colorAccent)
-                                                .setTitle("Success")
-                                                .setMessage("Friend deleting successfully")
+                                                .setTitle(R.string.success)
+                                                .setMessage(R.string.delete_success)
                                                 .show();
 
                                         Intent intentDeleted = new Intent(ContactsFragment.ACTION_DELETE_FRIEND);
@@ -663,8 +663,8 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                         dialogWaitDeleting.dismiss();
                                         new LovelyInfoDialog(context)
                                                 .setTopColorRes(R.color.colorAccent)
-                                                .setTitle("Error")
-                                                .setMessage("Error occurred during deleting friend")
+                                                .setTitle(R.string.error)
+                                                .setMessage(R.string.error_occurred)
                                                 .show();
                                     }
                                 });
@@ -680,8 +680,8 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             dialogWaitDeleting.dismiss();
             new LovelyInfoDialog(context)
                     .setTopColorRes(R.color.colorPrimary)
-                    .setTitle("Error")
-                    .setMessage("Error occurred during deleting friend")
+                    .setTitle(R.string.error)
+                    .setMessage(R.string.error_occurred)
                     .show();
         }
     }
@@ -701,4 +701,3 @@ class ItemFriendViewHolder extends RecyclerView.ViewHolder {
         this.context = context;
     }
 }
-

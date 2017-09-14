@@ -132,9 +132,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
 
         switch (id) {
-            case R.id.action_settings:
-                sayText("settings");
-                return true;
             case R.id.action_language:
                 showChangeLangDialog();
                 return true;
@@ -197,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         final Spinner spinner1 = (Spinner) dialogView.findViewById(R.id.spinner1);
 
         dialogBuilder.setTitle(getResources().getString(R.string.lang_dialog_title));
-        dialogBuilder.setPositiveButton("Select", new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton(R.string.select, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 int language = spinner1.getSelectedItemPosition();
                 switch (language) {
@@ -214,9 +211,9 @@ public class MainActivity extends AppCompatActivity {
                         setLangRecreate(Locale.getDefault().getDisplayLanguage());
                 }
             }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                //pass
+
             }
         });
         AlertDialog b = dialogBuilder.create();

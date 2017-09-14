@@ -47,7 +47,5 @@
             android:name=".service.FriendChatService"
             android:exported="false"
             android:persistent="true" />
-
-
     </application>
 </manifest>

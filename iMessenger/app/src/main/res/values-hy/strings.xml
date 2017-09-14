@@ -57,8 +57,30 @@
     <string name="action_submit">Հաստատել</string>
     <string name="hint_confirm_password">Հաստատել գաղտնաբառը</string>
 
-    <!-- Strings related to logout dialog -->
+    <!-- Strings related to dialogs -->
     <string name="logout_dialog_question">Վստա՞հ եք, որ ուզում եք դուրս գալ</string>
     <string name="yes">Այո</string>
     <string name="no">Ոչ</string>
+    <string name="select">Հաստատել</string>
+    <string name="cancel">Չեղարկել</string>
+    <string name="get_friends">Բեռնել ընկերների ցուցակը...</string>
+    <string name="add_friend">Ավելացնել ընկեր</string>
+    <string name="friend_email">Մուտքագրեք ընկերոջ էլ․ հասցեն</string>
+    <string name="email_not_found">Էլ․ հասցեն չի գտնվել</string>
+    <string name="finding_friend">Որոնում...</string>
+    <string name="fail">Ձախողում</string>
+    <string name="email_not_valid">Անվավեր էլ․ հասցե</string>
+    <string name="friend">Ընկեր</string>
+    <string name="failed_add_friend">Չհաջողվեց ավելացնել ընկեր</string>
+    <string name="success">Հաջողվեց</string>
+    <string name="add_friend_success">Ընկերը հաջողությամբ ավելացվեց</string>
+    <string name="delete_friend">Ջնջել ընկերոջը</string>
+    <string name="delete_confirmation">Վստա՞հ եք, որ ուզում եք ջնջել </string>
+    <string name="question"></string>
+    <string name="deleting">Ջնջում...</string>
+    <string name="error">Սխալ</string>
+    <string name="error_occurred">Ընկերոջը ջնջելիս տեղի ունեցավ սխալ</string>
+    <string name="delete_success">Ընկերը հաջողությամբ ջնջված է</string>
+
+    <string name="new_message">Նոր նամակ ունեք!!!</string>
 </resources>
