@@ -39,6 +39,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.activities.ChatActivity;
+import com.instigatemobile.imessenger.activities.MainActivity;
 import com.instigatemobile.imessenger.data.LocalDB;
 import com.instigatemobile.imessenger.data.StaticConfig;
 import com.instigatemobile.imessenger.models.Friend;
@@ -309,7 +310,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                     dialogWait.dismiss();
                     if (dataSnapshot.getValue() == null) {
                         new LovelyInfoDialog(context)
-                                .setTopColorRes(R.color.colorAccent)
+                                .setTopColorRes(R.color.colorPrimary)
                                 .setIcon(R.drawable.ic_add_friend)
                                 .setTitle(R.string.fail)
                                 .setMessage(R.string.email_not_found)
@@ -318,7 +319,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         String id = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
                         if (id.equals(StaticConfig.UID)) {
                             new LovelyInfoDialog(context)
-                                    .setTopColorRes(R.color.colorAccent)
+                                    .setTopColorRes(R.color.colorPrimary)
                                     .setIcon(R.drawable.ic_add_friend)
                                     .setTitle(R.string.fail)
                                     .setMessage(R.string.email_not_valid)
@@ -356,7 +357,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         .setTopColorRes(R.color.colorPrimary)
                         .setIcon(R.drawable.ic_add_friend)
                         .setTitle(R.string.friend)
-                        .setMessage("User " + userInfo.email + " has been friend")
+                        .setMessage("User " + userInfo.email + " already is your friend")
                         .show();
             } else {
                 addFriend(idFriend, true);
@@ -537,7 +538,6 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     @Override
                     public boolean onLongClick(View view) {
                         String friendName = (String) ((ItemFriendViewHolder) holder).txtName.getText();
-
                         new AlertDialog.Builder(context)
                                 .setTitle(R.string.delete_friend)
                                 .setMessage(R.string.delete_confirmation + friendName + R.string.question)
@@ -548,7 +548,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                         final String idFriendRemoval = listFriend.getListFriend().get(position).id;
                                         dialogWaitDeleting.setTitle(R.string.deleting)
                                                 .setCancelable(false)
-                                                .setTopColorRes(R.color.colorAccent)
+                                                .setTopColorRes(R.color.colorPrimary)
                                                 .show();
                                         deleteFriend(idFriendRemoval);
                                     }
@@ -730,7 +730,6 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         dialogWaitDeleting.dismiss();
-
                                         new LovelyInfoDialog(context)
                                                 .setTopColorRes(R.color.colorPrimary)
                                                 .setTitle(R.string.success)
@@ -781,7 +780,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     if (dataSnapshot.getValue() == null) {
                         dialogWaitDeleting.dismiss();
                         new LovelyInfoDialog(context)
-                                .setTopColorRes(R.color.colorAccent)
+                                .setTopColorRes(R.color.colorPrimary)
                                 .setTitle("Error")
                                 .setMessage("Error occurred during deleting favorite")
                                 .show();
@@ -802,7 +801,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                         dialogWaitDeleting.dismiss();
 
                                         new LovelyInfoDialog(context)
-                                                .setTopColorRes(R.color.colorAccent)
+                                                .setTopColorRes(R.color.colorPrimary)
                                                 .setTitle("Error")
                                                 .setMessage("Error occurred during deleting favorite")
                                                 .show();

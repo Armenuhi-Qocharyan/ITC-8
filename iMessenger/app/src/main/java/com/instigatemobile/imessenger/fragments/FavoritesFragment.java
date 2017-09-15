@@ -366,7 +366,7 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
                         .setTopColorRes(R.color.colorPrimary)
                         .setIcon(R.drawable.ic_add_friend)
                         .setTitle(R.string.friend)
-                        .setMessage("User " + userInfo.email + " has been friend")
+                        .setMessage("User " + userInfo.email + " has been added to friends")
                         .show();
             } else {
                 addFriend(idFriend, true);
