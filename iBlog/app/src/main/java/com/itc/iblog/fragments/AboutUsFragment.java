@@ -39,11 +39,11 @@ public class AboutUsFragment extends android.support.v4.app.Fragment {
 
     private void handleInstanceState(Bundle savedInstanceState) {
         mAdapterItems = new ArrayList<>();
-        mAdapterItems.add(new UserModel("Nelli Melkonyan", R.drawable.developer_nelli, "nelli.melkonyan.im@gmail.com"));
-        mAdapterItems.add(new UserModel("Khachik Ghazaryan", R.drawable.developer_khachik, "khachik.ghazaryan.im@gmail.com"));
-        mAdapterItems.add(new UserModel("Ruben Ghalayan", R.drawable.developer_ruben, "ruben.ghalayan.im@gmail.com"));
-        mAdapterItems.add(new UserModel("Liana Andreasyan", R.drawable.developer_liana, "liana.andreasyan.im@gmail.com"));
-        mAdapterItems.add(new UserModel("Smbat Dallakyan", R.drawable.developer_smbat_d, "smbat.dallakyan.im@gmail.com"));
+        mAdapterItems.add(new UserModel(getContext().getString(R.string.Nelli), R.drawable.developer_nelli, getContext().getString(R.string.Nelli_mail)));
+        mAdapterItems.add(new UserModel(getContext().getString(R.string.Khachik), R.drawable.developer_khachik, getContext().getString(R.string.Khachik_mail)));
+        mAdapterItems.add(new UserModel(getContext().getString(R.string.Ruben), R.drawable.developer_ruben, getContext().getString(R.string.Ruben_mail)));
+        mAdapterItems.add(new UserModel(getContext().getString(R.string.Liana), R.drawable.developer_liana, getContext().getString(R.string.Liana_mail)));
+        mAdapterItems.add(new UserModel(getContext().getString(R.string.Smbat), R.drawable.developer_smbat_d, getContext().getString(R.string.Smbat_mail)));
     }
 
     private void setupRecyclerview(View view) {

@@ -44,6 +44,7 @@ import com.google.firebase.storage.UploadTask;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.ListAdapter;
 import com.itc.iblog.models.PostModel;
+import com.itc.iblog.services.RequestService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -161,6 +162,13 @@ public class ProfileActivity extends AppCompatActivity {
                                 reference.child(userId).child("followers").child(userKey).getRef().setValue(true);
                                 reference.child(userKey).child("following").child(userId).getRef().setValue(true);
                                 follow.setText(R.string.unfollow);
+                                Intent serviceIntent = new Intent(getBaseContext(), RequestService.class);
+                                serviceIntent.putExtra("title", "started to follow you");
+                                serviceIntent.putExtra("name", snapshot.child(userId).child("userName").getValue().toString());
+                                serviceIntent.putExtra("image", snapshot.child(userId).child("url").getValue().toString());
+                                serviceIntent.putExtra("icon", "ic_action_name");
+                                serviceIntent.putExtra("id", userKey);
+                                getBaseContext().startService(serviceIntent);
                             }
 
                         }

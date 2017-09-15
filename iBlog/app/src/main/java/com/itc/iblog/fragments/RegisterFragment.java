@@ -92,41 +92,41 @@ public class RegisterFragment extends Fragment{
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if(TextUtils.isEmpty(email)) {
-            editTextEmailReg.setError("Email is required");
+            editTextEmailReg.setError(getContext().getString(R.string.email_required));
             return;
         }
 
         if(!email.matches(emailPattern)) {
-            editTextEmailReg.setError("Incorrect Email");
+            editTextEmailReg.setError(getContext().getString(R.string.invalid_email));
             return;
         }
 
         if(TextUtils.isEmpty(pass)) {
-            editTextPassReg.setError("Password is required");
+            editTextPassReg.setError((getContext().getString(R.string.password_required)));
             return;
         }
         if(TextUtils.isEmpty(passConf)) {
-            editTextConfPassReg.setError("Confirm password is required");
+            editTextConfPassReg.setError(getContext().getString(R.string.confirm_required));
             return;
         }
 
         if(TextUtils.isEmpty(age)) {
-            editTextSelectedAge.setError("Age is required");
+            editTextSelectedAge.setError(getContext().getString(R.string.age_required));
             return;
         }
 
         if(TextUtils.isEmpty(name)) {
-            editTextUsername.setError("Name is required");
+            editTextUsername.setError(getContext().getString(R.string.name_required));
             return;
         }
 
         if(!pass.equals(passConf)) {
-            editTextConfPassReg.setError("Passwords doesn't match");
+            editTextConfPassReg.setError(getContext().getString(R.string.password_dont_match));
             return;
         }
 
         if (!pass.matches(passPattern)) {
-            editTextConfPassReg.setError("Passwords doesn't match");
+            editTextConfPassReg.setError(getContext().getString(R.string.password_dont_match));
         }
         progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.createUserWithEmailAndPassword(email, pass)

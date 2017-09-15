@@ -29,6 +29,9 @@
     <string name="name">Имя</string>
     <string name="confirm_password">Подтвердить пароль</string>
     <string name="register">Зарегистрировать</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="forgot_password_msg">Нам нужен ваш зарегистрированный адрес электронной почты, чтобы отправить вам инструкции по сбросу пароля.</string>
+    <string name="reset_password">СБРОС ПАРОЛЯ</string>
 
     <string name="age">Возраст   </string>
     <string name="age_">Возраст -  </string>
@@ -53,6 +56,15 @@
     <string name="not_register"> Не удалось зарегистрировать. Пожалуйста, попробуйте еще раз. </string>
     <string name="faild">Oшибка аутентификации</string>
     <string name="comment"> комментарий </string>
-
-
+    <string name="Nelli">Нелли Мелконян</string>
+    <string name="Khachik">Хачик Казарян</string>
+    <string name="Ruben">Рубен Галаян</string>
+    <string name="Liana">Лиана Андреасян</string>
+    <string name="Smbat">Смбат Даллаякян</string>
+    <string name="password_required"> Требуется пароль</string>
+    <string name="password_size"> Пароль должен содержать минимум 6 символов, в конце концов, одну букву и одно число</string>
+    <string name="confirm_required">Требуется подтверждение пароля </string>
+    <string name="password_dont_match">Пароли не соответствуют</string>
+    <string name="name_required">Требуется имя </string>
+    <string name="age_required">Требуется возраст</string>
 </resources>

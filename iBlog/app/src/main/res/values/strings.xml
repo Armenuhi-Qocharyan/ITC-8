@@ -61,11 +61,25 @@
     <string name="post_text"> Post Text </string>
     <string name="post_title"> Post Title </string>
     <string name="login_successfully"> Login successfully </string>
-    <string name="email_required"> Email is required </string>
-    <string name="invalid_email"> Invalid Email address </string>
     <string name="register_successfully"> Registered successfully </string>
     <string name="not_register"> Could not register. Please try again. </string>
     <string name="faild"> Authentication faild</string>
     <string name="comment"> Type comment </string>
-
+    <string name="Nelli">Nelli Melkonyan</string>
+    <string name="Khachik">Khachik Ghazaryan</string>
+    <string name="Ruben">Ruben Ghalayan</string>
+    <string name="Liana">Liana Andreasyan</string>
+    <string name="Smbat">Smbat Dallakyan</string>
+    <string name="Nelli_mail">nelli.melkonyan.im@gmail.com</string>
+    <string name="Khachik_mail">khachik.ghazaryan.im@gmail.com</string>
+    <string name="Ruben_mail">ruben.ghalayan.im@gmail.com</string>
+    <string name="Liana_mail">liana.andreasyan.im@gmail.com</string>
+    <string name="Smbat_mail">smbat.dallakyan.im@gmail.com</string>
+    <string name="password_required">Password is required</string>
+    <string name="email_required">Email is required</string>
+    <string name="password_size">Password should contain minimum 6 symbols at last one letter and one number</string>
+    <string name="confirm_required">Confirm password is required</string>
+    <string name="password_dont_match">Passwords does not match</string>
+    <string name="name_required">Name is required</string>
+    <string name="age_required">Age is required</string>
 </resources>

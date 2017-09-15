@@ -38,6 +38,9 @@
     <string name="name">Անուն</string>
     <string name="confirm_password">Հաստատել գաղտնաբառը</string>
     <string name="register">Գրանցվել</string>
+    <string name="forgot_password">Մոռացել եք գաղտնաբառը?</string>
+    <string name="forgot_password_msg">Մուտքագրեք գրանցված էլեկտրոնային հասցեն՝ ծածկագիրը վերականգնելու համար․</string>
+    <string name="reset_password">ՎԵՐԱԿԱՆԳՆԵԼ ԳԱՂՏՆԱԲԱՌԸ</string>
 
     <string name="age">Տարիք   </string>
     <string name="age_">Տարիք -  </string>
@@ -59,6 +62,19 @@
     <string name="not_register"> Չհաջողվեց գրանցվել: Խնդրում եմ կրկին փորձեք. </string>
     <string name="faild"> Նույնականացումը չհաջողվեց</string>
     <string name="comment"> Թողնել մեկնաբանություն </string>
+    <string name="Nelli">Նելլի Մելքոնյան</string>
+    <string name="Khachik">Խաչիկ Ղազարյան</string>
+    <string name="Ruben">Ռուբեն Ղալայան</string>
+    <string name="Liana">Լիանա Անդրեասյան</string>
+    <string name="Smbat">Սմբատ Դալլաքյան</string>
+
+    <string name="password_required">Գաղտնաբառը պարտադիր է</string>
+    <string name="email_required">Էլեկտրոնային հասցեն պարտադիր է </string>
+    <string name="password_size">Գաղտնաբառը պետք է պարունակի նվազագույնը 6 նիշ</string>
+    <string name="confirm_required">Պարտադիր է կրկնել գաղտնագիրը</string>
+    <string name="password_dont_match"> Գաղտնաբառերը չեն համապատասխանում</string>
+    <string name="name_required">Անունը պարտադիր է</string>
+    <string name="age_required">Տարիքը պարտադիր է</string>
 
 
 </resources>

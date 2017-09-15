@@ -47,7 +47,6 @@ public class RequestService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "Service called", Toast.LENGTH_SHORT).show();
         Bundle extras = intent.getExtras();
         if(extras == null) {
             this.title = null;
@@ -90,7 +89,7 @@ public class RequestService extends Service {
        Callback responseCallBack = new Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
-
+                stopSelf();
             }
 
             @Override
@@ -98,7 +97,7 @@ public class RequestService extends Service {
                 if (!response.isSuccessful()) {
                     throw new IOException("Unexpected code " + response);
                 }
-
+                stopSelf();
             }
         };
         OkHttpClient client = new OkHttpClient();

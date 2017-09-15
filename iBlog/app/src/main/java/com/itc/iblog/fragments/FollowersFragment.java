@@ -34,13 +34,6 @@ public class FollowersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_followers, container, false);
         handleInstanceState(savedInstanceState);
-        if (!isNetworkAvailable()) {
-            new AlertDialog.Builder(this.getContext())
-                    .setTitle("No internet connection")
-                    .setMessage("Please, check your internet connection")
-                    .setPositiveButton("Ok", null)
-                    .show();
-        }
         Query query = setupFirebase();
         setupRecyclerview(view, query);
         setupData();
@@ -76,11 +69,5 @@ public class FollowersFragment extends Fragment {
         recyclerView.setAdapter(mMyAdapter);
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) this.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 }
 

@@ -26,8 +26,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.itc.iblog.R;
+import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.activities.ProfileActivity;
 import com.itc.iblog.models.UserModel;
+import com.itc.iblog.services.RequestService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 
 public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder, UserModel> {
     private DatabaseReference mDatabase;
+    private Context mContext;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -60,6 +63,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
     public UserAdapter(Context context, Query query, @Nullable ArrayList<UserModel> items,
                        @Nullable ArrayList<String> keys) {
         super(query, items, keys);
+        mContext = context;
     }
 
     @Override public UserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -112,6 +116,13 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
                     removeFollower(item, holder.follow);
                 } else {
                     addFollower(item, holder.follow);
+                    Intent serviceIntent = new Intent(v.getContext(), RequestService.class);
+                    serviceIntent.putExtra("title", "started to follow you");
+                    serviceIntent.putExtra("name", ((MainActivity)mContext).getUserName().getText().toString());
+                    serviceIntent.putExtra("image", ((MainActivity)mContext).getAvatarUrl());
+                    serviceIntent.putExtra("icon", "ic_action_name");
+                    serviceIntent.putExtra("id", item.getUID());
+                    v.getContext().startService(serviceIntent);
                 }
             }
         });

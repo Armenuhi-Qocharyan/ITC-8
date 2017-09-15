@@ -100,12 +100,12 @@ public class LoginFragment extends Fragment {
 
     private void signIn(final String email, String password) {
         if (TextUtils.isEmpty(password)) {
-            editTextPass.setError("Password is required");
+            editTextPass.setError(getContext().getString(R.string.password_required));
             return;
         }
 
         if (TextUtils.isEmpty(email)) {
-            editTextEmail.setError("Email is required");
+            editTextEmail.setError(getContext().getString(R.string.email_required));
             return;
         }
         Log.d(Tag, "signIn:" + email);
