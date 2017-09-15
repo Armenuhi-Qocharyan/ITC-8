@@ -423,4 +423,23 @@ public class ProfileActivity extends AppCompatActivity {
         return newBitmap;
     }
 
+
+    public String getCurrentUserAvatar() {
+        final String[] avatar = new String[1];
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference dbRef = mDatabase.child("Users");
+        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                avatar[0] = (String) dataSnapshot.child("url").getValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return avatar[0];
+    }
+
 }

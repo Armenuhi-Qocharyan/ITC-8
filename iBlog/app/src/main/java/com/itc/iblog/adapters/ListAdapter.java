@@ -1,6 +1,7 @@
 package com.itc.iblog.adapters;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -49,6 +50,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     private List<PostModel> cardList;
     private String email;
     private String userName;
+    private String url;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView userName;
@@ -151,6 +153,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             public void onDataChange(DataSnapshot dataSnapshot) {
                 email = (String) dataSnapshot.child("email").getValue();
                 userName = (String) dataSnapshot.child("userName").getValue();
+                url = (String) dataSnapshot.child("url").getValue();
                 if (post.getUsers().indexOf(email) >= 0) {
                     holder.likeButton.setBackgroundResource(0);
                     holder.likeButton.setImageResource(R.drawable.ic_action_liked);
@@ -197,7 +200,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.comButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                android.support.v4.app.Fragment fragment = new PostCommentsFragment(post, userName, email);
+                android.support.v4.app.Fragment fragment = new PostCommentsFragment(post, userName, email,url);
                 FragmentManager fm = ((FragmentActivity) view.getContext()).getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.contentFragment, fragment);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.itc.iblog.R;
+import com.itc.iblog.activities.ProfileActivity;
 import com.itc.iblog.services.RequestService;
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.adapters.CommentAdapter;
@@ -40,12 +42,14 @@ public class PostCommentsFragment extends Fragment {
     private String userName;
     private String email;
     private EditText text;
+    private String url;
 
 
-    public PostCommentsFragment(PostModel post, String userName, String email) {
+    public PostCommentsFragment(PostModel post, String userName, String email,String url) {
         this.post = post;
         this.userName = userName;
         this.email = email;
+        this.url = url;
     }
 
     @Override
@@ -102,15 +106,20 @@ public class PostCommentsFragment extends Fragment {
             public void onClick(final View view) {
                 String commentText = text.getText().toString();
                 if (!Objects.equals(commentText, "")) {
-                    CommentModel comment = new CommentModel(userName, email, ((MainActivity)getActivity()).getAvatarUrl(), new Date(), commentText);
+                    CommentModel comment;
+                    comment = new CommentModel(userName, email, url, new Date(), commentText);
                     text.setText("");
                     if (myDataset == null) {
                         myDataset = new ArrayList<CommentModel>();
                     }
                     myDataset.add(comment);
                     ref.child("comments").setValue(myDataset);
-                    Toast.makeText((MainActivity) getActivity(), "your comment added", Toast.LENGTH_SHORT).show();
+                    if (getActivity() instanceof  MainActivity) {
+                        Toast.makeText((MainActivity) getActivity(), "your comment added", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText((ProfileActivity) getActivity(), "your comment added", Toast.LENGTH_SHORT).show();
 
+                    }
                     Intent serviceIntent = new Intent(view.getContext(), RequestService.class);
                     serviceIntent.putExtra("title", "commented your post");
                     serviceIntent.putExtra("name", userName);
@@ -118,6 +127,7 @@ public class PostCommentsFragment extends Fragment {
                     serviceIntent.putExtra("icon", "ic_action_like.png");
                     serviceIntent.putExtra("id", post.getUuid());
                     view.getContext().startService(serviceIntent);
+
                 }
             }
         });

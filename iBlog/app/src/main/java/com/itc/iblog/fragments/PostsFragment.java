@@ -15,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -177,14 +178,12 @@ public class PostsFragment extends Fragment {
 
     private void fabClickListener(FloatingActionButton fab) {
         final Context context = getContext();
-
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog);
-        dialog.setTitle(R.string.add_your_post);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setLayout(width, height);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -212,7 +211,6 @@ public class PostsFragment extends Fragment {
                             postImagePath = null;
                         }
                         sendNotification();
-                        System.out.println("bla  " + ((MainActivity) getActivity()).getUserName().getText().toString());
                         ref.child(postId)
                                 .setValue(new PostModel(((MainActivity) getActivity()).getUserName().getText().toString(), ((MainActivity) getActivity()).getEmail().getText().toString(),
                                         ((MainActivity) getActivity()).getAvatarUrl(), postImagePath, new Date(), postId, title, text, 0, 0, 0, users, comments, ((MainActivity) getActivity()).getUuid()));
