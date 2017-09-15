@@ -115,7 +115,7 @@ public class PostCommentsFragment extends Fragment {
                     serviceIntent.putExtra("title", "commented your post");
                     serviceIntent.putExtra("name", userName);
                     serviceIntent.putExtra("image", post.getUserImage());
-                    serviceIntent.putExtra("icon", "ic_action_like.png");
+                    serviceIntent.putExtra("icon", "ic_action_comment");
                     serviceIntent.putExtra("id", post.getUuid());
                     view.getContext().startService(serviceIntent);
                 }

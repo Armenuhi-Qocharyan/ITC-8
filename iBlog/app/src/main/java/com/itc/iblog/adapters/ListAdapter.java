@@ -178,7 +178,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                     serviceIntent.putExtra("title", "liked your post");
                     serviceIntent.putExtra("name", userName);
                     serviceIntent.putExtra("image", post.getUserImage());
-                    serviceIntent.putExtra("icon", "ic_action_like.png");
+                    serviceIntent.putExtra("icon", "ic_action_like");
                     serviceIntent.putExtra("id", post.getUuid());
                     view.getContext().startService(serviceIntent);
                     holder.likeCount.setText(newLikeCount.toString());
