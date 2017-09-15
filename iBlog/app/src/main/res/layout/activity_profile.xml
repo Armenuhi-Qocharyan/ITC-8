@@ -53,6 +53,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -167,5 +168,5 @@
         app:backgroundTint="@color/colorWhite"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|center_horizontal"
-        />
+        android:visibility="visible" />
 </android.support.design.widget.CoordinatorLayout>

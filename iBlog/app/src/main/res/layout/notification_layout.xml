@@ -69,7 +69,8 @@
             android:id="@+id/notification_photo"
             android:padding="10dp"
             android:layout_alignParentEnd="true"
-            />
+            android:visibility="visible"
+            android:contentDescription="" />
     </RelativeLayout>
 
 </LinearLayout>

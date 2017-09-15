@@ -143,8 +143,7 @@
                 android:minHeight="50dp"
                 android:minWidth="50dp"
                 android:theme = "@style/ProgressBar"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true" />
+                android:visibility="gone"/>
         </RelativeLayout>
     </ScrollView>
 
