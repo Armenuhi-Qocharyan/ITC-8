@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,11 +17,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,17 +68,53 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private ListFriendsAdapter adapter;
     private ListFriend dataListFriend = null;
     private ArrayList<String> listFriendID = null;
+    private ArrayList<String> favoriteFriendsIDs = null;
     private LovelyProgressDialog dialogFindAllFriend;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private CountDownTimer detectFriendOnline;
     private BroadcastReceiver deleteFriendReceiver;
 
-    public ContactsFragment() {
+    public ContactsFragment(ArrayList<String> mylist) {
+        favoriteFriendsIDs = mylist;
         onFABClick = new FragFriendClickFloatButton();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        /*
+        if (favoriteFriendsIDs == null || favoriteFriendsIDs.isEmpty()) {
+            favoriteFriendsIDs = new ArrayList<String>();
+            //    System.out.printf("StaticConfig.UID ---- " + StaticConfig.UID);
+            FirebaseDatabase.getInstance().getReference().child("favorite").child(StaticConfig.UID)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            if (dataSnapshot.getValue() == null) {
+                                return;
+                            } else {
+                                HashMap tmp = ((HashMap) dataSnapshot.child(StaticConfig.UID).getValue());
+                                if (tmp == null)
+                                    return;
+                                Iterator it = tmp.keySet().iterator();
+                                while (it.hasNext()) {
+                                    Object key = it.next();
+                                    //        System.out.println(" --------- " + tmp.get(key));
+                                    favoriteFriendsIDs.add(tmp.get(key).toString().trim());
+                                 //   Toast.makeText(getContext(), tmp.get(key).toString().trim() , Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+        }
+        Toast.makeText(getContext(), favoriteFriendsIDs.toString() , Toast.LENGTH_SHORT).show();
+        */
         super.onCreate(savedInstanceState);
     }
 
@@ -112,7 +149,7 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerListFrends.setLayoutManager(linearLayoutManager);
         mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        adapter = new ListFriendsAdapter(getContext(), dataListFriend, this);
+        adapter = new ListFriendsAdapter(getContext(), dataListFriend, this, favoriteFriendsIDs);
         recyclerListFrends.setAdapter(adapter);
         dialogFindAllFriend = new LovelyProgressDialog(getContext());
         if (listFriendID == null) {
@@ -403,11 +440,12 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static Map<String, ChildEventListener> mapChildListenerOnline;
     public static Map<String, Boolean> mapMark;
     LovelyProgressDialog dialogWaitDeleting;
+    private List<String> favoriteFriendsIDs = null;
     private ListFriend listFriend;
     private Context context;
     private ContactsFragment fragment;
 
-    public ListFriendsAdapter(Context context, ListFriend listFriend, ContactsFragment fragment) {
+    public ListFriendsAdapter(Context context, ListFriend listFriend, ContactsFragment fragment, List<String> favoritesList) {
         this.listFriend = listFriend;
         this.context = context;
         mapQuery = new HashMap<>();
@@ -416,6 +454,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mapChildListenerOnline = new HashMap<>();
         mapQueryOnline = new HashMap<>();
         this.fragment = fragment;
+        favoriteFriendsIDs = favoritesList;
         dialogWaitDeleting = new LovelyProgressDialog(context);
     }
 
@@ -433,6 +472,40 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         final String idRoom = listFriend.getListFriend().get(position).idRoom;
         final String avata = listFriend.getListFriend().get(position).avata;
         ((ItemFriendViewHolder) holder).txtName.setText(name);
+
+
+        boolean isFavorite = favoriteFriendsIDs.contains(id);
+        if (isFavorite) {
+            ((ItemFriendViewHolder) holder).imageButton.setImageResource(R.drawable.favorit2);
+        } else {
+            ((ItemFriendViewHolder) holder).imageButton.setImageResource(R.drawable.favorit1);
+        }
+        ((View) ((ItemFriendViewHolder) holder).imageButton).setOnClickListener(new View.OnClickListener() {
+            boolean change = false;
+
+            @Override
+            public void onClick(View view) {
+                //isFavorit(StaticConfig.UID,id);
+                //   Toast.makeText(view.getContext(), "test" + position, Toast.LENGTH_SHORT).show();
+
+                change = favoriteFriendsIDs.contains(id);
+                if (change) {
+                    ((ItemFriendViewHolder) holder).imageButton.setImageResource(R.drawable.favorit1);
+                    change = false;
+                    //     Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
+                    //     Toast.makeText(context, StaticConfig.UID,Toast.LENGTH_SHORT).show();
+                    removeFavorite(id);
+                    favoriteFriendsIDs.remove(id);
+                } else {
+                    ((ItemFriendViewHolder) holder).imageButton.setImageResource(R.drawable.favorit2);
+                    change = true;
+                    addFavorite(id);
+                    favoriteFriendsIDs.add(id);
+                }
+
+            }
+        });
+
 
         ((View) ((ItemFriendViewHolder) holder).txtName.getParent().getParent().getParent())
                 .setOnClickListener(new View.OnClickListener() {
@@ -577,7 +650,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (listFriend.getListFriend().get(position).avata.equals(StaticConfig.STR_DEFAULT_BASE64)) {
             ((ItemFriendViewHolder) holder).avata.setImageResource(R.drawable.default_avata);
         } else {
-            FirebaseStorage storage= FirebaseStorage.getInstance();
+            FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference ref = storage.getReference();
             ref.child(avata).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
@@ -708,12 +781,111 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .show();
         }
     }
+
+    private void removeFavorite(final String idFriend) {
+        if (idFriend != null) {
+            FirebaseDatabase.getInstance().getReference().child("favorite").child(StaticConfig.UID)
+                    .orderByValue().equalTo(idFriend).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.getValue() == null) {
+                        dialogWaitDeleting.dismiss();
+                        new LovelyInfoDialog(context)
+                                .setTopColorRes(R.color.colorAccent)
+                                .setTitle("Error")
+                                .setMessage("Error occurred during deleting favorite")
+                                .show();
+
+                    } else {
+                        String idRemoval = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
+                        FirebaseDatabase.getInstance().getReference().child("favorite")
+                                .child(StaticConfig.UID).child(idRemoval).removeValue()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        dialogWaitDeleting.dismiss();
+/*
+                                        new LovelyInfoDialog(context)
+                                                .setTopColorRes(R.color.colorAccent)
+                                                .setTitle("Success")
+                                                .setMessage("Favorite deleting successfully")
+                                                .show();
+                                                */
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        dialogWaitDeleting.dismiss();
+
+                                        new LovelyInfoDialog(context)
+                                                .setTopColorRes(R.color.colorAccent)
+                                                .setTitle("Error")
+                                                .setMessage("Error occurred during deleting favorite")
+                                                .show();
+                                    }
+                                });
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            dialogWaitDeleting.dismiss();
+            new LovelyInfoDialog(context)
+                    .setTopColorRes(R.color.colorPrimary)
+                    .setTitle("Error")
+                    .setMessage("Error occurred during deleting friend")
+                    .show();
+        }
+    }
+
+    public void addFavorite(final String idFriend) {
+        if (idFriend != null) {
+            FirebaseDatabase.getInstance().getReference().child("favorite/" + StaticConfig.UID).push().setValue(idFriend)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                dialogWaitDeleting.dismiss();
+                                /*
+                                new LovelyInfoDialog(context)
+                                        .setTopColorRes(R.color.colorAccent)
+                                        .setTitle("Success")
+                                        .setMessage("Succesful adding favorite")
+                                        .show();
+                                        */
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+//
+                        }
+                    });
+        } else {
+            dialogWaitDeleting.dismiss();
+            new LovelyInfoDialog(context)
+                    .setTopColorRes(R.color.colorPrimary)
+                    .setTitle("Error")
+                    .setMessage("Error occurred during adding favorite")
+                    .show();
+        }
+    }
+
 }
 
 class ItemFriendViewHolder extends RecyclerView.ViewHolder {
     public CircleImageView avata;
     public TextView txtName, txtTime, txtMessage;
+    public ImageButton imageButton;
     private Context context;
+
 
     ItemFriendViewHolder(Context context, View itemView) {
         super(itemView);
@@ -721,6 +893,7 @@ class ItemFriendViewHolder extends RecyclerView.ViewHolder {
         txtName = (TextView) itemView.findViewById(R.id.txtName);
         txtTime = (TextView) itemView.findViewById(R.id.txtTime);
         txtMessage = (TextView) itemView.findViewById(R.id.txtMessage);
+        imageButton = (ImageButton) itemView.findViewById(R.id.favorite);
         this.context = context;
     }
 }

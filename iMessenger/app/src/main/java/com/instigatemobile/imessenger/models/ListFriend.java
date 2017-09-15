@@ -13,6 +13,10 @@ public class ListFriend {
         return listFriend;
     }
 
+    public  void removeFriend(int position) {
+        listFriend.remove(position);
+    }
+
     public void setListFriend(ArrayList<Friend> listFriend) {
         this.listFriend = listFriend;
     }

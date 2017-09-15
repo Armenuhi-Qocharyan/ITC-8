@@ -26,6 +26,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.instigatemobile.imessenger.R;
 import com.instigatemobile.imessenger.data.LocalDB;
@@ -37,6 +41,8 @@ import com.instigatemobile.imessenger.service.ServiceUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,11 +53,45 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
+    private ArrayList<String> favoriteFriendsIDs = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (favoriteFriendsIDs == null || favoriteFriendsIDs.isEmpty()) {
+            favoriteFriendsIDs = new ArrayList<String>();
+            //    System.out.printf("StaticConfig.UID ---- " + StaticConfig.UID);
+            final ArrayList<String> finalFavoriteFriendsIDs = favoriteFriendsIDs;
+            FirebaseDatabase.getInstance().getReference().child("favorite").child(StaticConfig.UID)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            if (dataSnapshot.getValue() == null) {
+                                return;
+                            } else {
+                                HashMap tmp = ((HashMap) dataSnapshot.child(StaticConfig.UID).getValue());
+                                if (tmp == null)
+                                    return;
+                                Iterator it = tmp.keySet().iterator();
+                                while (it.hasNext()) {
+                                    Object key = it.next();
+                                    //        System.out.println(" --------- " + tmp.get(key));
+                                    finalFavoriteFriendsIDs.add(tmp.get(key).toString().trim());
+                                //    Toast.makeText(MainActivity.this,"hello" +  tmp.get(key).toString().trim() , Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+        }
+
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -72,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsPagerAdapter.addFrag(new ContactsFragment());
+        mSectionsPagerAdapter.addFrag(new ContactsFragment(favoriteFriendsIDs));
         mSectionsPagerAdapter.addFrag(new ProfileFragment());
-        mSectionsPagerAdapter.addFrag(new FavoritesFragment());
+        mSectionsPagerAdapter.addFrag(new FavoritesFragment(favoriteFriendsIDs));
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
