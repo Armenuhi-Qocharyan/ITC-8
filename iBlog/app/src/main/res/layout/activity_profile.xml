@@ -135,6 +135,7 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:textSize="15sp"/>
             </LinearLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/profile_recycler_view"
                 android:scrollbars="vertical"
@@ -142,20 +143,16 @@
                 android:layout_height="match_parent"
                 tools:layout_editor_absoluteY="8dp"
                 tools:layout_editor_absoluteX="8dp"
-                android:layout_marginTop="250dp"/>
-
+                android:layout_marginTop="260dp"/>
 
         </android.support.v7.widget.CardView>
-
     </android.support.v4.widget.NestedScrollView>
-
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/contentFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" />
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_avatar"
@@ -166,6 +163,6 @@
         app:pressedTranslationZ="12dp"
         app:backgroundTint="@color/colorWhite"
         app:layout_anchor="@id/app_bar_layout"
-        app:layout_anchorGravity="bottom|center_horizontal"
-        />
+        app:layout_anchorGravity="bottom|center_horizontal" />
+
 </android.support.design.widget.CoordinatorLayout>

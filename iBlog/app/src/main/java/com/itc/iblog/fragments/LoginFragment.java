@@ -1,6 +1,5 @@
 package com.itc.iblog.fragments;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -26,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
+
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 
@@ -84,7 +84,6 @@ public class LoginFragment extends Fragment {
                 transaction.addToBackStack(null).commit();
             }
         });
-
         return view;
     }
 
@@ -138,5 +137,4 @@ public class LoginFragment extends Fragment {
                     }
                 });
     }
-
 }

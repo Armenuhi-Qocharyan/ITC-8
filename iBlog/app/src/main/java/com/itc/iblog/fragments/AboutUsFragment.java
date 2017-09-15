@@ -14,7 +14,6 @@ import com.itc.iblog.models.UsersModel;
 
 import java.util.ArrayList;
 
-
 public class AboutUsFragment extends android.support.v4.app.Fragment {
     private AboutUsAdapter mMyAdapter;
     private ArrayList<UsersModel> mAdapterItems;
@@ -33,7 +32,6 @@ public class AboutUsFragment extends android.support.v4.app.Fragment {
             }
         });
         setupRecyclerview(view);
-
         return view;
     }
 

@@ -9,9 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-
 import android.support.design.widget.FloatingActionButton;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,12 +17,8 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,15 +29,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import com.google.firebase.storage.UploadTask;
+
 import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.ListAdapter;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.CommentModel;
 import com.itc.iblog.models.PostModel;
 import com.itc.iblog.services.RequestService;
@@ -51,16 +43,10 @@ import com.itc.iblog.utils.HelperClass;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.Date;
-
 import java.util.List;
 
-import static com.itc.iblog.R.string.userName;
-
-
 public class PostsFragment extends Fragment {
-
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -76,7 +62,6 @@ public class PostsFragment extends Fragment {
     private Intent serviceIntent;
     private Context context;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,7 +71,6 @@ public class PostsFragment extends Fragment {
         myDataset = new ArrayList<>();
         serviceIntent = new Intent(view.getContext(), RequestService.class);
         context = view.getContext();
-
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Posts");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -122,10 +106,8 @@ public class PostsFragment extends Fragment {
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-
-                System.out.println("bla " + help.getInstance(getActivity()));
+                help.getInstance(getActivity());
                 mAdapter = new ListAdapter(myDataset);
-
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -140,10 +122,8 @@ public class PostsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == IMAGE && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
             file = data.getData();
-
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), file);
             } catch (IOException e) {
@@ -169,9 +149,8 @@ public class PostsFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.upload_done, Toast.LENGTH_SHORT).show();
                 }
             });
-        } else {
-            // Toast.makeText(getActivity(), "file is null", Toast.LENGTH_SHORT).show();
         }
+
         file = null;
         IMAGE = IMAGE + 1;
     }
@@ -193,10 +172,8 @@ public class PostsFragment extends Fragment {
                     public void onClick(View view) {
                         EditText addTitle = dialog.findViewById(R.id.add_post_title);
                         String title = addTitle.getText().toString();
-
                         EditText addText = dialog.findViewById(R.id.add_post_text);
                         String text = addText.getText().toString();
-
                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference ref = database.getReference("Posts");
                         postId = ((MainActivity) getActivity()).getUserName().getText().toString() + new Date().toString();
@@ -302,5 +279,3 @@ public class PostsFragment extends Fragment {
 //        }
     }
 }
-
-

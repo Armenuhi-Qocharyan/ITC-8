@@ -1,6 +1,5 @@
 package com.itc.iblog.fragments;
 
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -32,7 +31,7 @@ import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.models.UserModel;
 
-public class RegisterFragment extends Fragment{
+public class RegisterFragment extends Fragment {
 
     private Button buttonRegister;
     private EditText editTextEmailReg;
@@ -49,12 +48,12 @@ public class RegisterFragment extends Fragment{
     private ProgressBar progressBar;
     //private DatabaseReference mDatabase;
 
-
     public RegisterFragment(Activity login) {
         super();
         this.login = login;
 
     }
+
     public RegisterFragment() {
         super();
     }
@@ -62,12 +61,11 @@ public class RegisterFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(getActivity());
         main = new MainActivity();
-        database =  FirebaseDatabase.getInstance();
-        user =  firebaseAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        user = firebaseAuth.getCurrentUser();
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
         Animation scale = AnimationUtils.loadAnimation(super.getContext(), R.anim.scale);
@@ -89,7 +87,7 @@ public class RegisterFragment extends Fragment{
             public void afterTextChanged(Editable editable) {
                 String email = editTextEmailReg.getText().toString().trim();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-                if(TextUtils.isEmpty(email)) {
+                if (TextUtils.isEmpty(email)) {
                     editTextEmailReg.setError("Email is required");
                 }
                 if (!email.matches(emailPattern)) {
@@ -137,10 +135,10 @@ public class RegisterFragment extends Fragment{
             public void afterTextChanged(Editable editable) {
                 String pass = editTextPassReg.getText().toString().trim();
                 String passConf = editTextConfPassReg.getText().toString().trim();
-                if(TextUtils.isEmpty(passConf)) {
+                if (TextUtils.isEmpty(passConf)) {
                     editTextConfPassReg.setError("Confirm password is required");
                 }
-                if(!pass.equals(passConf)) {
+                if (!pass.equals(passConf)) {
                     editTextConfPassReg.setError("Passwords doesn't match");
                 }
             }
@@ -161,7 +159,7 @@ public class RegisterFragment extends Fragment{
             @Override
             public void afterTextChanged(Editable editable) {
                 String age = editTextSelectedAge.getText().toString().trim();
-                if(TextUtils.isEmpty(age)) {
+                if (TextUtils.isEmpty(age)) {
                     editTextSelectedAge.setError("Age is required");
                 }
 
@@ -182,7 +180,7 @@ public class RegisterFragment extends Fragment{
             @Override
             public void afterTextChanged(Editable editable) {
                 String name = editTextUsername.getText().toString().trim();
-                if(TextUtils.isEmpty(name)) {
+                if (TextUtils.isEmpty(name)) {
                     editTextUsername.setError("Name is required");
                 }
             }
@@ -193,7 +191,7 @@ public class RegisterFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 System.out.println("register");
-                if(v == buttonRegister) {
+                if (v == buttonRegister) {
                     registerUser(view);
                 }
             }
@@ -201,7 +199,7 @@ public class RegisterFragment extends Fragment{
         return view;
     }
 
-    public void onStart () {
+    public void onStart() {
         super.onStart();
         progressBar = getActivity().findViewById(R.id.progressBar_cyclic);
         progressBar.setVisibility(View.INVISIBLE);
@@ -216,37 +214,36 @@ public class RegisterFragment extends Fragment{
         String passPattern = "^(?=.*[0-9])(?=.*[a-z]).{6,}";
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        if(TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email)) {
             editTextEmailReg.setError("Email is required");
             return;
         }
 
-
-        if(!email.matches(emailPattern)) {
+        if (!email.matches(emailPattern)) {
             editTextEmailReg.setError("Incorrect Email");
             return;
         }
 
-        if(TextUtils.isEmpty(pass)) {
+        if (TextUtils.isEmpty(pass)) {
             editTextPassReg.setError("Password is required");
             return;
         }
-        if(TextUtils.isEmpty(passConf)) {
+        if (TextUtils.isEmpty(passConf)) {
             editTextConfPassReg.setError("Confirm password is required");
             return;
         }
 
-        if(TextUtils.isEmpty(age)) {
+        if (TextUtils.isEmpty(age)) {
             editTextSelectedAge.setError("Age is required");
             return;
         }
 
-        if(TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name)) {
             editTextUsername.setError("Name is required");
             return;
         }
 
-        if(!pass.equals(passConf)) {
+        if (!pass.equals(passConf)) {
             editTextConfPassReg.setError("Passwords doesn't match");
             return;
         }
@@ -259,8 +256,8 @@ public class RegisterFragment extends Fragment{
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            Toast.makeText(getActivity(),R.string.register_successfully, Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getActivity(), R.string.register_successfully, Toast.LENGTH_SHORT).show();
                             user = firebaseAuth.getCurrentUser();
                             registerUserInfo();
                             Intent intent = new Intent(login,
@@ -270,10 +267,9 @@ public class RegisterFragment extends Fragment{
                             startActivity(intent);
                             login.finish();
                         } else {
-                            Toast.makeText(getActivity(),R.string.not_register, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.not_register, Toast.LENGTH_SHORT).show();
                         }
                         progressBar.setVisibility(View.INVISIBLE);
-
                     }
                 });
     }
@@ -281,7 +277,7 @@ public class RegisterFragment extends Fragment{
     public void registerUserInfo() {
         String userId = user.getUid();
         UserModel userModel = new UserModel(this.editTextUsername.getText().toString().trim(), this.editTextEmailReg.getText().toString().trim(), Integer.parseInt(this.editTextSelectedAge.getText().toString()));
-        DatabaseReference mRef =  database.getReference().child("Users").child(userId);
+        DatabaseReference mRef = database.getReference().child("Users").child(userId);
         mRef.setValue(userModel);
     }
 }

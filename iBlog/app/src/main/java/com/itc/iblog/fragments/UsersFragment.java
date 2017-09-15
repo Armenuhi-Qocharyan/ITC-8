@@ -1,7 +1,6 @@
 package com.itc.iblog.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -9,21 +8,19 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import org.parceler.Parcels;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.DatabaseReference;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.UserAdapter;
 import com.itc.iblog.models.UserModel;
 
 import java.util.ArrayList;
-
 
 public class UsersFragment extends Fragment {
     private final static String SAVED_ADAPTER_ITEMS = "SAVED_ADAPTER_ITEMS";
@@ -72,7 +69,6 @@ public class UsersFragment extends Fragment {
         mMyAdapter = new UserAdapter(getContext(), mQuery, mAdapterItems, mAdapterKeys);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(mMyAdapter);
-
     }
 
     private boolean isNetworkAvailable() {

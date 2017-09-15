@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import com.itc.iblog.R;
 import com.itc.iblog.activities.ProfileActivity;
 import com.itc.iblog.services.RequestService;
@@ -44,8 +44,7 @@ public class PostCommentsFragment extends Fragment {
     private EditText text;
     private String url;
 
-
-    public PostCommentsFragment(PostModel post, String userName, String email,String url) {
+    public PostCommentsFragment(PostModel post, String userName, String email, String url) {
         this.post = post;
         this.userName = userName;
         this.email = email;
@@ -61,14 +60,11 @@ public class PostCommentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_post_comments, container, false);
-
-
         text = (EditText) view.findViewById(R.id.type_comment);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.send);
         fabClickListener(fab);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("Posts").child(post.getPostId());
-
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -79,7 +75,6 @@ public class PostCommentsFragment extends Fragment {
                         if (comment != null) {
                             myDataset.add(comment);
                         }
-
                     }
                     mRecyclerView = (RecyclerView) view.findViewById(R.id.comment_recycler_view);
                     mRecyclerView.setHasFixedSize(true);
@@ -114,9 +109,9 @@ public class PostCommentsFragment extends Fragment {
                     }
                     myDataset.add(comment);
                     ref.child("comments").setValue(myDataset);
-                    if (getActivity() instanceof  MainActivity) {
+                    if (getActivity() instanceof MainActivity) {
                         Toast.makeText((MainActivity) getActivity(), "your comment added", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         Toast.makeText((ProfileActivity) getActivity(), "your comment added", Toast.LENGTH_SHORT).show();
 
                     }
@@ -127,7 +122,6 @@ public class PostCommentsFragment extends Fragment {
                     serviceIntent.putExtra("icon", "ic_action_comment");
                     serviceIntent.putExtra("id", post.getUuid());
                     view.getContext().startService(serviceIntent);
-
                 }
             }
         });

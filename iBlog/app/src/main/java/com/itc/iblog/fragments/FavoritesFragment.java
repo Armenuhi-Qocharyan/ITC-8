@@ -67,7 +67,6 @@ public class FavoritesFragment extends Fragment {
         return query;
     }
 
-
     private void setupRecyclerview(View view, Query query) {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_favorites);
         mMyAdapter = new FavoritesAdapter(query, mAdapterItems, mAdapterKeys);
