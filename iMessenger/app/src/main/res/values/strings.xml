@@ -75,7 +75,7 @@
     <string name="success">Success</string>
     <string name="add_friend_success">Friend successfully added</string>
     <string name="delete_friend">Delete Friend</string>
-    <string name="delete_confirmation">Are you sure you want to delete </string>
+    <string name="delete_confirmation">Are you sure you want to delete %1$s user?</string>
     <string name="question">\?</string>
     <string name="deleting">Deleting...</string>
     <string name="error">Error</string>

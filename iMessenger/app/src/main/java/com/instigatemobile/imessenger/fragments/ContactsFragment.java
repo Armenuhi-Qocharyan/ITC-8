@@ -538,9 +538,10 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     @Override
                     public boolean onLongClick(View view) {
                         String friendName = (String) ((ItemFriendViewHolder) holder).txtName.getText();
+                        String msg = String.format(context.getResources().getString(R.string.delete_confirmation), friendName);
                         new AlertDialog.Builder(context)
                                 .setTitle(R.string.delete_friend)
-                                .setMessage(R.string.delete_confirmation + friendName + R.string.question)
+                                .setMessage(msg)
                                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {

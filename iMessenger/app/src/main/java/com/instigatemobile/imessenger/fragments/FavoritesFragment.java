@@ -94,20 +94,37 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
     private CountDownTimer detectFriendOnline;
     private BroadcastReceiver deleteFriendReceiver;
 
-
     public FavoritesFragment() {
-        throw new Resources.NotFoundException("Dont use this constructor");
-    }
-
-
-    public FavoritesFragment(ArrayList<String> mylist) {
-        favoriteFriendsIDs = mylist;
         onFABClick = new FragFriendClickFloatButton();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+        if (favoriteFriendsIDs == null || favoriteFriendsIDs.isEmpty()) {
+            favoriteFriendsIDs = new ArrayList<String>();
+//            FirebaseDatabase.getInstance().getReference().child("favorite").child(StaticConfig.UID)
+//                    .addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                            if (dataSnapshot.getValue() == null) {
+//                                return;
+//                            } else {
+//                                HashMap tmp = ((HashMap) dataSnapshot.child(StaticConfig.UID).getValue());
+//                                if (tmp == null)
+//                                    return;
+//                                Iterator it = tmp.keySet().iterator();
+//                                while (it.hasNext()) {
+//                                    Object key = it.next();
+//                                    favoriteFriendsIDs.add(tmp.get(key).toString().trim());
+//                                }
+//                            }
+//                        }
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//                        }
+//                    });
+        }
         super.onCreate(savedInstanceState);
     }
 
@@ -127,14 +144,18 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
         };
 
         if (dataListFriend == null) {
-            dataListFriend = LocalDB.getInstance(getContext()).getListFriend();
-            if (dataListFriend.getListFriend().size() > 0) {
-                listFriendID = new ArrayList<>();
-                for (Friend friend : dataListFriend.getListFriend()) {
-                    listFriendID.add(friend.id);
-                }
-                detectFriendOnline.start();
-            }
+            dataListFriend = new ListFriend();
+//            ListFriend tmpListFriend = LocalDB.getInstance(getContext()).getListFriend();
+//            if (tmpListFriend.getListFriend().size() > 0) {
+//                listFriendID = new ArrayList<>();
+//                for (Friend friend : tmpListFriend.getListFriend()) {
+//                    if (favoriteFriendsIDs.contains(friend.id)) {
+//                        listFriendID.add(friend.id);
+//                        dataListFriend.add(friend);
+//                    }
+//                }
+//                detectFriendOnline.start();
+//            }
         }
 
         View layout = inflater.inflate(R.layout.fragment_contacts, container, false);
@@ -158,12 +179,12 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
         dialogFindAllFriend = new LovelyProgressDialog(getContext());
         if (listFriendID == null) {
             listFriendID = new ArrayList<>();
-            dialogFindAllFriend.setCancelable(false)
-                    .setIcon(R.drawable.ic_add_friend)
-                    .setTitle(R.string.get_friends)
-                    .setTopColorRes(R.color.colorPrimary)
-                    .show();
-            getListFriendUId();
+//            dialogFindAllFriend.setCancelable(false)
+//                    .setIcon(R.drawable.ic_add_friend)
+//                    .setTitle(R.string.get_friends)
+//                    .setTopColorRes(R.color.colorPrimary)
+//                    .show();
+//            getListFriendUId();
         }
 
         deleteFriendReceiver = new BroadcastReceiver() {
@@ -182,6 +203,8 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
         };
         IntentFilter intentFilter = new IntentFilter(ACTION_DELETE_FRIEND);
         getContext().registerReceiver(deleteFriendReceiver, intentFilter);
+
+        refresh();
         return layout;
     }
 
@@ -203,6 +226,10 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
+        refresh();
+    }
+
+    private void refresh() {
         listFriendID.clear();
         dataListFriend.getListFriend().clear();
         adapter.notifyDataSetChanged();
@@ -213,7 +240,7 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void getListFriendUId() {
-        FirebaseDatabase.getInstance().getReference().child("friend/" + StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("favorite/" + StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -552,7 +579,7 @@ class ListFavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                         new AlertDialog.Builder(context)
                                 .setTitle(R.string.delete_friend)
-                                .setMessage(R.string.delete_confirmation + friendName + R.string.question)
+                                .setMessage(R.string.delete_confirmation)// + friendName + R.string.question)
                                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
