@@ -76,15 +76,11 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
         item.setUID(key);
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         holder.textViewAge.setText(String.valueOf(item.getAge()) + " years old");
-        if (item.getUID().equals(userId)) {
-            getItems().remove(position);
-            getKeys().remove(position);
-            //notifyItemRemoved(position);
-        }
 
-        if (!item.getFollowings().containsKey(userId) && !item.getUID().equals(userId)) {
+
+        if (!item.getFollowings().containsKey(userId)) {
             holder.follow.setImageResource(R.drawable.heart);
-        } else if (!item.getUID().equals(userId)) {
+        } else {
             holder.follow.setImageResource(R.drawable.heart_unfollow);
         }
 
@@ -100,7 +96,6 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
                 }
             });
         } else {
@@ -147,13 +142,13 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    mDatabase.child("Users").child(userId).child("followers").child(item.getUID()
-                    ).setValue(true);
-                    mDatabase.child("Users").child(item.getUID()).child("following").child
-                            (userId).setValue(true);
-                    item.following.put(userId,true);
-                   // follow.setImageResource(R.drawable.heart_unfollow);
-                    notifyItemChanged(getItems().indexOf(item));
+                mDatabase.child("Users").child(userId).child("followers").child(item.getUID()
+                ).setValue(true);
+                mDatabase.child("Users").child(item.getUID()).child("following").child
+                        (userId).setValue(true);
+                item.following.put(userId,true);
+                // follow.setImageResource(R.drawable.heart_unfollow);
+                notifyItemChanged(getItems().indexOf(item));
             }
 
             @Override
@@ -171,7 +166,7 @@ public class UserAdapter extends FirebaseRecyclerAdapter<UserAdapter.ViewHolder,
             public void onDataChange(DataSnapshot snapshot) {
                 snapshot.child(userId).child("followers").child(item.getUID()).getRef().removeValue();
                 snapshot.child(item.getUID()).child("following").child(userId).getRef().removeValue();
-               // follow.setImageResource(R.drawable.heart);
+                // follow.setImageResource(R.drawable.heart);
             }
 
             @Override

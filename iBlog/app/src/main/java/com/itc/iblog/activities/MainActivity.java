@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
         }
 
@@ -211,6 +212,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
 
         } else if (id == R.id.About_us) {
@@ -218,6 +220,7 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
 
         } else if (id == R.id.Language) {
