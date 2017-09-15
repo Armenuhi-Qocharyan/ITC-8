@@ -51,9 +51,6 @@ public class HelperClass  {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    FileOutputStream fOut = null;
-                    bitmap = Bitmap.createScaledBitmap(bitmap, 500,
-                            500, true);
 
                 }
 

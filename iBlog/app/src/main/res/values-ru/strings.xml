@@ -52,5 +52,7 @@
     <string name="register_successfully"> Зарегистрировано успешно </string>
     <string name="not_register"> Не удалось зарегистрировать. Пожалуйста, попробуйте еще раз. </string>
     <string name="faild">Oшибка аутентификации</string>
+    <string name="comment"> комментарий </string>
+
 
 </resources>

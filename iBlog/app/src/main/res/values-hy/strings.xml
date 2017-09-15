@@ -58,5 +58,7 @@
     <string name="register_successfully"> Գրանցումը հաջողված է </string>
     <string name="not_register"> Չհաջողվեց գրանցվել: Խնդրում եմ կրկին փորձեք. </string>
     <string name="faild"> Նույնականացումը չհաջողվեց</string>
+    <string name="comment"> Թողնել մեկնաբանություն </string>
+
 
 </resources>

@@ -102,7 +102,7 @@ public class PostCommentsFragment extends Fragment {
             public void onClick(final View view) {
                 String commentText = text.getText().toString();
                 if (!Objects.equals(commentText, "")) {
-                    CommentModel comment = new CommentModel(userName, email, post.getUserImage(), new Date(), commentText);
+                    CommentModel comment = new CommentModel(userName, email, ((MainActivity)getActivity()).getAvatarUrl(), new Date(), commentText);
                     text.setText("");
                     if (myDataset == null) {
                         myDataset = new ArrayList<CommentModel>();

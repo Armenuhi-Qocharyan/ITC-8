@@ -87,22 +87,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     public ListAdapter(List<PostModel> cardList) {
         this.cardList = cardList;
-        System.out.println("bla " + cardList.size());
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference dbRef = mDatabase.child("Users");
-        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                email = (String) dataSnapshot.child("email").getValue();
-                userName = (String) dataSnapshot.child("userName").getValue();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override
@@ -158,6 +143,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.likeCount.setText(post.getLikeCount().toString());
 
 
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference dbRef = mDatabase.child("Users");
+        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                email = (String) dataSnapshot.child("email").getValue();
+                userName = (String) dataSnapshot.child("userName").getValue();
+                if (post.getUsers().indexOf(email) >= 0) {
+                    holder.likeButton.setBackgroundResource(0);
+                    holder.likeButton.setImageResource(R.drawable.ic_action_liked);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,10 +183,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                     view.getContext().startService(serviceIntent);
                     holder.likeCount.setText(newLikeCount.toString());
                     ref.child(post.getPostId()).child("users").setValue(users);
+                    holder.likeButton.setBackgroundResource(0);
+                    holder.likeButton.setImageResource(R.drawable.ic_action_liked);
+
                 }
             }
         });
-
         Integer comCount = 0;
         if (post.getComments() != null) {
             comCount = post.getComments().size();
@@ -200,43 +208,52 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         });
         holder.favCount.setText(post.getFavCount().toString());
 
-        holder.favButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                final DatabaseReference dbRef = mDatabase.child("Users");
+        final ArrayList<String> favPosts = new ArrayList<String>();
+        final DatabaseReference db = mDatabase.child("Users");
+        db.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        final List<String> favPosts;
+                        if (dataSnapshot.hasChild("favoritesPosts")) {
+                            favPosts = dataSnapshot.child("favoritesPosts").getValue(new GenericTypeIndicator<ArrayList<String>>() {
+                            });
+                        } else {
+                            favPosts = new ArrayList<String>();
+                            favPosts.add("");
+                        }
+                        if (favPosts.indexOf(post.getPostId()) > -1) {
+                            holder.favButton.setBackgroundResource(0);
+                            holder.favButton.setImageResource(R.drawable.ic_action_faved);
+                        } else {
+                            holder.favButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                                    if (favPosts.indexOf(post.getPostId()) == -1) {
+                                        favPosts.add(post.getPostId());
+                                        db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("favoritesPosts").setValue(favPosts);
+                                        Integer newFavCount = Integer.parseInt(String.valueOf(post.getFavCount())) + 1;
+                                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                        DatabaseReference ref = database.getReference("Posts");
+                                        ref.child(post.getPostId()).child("favCount").setValue(newFavCount);
+                                        holder.favCount.setText(newFavCount.toString());
+                                        holder.favButton.setBackgroundResource(0);
+                                        holder.favButton.setImageResource(R.drawable.ic_action_faved);
+                                    }
 
-                dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                List<String> favPosts;
-                                if (dataSnapshot.hasChild("favoritesPosts")) {
-                                    favPosts = dataSnapshot.child("favoritesPosts").getValue(new GenericTypeIndicator<ArrayList<String>>() {
-                                    });
-                                } else {
-                                    favPosts = new ArrayList<String>();
-                                    favPosts.add("");
+
                                 }
+                            });
+                        }
+                    }
 
-                                if (favPosts.indexOf(post.getPostId()) == -1) {
-                                    favPosts.add(post.getPostId());
-                                    dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("favoritesPosts").setValue(favPosts);
-                                    Integer newFavCount = Integer.parseInt(String.valueOf(post.getFavCount())) + 1;
-                                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                    DatabaseReference ref = database.getReference("Posts");
-                                    ref.child(post.getPostId()).child("favCount").setValue(newFavCount);
-                                    holder.favCount.setText(newFavCount.toString());
-                                }
-                            }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
-                            }
-                        });
-            }
-        });
     }
 
     @Override

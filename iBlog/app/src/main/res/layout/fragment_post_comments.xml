@@ -22,21 +22,32 @@
             android:clickable="true"
             android:src="@drawable/ic_send_black"
             android:id="@+id/send"
-            android:tint="@android:color/white"
+            android:tint="#ffffff"
+            android:background="#942f2f"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            android:foregroundGravity="center"/>
 
 
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Type comment"
-                android:id="@+id/type_comment"
-                android:layout_toLeftOf="@id/send"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/type_comment"
+            android:padding="10dp"
+            android:hint="@string/comment"
+            android:inputType="textMultiLine"
+            android:layout_toLeftOf="@id/send"
+            android:lines="2"
+            android:minLines="1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:gravity="top|left"
+            android:maxLines="10"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@drawable/dialog"
+            android:scrollbars="vertical" />
 
 
 

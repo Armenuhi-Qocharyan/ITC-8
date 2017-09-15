@@ -66,5 +66,6 @@
     <string name="register_successfully"> Registered successfully </string>
     <string name="not_register"> Could not register. Please try again. </string>
     <string name="faild"> Authentication faild</string>
+    <string name="comment"> Type comment </string>
 
 </resources>
