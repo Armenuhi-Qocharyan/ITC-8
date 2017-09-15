@@ -53,9 +53,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import static com.itc.iblog.R.id.fab;
-
-
 public class ProfileActivity extends AppCompatActivity {
     private String whatImage;
     private FloatingActionButton avatar;
@@ -80,15 +77,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         database = FirebaseDatabase.getInstance();
         myDataset = new ArrayList<>();
-
-
-
-
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         Configuration config = getBaseContext().getResources().getConfiguration();
 
         String lang = settings.getString("LANG", "");
-        if (! "".equals(lang) && ! config.locale.getLanguage().equals(lang)) {
+        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
             Locale locale = new Locale(lang);
             Locale.setDefault(locale);
             config.locale = locale;
@@ -98,24 +91,24 @@ public class ProfileActivity extends AppCompatActivity {
         editIcon = (ImageView) findViewById(R.id.edit_icon);
         bgImage = (ImageView) findViewById(R.id.bg_image);
         follow = (Button) findViewById(R.id.profile_follow);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         boolean owner = true;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            if(extras == null || extras.getString("key").equals(userId)) {
+            if (extras == null || extras.getString("key").equals(userId)) {
                 userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 follow.setVisibility(View.INVISIBLE);
             } else {
                 owner = false;
                 editIcon.setVisibility(View.INVISIBLE);
                 findViewById(R.id.profile_follow).setVisibility(View.VISIBLE);
-                userKey= extras.getString("key");
+                userKey = extras.getString("key");
                 if (extras.getBoolean("followed")) {
                     follow.setText(R.string.unfollow);
                 } else {
@@ -128,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
         setImage("bg");
         setImage("avatar");
-        if ( owner ) {
+        if (owner) {
             floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -138,7 +131,6 @@ public class ProfileActivity extends AppCompatActivity {
                     return false;
                 }
             });
-
             editIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -154,9 +146,10 @@ public class ProfileActivity extends AppCompatActivity {
                     final DatabaseReference reference = database.getReference("Users");
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
-                            if(snapshot.child(userId).child("followers").hasChild(userKey)) {
+                            if (snapshot.child(userId).child("followers").hasChild(userKey)) {
                                 snapshot.child(userId).child
                                         ("followers").child(userKey).getRef()
                                         .removeValue();
@@ -167,7 +160,6 @@ public class ProfileActivity extends AppCompatActivity {
                                 reference.child(userKey).child("following").child(userId).getRef().setValue(true);
                                 follow.setText(R.string.unfollow);
                             }
-
                         }
 
                         @Override
@@ -175,10 +167,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                         }
                     });
-
                 }
             });
-
         }
 
         DatabaseReference ref = database.getReference("Posts");
@@ -209,26 +199,23 @@ public class ProfileActivity extends AppCompatActivity {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-
         if (id == android.R.id.home) {
             onBackPressed();
             return true;
-         }
-         return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setImage(final String img) {
         this.storageRef = FirebaseStorage.getInstance().getReference();
         DatabaseReference dbRef = database.getReference().child("Users");
-        dbRef.child(userKey).addListenerForSingleValueEvent (new ValueEventListener() {
+        dbRef.child(userKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String url = "";
@@ -243,13 +230,13 @@ public class ProfileActivity extends AppCompatActivity {
                     Long age = (Long) dataSnapshot.child("age").getValue();
                     userAge.append(age.toString());
                     url = (String) dataSnapshot.child("url").getValue();
-                } else if(img.equals("bg")) {
+                } else if (img.equals("bg")) {
                     url = (String) dataSnapshot.child("bgUrl").getValue();
                 }
                 // Get avatar image
                 if (url != null) {
                     StorageReference pathReference = storageRef.child(url);
-                    if(url.equals("null") && img.equals("bg")) {
+                    if (url.equals("null") && img.equals("bg")) {
                         bgImage.setImageResource(R.drawable.background_img);
                         return;
                     }
@@ -267,7 +254,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 Bitmap result = getCroppedBitmap(bitmap);
                                 ProfileActivity.this.avatar = (FloatingActionButton) findViewById(R.id.floating_avatar);
                                 avatar.setImageBitmap(result);
-                            } else if(img.equals("bg")) {
+                            } else if (img.equals("bg")) {
                                 ProfileActivity.this.bgImage = (ImageView) findViewById(R.id.bg_image);
                                 bgImage.setImageBitmap(bmp);
                             }
@@ -280,13 +267,15 @@ public class ProfileActivity extends AppCompatActivity {
                     });
                 }
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
             Log.i("Profile", "popping backstack");
@@ -294,8 +283,8 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             Log.i("Profile", "nothing on backstack, calling super");
             super.onBackPressed();
-         }
-     }
+        }
+    }
 
     public Bitmap getCroppedBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -323,11 +312,11 @@ public class ProfileActivity extends AppCompatActivity {
             try {
                 final Uri imageUri = data.getData();
                 String imagePath = getRealPathFromURI(imageUri);
-                String filename = imagePath.substring(imagePath.lastIndexOf("/")+1);
+                String filename = imagePath.substring(imagePath.lastIndexOf("/") + 1);
 
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                if(whatImage.equals("avatar")) {
+                if (whatImage.equals("avatar")) {
                     putImageToStorage(selectedImage, filename);
                     changeUserInfo("images/" + filename);
                     this.avatar = (FloatingActionButton) findViewById(R.id.floating_avatar);
@@ -346,14 +335,14 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
 
-        }else {
-            Toast.makeText(this, R.string.not_picked_image,Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.not_picked_image, Toast.LENGTH_LONG).show();
         }
     }
 
     public void putImageToStorage(Bitmap btm, String filename) {
         Bitmap selectedImage = null;
-        if(whatImage.equals("avatar")) {
+        if (whatImage.equals("avatar")) {
             selectedImage = scaleDown(btm, 300, true);
         } else if (whatImage.equals("bg")) {
             selectedImage = scaleDown(btm, 600, true);
@@ -404,7 +393,7 @@ public class ProfileActivity extends AppCompatActivity {
         DatabaseReference mRef = null;
         if (whatImage.equals("avatar")) {
             mRef = database.getReference().child("Users").child(userKey).child("url");
-        } else if(whatImage.equals("bg")) {
+        } else if (whatImage.equals("bg")) {
             mRef = database.getReference().child("Users").child(userKey).child("bgUrl");
         }
         mRef.setValue(path);
@@ -423,7 +412,6 @@ public class ProfileActivity extends AppCompatActivity {
         return newBitmap;
     }
 
-
     public String getCurrentUserAvatar() {
         final String[] avatar = new String[1];
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -441,5 +429,4 @@ public class ProfileActivity extends AppCompatActivity {
         });
         return avatar[0];
     }
-
 }

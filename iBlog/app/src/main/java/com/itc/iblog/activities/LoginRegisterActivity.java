@@ -14,8 +14,7 @@ import com.itc.iblog.fragments.LoginFragment;
 
 import java.util.Locale;
 
-
-public class LoginRegisterActivity extends FragmentActivity{
+public class LoginRegisterActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +38,6 @@ public class LoginRegisterActivity extends FragmentActivity{
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
             transaction.commit();
-        } else {
-
         }
     }
 

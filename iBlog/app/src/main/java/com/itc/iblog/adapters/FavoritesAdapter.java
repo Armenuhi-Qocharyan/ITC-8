@@ -36,16 +36,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     private ArrayList<String> mKeys;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         private TextView textViewName;
         private TextView textViewAge;
         private TextView textViewEmail;
         private ImageView imageView;
         private Button unfollow;
         private CardView cardView;
-
-
-
         public ViewHolder(View view) {
             super(view);
             textViewName = (TextView) view.findViewById(R.id.textview_name);
@@ -62,11 +58,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         this.mItems = items;
         this.mKeys = keys;
         query.addChildEventListener(mListener);
-
     }
 
     public FavoritesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.user_card, parent, false);
         return new FavoritesAdapter.ViewHolder(view);
@@ -83,7 +77,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         String key = mKeys.get(position);
         item.setUID(key);
         holder.textViewAge.setText(String.valueOf(item.getAge()) + " years old");
-
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         if (item.getUrl() != null) {
             firebaseStorage.getReference().child(item.getUrl()).getDownloadUrl().addOnSuccessListener
@@ -105,15 +98,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         holder.unfollow.setText(R.string.unfollow);
         holder.textViewEmail.setText(item.getEmail());
         holder.textViewName.setText(item.getUserName());
-
         holder.unfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeFollower(item);
             }
         });
-
-
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +115,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                 context.startActivity(intent);
             }
         });
-
     }
 
     private void removeFollower(final UserModel item) {
@@ -139,9 +128,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
@@ -150,7 +137,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
             String key = dataSnapshot.getKey();
-
             if (!mKeys.contains(key)) {
                 UserModel item = dataSnapshot.getValue(UserModel.class);
                 int insertedPosition;
@@ -185,7 +171,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                 if (newItem.getFollowings().containsKey(userId)) {
                     mItems.set(index, newItem);
                     notifyItemChanged(index);
-
                 } else {
                     mKeys.remove(index);
                     mItems.remove(index);
@@ -197,7 +182,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             String key = dataSnapshot.getKey();
-
             if (mKeys.contains(key)) {
                 int index = mKeys.indexOf(key);
                 mKeys.remove(index);
@@ -209,7 +193,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         @Override
         public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
             String key = dataSnapshot.getKey();
-
             int index = mKeys.indexOf(key);
             UserModel item = dataSnapshot.getValue(UserModel.class);
             mItems.remove(index);
@@ -235,10 +218,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         }
 
         @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-
+        public void onCancelled(DatabaseError databaseError) {}
     };
-
 }

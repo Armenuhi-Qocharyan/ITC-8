@@ -10,14 +10,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.design.widget.NavigationView;
@@ -53,14 +51,7 @@ import com.itc.iblog.fragments.FavoritesPostsFragment;
 import com.itc.iblog.fragments.PostsFragment;
 import com.itc.iblog.fragments.UsersFragment;
 import com.itc.iblog.fragments.FollowersFragment;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
-import com.itc.iblog.models.PostModel;
 
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -77,9 +68,10 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mDatabase;
     private TextView userName;
     private TextView email;
-
     private Bitmap bitmap;
     private String uuid;
+    private String avatarUrl;
+    private StorageReference storageRef;
 
     public String getUuid() {
         this.uuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -90,7 +82,6 @@ public class MainActivity extends AppCompatActivity
         return email;
     }
 
-
     public TextView getUserName() {
         return userName;
     }
@@ -98,10 +89,6 @@ public class MainActivity extends AppCompatActivity
     public String getAvatarUrl() {
         return avatarUrl;
     }
-
-    private String avatarUrl;
-    private StorageReference storageRef;
-
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -162,7 +149,6 @@ public class MainActivity extends AppCompatActivity
         setAvatar();
         userName = (TextView) findViewById(R.id.header_user_name);
         email = (TextView) findViewById(R.id.header_user_email);
-
         return true;
     }
 
@@ -244,8 +230,6 @@ public class MainActivity extends AppCompatActivity
                     .show();
 
         }
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -260,9 +244,7 @@ public class MainActivity extends AppCompatActivity
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.language_dialog, null);
         dialogBuilder.setView(dialogView);
-
         final Spinner spinner1 = (Spinner) dialogView.findViewById(R.id.spinner1);
-
         dialogBuilder.setTitle(getResources().getString(R.string.lang_dialog_title));
         //dialogBuilder.setMessage(getResources().getString(R.string.lang_dialog_message));
         dialogBuilder.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
@@ -371,7 +353,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
@@ -395,5 +376,4 @@ public class MainActivity extends AppCompatActivity
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
 }

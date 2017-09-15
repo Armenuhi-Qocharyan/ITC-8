@@ -2,18 +2,13 @@ package com.itc.iblog.adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,43 +17,23 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
-import com.itc.iblog.activities.MainActivity;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.CommentModel;
-import com.itc.iblog.models.PostModel;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Random;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.google.android.gms.internal.zzs.TAG;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHolder> {
-
     private List<CommentModel> cardList;
     private String email;
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView userName;
         public TextView userSurname;
         public TextView commentTime;
         public ImageView userImage;
         public TextView commentText;
-
         public MyViewHolder(View view) {
             super(view);
             userName = (TextView) view.findViewById(R.id.com_user_name);
@@ -98,15 +73,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final CommentModel post = cardList.get(position);
+        final long ONE_MEGABYTE = 1024 * 1024;
         holder.userName.setText(post.getUserName());
         holder.userSurname.setText(post.getUserEmail());
         holder.commentTime.setText(post.getCommentTime().toString().substring(0,19));
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-
         StorageReference pathReference = storageRef.child(post.getUserImage());
-
-        final long ONE_MEGABYTE = 1024 * 1024;
         pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -123,14 +96,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             }
         });
         holder.commentText.setText(post.getCommentText());
-
     }
 
     @Override
     public int getItemCount() {
         return cardList.size();
     }
-
-
-
 }

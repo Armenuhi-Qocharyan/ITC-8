@@ -1,6 +1,5 @@
 package com.itc.iblog.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +12,8 @@ import com.itc.iblog.models.UsersModel;
 
 import java.util.ArrayList;
 
-
 public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ViewHolder> {
     ArrayList<UsersModel> developers;
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewEmail;
         private final TextView textViewName;
