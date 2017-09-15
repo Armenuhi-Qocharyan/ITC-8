@@ -63,13 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (favoriteFriendsIDs == null || favoriteFriendsIDs.isEmpty()) {
             favoriteFriendsIDs = new ArrayList<String>();
-            //    System.out.printf("StaticConfig.UID ---- " + StaticConfig.UID);
             final ArrayList<String> finalFavoriteFriendsIDs = favoriteFriendsIDs;
             FirebaseDatabase.getInstance().getReference().child("favorite").child(StaticConfig.UID)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-
                             if (dataSnapshot.getValue() == null) {
                                 return;
                             } else {
@@ -79,9 +77,7 @@ public class MainActivity extends AppCompatActivity {
                                 Iterator it = tmp.keySet().iterator();
                                 while (it.hasNext()) {
                                     Object key = it.next();
-                                    //        System.out.println(" --------- " + tmp.get(key));
                                     finalFavoriteFriendsIDs.add(tmp.get(key).toString().trim());
-                                //    Toast.makeText(MainActivity.this,"hello" +  tmp.get(key).toString().trim() , Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -91,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
-
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -112,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsPagerAdapter.addFrag(new ContactsFragment(favoriteFriendsIDs));
+        mSectionsPagerAdapter.addFrag(new ContactsFragment(/*favoriteFriendsIDs*/));
         mSectionsPagerAdapter.addFrag(new ProfileFragment());
         mSectionsPagerAdapter.addFrag(new FavoritesFragment(favoriteFriendsIDs));
 

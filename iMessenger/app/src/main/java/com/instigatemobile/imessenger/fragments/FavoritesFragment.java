@@ -19,66 +19,66 @@ public class FavoritesFragment extends Fragment {
 */
 
 
-        import android.content.BroadcastReceiver;
-        import android.content.Context;
-        import android.content.DialogInterface;
-        import android.content.Intent;
-        import android.content.IntentFilter;
-        import android.content.res.Resources;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.graphics.Typeface;
-        import android.os.Bundle;
-        import android.os.CountDownTimer;
-        import android.support.annotation.NonNull;
-        import android.support.v4.app.Fragment;
-        import android.support.v4.widget.SwipeRefreshLayout;
-        import android.support.v7.app.AlertDialog;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.text.InputType;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageButton;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.OnFailureListener;
-        import com.google.android.gms.tasks.OnSuccessListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.firebase.database.ChildEventListener;
-        import com.google.firebase.database.DataSnapshot;
-        import com.google.firebase.database.DatabaseError;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.database.Query;
-        import com.google.firebase.database.ValueEventListener;
-        import com.google.firebase.storage.FirebaseStorage;
-        import com.google.firebase.storage.StorageReference;
-        import com.instigatemobile.imessenger.R;
-        import com.instigatemobile.imessenger.activities.ChatActivity;
-        import com.instigatemobile.imessenger.data.LocalDB;
-        import com.instigatemobile.imessenger.data.StaticConfig;
-        import com.instigatemobile.imessenger.models.Friend;
-        import com.instigatemobile.imessenger.models.ListFriend;
-        import com.instigatemobile.imessenger.service.ServiceUtils;
-        import com.yarolegovich.lovelydialog.LovelyInfoDialog;
-        import com.yarolegovich.lovelydialog.LovelyProgressDialog;
-        import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.instigatemobile.imessenger.R;
+import com.instigatemobile.imessenger.activities.ChatActivity;
+import com.instigatemobile.imessenger.data.LocalDB;
+import com.instigatemobile.imessenger.data.StaticConfig;
+import com.instigatemobile.imessenger.models.Friend;
+import com.instigatemobile.imessenger.models.ListFriend;
+import com.instigatemobile.imessenger.service.ServiceUtils;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
+import com.yarolegovich.lovelydialog.LovelyProgressDialog;
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 
-        import java.text.SimpleDateFormat;
-        import java.util.ArrayList;
-        import java.util.Date;
-        import java.util.HashMap;
-        import java.util.Iterator;
-        import java.util.List;
-        import java.util.Map;
-        import java.util.regex.Matcher;
-        import java.util.regex.Pattern;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-        import de.hdodenhof.circleimageview.CircleImageView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -93,6 +93,11 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private CountDownTimer detectFriendOnline;
     private BroadcastReceiver deleteFriendReceiver;
+
+
+    public FavoritesFragment() {
+        throw new Resources.NotFoundException("Dont use this constructor");
+    }
 
 
     public FavoritesFragment(ArrayList<String> mylist) {
@@ -115,6 +120,7 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
                 ServiceUtils.updateFriendStatus(getContext(), dataListFriend);
                 ServiceUtils.updateUserStatus(getContext());
             }
+
             @Override
             public void onFinish() {
             }
@@ -130,7 +136,7 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
                 detectFriendOnline.start();
             }
         }
-        
+
         View layout = inflater.inflate(R.layout.fragment_contacts, container, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         RecyclerView recyclerListFrends = (RecyclerView) layout.findViewById(R.id.recycleListFriend);
@@ -138,14 +144,14 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
         mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
+
         for (int i = 0; i < dataListFriend.getListFriend().size(); ++i) {
             System.out.println(dataListFriend.getListFriend().get(i).getId());
-            if(favoriteFriendsIDs.contains(dataListFriend.getListFriend().get(i).getId().toString())){
-               continue;
-            }  else {
+            if (!favoriteFriendsIDs.contains(dataListFriend.getListFriend().get(i).getId().toString())) {
                 dataListFriend.removeFriend(i);
             }
         }
+
 
         adapter = new ListFavoritAdapter(getContext(), dataListFriend, this, favoriteFriendsIDs);
         recyclerListFrends.setAdapter(adapter);
@@ -203,16 +209,7 @@ public class FavoritesFragment extends Fragment implements SwipeRefreshLayout.On
         LocalDB.getInstance(getContext()).dropDB();
         detectFriendOnline.cancel();
         getListFriendUId();
-        /*
-        for (int i = 0; i < dataListFriend.getListFriend().size(); ++i) {
-            System.out.println(dataListFriend.getListFriend().get(i).getId());
-            if(favoriteFriendsIDs.contains(dataListFriend.getListFriend().get(i).getId().toString())){
-                continue;
-            }  else {
-                dataListFriend.removeFriend(i);
-            }
-        }
-        */
+        favoriteFriendsIDs.clear();
     }
 
     private void getListFriendUId() {
@@ -487,22 +484,19 @@ class ListFavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else {
             ((ItemFavoritViewHolder) holder).imageButton.setImageResource(R.drawable.favorit1);
         }
+
         ((View) ((ItemFavoritViewHolder) holder).imageButton).setOnClickListener(new View.OnClickListener() {
             boolean change = false;
-
             @Override
             public void onClick(View view) {
-                //isFavorit(StaticConfig.UID,id);
-                //   Toast.makeText(view.getContext(), "test" + position, Toast.LENGTH_SHORT).show();
-
                 change = favoriteFriendsIDs.contains(id);
                 if (change) {
                     ((ItemFavoritViewHolder) holder).imageButton.setImageResource(R.drawable.favorit1);
                     change = false;
-                    //     Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
-                    //     Toast.makeText(context, StaticConfig.UID,Toast.LENGTH_SHORT).show();
                     removeFavorite(id);
                     favoriteFriendsIDs.remove(id);
+                    listFriend.removeFriend(position);
+                    notifyDataSetChanged();
                 } else {
                     ((ItemFavoritViewHolder) holder).imageButton.setImageResource(R.drawable.favorit2);
                     change = true;

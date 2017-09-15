@@ -74,18 +74,16 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private CountDownTimer detectFriendOnline;
     private BroadcastReceiver deleteFriendReceiver;
 
-    public ContactsFragment(ArrayList<String> mylist) {
-        favoriteFriendsIDs = mylist;
+    public ContactsFragment(/*ArrayList<String> mylist*/) {
+        //favoriteFriendsIDs = mylist;
         onFABClick = new FragFriendClickFloatButton();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        /*
         if (favoriteFriendsIDs == null || favoriteFriendsIDs.isEmpty()) {
             favoriteFriendsIDs = new ArrayList<String>();
-            //    System.out.printf("StaticConfig.UID ---- " + StaticConfig.UID);
             FirebaseDatabase.getInstance().getReference().child("favorite").child(StaticConfig.UID)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -100,21 +98,15 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 Iterator it = tmp.keySet().iterator();
                                 while (it.hasNext()) {
                                     Object key = it.next();
-                                    //        System.out.println(" --------- " + tmp.get(key));
                                     favoriteFriendsIDs.add(tmp.get(key).toString().trim());
-                                 //   Toast.makeText(getContext(), tmp.get(key).toString().trim() , Toast.LENGTH_SHORT).show();
-
                                 }
                             }
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-
                         }
                     });
         }
-        Toast.makeText(getContext(), favoriteFriendsIDs.toString() , Toast.LENGTH_SHORT).show();
-        */
         super.onCreate(savedInstanceState);
     }
 
@@ -149,6 +141,8 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerListFrends.setLayoutManager(linearLayoutManager);
         mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+
         adapter = new ListFriendsAdapter(getContext(), dataListFriend, this, favoriteFriendsIDs);
         recyclerListFrends.setAdapter(adapter);
         dialogFindAllFriend = new LovelyProgressDialog(getContext());
@@ -480,20 +474,15 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else {
             ((ItemFriendViewHolder) holder).imageButton.setImageResource(R.drawable.favorit1);
         }
+
         ((View) ((ItemFriendViewHolder) holder).imageButton).setOnClickListener(new View.OnClickListener() {
             boolean change = false;
-
             @Override
             public void onClick(View view) {
-                //isFavorit(StaticConfig.UID,id);
-                //   Toast.makeText(view.getContext(), "test" + position, Toast.LENGTH_SHORT).show();
-
                 change = favoriteFriendsIDs.contains(id);
                 if (change) {
                     ((ItemFriendViewHolder) holder).imageButton.setImageResource(R.drawable.favorit1);
                     change = false;
-                    //     Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
-                    //     Toast.makeText(context, StaticConfig.UID,Toast.LENGTH_SHORT).show();
                     removeFavorite(id);
                     favoriteFriendsIDs.remove(id);
                 } else {
@@ -805,13 +794,6 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         dialogWaitDeleting.dismiss();
-/*
-                                        new LovelyInfoDialog(context)
-                                                .setTopColorRes(R.color.colorAccent)
-                                                .setTitle("Success")
-                                                .setMessage("Favorite deleting successfully")
-                                                .show();
-                                                */
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -828,7 +810,6 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 });
                     }
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
@@ -852,13 +833,6 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 dialogWaitDeleting.dismiss();
-                                /*
-                                new LovelyInfoDialog(context)
-                                        .setTopColorRes(R.color.colorAccent)
-                                        .setTitle("Success")
-                                        .setMessage("Succesful adding favorite")
-                                        .show();
-                                        */
                             }
                         }
                     })
