@@ -34,9 +34,8 @@ public class DataBase {
         database.child(user.getUid()).child("background").setValue(url);
     }
 
-    public void getCurrentProfile(final ProfileCallbackInterface profileCallback) {
-        FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
-        database.child(auth.getUid()).addListenerForSingleValueEvent(
+    public void getCurrentProfile(final ProfileCallbackInterface profileCallback, String userID) {
+        database.child(userID).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

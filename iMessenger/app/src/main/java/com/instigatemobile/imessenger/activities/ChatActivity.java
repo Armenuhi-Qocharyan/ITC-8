@@ -1,28 +1,29 @@
 package com.instigatemobile.imessenger.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,16 +60,16 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     public static final int VIEW_TYPE_USER_MESSAGE = 0;
     public static final int VIEW_TYPE_FRIEND_MESSAGE = 1;
     private ListMessageAdapter adapter;
-    private String roomId;
-    private ArrayList<CharSequence> idFriend;
+    public String roomId;
+    public ArrayList<CharSequence> idFriend;
     private Conversation consersation;
-    private ImageButton btnSend;
+    public ImageButton btnSend;
+    public  String nameFriend;
     private EditText editWriteMessage;
     private LinearLayoutManager linearLayoutManager;
     public static HashMap<String, Bitmap> bitmapAvataFriend;
     public Bitmap bitmapAvataUser;
 
-    public static String friendid;
 
     private static final String SERVER_KEY = "AAAA4RXWeiI:APA91bEiawUeTrWSOB8VJUHAfNpUl2GtXlmwmp9VVf6IJOC0nGU6ihINOerQIiuoGhmpXeyyDcHNDRy6ZFX7X3rPIWWp20YlBkyz185ichGcL8T_bLfpseT5TeJYLdQfwlQ9icR64qcx";
 
@@ -80,13 +81,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         Intent intentData = getIntent();
         idFriend = intentData.getCharSequenceArrayListExtra(StaticConfig.INTENT_KEY_CHAT_ID);
         roomId = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID);
-
-        System.out.println(idFriend);
-        System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        final String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
-
+        nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
+        
         consersation = new Conversation();
+        initCustomActionBar(nameFriend);
         btnSend = (ImageButton) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(this);
 
@@ -100,11 +98,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                     bitmapAvataUser = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     editWriteMessage = (EditText) findViewById(R.id.editWriteMessage);
                     if (idFriend != null && nameFriend != null) {
-                        getSupportActionBar().setTitle(nameFriend);
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                        getSupportActionBar().setHomeButtonEnabled(true);
-                        getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_white);
                         linearLayoutManager = new LinearLayoutManager(ChatActivity.this, LinearLayoutManager.VERTICAL, false);
                         recyclerChat = (RecyclerView) findViewById(R.id.recyclerChat);
                         recyclerChat.setLayoutManager(linearLayoutManager);
@@ -132,7 +125,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
                             @Override
                             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                                if (dataSnapshot.getValue() != null) {
+                                    //consersation.getListMessageData().removeAll(consersation.getListMessageData());
+                                    consersation.getListMessageData().clear();
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
 
                             @Override
@@ -160,6 +157,21 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void initCustomActionBar(String nameFriend) {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        View mCustomView = mInflater.inflate(R.layout.custom_action_bar, null);
+        actionBar.setCustomView(mCustomView);
+        actionBar.setDisplayShowCustomEnabled(true);
+        Button btnDelMsg = (Button) mCustomView.findViewById(R.id.del_msg);
+        btnDelMsg.setOnClickListener(this);
+        getSupportActionBar().setTitle(nameFriend);
+        TextView friend_name = (TextView) mCustomView.findViewById((R.id.friend_name));
+        friend_name.setText(nameFriend);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -193,6 +205,23 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 FirebaseDatabase.getInstance().getReference().child("message/" + roomId).push().setValue(newMessage);
                 sendHttpRequest();
             }
+        } else if (view.getId() == R.id.del_msg) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.delete_msg_quastion)
+                    .setCancelable(true)
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().getRoot().child("message").child(roomId);
+                            dbRef.setValue(null);
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 
@@ -253,7 +282,21 @@ class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ChatActivity.VIEW_TYPE_FRIEND_MESSAGE) {
             View view = LayoutInflater.from(context).inflate(R.layout.rc_item_message_friend, parent, false);
-            return new ItemMessageFriendHolder(view);
+            ItemMessageFriendHolder friendHolder =  new ItemMessageFriendHolder(view);
+            friendHolder.avata.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ListMessageAdapter.this.context, ContactProfileActivity.class);
+                    ChatActivity chatActivity = (ChatActivity)(ListMessageAdapter.this.context);
+                    intent.putCharSequenceArrayListExtra(StaticConfig.INTENT_KEY_CHAT_ID, chatActivity.idFriend);
+                    intent.putExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID, chatActivity.roomId);
+                    intent.putExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND, chatActivity.nameFriend);
+                    ListMessageAdapter.this.context.startActivity(intent);
+                    chatActivity.finish();
+
+                }
+            });
+            return friendHolder;
         } else if (viewType == ChatActivity.VIEW_TYPE_USER_MESSAGE) {
             View view = LayoutInflater.from(context).inflate(R.layout.rc_item_message_user, parent, false);
             return new ItemMessageUserHolder(view);
