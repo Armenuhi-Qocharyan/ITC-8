@@ -19,10 +19,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
 import com.itc.iblog.R;
 
 public class ForgotPasswordFragment extends Fragment {
-
     private Button btnSend;
     private EditText editTextEmailReg;
     private FirebaseAuth firebaseAuth;
@@ -31,16 +31,15 @@ public class ForgotPasswordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         firebaseAuth = FirebaseAuth.getInstance();
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_forgot_password, container, false);
         Animation scale = AnimationUtils.loadAnimation(super.getContext(), R.anim.scale);
         view.setAnimation(scale);
-
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar_cyclic_login);
         editTextEmailReg = view.findViewById(R.id.editText);
         editTextEmailReg.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -63,7 +62,6 @@ public class ForgotPasswordFragment extends Fragment {
                 }
             }
         });
-
 
         btnSend = view.findViewById(R.id.button_send);
         btnSend.setOnClickListener(new View.OnClickListener() {

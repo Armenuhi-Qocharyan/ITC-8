@@ -9,10 +9,11 @@ public class CommentModel {
     private String commentText;
     private Date commentTime;
 
-    public CommentModel() {}
+    public CommentModel() {
+    }
 
-    public CommentModel(String userName, String userEmail,String userImage,
-                     Date postTime, String postText) {
+    public CommentModel(String userName, String userEmail, String userImage,
+                        Date postTime, String postText) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.commentTime = postTime;
@@ -36,7 +37,6 @@ public class CommentModel {
     public String getCommentText() {
         return this.commentText;
     }
-
 
     public Date getCommentTime() {
         return this.commentTime;

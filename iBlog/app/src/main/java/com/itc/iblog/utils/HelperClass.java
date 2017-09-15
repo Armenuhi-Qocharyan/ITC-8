@@ -23,12 +23,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
-public class HelperClass  {
-    private  static Bitmap bitmap;
+public class HelperClass {
+    private static Bitmap bitmap;
     private static Activity activity;
     private HelperClass helperClass;
-    public HelperClass() {}
+
+    public HelperClass() {
+    }
 
     public HelperClass getInstance(Activity activity) {
         if (null != helperClass) {
@@ -106,14 +107,12 @@ public class HelperClass  {
                 });
                 System.out.println("bla " + bitmap);
                 return bitmap;
-
             } else {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmap = BitmapFactory.decodeFile(String.valueOf(file), options);
                 return BitmapFactory.decodeFile(String.valueOf(file), options);
             }
-
         }
     }
 }
