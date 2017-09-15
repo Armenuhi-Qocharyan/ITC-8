@@ -107,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsPagerAdapter.addFrag(new ContactsFragment(/*favoriteFriendsIDs*/));
+        mSectionsPagerAdapter.addFrag(new ContactsFragment());
         mSectionsPagerAdapter.addFrag(new ProfileFragment());
-        mSectionsPagerAdapter.addFrag(new FavoritesFragment(favoriteFriendsIDs));
+        mSectionsPagerAdapter.addFrag(new FavoritesFragment());
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);

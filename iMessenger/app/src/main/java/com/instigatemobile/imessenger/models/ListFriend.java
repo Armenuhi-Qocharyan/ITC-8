@@ -29,4 +29,8 @@ public class ListFriend {
         }
         return "";
     }
+
+    public void add(Friend friend) {
+        listFriend.add(friend);
+    }
 }

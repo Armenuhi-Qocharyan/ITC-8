@@ -75,7 +75,7 @@
     <string name="success">Հաջողվեց</string>
     <string name="add_friend_success">Ընկերը հաջողությամբ ավելացվեց</string>
     <string name="delete_friend">Ջնջել ընկերոջը</string>
-    <string name="delete_confirmation">Վստա՞հ եք, որ ուզում եք ջնջել </string>
+    <string name="delete_confirmation">Վստա՞հ եք, որ ուզում եք ջնջել %1$s օգտատերին</string>
     <string name="question"></string>
     <string name="deleting">Ջնջում...</string>
     <string name="error">Սխալ</string>
