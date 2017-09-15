@@ -1,13 +1,12 @@
 package com.itc.iblog.fragments;
 
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,11 +25,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
+import com.itc.iblog.activities.MainActivity;
 
 public class LoginFragment extends Fragment {
-    private Activity login;
     private FirebaseAuth firebaseAuth;
     private EditText editTextEmail;
     private EditText editTextPass;
@@ -38,10 +36,6 @@ public class LoginFragment extends Fragment {
     private ProgressBar progressBar;
 
     public LoginFragment() {
-    }
-
-    public LoginFragment(Activity login) {
-        this.login = login;
     }
 
     @Override
@@ -55,7 +49,7 @@ public class LoginFragment extends Fragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new RegisterFragment(login);
+                Fragment fragment = new RegisterFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.contentFragment, fragment);
@@ -64,6 +58,7 @@ public class LoginFragment extends Fragment {
         });
         editTextEmail = (EditText) view.findViewById(R.id.editText);
         editTextPass = (EditText) view.findViewById(R.id.editText2);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar_cyclic_login);
         Button login = (Button) view.findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,26 +79,22 @@ public class LoginFragment extends Fragment {
                 transaction.addToBackStack(null).commit();
             }
         });
-
+        updateUI(firebaseAuth.getCurrentUser());
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        progressBar = getActivity().findViewById(R.id.progressBar_cyclic_login);
-        progressBar.setVisibility(View.INVISIBLE);
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        updateUI(currentUser);
     }
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(login,
+            Intent intent = new Intent(getActivity(),
                     MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
-            login.finish();
+            getActivity().finish();
         }
     }
 

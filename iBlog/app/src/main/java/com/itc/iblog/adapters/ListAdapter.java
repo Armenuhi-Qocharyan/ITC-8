@@ -1,7 +1,6 @@
 package com.itc.iblog.adapters;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,16 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
-
+import com.itc.iblog.fragments.PostCommentsFragment;
+import com.itc.iblog.models.PostModel;
 import com.itc.iblog.services.RequestService;
-import com.itc.iblog.fragments.PostCommentsFragment;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
-import com.itc.iblog.models.PostModel;
 import com.itc.iblog.utils.HelperClass;
-import com.itc.iblog.fragments.PostCommentsFragment;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
-import com.itc.iblog.models.PostModel;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +77,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             favButton = (ImageView) view.findViewById(R.id.favorite);
             favCount = (TextView) view.findViewById(R.id.favorite_count);
             comButton = (ImageView) view.findViewById(R.id.comment);
+
         }
     }
 
@@ -240,12 +234,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
                                         DatabaseReference ref = database.getReference("Posts");
                                         ref.child(post.getPostId()).child("favCount").setValue(newFavCount);
+                                        Intent serviceIntent = new Intent(view.getContext(), RequestService.class);
+                                        serviceIntent.putExtra("title", "selected your post as favorite");
+                                        serviceIntent.putExtra("name", userName);
+                                        serviceIntent.putExtra("image", post.getUserImage());
+                                        serviceIntent.putExtra("icon", "ic_action_name");
+                                        serviceIntent.putExtra("id", post.getUuid());
+                                        view.getContext().startService(serviceIntent);
                                         holder.favCount.setText(newFavCount.toString());
                                         holder.favButton.setBackgroundResource(0);
                                         holder.favButton.setImageResource(R.drawable.ic_action_faved);
                                     }
-
-
                                 }
                             });
                         }

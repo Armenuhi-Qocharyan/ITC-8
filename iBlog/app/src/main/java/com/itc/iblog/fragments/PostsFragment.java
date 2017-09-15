@@ -9,9 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-
 import android.support.design.widget.FloatingActionButton;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,12 +17,8 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,15 +29,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import com.google.firebase.storage.UploadTask;
-import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
+import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.adapters.ListAdapter;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.CommentModel;
 import com.itc.iblog.models.PostModel;
 import com.itc.iblog.services.RequestService;
@@ -51,12 +42,8 @@ import com.itc.iblog.utils.HelperClass;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.Date;
-
 import java.util.List;
-
-import static com.itc.iblog.R.string.userName;
 
 
 public class PostsFragment extends Fragment {
@@ -278,7 +265,7 @@ public class PostsFragment extends Fragment {
                     serviceIntent.putExtra("title", "added new post");
                     serviceIntent.putExtra("name", ((MainActivity) getActivity()).getUserName().getText().toString());
                     serviceIntent.putExtra("image", ((MainActivity) getActivity()).getAvatarUrl());
-                    serviceIntent.putExtra("icon", "ic_action_like.png");
+                    serviceIntent.putExtra("icon", "post");
                     serviceIntent.putExtra("id", post);
                     context.startService(serviceIntent);
 

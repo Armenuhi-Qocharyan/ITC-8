@@ -1,16 +1,13 @@
 package com.itc.iblog.fragments;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.itc.iblog.R;
@@ -33,15 +30,7 @@ public class FavoritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         handleInstanceState(savedInstanceState);
-        if (!isNetworkAvailable()) {
-            new AlertDialog.Builder(this.getContext())
-                    .setTitle("No internet connection")
-                    .setMessage("Please, check your internet connection")
-                    .setPositiveButton("Ok", null)
-                    .show();
-        }
-        Query query = setupFirebase();
-        setupRecyclerview(view, query);
+        setupRecyclerview(view);
         setupData();
         return view;
     }
@@ -62,24 +51,12 @@ public class FavoritesFragment extends Fragment {
         }
     }
 
-    private Query setupFirebase() {
+    private void setupRecyclerview(View view) {
         Query query = FirebaseDatabase.getInstance().getReference("Users");
-        return query;
-    }
-
-
-    private void setupRecyclerview(View view, Query query) {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_favorites);
         mMyAdapter = new FavoritesAdapter(query, mAdapterItems, mAdapterKeys);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(mMyAdapter);
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) this.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
 

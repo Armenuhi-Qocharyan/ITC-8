@@ -34,7 +34,7 @@ public class LoginRegisterActivity extends FragmentActivity{
         }
 
         if (savedInstanceState == null) {
-            Fragment fragment = new LoginFragment(this);
+            Fragment fragment = new LoginFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);

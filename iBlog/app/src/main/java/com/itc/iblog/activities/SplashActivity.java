@@ -1,11 +1,8 @@
 package com.itc.iblog.activities;
 
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.content.Intent;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -14,13 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.itc.iblog.R;
-
-import java.util.Locale;
-
-
-/**
- * Created by liana on 8/30/17.
- */
 
     public class SplashActivity extends AppCompatActivity {
         public void onAttachedToWindow() {
@@ -67,7 +57,6 @@ import java.util.Locale;
                         startActivity(intent);
                         SplashActivity.this.finish();
                     } catch (InterruptedException e) {
-                        // do nothing
                     } finally {
                         SplashActivity.this.finish();
                     }

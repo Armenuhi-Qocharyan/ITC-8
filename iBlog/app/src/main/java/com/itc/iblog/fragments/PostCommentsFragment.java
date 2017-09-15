@@ -2,9 +2,10 @@ package com.itc.iblog.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,12 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.itc.iblog.R;
-import com.itc.iblog.activities.ProfileActivity;
-import com.itc.iblog.services.RequestService;
 import com.itc.iblog.activities.MainActivity;
+import com.itc.iblog.activities.ProfileActivity;
 import com.itc.iblog.adapters.CommentAdapter;
 import com.itc.iblog.models.CommentModel;
 import com.itc.iblog.models.PostModel;
+import com.itc.iblog.services.RequestService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,6 +44,8 @@ public class PostCommentsFragment extends Fragment {
     private String email;
     private EditText text;
     private String url;
+    private AppBarLayout appBarLayout;
+    private NestedScrollView nestedScroll;
 
 
     public PostCommentsFragment(PostModel post, String userName, String email,String url) {
@@ -60,8 +63,14 @@ public class PostCommentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (getActivity() instanceof  ProfileActivity) {
+            getActivity().findViewById(R.id.floating_avatar).setVisibility(View.GONE);
+            appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.app_bar_layout);
+            nestedScroll = (NestedScrollView) getActivity().findViewById(R.id.nested_scroll);
+            nestedScroll.setNestedScrollingEnabled(false);
+            appBarLayout.setExpanded(false, false);
+        }
         final View view = inflater.inflate(R.layout.fragment_post_comments, container, false);
-
 
         text = (EditText) view.findViewById(R.id.type_comment);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.send);

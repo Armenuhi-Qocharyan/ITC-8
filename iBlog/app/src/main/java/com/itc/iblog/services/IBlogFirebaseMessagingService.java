@@ -1,6 +1,5 @@
 package com.itc.iblog.services;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -13,8 +12,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 import android.widget.RemoteViews;
 
@@ -39,7 +36,7 @@ public class IBlogFirebaseMessagingService extends com.google.firebase.messaging
     private Bitmap bitmap;
 
     @Override
-    public void onMessageReceived(RemoteMessage message) {
+    public void onMessageReceived(final RemoteMessage message) {
         super.onMessageReceived(message);
 
         final Intent emptyIntent = new Intent(this, MainActivity.class);
@@ -56,13 +53,29 @@ public class IBlogFirebaseMessagingService extends com.google.firebase.messaging
                         .setContentIntent(pendingIntent);
 
         Date currentTime = Calendar.getInstance().getTime();
-        RemoteViews mContentView = new RemoteViews(getPackageName(), R.layout.notification_layout);
+        final RemoteViews mContentView = new RemoteViews(getPackageName(), R.layout.notification_layout);
         mContentView.setImageViewResource(R.id.notification_icon, id);
         mContentView.setTextViewText(R.id.notification_time, currentTime.toString());
         mContentView.setTextViewText(R.id.notification_name, message.getData().get("name"));
         mContentView.setTextViewText(R.id.notification_text, message.getData().get("title"));
-        mContentView.setImageViewBitmap(R.id.notification_photo, getBitmapFromURL(message.getData()
-                .get("image")));
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child(message.getData()
+                .get("image"));
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                System.out.println("======================>" + bitmap.getByteCount());
+                mContentView.setImageViewBitmap(R.id.notification_photo, Bitmap.createScaledBitmap(bitmap, 50, 50, false));
+
+            }
+        });
+
+
+
+
         mBuilder.setContent(mContentView);
 
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
@@ -80,9 +93,10 @@ public class IBlogFirebaseMessagingService extends com.google.firebase.messaging
             @Override
             public void onSuccess(byte[] bytes) {
                 bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                System.out.println("======================>" + bitmap.getByteCount());
             }
         });
-
+        System.out.println("======================>" + bitmap.getByteCount());
         return bitmap;
     }
 

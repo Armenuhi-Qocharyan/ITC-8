@@ -1,17 +1,7 @@
 package com.itc.iblog.fragments;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-
-import android.support.design.widget.FloatingActionButton;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,14 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import android.widget.Button;
-import android.widget.EditText;
-
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,22 +16,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import com.google.firebase.storage.UploadTask;
-import com.itc.iblog.activities.MainActivity;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.ListAdapter;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import java.util.Date;
-
 import java.util.List;
 
 
@@ -74,7 +45,7 @@ public class FavoritesPostsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("favoritesPosts")) {
-                    myDataset = new ArrayList<PostModel>();
+                    myDataset = new ArrayList<>();
                     for (DataSnapshot messageSnapshot : dataSnapshot.child("favoritesPosts").getChildren()) {
                         final String postId = messageSnapshot.getValue(new GenericTypeIndicator<String>() {});
                         DatabaseReference postRef = database.getReference("Posts").child(postId);

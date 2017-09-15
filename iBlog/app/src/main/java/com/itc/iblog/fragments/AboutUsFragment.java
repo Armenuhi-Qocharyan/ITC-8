@@ -10,14 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.itc.iblog.R;
 import com.itc.iblog.adapters.AboutUsAdapter;
-import com.itc.iblog.models.UsersModel;
+import com.itc.iblog.models.UserModel;
 
 import java.util.ArrayList;
 
 
 public class AboutUsFragment extends android.support.v4.app.Fragment {
     private AboutUsAdapter mMyAdapter;
-    private ArrayList<UsersModel> mAdapterItems;
+    private ArrayList<UserModel> mAdapterItems;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,12 +38,12 @@ public class AboutUsFragment extends android.support.v4.app.Fragment {
     }
 
     private void handleInstanceState(Bundle savedInstanceState) {
-        mAdapterItems = new ArrayList<UsersModel>();
-        mAdapterItems.add(new UsersModel("Nelli Melkonyan", R.drawable.developer_nelli, "nelli.melkonyan.im@gmail.com"));
-        mAdapterItems.add(new UsersModel("Khachik Ghazaryan", R.drawable.developer_khachik, "khachik.ghazaryan.im@gmail.com"));
-        mAdapterItems.add(new UsersModel("Ruben Ghalayan", R.drawable.developer_ruben, "ruben.ghalayan.im@gmail.com"));
-        mAdapterItems.add(new UsersModel("Liana Andreasyan", R.drawable.developer_liana, "liana.andreasyan.im@gmail.com"));
-        mAdapterItems.add(new UsersModel("Smbat Dallakyan", R.drawable.developer_smbat_d, "smbat.dallakyan.im@gmail.com"));
+        mAdapterItems = new ArrayList<>();
+        mAdapterItems.add(new UserModel("Nelli Melkonyan", R.drawable.developer_nelli, "nelli.melkonyan.im@gmail.com"));
+        mAdapterItems.add(new UserModel("Khachik Ghazaryan", R.drawable.developer_khachik, "khachik.ghazaryan.im@gmail.com"));
+        mAdapterItems.add(new UserModel("Ruben Ghalayan", R.drawable.developer_ruben, "ruben.ghalayan.im@gmail.com"));
+        mAdapterItems.add(new UserModel("Liana Andreasyan", R.drawable.developer_liana, "liana.andreasyan.im@gmail.com"));
+        mAdapterItems.add(new UserModel("Smbat Dallakyan", R.drawable.developer_smbat_d, "smbat.dallakyan.im@gmail.com"));
     }
 
     private void setupRecyclerview(View view) {

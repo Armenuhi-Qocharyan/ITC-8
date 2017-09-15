@@ -113,7 +113,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             }
         });
 
-
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

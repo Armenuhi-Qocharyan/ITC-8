@@ -10,20 +10,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -45,22 +43,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import com.itc.iblog.R;
 import com.itc.iblog.fragments.AboutUsFragment;
 import com.itc.iblog.fragments.FavoritesFragment;
 import com.itc.iblog.fragments.FavoritesPostsFragment;
+import com.itc.iblog.fragments.FollowersFragment;
 import com.itc.iblog.fragments.PostsFragment;
 import com.itc.iblog.fragments.UsersFragment;
-import com.itc.iblog.fragments.FollowersFragment;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
-import com.itc.iblog.models.PostModel;
 
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -111,7 +101,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        FirebaseMessaging.getInstance().subscribeToTopic("email");
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         Configuration config = getBaseContext().getResources().getConfiguration();
@@ -171,86 +160,75 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment;
 
-        if (id == R.id.My_profile) {
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            // Handle the camera action
-        } else if (id == R.id.Posts) {
-            Fragment fragment = new PostsFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else if (id == R.id.Folowers) {
-            Fragment fragment = new FollowersFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else if (id == R.id.Favorites) {
-            Fragment fragment = new FavoritesFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+        switch (id) {
+            case R.id.My_profile:
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
+            case R.id.Posts:
+                fragment = new PostsFragment();
+                changeFragment(fragment);
+                break;
+            case R.id.Folowers:
+                fragment = new FollowersFragment();
+                changeFragment(fragment);
+                break;
+            case R.id.Favorites:
+                fragment = new FavoritesFragment();
+                changeFragment(fragment);
+                break;
+            case R.id.Favorite_post:
+                fragment = new FavoritesPostsFragment();
+                changeFragment(fragment);
+                break;
+            case R.id.Users:
+                fragment = new UsersFragment();
+                changeFragment(fragment);
+                break;
+            case R.id.About_us:
+                fragment = new AboutUsFragment();
+                changeFragment(fragment);
+                break;
+            case R.id.Language:
+                showChangeLangDialog();
+                break;
+            case R.id.Log_out:
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle(R.string.log_out)
+                        .setMessage(R.string.log_out_message)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                FirebaseAuth.getInstance().signOut();
+                                startActivity(new Intent(MainActivity.this, LoginRegisterActivity.class)); //Go back to home page
+                                finish();
+                            }
 
-        } else if (id == R.id.Favorite_post) {
-            Fragment fragment = new FavoritesPostsFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
-        } else if (id == R.id.Users) {
-            Fragment fragment = new UsersFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
-        } else if (id == R.id.About_us) {
-            Fragment fragment = new AboutUsFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
-        } else if (id == R.id.Language) {
-            showChangeLangDialog();
-        } else if (id == R.id.Log_out) {
-            new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle(R.string.log_out)
-                    .setMessage(R.string.log_out_message)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            FirebaseMessaging.getInstance().unsubscribeFromTopic(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            FirebaseAuth.getInstance().signOut();
-                            startActivity(new Intent(MainActivity.this, LoginRegisterActivity.class)); //Go back to home page
-                            finish();
-                        }
-
-                    })
-                    .setNegativeButton(R.string.no, null)
-                    .show();
-
+                        })
+                        .setNegativeButton(R.string.no, null)
+                        .show();
+                break;
+            default:
+                break;
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    public void changeFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.contentFragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
     /**
      * Get user avatar image, username and email from firebase.
      */
@@ -264,7 +242,6 @@ public class MainActivity extends AppCompatActivity
         final Spinner spinner1 = (Spinner) dialogView.findViewById(R.id.spinner1);
 
         dialogBuilder.setTitle(getResources().getString(R.string.lang_dialog_title));
-        //dialogBuilder.setMessage(getResources().getString(R.string.lang_dialog_message));
         dialogBuilder.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 int langpos = spinner1.getSelectedItemPosition();
@@ -290,7 +267,6 @@ public class MainActivity extends AppCompatActivity
         });
         dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                //pass
             }
         });
         AlertDialog b = dialogBuilder.create();

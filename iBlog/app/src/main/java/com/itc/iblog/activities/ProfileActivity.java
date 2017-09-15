@@ -53,26 +53,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import static com.itc.iblog.R.id.fab;
-
 
 public class ProfileActivity extends AppCompatActivity {
+    private String userKey;
     private String whatImage;
+    private List<PostModel> myDataset;
     private FloatingActionButton avatar;
+    private FloatingActionButton floatingActionButton;
+    private Button follow;
     private ImageView editIcon;
     private ImageView bgImage;
     private TextView userName;
     private TextView email;
     private TextView userAge;
-    private FloatingActionButton floatingActionButton;
-    private Button follow;
     private FirebaseDatabase database;
     private StorageReference storageRef;
-    private String userKey;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<PostModel> myDataset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +78,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         database = FirebaseDatabase.getInstance();
         myDataset = new ArrayList<>();
-
-
-
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         Configuration config = getBaseContext().getResources().getConfiguration();
@@ -291,6 +286,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (fm.getBackStackEntryCount() > 0) {
             Log.i("Profile", "popping backstack");
             fm.popBackStack();
+
         } else {
             Log.i("Profile", "nothing on backstack, calling super");
             super.onBackPressed();
@@ -378,8 +374,6 @@ public class ProfileActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 Toast.makeText(ProfileActivity.this, R.string.upload_successfully, Toast.LENGTH_SHORT).show();
             }
         });
@@ -400,7 +394,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void changeUserInfo(String path) {
-        //String userId = user.getUid();
         DatabaseReference mRef = null;
         if (whatImage.equals("avatar")) {
             mRef = database.getReference().child("Users").child(userKey).child("url");
@@ -422,24 +415,4 @@ public class ProfileActivity extends AppCompatActivity {
                 height, filter);
         return newBitmap;
     }
-
-
-    public String getCurrentUserAvatar() {
-        final String[] avatar = new String[1];
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference dbRef = mDatabase.child("Users");
-        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                avatar[0] = (String) dataSnapshot.child("url").getValue();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        return avatar[0];
-    }
-
 }

@@ -2,7 +2,6 @@ package com.itc.iblog.utils;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Application;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,7 +16,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
 
 import java.io.File;

@@ -1,6 +1,5 @@
 package com.itc.iblog.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.itc.iblog.R;
-import com.itc.iblog.models.UsersModel;
+import com.itc.iblog.models.UserModel;
 
 import java.util.ArrayList;
 
 
 public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ViewHolder> {
-    ArrayList<UsersModel> developers;
+    ArrayList<UserModel> developers;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewEmail;
@@ -29,7 +28,7 @@ public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ViewHold
         }
     }
 
-    public AboutUsAdapter(ArrayList<UsersModel> developers) {
+    public AboutUsAdapter(ArrayList<UserModel> developers) {
         this.developers = developers;
     }
 
@@ -44,9 +43,8 @@ public class AboutUsAdapter extends RecyclerView.Adapter<AboutUsAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textViewName.setText(developers.get(position).userName);
         holder.textViewEmail.setText(developers.get(position).email);
-        holder.imageView.setImageResource(developers.get(position).imageId);
+        holder.imageView.setImageResource(developers.get(position).getImageID());
     }
-
     @Override
     public int getItemCount() {
         return developers.size();
