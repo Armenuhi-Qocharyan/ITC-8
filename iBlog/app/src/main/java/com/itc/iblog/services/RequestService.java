@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-
 import com.itc.iblog.models.NotificationData;
 import com.itc.iblog.models.PostRequestData;
+
 
 import java.io.IOException;
 
@@ -38,6 +39,7 @@ public class RequestService extends Service {
         return null;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,7 +49,7 @@ public class RequestService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "Service called", Toast.LENGTH_SHORT).show();
         Bundle extras = intent.getExtras();
-        if (extras == null) {
+        if(extras == null) {
             this.title = null;
             this.id = null;
             this.name = null;
@@ -63,28 +65,29 @@ public class RequestService extends Service {
 
         sendNotification();
         return super.onStartCommand(intent, flags, startId);
-    }
 
-    private void sendNotification() {
-        NotificationData data = new NotificationData();
-        data.setTitle(this.title);
-        data.setName(this.name);
-        data.setImage(this.image);
-        data.setIcon(this.icon);
-        this.postRequestData = new PostRequestData();
-        postRequestData.setTo("/topics/" + id);
-        postRequestData.setData(data);
-        Gson gson = new Gson();
-        String json = gson.toJson(postRequestData);
-        String url = "https://fcm.googleapis.com/fcm/send";
-        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
+   }
+
+   private void sendNotification() {
+       NotificationData data = new NotificationData();
+       data.setTitle(this.title);
+       data.setName(this.name);
+       data.setImage(this.image);
+       data.setIcon(this.icon);
+       this.postRequestData = new PostRequestData();
+       postRequestData.setTo("/topics/" + id);
+       postRequestData.setData(data);
+       Gson gson = new Gson();
+       String json = gson.toJson(postRequestData);
+       String url = "https://fcm.googleapis.com/fcm/send";
+       final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+       RequestBody body = RequestBody.create(JSON, json);
+       Request request = new Request.Builder()
                 .url(url)
                 .header("Authorization", "key=" + SERVER_KEY)
                 .post(body)
                 .build();
-        Callback responseCallBack = new Callback() {
+       Callback responseCallBack = new Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
 
@@ -101,5 +104,6 @@ public class RequestService extends Service {
         OkHttpClient client = new OkHttpClient();
         Call call = client.newCall(request);
         call.enqueue(responseCallBack);
-    }
+
+   }
 }

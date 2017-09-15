@@ -1,5 +1,6 @@
 package com.itc.iblog.models;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,6 +13,7 @@ public class PostModel {
     private String postTitle;
     private String postText;
     private String uuid;
+
     private Date postTime;
     private Integer likeCount;
     private Integer commentCount;
