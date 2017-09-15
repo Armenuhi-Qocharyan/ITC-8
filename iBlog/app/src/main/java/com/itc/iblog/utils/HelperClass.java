@@ -2,7 +2,6 @@ package com.itc.iblog.utils;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Application;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,7 +16,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itc.iblog.R;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
 
 import java.io.File;
@@ -25,12 +23,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
-public class HelperClass  {
-    private  static Bitmap bitmap;
+public class HelperClass {
+    private static Bitmap bitmap;
     private static Activity activity;
     private HelperClass helperClass;
-    public HelperClass() {}
+
+    public HelperClass() {
+    }
 
     public HelperClass getInstance(Activity activity) {
         if (null != helperClass) {
@@ -108,14 +107,12 @@ public class HelperClass  {
                 });
                 System.out.println("bla " + bitmap);
                 return bitmap;
-
             } else {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmap = BitmapFactory.decodeFile(String.valueOf(file), options);
                 return BitmapFactory.decodeFile(String.valueOf(file), options);
             }
-
         }
     }
 }

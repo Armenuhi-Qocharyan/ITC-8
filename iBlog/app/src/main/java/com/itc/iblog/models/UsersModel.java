@@ -1,11 +1,5 @@
 package com.itc.iblog.models;
 
-import android.net.Uri;
-
-/**
- * Created by xacho on 01.09.17.
- */
-
 public class UsersModel {
     public int age;
     public String userName;
@@ -13,7 +7,6 @@ public class UsersModel {
     public String url;
     public int imageId;
 
-    //required default constructor
     public UsersModel() {
     }
 
@@ -42,6 +35,8 @@ public class UsersModel {
         return email;
     }
 
-    public String getUrl() {return url; }
+    public String getUrl() {
+        return url;
+    }
 
 }

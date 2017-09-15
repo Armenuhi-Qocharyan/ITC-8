@@ -34,12 +34,8 @@ import com.itc.iblog.R;
 
 import com.itc.iblog.services.RequestService;
 import com.itc.iblog.fragments.PostCommentsFragment;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
 import com.itc.iblog.models.PostModel;
 import com.itc.iblog.utils.HelperClass;
-import com.itc.iblog.fragments.PostCommentsFragment;
-import com.itc.iblog.interfaces.ImageLoaderInterface;
-import com.itc.iblog.models.PostModel;
 
 
 import java.util.ArrayList;

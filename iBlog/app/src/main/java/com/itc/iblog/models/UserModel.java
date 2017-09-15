@@ -1,12 +1,6 @@
 package com.itc.iblog.models;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-/**
- * Created by xacho on 01.09.17.
- */
 
 public class UserModel {
     public int age;
@@ -17,8 +11,6 @@ public class UserModel {
     public HashMap<String, Boolean> followers = new HashMap<>();
     public HashMap<String, Boolean> following = new HashMap<>();
     private String UID;
-
-    //required default constructor
 
     public UserModel() {
     }
@@ -38,7 +30,8 @@ public class UserModel {
         this.url = url;
     }
 
-    public UserModel(String userName, String email, int age, String url, HashMap<String, Boolean> followers, HashMap<String, Boolean> following) {
+    public UserModel(String userName, String email, int age, String url,
+                     HashMap<String, Boolean> followers, HashMap<String, Boolean> following) {
         this.age = age;
         this.userName = userName;
         this.email = email;
@@ -59,14 +52,23 @@ public class UserModel {
         return email;
     }
 
-    public String getUrl() {return url; }
+    public String getUrl() {
+        return url;
+    }
 
-    public void setUID (String UID) { this.UID = UID; }
+    public void setUID (String UID) {
+        this.UID = UID;
+    }
 
-    public String getUID() { return UID; }
+    public String getUID() {
+        return UID;
+    }
 
-    public HashMap getFollowers() { return  followers; }
+    public HashMap getFollowers() {
+        return  followers;
+    }
 
-    public HashMap getFollowings() { return following; }
-
+    public HashMap getFollowings() {
+        return following;
+    }
 }
