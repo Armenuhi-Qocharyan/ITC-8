@@ -1,0 +1,9 @@
+=== Factory Design Pattern ===
+
+This project uses an "Abstract Factory" design pattern
+
+
+=== Execute ===
+
+    javac *.java
+    java Main
