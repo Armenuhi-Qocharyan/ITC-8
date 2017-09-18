@@ -1,0 +1,28 @@
+Implement Decorator pattern with JAVA
+__________________________________________
+
+
+Preface
+-------
+    This project present simple programm where implement "Decorator Pattern".
+
+
+How run
+-------
+    Go to project directory with terminal and write this commands :
+        * javac Main.java
+        * java Main
+
+
+Project Structure
+-----------------
+.
+├── Main.java
+├── READMY.txt
+└── shape
+    ├── BorderDecorator.java
+    ├── ScrollDecorator.java
+    ├── Shape.java
+    └── View.java
+
+
