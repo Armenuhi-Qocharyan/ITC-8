@@ -1,12 +1,13 @@
 public interface UniversityFactory {
+    public static PolytechnicFactory polytechnic = new PolytechnicFactory();
+    public static PedagogicalFactory pedagogical = new PedagogicalFactory();
     public static UniversityFactory getUniversity(String university) {
         if (university.equals("Polytechnic")) {
-            return new PolytechnicFactory();
+            return polytechnic;
         } else if (university.equals("Pedagogical")) {
-            return new PedagogicalFactory();
-        } else {
-            return null;
+            return pedagogical;
         }
+        return null;
     }
 
     public Programmer getProgrammer();
