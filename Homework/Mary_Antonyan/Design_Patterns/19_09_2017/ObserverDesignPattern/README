@@ -1,0 +1,14 @@
+=== Title ===
+
+Observer Design Pattern
+
+
+=== Real World Example ===
+
+Messenger, group chat: If one joins to conversation, he/she gets added to the observers and any further messages in the same conversation send a notification to him/her and other observers.
+
+
+=== Execute ===
+
+    javac *.java
+    java ObserverDesignPattern
