@@ -1,6 +1,6 @@
 -- Decorators --
 
-This is a simple programm for understanding design pattern decorator.
+This is a simple program for understanding design pattern decorator.
 
 --Directory Structure--
 
@@ -13,7 +13,7 @@ This is a simple programm for understanding design pattern decorator.
 
 --Build and Run--
 
-You can build programm using ide (NetBeans, IntelliJ) or command line.
+You can build program using ide (NetBeans, IntelliJ) or command line.
 Command line:
 
 javac *.java
