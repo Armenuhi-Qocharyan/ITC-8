@@ -2,15 +2,25 @@ package Billiard;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class Table {
+    private ArrayList<Ball> movingBalls;
     private ArrayList<Ball> balls;
     private float width;
     private float height;
-    enum side { TOP, BOTTOM, LEFT, RIGHT, MIDDLE }; 
+    private static Table table;
 
-    public Table(float w, float h) {
+    private Table(float w, float h) {
+        movingBalls = new ArrayList<Ball>();
         width = w;
         height = h;
+    }
+
+    public static Table getInstance(float w, float h) {
+        if (null == table) {
+            table = new Table(w, h);
+        }
+        return table;
     }
 
     public void setBall(Ball b) {
@@ -34,63 +44,44 @@ public class Table {
         return height;
     }
 
+
     public void startGame(int moveTime) { 
         for (int i = 0; i < moveTime; ++i) {
-            for (int j = 0; j < balls.size(); ++j) {
-                isCollideBall(balls.get(i));            
-                balls.get(i).move();
+            for (int j = 0; j < movingBalls.size(); ++j) {
+                isCollideChangeBallsVectors(movingBalls.get(j));            
+                movingBalls.get(j).move();
             }
         }
     }
 
-    public boolean isCollideBall(Ball ball) {
-        Ball b;
+    public void addObserver(Ball ball) {
+        movingBalls.add(ball);
+    }
+
+    public void removeObserver(Ball ball) {
+        movingBalls.remove(ball);
+    }
+
+    public void isCollideChangeBallsVectors(Ball ball) {
         for (int i = 0; i < balls.size(); ++i) {
-            b = balls.get(i);
-            if (ball.getCoordX() + ball.getRadius() == b.getCoordX() - b.getRadius()) {
-                //change vectors
-                return true;         
-            } 
-            if (ball.getCoordX() - ball.getRadius() == b.getCoordX() + b.getRadius()) {
-                //change vectors
-                return true;
-            }
-            if (ball.getCoordY() + ball.getRadius() == b.getCoordY() - b.getRadius()) {
-                //change vectors
-                return true;
-            }
-            if (ball.getCoordY() - ball.getRadius() == b.getCoordY() + b.getRadius()) {
-                //change vectors
-                return true;
-            }
+            balls.get(i).isCollideWhitBallChageVectors(ball);
         }
-        //change vectors
-        isCollideBounds(ball);
-        return false;
+        ball.isCollideWithBoudChangeVectors();
     } 
-
-    public side isCollideBounds(Ball ball) {
-        //for (int i = 0; i < balls.size(); ++i) {
-            if (ball.getCoordX() == ball.getRadius()) {
-                return side.LEFT;
-            } else if(ball.getCoordX() == width - ball.getRadius()) {
-                return side.RIGHT;
-            } else if(ball.getCoordY() == ball.getRadius()) {
-                return side.BOTTOM;
-            } else if(ball.getCoordY() == height - ball.getRadius()) {
-                return side.TOP;
-            }
-        //}
-        return side.MIDDLE;
-    }
 
     public void createBalls(int count, float radius, float weight) {
         balls = new ArrayList<Ball>();
         Random random = new Random();
-        Ball ball;
+       
+        System.out.println("Balls coords ...");
         for (int i = 0; i < count; ++i) {
-            ball = new Ball(radius, weight, random.nextFloat() * (width - radius) + width, random.nextFloat() * (height - radius) + height, 0 , 0);
+            Ball ball = new Ball(radius, weight, random.nextFloat() * (width - radius) + radius, random.nextFloat() * (height - radius) + radius, 0 , 0);
             balls.add(ball);
+        
+        System.out.print(ball.getCoordX());
+        System.out.print("  ");
+        System.out.println(ball.getCoordY());
         }
+
     }
 }

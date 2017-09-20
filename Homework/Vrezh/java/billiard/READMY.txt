@@ -1,4 +1,4 @@
-# I created the logic of the program but did not change the vectors when the ball touched something.
+# Balls game Using Designe Patterns .
 
 *Billiard game :
 
@@ -6,6 +6,7 @@
     *create table,
     *create balls,
     *beat the ball
+    *show coords balls
 
 .
 ├── Billiard
