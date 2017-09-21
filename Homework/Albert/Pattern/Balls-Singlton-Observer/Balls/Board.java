@@ -2,7 +2,7 @@ package Balls;
 import java.util.ArrayList;
 
 public class Board implements BallsCollisionObserver {
-    private ArrayList<BallInterface> balls;
+    private ArrayList<Ball> balls;
     private static Board board = null;
     private int height;
     private int wigth;
@@ -11,7 +11,7 @@ public class Board implements BallsCollisionObserver {
     private Board(int height, int wigth) { 
         this.height = height;
         this.wigth = wigth;
-        this.balls = new ArrayList<BallInterface>();
+        this.balls = new ArrayList<Ball>();
     }
 
     public static Board getInstance(int height, int wigth) {
@@ -28,12 +28,12 @@ public class Board implements BallsCollisionObserver {
         return this.wigth;
     }
 
-    public void setBall(BallInterface ball) {
+    public void setBall(Ball ball) {
 
         balls.add(ball);
     }
 
-    public ArrayList<BallInterface> getBalls() {
+    public ArrayList<Ball> getBalls() {
         return this.balls;
     }
 
@@ -44,7 +44,7 @@ public class Board implements BallsCollisionObserver {
     public void start(int minut) {
         boolean check = false;
         int second = 0;
-        BallInterface tmp = new Ball(0,0,0,0,0);
+        Ball tmp = new Ball(0,0,0,0,0);
         for (second = 1; second < minut; ++second) {
             for (int i = 0; i < this.balls.size(); ++i) {
                 balls.get(i).move(i);
@@ -78,7 +78,7 @@ public class Board implements BallsCollisionObserver {
     
     @Override
     public void notifyBallsCollision() {
-        System.out.println("\nNotification. Two balls are collidate!\n       ***** End Game *****\n");
+        System.out.println("")
         this.endGame = true;
     }
 
