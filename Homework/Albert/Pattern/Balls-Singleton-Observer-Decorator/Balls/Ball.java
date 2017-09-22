@@ -3,7 +3,6 @@ import java.lang.Math;
 import java.util.ArrayList;
 
 public class Ball implements BallInterface {
-
     private int x;
     private int y;
     private int r;
@@ -32,8 +31,6 @@ public class Ball implements BallInterface {
         observer.remove(object);
     }
 
-
-    // x coordinate  Setter Getter
     @Override
     public int getX() {
         return this.x;
@@ -47,7 +44,6 @@ public class Ball implements BallInterface {
         }
     }
 
-    // y coordinate Setter Getter
     @Override
     public int getY() {
         return this.y;
@@ -61,7 +57,6 @@ public class Ball implements BallInterface {
         }
     }
 
-    // radius Setter Getter
     @Override
     public int getR() {
         return this.r;
@@ -70,8 +65,6 @@ public class Ball implements BallInterface {
     public void setR(int r) {
         this.r = r;
     }
-
-    // weight Setter Getter
     @Override
     public float getWeight() {
         return this.weight;
@@ -80,8 +73,6 @@ public class Ball implements BallInterface {
     public void setWeight(float w) {
         this.weight = w;
     }
-
-    // Ball moving function
     @Override
     public void move(int i) {
         this.x += (this.v / this.weight) * Math.sin(Math.toRadians(this.angle));
@@ -89,13 +80,11 @@ public class Ball implements BallInterface {
         this.printCoord(i+1);            
     }
 
-    // Get distance for two ball
     @Override
      public double getDistance(BallInterface ball) { 
         return Math.sqrt((this.x - ball.getX()) * (this.x - ball.getX()) + (this.y - ball.getY()) * (this.x - ball.getY()));
     }
 
-    // Check collision for two ball
     @Override
     public void checkCollisionTwoBalls(BallInterface ball) {
         if (this.getDistance(ball) <= this.getR() + ball.getR()) {
@@ -104,8 +93,11 @@ public class Ball implements BallInterface {
             }
         }
     }
-    
-    // print ball x,y coordinate and radius
+/*
+    @Override
+    public boolean checkCollisionBound(BallInterface ball) {
+    }
+*/
     @Override
     public void printCoord(int i) {
         System.out.println("     Ball-" + i + "     ");
@@ -114,9 +106,4 @@ public class Ball implements BallInterface {
         System.out.println("   r: " + this.r);
         System.out.println("------------------------");
     }
-/*
-    @Override
-    public boolean checkCollisionBound(BallInterface ball) {
-   }
-*/
 }

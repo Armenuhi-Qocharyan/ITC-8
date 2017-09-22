@@ -21,22 +21,18 @@ public class Board implements BallsCollisionObserver {
         return board;
     }
 
-    // Board height getter
     public int getHeight() {
         return this.height;
     }
-
-    // Board wigth getter
     public int getWigth() {
         return this.wigth;
     }
-    
-    // Add balls in boards ArrayList
+
     public void setBall(BallInterface ball) {
+
         balls.add(ball);
     }
 
-    // Get all balls
     public ArrayList<BallInterface> getBalls() {
         return this.balls;
     }
@@ -45,8 +41,6 @@ public class Board implements BallsCollisionObserver {
     public boolean getEndGame() {
         return this.endGame;
     }
-
-    
     public void start(int minut) {
         boolean check = false;
         int second = 0;
@@ -84,7 +78,7 @@ public class Board implements BallsCollisionObserver {
     
     @Override
     public void notifyBallsCollision() {
-        System.out.println("\nNotification. Two balls are collided!\n       ***** End Game *****\n");
+        System.out.println("\nNotification. Two balls are collidate!\n       ***** End Game *****\n");
         this.endGame = true;
     }
 

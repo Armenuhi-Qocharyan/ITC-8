@@ -12,13 +12,11 @@ public class IronBall extends BallDecorator {
         super.move(i);
 
     }
+
     @Override
-    public void printCoord(int i) {
-        System.out.print("     Type IronBall     ");
-        super.printCoord(i);
-    }
-    @Override 
-    public void accept(BallVisitor visitor) {
-        visitor.visit(this);
-    }
+       public void printCoord(int i) {
+           System.out.print("     Type IronBall     ");
+           super.printCoord(i);
+       }
+
 }

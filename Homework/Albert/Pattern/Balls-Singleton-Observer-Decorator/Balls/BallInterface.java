@@ -2,6 +2,7 @@ package Balls;
 import java.lang.Math;
 
 public interface BallInterface {
+
     
     float getWeight();
     void setWeight(float weight);
@@ -12,10 +13,14 @@ public interface BallInterface {
     int getR();
     void setR(int r);
     void move(int i);
-    double getDistance(BallInterface ball); 
-    void addObserver(BallsCollisionObserver object);
-    void removeObserver(BallsCollisionObserver object);
-    void checkCollisionTwoBalls(BallInterface ball);
-    void printCoord(int i); 
+    public double getDistance(BallInterface ball); 
+    public void addObserver(BallsCollisionObserver object);
+    public void removeObserver(BallsCollisionObserver object);
+    public void checkCollisionTwoBalls(BallInterface ball);
     //public void checkCollisionBound(BallInterface ball);
+    public void printCoord(int i);
+
+
+
+
 }     

@@ -17,9 +17,5 @@ public class TitanBall extends BallDecorator {
         System.out.println("     type TitanBall     ");
         super.printCoord(i);
     }
-    
-    @Override
-    public void accept(BallVisitor visitor) {
-        visitor.visit(this);
-    }
+
 }

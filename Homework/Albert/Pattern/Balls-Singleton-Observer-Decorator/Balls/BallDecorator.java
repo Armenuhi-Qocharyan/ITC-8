@@ -7,8 +7,6 @@ public class BallDecorator implements BallInterface {
         this.ballInterface = ballInterface;
     }
 
-    public void accept(BallVisitor visitor) { }
-
     @Override
     public float getWeight() {
         return ballInterface.getWeight();
@@ -70,15 +68,15 @@ public class BallDecorator implements BallInterface {
     public void checkCollisionTwoBalls(BallInterface ball) {
         this.ballInterface.checkCollisionTwoBalls(ball);
     }
+/*
+    @Override
+    public void checkCollisionBound(BallInterface ball) {
+        this.ballInterface.checkCollisionBound(ball); 
+    }
+*/
     @Override
     public void printCoord(int i) {
         this.ballInterface.printCoord(i);
     }
 
-    /*
-       @Override
-       public void checkCollisionBound(BallInterface ball) {
-       this.ballInterface.checkCollisionBound(ball); 
-       }
-    */
 }
