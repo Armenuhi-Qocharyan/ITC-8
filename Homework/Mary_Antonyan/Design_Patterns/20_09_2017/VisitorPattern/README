@@ -1,0 +1,29 @@
+=== Title ===
+War
+
+=== Description ===
+This program illustrates war field using Visitor, Singletone and Observer design patterns.
+
+
+=== Execute ===
+javac *.java
+java Main
+
+
+=== Project Structure ===
+.
+└── VisitorPattern
+    ├── Bullet.java
+    ├── Field.java
+    ├── GameObject.java
+    ├── Grenade.java
+    ├── README
+    ├── Soldier.java
+    ├── Tank.java
+    ├── Target.java
+    ├── VisitorPattern.java
+    └── Weapon.java
+
+
+=== Author ===
+Mary Antonyan
