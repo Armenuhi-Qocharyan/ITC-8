@@ -2,7 +2,7 @@
 War
 
 === Description ===
-This program illustrates war field using Visitor, Singletone and Observer design patterns.
+This program illustrates war field using Visitor, Singleton and Observer design patterns.
 
 
 === Execute ===
