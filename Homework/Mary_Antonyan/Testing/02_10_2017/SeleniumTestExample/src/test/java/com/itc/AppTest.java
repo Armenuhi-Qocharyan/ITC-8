@@ -30,12 +30,12 @@ public class AppTest extends TestCase {
         driver.get("https://www.gmail.com");
         Thread.sleep(2000);
 
-        driver.findElement(By.name("identifier")).sendKeys("email");
+        driver.findElement(By.name("identifier")).sendKeys("enter your email");
 
         driver.findElement(By.cssSelector("div[id='identifierNext']")).click();
         Thread.sleep(2000);
 
-        driver.findElement(By.cssSelector("input[type='password']")).sendKeys("password");
+        driver.findElement(By.cssSelector("input[type='password']")).sendKeys("enter your password");
 
         driver.findElement(By.cssSelector("div[id='passwordNext']")).click();
         Thread.sleep(10000);
@@ -43,13 +43,13 @@ public class AppTest extends TestCase {
         driver.findElement(By.cssSelector("div[class='T-I J-J5-Ji T-I-KE L3']")).click();
         Thread.sleep(4000);
 
-        driver.findElement(By.cssSelector("div[class=':oL']")).sendKeys("email");
+        driver.findElement(By.cssSelector("textarea[id=':ah']")).sendKeys("enter reciever");
         Thread.sleep(1000);
 
-        driver.findElement(By.cssSelector("div[name='subjectbox']")).sendKeys("Selenium Test");
+        driver.findElement(By.cssSelector("input[id=':a0']")).sendKeys("Selenium Test");
         Thread.sleep(1000);
 
-        driver.findElement(By.cssSelector("div[id=':83']")).sendKeys("Hello!");
+        driver.findElement(By.cssSelector("div[id=':b1']")).sendKeys("Hello!");
         Thread.sleep(1000);
 
         driver.findElement(By.cssSelector("div[id=':9q']")).click();

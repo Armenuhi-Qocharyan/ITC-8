@@ -1,0 +1,15 @@
+=== Title ===
+Selenium Test Example
+
+
+=== Description ===
+Here is the a simple Selenium test example written in Java / Maven
+
+The following application logs in to email by given login and password,
+sends message to given user with specified subject and content
+
+
+=== Execute ===
+
+cd SeleniumTestExample/
+mvn test
