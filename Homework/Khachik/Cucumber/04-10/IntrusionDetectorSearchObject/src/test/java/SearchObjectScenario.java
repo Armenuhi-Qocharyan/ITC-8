@@ -1,22 +1,20 @@
-package com.itc.detected.cucumber;
-
 import cucumber.annotation.en.Given;
 import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
+import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import static org.junit.Assert.assertTrue;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class ObjectSearchScenario {
-
+public class SearchObjectScenario {
+    
     private final WebDriver driver;
 
-    public ObjectSearchScenario() {
+    public SearchObjectScenario() {
         this.driver = new ChromeDriver();
     }
-
+    
     @Given("^the page is open \"([^\"]*)\"$")
     public void the_page_is_open(String page) throws Throwable {
     	driver.get(page);
@@ -53,5 +51,5 @@ public class ObjectSearchScenario {
         WebElement element = driver.findElement(By.cssSelector("body > id-root > div > div > id-detected-objects > div > div > div > div:nth-child(1) > div > div > div.object-data.col-sm-4.col-sm-offset-1.col-xs-7.col-xs-offset-1 > span:nth-child(1)"));
         assertTrue(element.getText().contains(cameraName));
     }
-
+    
 }
