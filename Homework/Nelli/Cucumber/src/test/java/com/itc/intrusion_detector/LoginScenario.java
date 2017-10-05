@@ -1,18 +1,10 @@
-package com.michalvich.cucumber.selenium.example;
-
-import cucumber.annotation.en.And;
-import cucumber.annotation.en.Given;
+package com.itc.intrusion_detector;
 import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
-import cucumber.runtime.PendingException;
-import java.util.ArrayList;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import static org.junit.Assert.fail;
-import org.openqa.selenium.chrome.ChromeDriver;
-import static org.junit.Assert.fail;
 
 public class LoginScenario {
 
@@ -34,7 +26,7 @@ public class LoginScenario {
         @Then("^I should care that login button's text is changed xpath \"([^\"]*)\"$")
         public void I_should_care_that_login_button_s_text_is_changed_xpath(String arg1) {
             WebElement loginButton = driver.findElement(By.xpath(arg1));
-            Assert.assertEquals(loginButton.getText(), "logout");
+            Assert.assertEquals("logout", loginButton.getText());
         }
        
 }

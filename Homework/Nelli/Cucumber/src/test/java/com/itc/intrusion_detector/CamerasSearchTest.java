@@ -1,4 +1,4 @@
-package com.michalvich.cucumber.selenium.example;
+package com.itc.intrusion_detector;
 
 import cucumber.junit.Cucumber;
 import org.junit.runner.RunWith;
