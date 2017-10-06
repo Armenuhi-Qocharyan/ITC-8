@@ -5,8 +5,8 @@ Feature: Cameras
 
   Scenario: Search Camera
     Given the page is open "http://localhost:4200/cameras"
-    When I search for "test"
-    Then a shown device name should contains "test"
+    When I search for "Camera_11"
+    Then a shown device name should contains "Camera_11"
     When I search for "bdcbhfh"
     Then I can't see any results
 
@@ -42,9 +42,9 @@ Feature: Cameras
   Scenario: Pagination
     Given all cameras count
     Then Check pagination button's count  
-    And Button is disable xpath "" 
-    When I click button by xpath ""
-    Then Button change Bachground color "" xpath ""
+    And Button is disable xpath "/html/body/id-root/div/div/id-cameras/pagination-controls/pagination-template/ul/li[1]" 
+    When I click button by xpath "/html/body/id-root/div/div/id-cameras/pagination-controls/pagination-template/ul/li[3]"
+    Then Button is selected xpath "/html/body/id-root/div/div/id-cameras/pagination-controls/pagination-template/ul/li[3]"
     And Check cameras count in current page 
 
 

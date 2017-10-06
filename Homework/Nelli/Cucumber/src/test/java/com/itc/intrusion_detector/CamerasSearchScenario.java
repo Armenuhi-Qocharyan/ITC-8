@@ -19,7 +19,6 @@ public class CamerasSearchScenario {
 	@Given("^the page is open \"([^\"]*)\"$")
 	public void the_page_is_open(String page) throws Throwable {
             driver.get(page);
-            driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"t");
 	}
 
 	@When("^I search for \"([^\"]*)\"$")
