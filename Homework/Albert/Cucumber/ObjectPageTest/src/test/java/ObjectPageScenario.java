@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.JavascriptExecutor;
@@ -49,6 +48,20 @@ public class ObjectPageScenario {
         Assert.assertEquals("http://localhost:4200/" + pageUrl, driver.getCurrentUrl());
         Thread.sleep(500);
     }
+    
+    @Then("^I check whether the delet edit merge and slide buttons by xpath \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" is visible$")
+    public void I_check_whether_the_delet_edit_and_merge_buttons_by_xpath_is_visible(String delete, String edit, String merge, String slide) throws Throwable {
+        Assert.assertTrue(!driver.findElements(By.xpath(delete)).isEmpty());
+        Assert.assertTrue(!driver.findElements(By.xpath(edit)).isEmpty());
+        Assert.assertTrue(!driver.findElements(By.xpath(merge)).isEmpty());
+        Assert.assertTrue(!driver.findElements(By.xpath(slide)).isEmpty());
+        Thread.sleep(500);
+    }
+    @Then("^I check whether edit form by xpath \"([^\"]*)\"$")
+    public void I_check_whether_edit_form_by_xpath(String editForm) throws Throwable {
+        Assert.assertTrue(!driver.findElements(By.xpath(editForm)).isEmpty());
+        Thread.sleep(500);
+    }
     @When("^I enter the email and password \"([^\"]*)\" \"([^\"]*)\"$")
     public void I_enter_the_email_and_password(String inputEmail, String inputPass) throws Throwable {
         WebElement emailPass = driver.findElement(By.xpath(inputEmail));
@@ -77,7 +90,6 @@ public class ObjectPageScenario {
          response.append(output);
         }
         in.close();
-        //printing result from response
         if (beforeAfter.equals("before")) {
             this.countBefore = new JSONObject(response.toString()).getInt("count");
         } else {
@@ -87,7 +99,7 @@ public class ObjectPageScenario {
     @Then("^the count of objects will decrease by one")
     public void the_count_of_objects_will_decrease_by_one() throws Throwable {
         Assert.assertEquals(this.countBefore-1, this.countAfter);
-        Thread.sleep(100);
+        Thread.sleep(300);
     }
 
     @Then("^I enter new type xpath \"([^\"]*)\" value \"([^\"]*)\"$")
@@ -104,21 +116,29 @@ public class ObjectPageScenario {
         WebElement objType = driver.findElement(By.xpath(xpath));
         Assert.assertEquals(objType.getText(),value);
     }
-/*
+
     @When("^I click pagination button$")
     public void I_click_pagination_button() throws Throwable {
         ((JavascriptExecutor) driver).executeScript("scroll(0,500);");
         double pageNumber = (double)(this.countBefore/5.0) + 1.0;
-        if (pageNumber > (int)pageNumber){
-            pageNumber++;
+        pageNumber = pageNumber > (int)pageNumber ? ++pageNumber : pageNumber;
+        pageNumber = (int)pageNumber > 9 ? 10 : (int)pageNumber;
+        if (2 < (int)pageNumber) {
+            Assert.assertTrue(!driver.findElements(By.xpath("/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/pagination-controls/pagination-template/ul/li["+(int)pageNumber+"]/a/span[2]")).isEmpty());
+            WebElement clickedButton = driver.findElement(By.xpath("/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/pagination-controls/pagination-template/ul/li["+(int)pageNumber+"]/a/span[2]"));
+            clickedButton.click();
+        } else {
+            Assert.assertTrue(driver.findElements(By.xpath("/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/pagination-controls/pagination-template/ul/li["+(int)pageNumber+"]/a/span[2]")).isEmpty());
         }
-        System.out.println("tiv : " + pageNumber);
         Thread.sleep(500);
-
-        WebElement clickedButton = driver.findElement(By.xpath("/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/pagination-controls/pagination-template/ul/li[4]/div/span[2]"));
-        clickedButton.click();
+    } 
+    
+    @Then("^end test$")
+    public void end_test() throws Throwable {
+        Thread.sleep(3000);
+        driver.quit();
     }
-*/
+    
 }
 
 
