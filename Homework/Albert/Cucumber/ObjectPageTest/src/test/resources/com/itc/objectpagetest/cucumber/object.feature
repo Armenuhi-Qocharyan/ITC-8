@@ -14,12 +14,30 @@ Feature: Test detected objects page
     When I click button by xpath "/html/body/id-root/div/div/id-header/header/nav/div/div[2]/ul[1]/li[2]/a"
     Then I should navigate to "detected" page
 
-    When I click button by xpath "//*[@id='obj-area']/div/div/div[2]/button[1]"
+    When I get object count "before"
+    And I click button by xpath "/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/div[1]/div/div/div[2]/button[1]"
+    And I get object count "after"
     Then the count of objects will decrease by one
 
-    When I click button by xpath "//*[@id='obj-area']/div/div/div[2]/button[2]"
+    When I click button by xpath "/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/div[1]/div/div/div[2]/button[2]"
     Then I enter new type xpath "//*[@id='edit']/div/div/form/div[1]/div/div[1]/input" value "car"
     And I click button by xpath "//*[@id='edit']/div/div/form/div[2]/button[1]"
-    Then I must see "car" by xpath "//*[@id='obj-area']/div/div/div[1]/h6[1]"
+    Then I must see "car" by xpath "/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/div[1]/div/div/div[1]/h6[1]"
+
+    When I get object count "before"
+    And I click button by xpath "/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/div[1]/div/div/div[3]/label"
+    And I click button by xpath "/html/body/id-root/div/div/id-detected-objects/div/div[1]/div/div[2]/div/div/div[3]/label"
+    And I click button by xpath "/html/body/id-root/div/div/id-detected-objects/div/button"
+    And I click button by xpath "//*[@id='myModal']/div/div/form/div[2]/button[1]"
+    And I get object count "after"
+    Then the count of objects will decrease by one
+
+    When I get object count "before"
+    And I click pagination button
+
+
+
+
+
  
 
