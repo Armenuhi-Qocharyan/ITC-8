@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 
 public class UpdateDeleteCameraScenario {
 
-	private static WebDriver driver = CamerasSearchScenario.driver;
+       private static WebDriver driver = CamerasSearchScenario.driver;
 
        @Then("^I should see edit and delete buttons by xpath \"([^\"]*)\" \"([^\"]*)\"$")
        public void I_should_see_edit_and_delete_buttons_by_xpath(String arg1, String arg2) throws InterruptedException {

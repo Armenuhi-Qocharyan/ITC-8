@@ -3,8 +3,9 @@ Feature: Cameras
   I want to search on cameras page
   So that I can see results
 
-  Scenario: Search Camera
+  Background:
     Given the page is open "http://localhost:4200/cameras"
+  Scenario: Search Camera
     When I search for "Camera_11"
     Then a shown device name should contains "Camera_11"
     When I search for "bdcbhfh"
